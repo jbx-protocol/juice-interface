@@ -1,9 +1,11 @@
-import { Divider } from 'antd'
 import { ReactNode, useCallback, useContext, useMemo } from 'react'
+
+import { Divider } from 'antd'
+import useMobile from 'hooks/useMobile'
 import { classNames } from 'utils/classNames'
-import { SelectionContext } from './Selection'
 import { CheckedCircle } from './components/CheckedCircle'
 import { RadialBackgroundIcon } from './components/RadialBackgroundIcon'
+import { SelectionContext } from './Selection'
 
 const Container: React.FC<
   React.PropsWithChildren<{
@@ -62,6 +64,7 @@ export const SelectionCard: React.FC<
   isDisabled = false,
   children,
 }) => {
+  const isMobile = useMobile()
   const { selection, defocusOnSelect, setSelection } =
     useContext(SelectionContext)
   const isSelected = selection === name
@@ -131,7 +134,7 @@ export const SelectionCard: React.FC<
       {isSelected && children && (
         <div className="pb-7">
           <Divider className="mt-0 mb-8" />
-          <div className={`px-[calc(42px+32px)]`}>{children}</div>
+          <div className={isMobile ? `px-[30px]`: `px-[calc(42px+32px)]`}>{children}</div>
         </div>
       )}
     </Container>

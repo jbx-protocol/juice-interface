@@ -1,10 +1,3 @@
-import { ContractFunctionReturnType, zeroAddress } from 'viem'
-import {
-  DEFAULT_NFT_FLAGS_V4,
-  DEFAULT_NFT_PRICING,
-  EMPTY_NFT_COLLECTION_METADATA,
-} from 'redux/slices/v2v3/editingV2Project'
-import React, { createContext } from 'react'
 import {
   jb721TiersHookStoreAbi,
   useJBProjectId,
@@ -15,12 +8,20 @@ import {
   useReadJb721TiersHookStoreAddress,
   useReadJb721TiersHookStoreFlagsOf,
   useReadJb721TiersHookStoreTiersOf,
+  useSuckers,
 } from 'juice-sdk-react'
+import React, { createContext } from 'react'
+import {
+  DEFAULT_NFT_FLAGS_V4,
+  DEFAULT_NFT_PRICING,
+  EMPTY_NFT_COLLECTION_METADATA,
+} from 'redux/slices/v2v3/editingV2Project'
+import { ContractFunctionReturnType, zeroAddress } from 'viem'
 
-import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { JB721GovernanceType } from 'models/nftRewards'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V4NftRewardsData } from 'packages/v4/models/nfts'
+import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { useNftRewards } from './useNftRewards'
 
 const NFT_PAGE_SIZE = 100n
@@ -56,6 +57,8 @@ export const V4NftRewardsProvider: React.FC<
   const jbRuleSet = useJBRulesetContext()
   const { projectId, chainId } = useJBProjectId()
   const upcomingRuleset = useJBUpcomingRuleset({ projectId, chainId })
+  const { data: suckers } = useSuckers()
+  
   let dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
   
   if (jbRuleSet.ruleset.data?.cycleNumber === 0) {
@@ -69,6 +72,10 @@ export const V4NftRewardsProvider: React.FC<
     chainId
   })
 
+  // Get all project chains, fallback to current chain if no suckers
+  const projectChains = suckers?.map(s => s.peerChainId) || [chainId]
+
+  // Fetch tiers from current chain (for metadata and structure)
   const tiersOf = useReadJb721TiersHookStoreTiersOf({
     address: storeAddress.data,
     args: [
@@ -82,7 +89,7 @@ export const V4NftRewardsProvider: React.FC<
   })
 
   const { data: loadedRewardTiers, isLoading: nftRewardTiersLoading } =
-    useNftRewards(tiersOf.data ?? [], projectId, chainId, storeAddress.data)
+    useNftRewards(tiersOf.data ?? [], projectChains, projectId, chainId, storeAddress.data, dataHookAddress)
 
   const loadedCIDs = CIDsOfNftRewardTiersResponse(tiersOf.data ?? [])
 

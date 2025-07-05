@@ -1,4 +1,5 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import { formatEther, readJb721TiersHookStoreTiersOf } from 'juice-sdk-core'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
 import {
   cidFromUrl,
@@ -9,16 +10,25 @@ import {
 } from 'utils/ipfs'
 
 import axios from 'axios'
-import { formatEther } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
 import { withHttps } from 'utils/externalLink'
+import { zeroAddress } from 'viem'
+import { useConfig } from 'wagmi'
 import { JB721TierV4 } from './V4NftRewardsProvider'
+
+const NFT_PAGE_SIZE = 100n
 
 // fetchRewardTierMetadata takes three steps to retrieve and process metadata:
 // 1. Attempt to fetch metadata from the primary eth.sucks gateway.
 // 2. If the primary gateway fails, fallback to the Infura (jbm.infura-ipfs) gateway, and then to the Pinata gateway.
 // 3. Process the retrieved metadata (e.g., handle image URLs, format data) and return the reward tier details.
-async function fetchRewardTierMetadata({ tier }: { tier: JB721TierV4 }) {
+async function fetchRewardTierMetadata({ 
+  tier, 
+  perChainSupply 
+}: { 
+  tier: JB721TierV4
+  perChainSupply?: { chainId: number; remainingSupply: number }[]
+}) {
   const tierCid = decodeEncodedIpfsUri(tier.encodedIPFSUri)
   const primaryUrl = ethSucksGatewayUrl(tierCid) // Use eth.sucks as primary
   
@@ -43,7 +53,7 @@ async function fetchRewardTierMetadata({ tier }: { tier: JB721TierV4 }) {
 
     const rawContributionFloor = tier.price
 
-    return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor)
+    return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor, perChainSupply)
   } catch (error) {
     console.warn(`eth.sucks gateway failed for CID ${tierCid}, trying Infura fallback`)
     
@@ -67,7 +77,7 @@ async function fetchRewardTierMetadata({ tier }: { tier: JB721TierV4 }) {
         tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
       }
 
-      return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor)
+      return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor, perChainSupply)
     } catch (infuraError) {
       console.warn(`Infura gateway failed for CID ${tierCid}, trying Pinata fallback`)
       
@@ -91,7 +101,7 @@ async function fetchRewardTierMetadata({ tier }: { tier: JB721TierV4 }) {
           tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
         }
 
-        return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor)
+        return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor, perChainSupply)
       } catch (pinataError) {
         // If all gateways fail, rethrow the original error
         console.error(`All IPFS gateways failed for CID ${tierCid}`)
@@ -106,8 +116,11 @@ function processMetadata(
   tier: JB721TierV4, 
   tierMetadata: IPFSNftRewardTier, 
   maxSupply: number,
-  rawContributionFloor: bigint
+  rawContributionFloor: bigint,
+  perChainSupply?: { chainId: number; remainingSupply: number }[]
 ) {
+  const totalRemainingSupply = perChainSupply?.reduce((acc, chain) => acc + chain.remainingSupply, 0) ?? tier.remainingSupply
+
   return {
     id: tier.id,
     name: tierMetadata.name,
@@ -115,7 +128,8 @@ function processMetadata(
     externalLink: withHttps(tierMetadata.externalLink),
     contributionFloor: formatEther(rawContributionFloor),
     maxSupply,
-    remainingSupply: tier.remainingSupply,
+    remainingSupply: totalRemainingSupply,
+    perChainSupply,
     fileUrl: tierMetadata.image,
     beneficiary: tier.reserveBeneficiary,
     reservedRate: tier.reserveFrequency,
@@ -125,17 +139,75 @@ function processMetadata(
 
 export const useNftRewards = (
   tiers: readonly JB721TierV4[],
+  projectChains: number[],
   projectId: bigint | undefined,
   chainId: JBChainId | undefined,
   dataSourceAddress: string | undefined,
+  dataHookAddress: `0x${string}` | undefined,
 ): UseQueryResult<NftRewardTier[]> => {
-  const enabled = Boolean(tiers?.length)
+  const config = useConfig()
+  const enabled = Boolean(tiers?.length && dataSourceAddress)
+  
   return useQuery({
-    queryKey: ['nftRewards', projectId?.toString(), chainId, dataSourceAddress],
+    queryKey: ['nftRewards', projectId?.toString(), chainId, dataSourceAddress, projectChains],
     enabled,
     queryFn: async () => {
+      if (!dataSourceAddress || !dataHookAddress) return []
+      
+      // Fetch tiers from all chains for supply aggregation
+      const allChainTiersData = await Promise.all(
+        projectChains.map(async currentChainId => {
+          try {
+            const chainTiers = await readJb721TiersHookStoreTiersOf(config, {
+              address: dataSourceAddress as `0x${string}`,
+              args: [
+                dataHookAddress ?? zeroAddress as `0x${string}`,
+                [], // _categories
+                false, // _includeResolvedUri
+                0n, // _startingId
+                NFT_PAGE_SIZE, // limit
+              ],
+              chainId: currentChainId
+            })
+            
+            return {
+              chainId: currentChainId,
+              tiers: chainTiers
+            }
+          } catch (error) {
+            console.warn(`Failed to fetch tiers for chain ${currentChainId}:`, error)
+            return {
+              chainId: currentChainId,
+              tiers: []
+            }
+          }
+        })
+      )
+
+      // Aggregate supply data from all chains
+      const aggregatedTiers = tiers.map(tier => {
+        const perChainSupply = projectChains.map(currentChainId => {
+          const chainTiersData = allChainTiersData.find(chainData => 
+            chainData.chainId === currentChainId
+          )?.tiers
+          
+          const matchingTier = chainTiersData?.find((chainTier: JB721TierV4) => 
+            chainTier.id === tier.id
+          )
+          
+          return {
+            chainId: currentChainId,
+            remainingSupply: matchingTier?.remainingSupply || 0
+          }
+        })
+
+        return { tier, perChainSupply }
+      })
+
       return await Promise.all(
-        tiers.map(tier => fetchRewardTierMetadata({ tier })),
+        aggregatedTiers.map(({ tier, perChainSupply }) => 
+          fetchRewardTierMetadata({ tier, perChainSupply })
+        ),
       )
     },
   })

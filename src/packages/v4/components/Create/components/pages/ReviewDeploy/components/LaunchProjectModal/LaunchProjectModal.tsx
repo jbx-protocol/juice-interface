@@ -6,8 +6,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/solid'
-import { ContractFunctionArgs, hexToBigInt } from 'viem'
-import React, { useCallback, useEffect, useState } from 'react'
+import { Trans, t } from '@lingui/macro'
 import {
   RelayrPostBundleResponse,
   jb721TiersHookProjectDeployerAbi,
@@ -15,35 +14,37 @@ import {
   useGetRelayrTxBundle,
   useSendRelayrTx,
 } from 'juice-sdk-react'
-import { Trans, t } from '@lingui/macro'
+import React, { useCallback, useEffect, useState } from 'react'
+import { ContractFunctionArgs, hexToBigInt } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
+import Loading from 'components/Loading'
+import { JuiceModal } from 'components/modals/JuiceModal'
+import { NETWORKS } from 'constants/networks'
+import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-core'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { useRouter } from 'next/router'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import ETHAmount from 'components/currency/ETHAmount'
-import { JBChainId } from 'juice-sdk-core'
-import { JuiceModal } from 'components/modals/JuiceModal'
-import Loading from 'components/Loading'
-import { NETWORKS } from 'constants/networks'
-import { OmnichainTxLoadingContent } from './OmnichainTxLoadingContent'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { emitErrorNotification } from 'utils/notifications'
-import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
-import { getTransactionReceipt } from 'viem/actions'
-import { twMerge } from 'tailwind-merge'
-import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useConfig } from 'wagmi'
-import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
-import { useDispatch } from 'react-redux'
 import { useIsNftProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useIsNftProject'
 import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
-import { useRouter } from 'next/router'
-import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { useUploadNftRewards } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useUploadNftRewards'
+import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
+import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
+import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { twMerge } from 'tailwind-merge'
+import { emitErrorNotification } from 'utils/notifications'
+import { getTransactionReceipt } from 'viem/actions'
+import { useConfig } from 'wagmi'
+import { OmnichainTxLoadingContent } from './OmnichainTxLoadingContent'
 
 const JUICEBOX_DOMAIN = 'juicebox'
 
@@ -60,6 +61,7 @@ export const LaunchProjectModal: React.FC<{
   const router = useRouter()
   const relayrBundle = useGetRelayrTxBundle()
   const { sendRelayrTx, isPending, data: txData } = useSendRelayrTx()
+  const { userAddress } = useWallet()
 
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(
     process.env.NEXT_PUBLIC_TESTNET == 'true' ? sepolia.id : mainnet.id,
@@ -67,6 +69,7 @@ export const LaunchProjectModal: React.FC<{
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
   const [txSigning, setTxSigning] = useState(false)
+  
   const isNftProject = useIsNftProject()
   const uploadNftRewards = useUploadNftRewards()
   const dispatch = useDispatch()
@@ -91,6 +94,8 @@ export const LaunchProjectModal: React.FC<{
   // bongs. re-capture nft state so that the 'succes' page doesnt bong out upon reseting the form state
   const [nftProject, setNftProject] = useState(false)
 
+
+
   /**
    * Fetches a quote for the omnichain transaction.
    *
@@ -101,23 +106,33 @@ export const LaunchProjectModal: React.FC<{
     setTxQuoteLoading(true)
 
     try {
-      const projectMetadataCid = (
+      // Upload project metadata
+      const cid = (
         await uploadProjectMetadata({
           ...createData.projectMetadata,
           domain: JUICEBOX_DOMAIN,
         })
       ).Hash
+
+      let uploadedNftData: {
+        rewardTierCids: string[]
+        nftCollectionMetadataUri: string
+      } | undefined
+
       if (isNftProject) {
         setNftProject(true)
-        const {
-          rewardTiers: rewardTierCids,
-          nfCollectionMetadata: nftCollectionMetadataUri,
-        } = (await uploadNftRewards()) ?? {}
-        if (!rewardTierCids || !nftCollectionMetadataUri) {
+        const result = await uploadNftRewards()
+        if (!result?.rewardTiers || !result?.nfCollectionMetadata) {
           emitErrorNotification('Failed to upload NFT rewards')
           return
         }
+        uploadedNftData = {
+          rewardTierCids: result.rewardTiers,
+          nftCollectionMetadataUri: result.nfCollectionMetadata,
+        }
+      }
 
+      if (isNftProject && uploadedNftData) {
         const launchData = chainIds.reduce(
           (
             acc: {
@@ -130,10 +145,10 @@ export const LaunchProjectModal: React.FC<{
             chainId,
           ) => {
             const { args } = getNftProjectLaunchData({
-              projectMetadataCID: projectMetadataCid,
+              projectMetadataCID: cid,
               chainId,
-              rewardTierCids,
-              nftCollectionMetadataUri,
+              rewardTierCids: uploadedNftData.rewardTierCids,
+              nftCollectionMetadataUri: uploadedNftData.nftCollectionMetadataUri,
               withStartBuffer: true,
             })
 
@@ -157,7 +172,7 @@ export const LaunchProjectModal: React.FC<{
             chainId,
           ) => {
             const { args } = getStandardProjectLaunchData({
-              projectMetadataCID: projectMetadataCid,
+              projectMetadataCID: cid,
               chainId,
               withStartBuffer: true,
             })
@@ -178,15 +193,17 @@ export const LaunchProjectModal: React.FC<{
       setTxQuoteLoading(false)
     }
   }, [
-    getNftProjectLaunchData,
-    uploadNftRewards,
+    createData.projectMetadata,
     isNftProject,
     chainIds,
-    createData.projectMetadata,
-    deployOmnichainProject,
+    getNftProjectLaunchData,
     deployOmnichainNftProject,
     getStandardProjectLaunchData,
+    deployOmnichainProject,
+    uploadNftRewards,
   ])
+
+
 
   async function onClickLaunch() {
     if (!txQuote) {
@@ -259,15 +276,16 @@ export const LaunchProjectModal: React.FC<{
   ])
 
   return (
-    <JuiceModal
-      className="max-w-lg"
-      title={t`Launch project`}
-      okText={!txQuote ? t`Get launch quote` : t`Launch project`}
-      cancelText={t`Cancel`}
-      onOk={onClickLaunch}
-      okLoading={txSigning || txLoading || txQuoteLoading}
-      {...props}
-    >
+    <>
+      <JuiceModal
+        className="max-w-lg"
+        title={t`Launch project`}
+        okText={!txQuote ? t`Get launch quote` : t`Launch project`}
+        cancelText={t`Cancel`}
+        onOk={onClickLaunch}
+        okLoading={txSigning || txLoading || txQuoteLoading}
+        {...props}
+      >
       {txLoading ? (
         <OmnichainTxLoadingContent
           relayrResponse={relayrBundle.response}
@@ -308,7 +326,7 @@ export const LaunchProjectModal: React.FC<{
                       <GasIcon className="h-5 w-5" />
                       <div className="text-base font-medium leading-none">
                         {txQuoteLoading || !txQuoteCost ? (
-                          '--'
+                          <span>--</span>
                         ) : (
                           <ETHAmount
                             amount={BigNumber.from(txQuoteCost?.toString())}
@@ -345,6 +363,11 @@ export const LaunchProjectModal: React.FC<{
                   />
                 </div>
               </div>
+              {txQuoteLoading && (
+                <div className="text-xs text-grey-500 mt-2">
+                  <Trans>This sometimes takes up to a minute</Trans>
+                </div>
+              )}
               <span
                 role="button"
                 className="mb-4 text-xs underline hover:opacity-75"
@@ -358,6 +381,7 @@ export const LaunchProjectModal: React.FC<{
         </div>
       )}
     </JuiceModal>
+    </>
   )
 }
 

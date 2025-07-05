@@ -1,6 +1,7 @@
 import { Trans, t } from '@lingui/macro'
-import { EmptyScreen } from 'components/Project/ProjectTabs/EmptyScreen'
 import { NftReward, NftRewardSkeleton } from './NftReward/NftReward'
+
+import { EmptyScreen } from 'components/Project/ProjectTabs/EmptyScreen'
 import { RedeemNftsSection } from './RedeemNftsSection/RedeemNftsSection'
 import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'
 
@@ -20,7 +21,7 @@ export const V4NftRewardsPanel = () => {
       <RedeemNftsSection />
 
       {!nftsLoading && rewardTiers?.length ? (
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 max-h-[800px] overflow-y-auto">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-6">
           {rewardTiers?.map((tier, i) => (
             <div key={i} className="flex">
               <NftReward

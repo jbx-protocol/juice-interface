@@ -1,5 +1,6 @@
-import useMobile from 'hooks/useMobile'
 import React, { ReactNode } from 'react'
+
+import useMobile from 'hooks/useMobile'
 import { twJoin } from 'tailwind-merge'
 import { Page } from './Page'
 import { Steps } from './Steps/Steps'
@@ -11,11 +12,13 @@ const WizardContainer: React.FC<
     className?: string
   }>
 > = ({ children, className }) => {
+  const isMobile = useMobile()
   return (
     <div
       className={twJoin(
         className,
         'm-auto flex flex-col items-center gap-16 py-8 px-4 md:px-16',
+        isMobile ? `px-8` : ''
       )}
     >
       {children}

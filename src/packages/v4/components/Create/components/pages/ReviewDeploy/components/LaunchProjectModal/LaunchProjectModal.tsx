@@ -364,7 +364,7 @@ export const LaunchProjectModal: React.FC<{
                 </div>
               </div>
               {txQuoteLoading && (
-                <div className="text-xs text-grey-500 mt-2">
+                <div className="text-xs text-grey-500">
                   <Trans>This sometimes takes up to a minute</Trans>
                 </div>
               )}

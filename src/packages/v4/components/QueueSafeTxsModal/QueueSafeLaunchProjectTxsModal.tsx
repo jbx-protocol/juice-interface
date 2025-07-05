@@ -32,13 +32,7 @@ export default function QueueSafeLaunchProjectTxsModal({
     [proposeLaunchProjectTx, launchData],
   )
 
-  const title = useMemo(() => {
-    const chainCount = chains.length
-    if (chainCount === 1) {
-      return <Trans>Queue launch transaction to Safe</Trans>
-    }
-    return <Trans>Queue launch transactions to Safe ({chainCount} chains)</Trans>
-  }, [chains.length])
+  const title = <Trans>Queue launch transactions to Safe</Trans>
 
   const description = useMemo(() => {
     if (chains.length === 1) {

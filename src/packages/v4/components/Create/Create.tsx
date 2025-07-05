@@ -7,7 +7,6 @@ import { JBChainId } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { zeroAddress } from 'viem'
 import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
@@ -77,7 +76,7 @@ export default function Create() {
   }
 
   if (isSafeQueued) {
-    return <SafeQueueSuccess chains={queuedChains} safeAddress={inputProjectOwner ?? userAddress ?? zeroAddress}/>
+    return <SafeQueueSuccess chains={queuedChains} />
   }
 
   return (

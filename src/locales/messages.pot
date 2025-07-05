@@ -3719,9 +3719,6 @@ msgstr ""
 msgid "Cannot use zero address"
 msgstr ""
 
-msgid "Queue launch transaction to Safe"
-msgstr ""
-
 msgid "Allowed"
 msgstr ""
 
@@ -4220,7 +4217,7 @@ msgstr ""
 msgid "Switch to unlimited"
 msgstr ""
 
-msgid "Queue launch transactions to Safe ({chainCount} chains)"
+msgid "Queue launch transactions to Safe"
 msgstr ""
 
 msgid "No payment info for selected chain"

@@ -1,8 +1,7 @@
 import { JBChainId, jb721TiersHookProjectDeployerAddress, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import {
-    jb721TiersHookProjectDeployerAbi,
-    jbController4_1Abi,
-    useSuckers
+  jb721TiersHookProjectDeployerAbi,
+  jbController4_1Abi
 } from 'juice-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
@@ -26,17 +25,12 @@ export interface SafeLaunchProjectData {
 
 export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: string }) {
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress })
-  const { data: suckers } = useSuckers()
-
   const proposeLaunchProjectTx = useCallback(
     async (
       chainId: JBChainId,
       launchData: SafeLaunchProjectData,
     ): Promise<SafeProposeTransactionResponse> => {
       // Find the project deployment will happen on this chain
-      if (!suckers?.some(s => s.peerChainId === chainId)) {
-        throw new Error(`No project deployment configured for chain ${chainId}`)
-      }
 
       let data: `0x${string}`
       let to: `0x${string}`
@@ -81,7 +75,6 @@ export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: st
     },
     [
       proposeTransaction,
-      suckers,
     ],
   )
 

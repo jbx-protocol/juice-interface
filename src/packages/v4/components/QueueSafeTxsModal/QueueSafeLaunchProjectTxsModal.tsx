@@ -1,9 +1,9 @@
 import { SafeLaunchProjectData, useProposeSafeLaunchProjectTx } from 'packages/v4/hooks/useProposeSafeLaunchProjectTx'
+import { useCallback, useMemo } from 'react'
 
 import { Trans } from '@lingui/macro'
 import { JBChainId } from 'juice-sdk-react'
 import { SafeProposeTransactionResponse } from 'packages/v4/hooks/useProposeSafeTransaction'
-import { useMemo } from 'react'
 import QueueSafeTxsModal from './QueueSafeTxsModal'
 
 export interface QueueSafeLaunchProjectTxsModalProps {
@@ -25,9 +25,12 @@ export default function QueueSafeLaunchProjectTxsModal({
 }: QueueSafeLaunchProjectTxsModalProps) {
   const { proposeLaunchProjectTx } = useProposeSafeLaunchProjectTx({ safeAddress })
 
-  const handleExecuteOnChain = async (chainId: JBChainId): Promise<SafeProposeTransactionResponse> => {
-    return await proposeLaunchProjectTx(chainId, launchData)
-  }
+  const handleExecuteChain = useCallback(
+    async (chainId: JBChainId): Promise<SafeProposeTransactionResponse> => {
+      return await proposeLaunchProjectTx(chainId, launchData)
+    },
+    [proposeLaunchProjectTx, launchData],
+  )
 
   const title = useMemo(() => {
     const chainCount = chains.length
@@ -58,12 +61,15 @@ export default function QueueSafeLaunchProjectTxsModal({
     <QueueSafeTxsModal
       open={open}
       onCancel={onCancel}
-      onAllComplete={onComplete}
       title={title}
       description={description}
-      onExecuteChain={handleExecuteOnChain}
+      onExecuteChain={handleExecuteChain}
       safeAddress={safeAddress}
       chains={chains}
+      onTxComplete={(chainId, result) => {
+        // Handle individual chain completion if needed
+      }}
+      onAllComplete={onComplete}
       buttonTextOverride={{
         completed: <Trans>Queued</Trans>,
         connectWallet: <Trans>Connect wallet</Trans>,

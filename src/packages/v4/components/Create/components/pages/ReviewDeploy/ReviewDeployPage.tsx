@@ -1,4 +1,8 @@
 import { Checkbox, Form } from 'antd'
+import {
+  jb721TiersHookProjectDeployerAbi,
+  jbControllerAbi,
+} from 'juice-sdk-react'
 import React, {
   useCallback,
   useContext,
@@ -38,8 +42,11 @@ import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCrea
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { helpPagePath } from 'utils/helpPagePath'
 import { emitErrorNotification } from 'utils/notifications'
+import { ContractFunctionArgs } from 'viem'
 import { useIsNftProject } from '../../../hooks/DeployProject/hooks/NFT/useIsNftProject'
+import { useNftProjectLaunchData } from '../../../hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
 import { useUploadNftRewards } from '../../../hooks/DeployProject/hooks/NFT/useUploadNftRewards'
+import { useStandardProjectLaunchData } from '../../../hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { useDeployProject } from '../../../hooks/DeployProject/useDeployProject'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
@@ -98,10 +105,13 @@ export const ReviewDeployPage = () => {
   const createData = useAppSelector(state => state.creatingV2Project)
   const isNftProject = useIsNftProject()
   const uploadNftRewards = useUploadNftRewards()
+  const getStandardProjectLaunchData = useStandardProjectLaunchData()
+  const getNftProjectLaunchData = useNftProjectLaunchData()
   
-  // Safe detection
-  const { data: gnosisSafeData } = useGnosisSafe(userAddress)
-  const isSafe = Boolean(gnosisSafeData)
+  // Safe detection - check if project owner is a Safe
+  const projectOwner = createData.inputProjectOwner || userAddress
+  const { data: gnosisSafeData } = useGnosisSafe(projectOwner)
+  const isProjectOwnerSafe = Boolean(gnosisSafeData)
   
   // State
   const nftRewards = useAppSelector(
@@ -123,6 +133,12 @@ export const ReviewDeployPage = () => {
   const [uploadedNftData, setUploadedNftData] = useState<{
     rewardTierCids: string[]
     nftCollectionMetadataUri: string
+  }>()
+  const [standardProjectLaunchData, setStandardProjectLaunchData] = useState<{
+    [k in JBChainId]?: ContractFunctionArgs<typeof jbControllerAbi, 'nonpayable', 'launchProjectFor'>
+  }>()
+  const [nftProjectLaunchData, setNftProjectLaunchData] = useState<{
+    [k in JBChainId]?: ContractFunctionArgs<typeof jb721TiersHookProjectDeployerAbi, 'nonpayable', 'launchProjectFor'>
   }>()
 
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
@@ -161,6 +177,49 @@ export const ReviewDeployPage = () => {
         setUploadedNftData(nftData)
       }
 
+      // Generate launch data for all selected chains
+      const selectedChainIds = Object.entries(selectedRelayrChains)
+        .filter(([_, selected]) => selected)
+        .map(([chainId, _]) => parseInt(chainId) as JBChainId)
+
+      if (isNftProject && nftData) {
+        // Generate NFT project launch data for each chain
+        const nftLaunchData = selectedChainIds.reduce(
+          (acc, chainId) => {
+            const { args } = getNftProjectLaunchData({
+              projectMetadataCID: cid,
+              chainId,
+              rewardTierCids: nftData.rewardTierCids,
+              nftCollectionMetadataUri: nftData.nftCollectionMetadataUri,
+              withStartBuffer: true,
+            })
+            acc[chainId] = args
+            return acc
+          },
+          {} as {
+            [k in JBChainId]?: ContractFunctionArgs<typeof jb721TiersHookProjectDeployerAbi, 'nonpayable', 'launchProjectFor'>
+          },
+        )
+        setNftProjectLaunchData(nftLaunchData)
+      } else {
+        // Generate standard project launch data for each chain
+        const standardLaunchData = selectedChainIds.reduce(
+          (acc, chainId) => {
+            const { args } = getStandardProjectLaunchData({
+              projectMetadataCID: cid,
+              chainId,
+              withStartBuffer: true,
+            })
+            acc[chainId] = args
+            return acc
+          },
+          {} as {
+            [k in JBChainId]?: ContractFunctionArgs<typeof jbControllerAbi, 'nonpayable', 'launchProjectFor'>
+          },
+        )
+        setStandardProjectLaunchData(standardLaunchData)
+      }
+
       return { projectMetadataCid: cid, uploadedNftData: nftData }
     } catch (error) {
       console.error('Failed to upload metadata:', error)
@@ -175,6 +234,9 @@ export const ReviewDeployPage = () => {
     createData.projectMetadata,
     isNftProject,
     uploadNftRewards,
+    selectedRelayrChains,
+    getNftProjectLaunchData,
+    getStandardProjectLaunchData,
   ])
 
   // Safe queue success handler
@@ -239,7 +301,7 @@ export const ReviewDeployPage = () => {
     }
 
     // For Safe wallets with multiple chains, use the Safe queue flow
-    if (isSafe && isMultiChainSelected) {
+    if (isProjectOwnerSafe && isMultiChainSelected) {
       const uploadResult = await uploadMetadata()
       if (!uploadResult) {
         return
@@ -290,7 +352,7 @@ export const ReviewDeployPage = () => {
     isConnected,
     omnichainDeployModal,
     connect,
-    isSafe,
+    isProjectOwnerSafe,
     uploadMetadata,
   ])
 
@@ -527,7 +589,7 @@ export const ReviewDeployPage = () => {
       />
       
       {/* Safe Queue Modal for multi-chain Safe launches */}
-      {showSafeQueueModal && projectMetadataCid && userAddress && gnosisSafeData && (
+      {showSafeQueueModal && projectMetadataCid && projectOwner && gnosisSafeData && (
         <QueueSafeLaunchProjectTxsModal
           open={showSafeQueueModal}
           onCancel={() => setShowSafeQueueModal(false)}
@@ -539,12 +601,14 @@ export const ReviewDeployPage = () => {
               rewardTierCids: uploadedNftData.rewardTierCids,
               nftCollectionMetadataUri: uploadedNftData.nftCollectionMetadataUri,
             } : undefined,
+            standardProjectData: standardProjectLaunchData,
+            nftProjectData: nftProjectLaunchData,
           }}
           chains={Object.entries(selectedRelayrChains)
             .filter(([_, selected]) => selected)
             .map(([chainId, _]) => parseInt(chainId) as JBChainId)
           }
-          safeAddress={userAddress}
+          safeAddress={projectOwner}
         />
       )}
       

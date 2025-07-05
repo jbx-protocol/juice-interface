@@ -1253,9 +1253,6 @@ msgstr ""
 msgid "This contract manages NFT minting and redeeming for this project."
 msgstr ""
 
-msgid "{remainingSupply} remaining"
-msgstr ""
-
 msgid "None"
 msgstr ""
 
@@ -3366,6 +3363,9 @@ msgid "Enable project token transfers"
 msgstr ""
 
 msgid "Deadline"
+msgstr ""
+
+msgid "{remainingSupply}{aggregatedMaxSupplyText}"
 msgstr ""
 
 msgid "<0>You won't receive ETH because this project has no ETH, or is using all of its ETH for payouts .</0>"

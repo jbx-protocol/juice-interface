@@ -159,7 +159,7 @@ export const useNftRewards = (
         projectChains.map(async currentChainId => {
           try {
             const chainTiers = await readJb721TiersHookStoreTiersOf(config, {
-              address: dataSourceAddress,
+              address: dataSourceAddress as `0x${string}`,
               args: [
                 dataHookAddress ?? zeroAddress,
                 [], // _categories

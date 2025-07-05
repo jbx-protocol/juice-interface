@@ -136,7 +136,6 @@ const externalWalletConfig = {
       chains: SUPPORTED_CHAINS,
       transports: transports,
     },
-    wagmiProviderProps: {},
   },
   wallets: SUPPORTED_WALLETS,
   walletConnect: {

@@ -326,12 +326,7 @@ export const LaunchProjectModal: React.FC<{
                       <GasIcon className="h-5 w-5" />
                       <div className="text-base font-medium leading-none">
                         {txQuoteLoading || !txQuoteCost ? (
-                          <div className="flex flex-col">
-                            <span>--</span>
-                            <span className="text-xs text-grey-500 mt-1">
-                              <Trans>This sometimes takes up to a minute</Trans>
-                            </span>
-                          </div>
+                          <span>--</span>
                         ) : (
                           <ETHAmount
                             amount={BigNumber.from(txQuoteCost?.toString())}
@@ -368,6 +363,11 @@ export const LaunchProjectModal: React.FC<{
                   />
                 </div>
               </div>
+              {txQuoteLoading && (
+                <div className="text-xs text-grey-500 mt-2">
+                  <Trans>This sometimes takes up to a minute</Trans>
+                </div>
+              )}
               <span
                 role="button"
                 className="mb-4 text-xs underline hover:opacity-75"

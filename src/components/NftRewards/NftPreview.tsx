@@ -40,12 +40,13 @@ export function NftPreview({
   }
 
   const remainingSupplyElement = (
-    <div className="flex text-xs text-grey-400 md:mt-1">
-      <Trans>REMAINING SUPPLY: </Trans>
+    <div className="flex text-xs text-grey-400 md:mt-1 gap-2">
+      <Trans>REMAINING SUPPLY:</Trans>
       <RemainingSupplyWithTooltip
         remainingSupply={rewardTier.remainingSupply}
         maxSupply={rewardTier.maxSupply}
         perChainSupply={rewardTier.perChainSupply}
+        showMaxSupply
       />
     </div>
   )

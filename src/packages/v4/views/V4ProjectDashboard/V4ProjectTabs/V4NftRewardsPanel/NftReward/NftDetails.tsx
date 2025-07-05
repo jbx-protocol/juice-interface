@@ -3,7 +3,6 @@ import ETHAmount from 'components/currency/ETHAmount'
 import { TruncatedText } from 'components/TruncatedText'
 import { useJBChainId } from 'juice-sdk-react'
 import { NftRewardTier } from 'models/nftRewards'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { twMerge } from 'tailwind-merge'
 import { parseWad } from 'utils/format/formatNumber'
 
@@ -62,11 +61,8 @@ export function NftDetails({
           >
             <div className='whitespace-nowrap'>
               <span className="text-xs text-grey-400 dark:text-slate-300">
-                {remainingSupplyElement} on{' '}
+                {remainingSupplyElement}
               </span>
-              {chainId ? (
-                <ChainLogo chainId={chainId} className="ml-1 inline-block" />
-              ) : null}
             </div>
           </Skeleton>
         </div>

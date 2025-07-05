@@ -88,29 +88,8 @@ export const V4NftRewardsProvider: React.FC<
     chainId
   })
 
-  // Fetch tiers from all chains for supply aggregation
-  const allChainTiers = projectChains.map(currentChainId => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const tierQuery = useReadJb721TiersHookStoreTiersOf({
-      address: storeAddress.data,
-      args: [
-        dataHookAddress ?? zeroAddress,
-        [], // _categories
-        false, // _includeResolvedUri
-        0n, // _startingId
-        NFT_PAGE_SIZE, // limit
-      ],
-      chainId: currentChainId
-    })
-    
-    return {
-      data: tierQuery.data,
-      variables: { chainId: currentChainId }
-    }
-  })
-
   const { data: loadedRewardTiers, isLoading: nftRewardTiersLoading } =
-    useNftRewards(tiersOf.data ?? [], allChainTiers, projectChains, projectId, chainId, storeAddress.data)
+    useNftRewards(tiersOf.data ?? [], projectChains, projectId, chainId, storeAddress.data, dataHookAddress)
 
   const loadedCIDs = CIDsOfNftRewardTiersResponse(tiersOf.data ?? [])
 

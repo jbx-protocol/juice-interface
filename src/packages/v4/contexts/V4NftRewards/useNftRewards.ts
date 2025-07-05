@@ -1,23 +1,22 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import { formatEther, readJb721TiersHookStoreTiersOf } from 'juice-sdk-core'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
 import {
-    cidFromUrl,
-    decodeEncodedIpfsUri,
-    ethSucksGatewayUrl,
-    ipfsGatewayUrl,
-    pinataGatewayUrl
+  cidFromUrl,
+  decodeEncodedIpfsUri,
+  ethSucksGatewayUrl,
+  ipfsGatewayUrl,
+  pinataGatewayUrl
 } from 'utils/ipfs'
 
 import axios from 'axios'
-import { formatEther } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
 import { withHttps } from 'utils/externalLink'
+import { zeroAddress } from 'viem'
+import { useConfig } from 'wagmi'
 import { JB721TierV4 } from './V4NftRewardsProvider'
 
-type ChainTierQuery = {
-  data?: readonly JB721TierV4[]
-  variables?: { chainId: number }
-}
+const NFT_PAGE_SIZE = 100n
 
 // fetchRewardTierMetadata takes three steps to retrieve and process metadata:
 // 1. Attempt to fetch metadata from the primary eth.sucks gateway.
@@ -140,23 +139,57 @@ function processMetadata(
 
 export const useNftRewards = (
   tiers: readonly JB721TierV4[],
-  allChainTiers: ChainTierQuery[], // Array of tier queries from all chains
   projectChains: number[],
   projectId: bigint | undefined,
   chainId: JBChainId | undefined,
   dataSourceAddress: string | undefined,
+  dataHookAddress: string | undefined,
 ): UseQueryResult<NftRewardTier[]> => {
-  const enabled = Boolean(tiers?.length)
+  const config = useConfig()
+  const enabled = Boolean(tiers?.length && dataSourceAddress)
+  
   return useQuery({
     queryKey: ['nftRewards', projectId?.toString(), chainId, dataSourceAddress, projectChains],
     enabled,
     queryFn: async () => {
+      if (!dataSourceAddress || !dataHookAddress) return []
+      
+      // Fetch tiers from all chains for supply aggregation
+      const allChainTiersData = await Promise.all(
+        projectChains.map(async currentChainId => {
+          try {
+            const chainTiers = await readJb721TiersHookStoreTiersOf(config, {
+              address: dataSourceAddress,
+              args: [
+                dataHookAddress ?? zeroAddress,
+                [], // _categories
+                false, // _includeResolvedUri
+                0n, // _startingId
+                NFT_PAGE_SIZE, // limit
+              ],
+              chainId: currentChainId
+            })
+            
+            return {
+              chainId: currentChainId,
+              tiers: chainTiers
+            }
+          } catch (error) {
+            console.warn(`Failed to fetch tiers for chain ${currentChainId}:`, error)
+            return {
+              chainId: currentChainId,
+              tiers: []
+            }
+          }
+        })
+      )
+
       // Aggregate supply data from all chains
       const aggregatedTiers = tiers.map(tier => {
         const perChainSupply = projectChains.map(currentChainId => {
-          const chainTiersData = allChainTiers.find(chainQuery => 
-            chainQuery.variables?.chainId === currentChainId
-          )?.data
+          const chainTiersData = allChainTiersData.find(chainData => 
+            chainData.chainId === currentChainId
+          )?.tiers
           
           const matchingTier = chainTiersData?.find((chainTier: JB721TierV4) => 
             chainTier.id === tier.id

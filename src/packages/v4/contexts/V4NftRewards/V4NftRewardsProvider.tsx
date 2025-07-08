@@ -58,9 +58,9 @@ export const V4NftRewardsProvider: React.FC<
   const { projectId, chainId } = useJBProjectId()
   const upcomingRuleset = useJBUpcomingRuleset({ projectId, chainId })
   const { data: suckers } = useSuckers()
-  
+
   let dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
-  
+
   if (jbRuleSet.ruleset.data?.cycleNumber === 0) {
     // If the ruleset is the first one, we use the upcoming ruleset's data hook address
     // (projects that haven't started yet)
@@ -69,7 +69,7 @@ export const V4NftRewardsProvider: React.FC<
 
   const storeAddress = useReadJb721TiersHookStoreAddress({
     address: dataHookAddress,
-    chainId
+    chainId,
   })
 
   // Get all project chains, fallback to current chain if no suckers
@@ -85,11 +85,18 @@ export const V4NftRewardsProvider: React.FC<
       0n, // _startingId
       NFT_PAGE_SIZE, // limit
     ],
-    chainId
+    chainId,
   })
 
   const { data: loadedRewardTiers, isLoading: nftRewardTiersLoading } =
-    useNftRewards(tiersOf.data ?? [], projectChains, projectId, chainId, storeAddress.data, dataHookAddress)
+    useNftRewards(
+      tiersOf.data ?? [],
+      projectChains,
+      projectId,
+      chainId,
+      storeAddress.data as `0x${string}` | undefined,
+      dataHookAddress as `0x${string}` | undefined,
+    )
 
   const loadedCIDs = CIDsOfNftRewardTiersResponse(tiersOf.data ?? [])
 
@@ -99,12 +106,12 @@ export const V4NftRewardsProvider: React.FC<
   const flags = useReadJb721TiersHookStoreFlagsOf({
     address: storeAddress.data,
     args: [dataHookAddress ?? zeroAddress],
-    chainId
+    chainId,
   })
 
   const { data: collectionMetadataUri } = useReadJb721TiersHookContractUri({
     address: dataHookAddress,
-    chainId
+    chainId,
   })
 
   const loading = React.useMemo(

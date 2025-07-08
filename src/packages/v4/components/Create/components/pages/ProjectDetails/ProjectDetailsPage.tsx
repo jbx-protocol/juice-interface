@@ -1,38 +1,38 @@
 import * as constants from '@ethersproject/constants'
 
+import { Trans, t } from '@lingui/macro'
 import { Col, Form, Row } from 'antd'
 import { JBChainId, JB_CHAINS } from 'juice-sdk-core'
-import { Trans, t } from '@lingui/macro'
 import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
-import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 import { useCallback, useContext, useState } from 'react'
+import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 
-import { CREATE_FLOW } from 'constants/fathomEvents'
+import { RightOutlined } from '@ant-design/icons'
 import { Callout } from 'components/Callout/Callout'
-import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { FormItems } from 'components/formItems'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { RichEditor } from 'components/RichEditor'
+import { CREATE_FLOW } from 'constants/fathomEvents'
+import { useWallet } from 'hooks/Wallet'
+import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
-import { LoadCreateStateFromFile } from './LoadCreateStateFromFile'
+import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
+import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
+import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { RichEditor } from 'components/RichEditor'
-import { RightOutlined } from '@ant-design/icons'
-import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { Wizard } from '../../Wizard/Wizard'
-import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
-import { trackFathomGoal } from 'lib/fathom'
-import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
-import { useWallet } from 'hooks/Wallet'
+import { LoadCreateStateFromFile } from './LoadCreateStateFromFile'
 
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>
@@ -137,6 +137,9 @@ export const ProjectDetailsPage: React.FC<
             header={<OptionalHeader header={t`Project owner`} />}
             hideDivider
           >
+            <div className="mb-2 text-sm text-grey-600 dark:text-grey-400">
+              <Trans>Ensure this address exists on all chains where your project is deployed</Trans>
+            </div>
             <Form.Item
               className="pb-8 pt-5"
               name="inputProjectOwner"

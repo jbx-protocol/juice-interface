@@ -288,40 +288,45 @@ export const AddEditAllocationModal = ({
           </Form.Item>
         )}
         {recipient !== 'projectOwner' && (
-          <Form.Item
-            name="address"
-            label={addressLabel}
-            tooltip={addressExtra}
-            required
-            rules={[
-              inputMustExistRule({ label: addressLabel }),
-              inputMustBeEthAddressRule({
-                label: addressLabel,
-                validateTrigger: 'onSubmit',
-              }),
-              allocationInputAlreadyExistsRule({
-                existingAllocations: allocations
-                  .map(({ beneficiary, projectId }) => ({
-                    beneficiary,
-                    projectId: projectId?.toString(),
-                  }))
-                  .filter(
-                    (
-                      a,
-                    ): a is {
-                      beneficiary: Hash
-                      projectId: string
-                    } => !!a.beneficiary,
-                  ),
-                inputProjectId: projectId,
-                editingAddressBeneficiary: !editingData?.projectOwner
-                  ? editingData?.beneficiary
-                  : undefined,
-              }),
-            ]}
-          >
-            <EthAddressInput placeholder="" />
-          </Form.Item>
+          <>
+            <div className="mb-2 text-sm text-grey-600 dark:text-grey-400">
+              <Trans>Ensure this address exists on all chains where your project is deployed</Trans>
+            </div>
+            <Form.Item
+              name="address"
+              label={addressLabel}
+              tooltip={addressExtra}
+              required
+              rules={[
+                inputMustExistRule({ label: addressLabel }),
+                inputMustBeEthAddressRule({
+                  label: addressLabel,
+                  validateTrigger: 'onSubmit',
+                }),
+                allocationInputAlreadyExistsRule({
+                  existingAllocations: allocations
+                    .map(({ beneficiary, projectId }) => ({
+                      beneficiary,
+                      projectId: projectId?.toString(),
+                    }))
+                    .filter(
+                      (
+                        a,
+                      ): a is {
+                        beneficiary: Hash
+                        projectId: string
+                      } => !!a.beneficiary,
+                    ),
+                  inputProjectId: projectId,
+                  editingAddressBeneficiary: !editingData?.projectOwner
+                    ? editingData?.beneficiary
+                    : undefined,
+                }),
+              ]}
+            >
+              <EthAddressInput placeholder="" />
+            </Form.Item>
+          </>
         )}
 
         <Form.Item

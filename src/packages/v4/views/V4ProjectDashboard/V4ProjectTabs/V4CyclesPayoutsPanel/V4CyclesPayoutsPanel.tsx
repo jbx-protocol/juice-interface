@@ -1,9 +1,9 @@
-import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
 import { Tab } from '@headlessui/react'
-import { V4CurrentUpcomingSubPanel } from './V4CurrentUpcomingSubPanel'
 import { t } from '@lingui/macro'
+import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
 import { useMemo } from 'react'
 import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
+import { V4CurrentUpcomingSubPanel } from './V4CurrentUpcomingSubPanel'
 
 type V4CyclesSubPanel = {
   id: 'current' | 'upcoming' | 'history'
@@ -30,7 +30,7 @@ export const V4CyclesPayoutsPanel = () => {
     <>
       <Tab.Group as="div" className="mx-auto relative flex w-full flex-col gap-5">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-          <h2 className="mb-0 font-heading text-2xl font-medium">Ruleset cycle</h2>
+          <h2 className="mb-0 font-heading text-2xl font-medium">Rulesets</h2>
           {/* ProjectChainSelect is in V4CurrentUpcomingSubPanel */}
           <Tab.List className="flex gap-2">
             {tabs.map(tab => (

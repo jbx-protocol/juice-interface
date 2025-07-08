@@ -20,6 +20,7 @@ export interface QueueSafeTxsModalProps {
   description: React.ReactNode
   onExecuteChain: (chainId: JBChainId) => Promise<SafeProposeTransactionResponse>
   safeAddress: string
+  chains?: JBChainId[] // Optional - if not provided, will derive from suckers
   buttonTextOverride?: {
     completed?: React.ReactNode
     connectWallet?: React.ReactNode
@@ -37,6 +38,7 @@ export default function QueueSafeTxsModal({
   description,
   onExecuteChain,
   safeAddress,
+  chains: chainsProps,
   onTxComplete,
   onAllComplete,
   buttonTextOverride,
@@ -50,10 +52,13 @@ export default function QueueSafeTxsModal({
   const router = useRouter()
 
   const { data: suckers } = useSuckers()
-  const chains = useMemo(() => {
+  const suckersChains = useMemo(() => {
     if (!suckers?.length) return []
     return suckers.map((sucker) => sucker.peerChainId).filter(Boolean) as JBChainId[]
   }, [suckers])
+
+  // Use provided chains or fall back to suckers chains
+  const chains = chainsProps || suckersChains
 
   const handleExecuteOnChain = useCallback(async (chainId: JBChainId) => {
     // Check if wallet is connected

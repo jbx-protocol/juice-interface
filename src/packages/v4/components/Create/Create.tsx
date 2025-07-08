@@ -2,8 +2,12 @@ import { Trans, t } from '@lingui/macro'
 import { DEADLINE_EXPLANATION, RULESET_EXPLANATION } from 'components/strings'
 
 import Loading from 'components/Loading'
+import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { zeroAddress } from 'viem'
 import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
@@ -13,6 +17,7 @@ import { ProjectDetailsPage } from './components/pages/ProjectDetails/ProjectDet
 import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPage'
 import { ReconfigurationRulesPage } from './components/pages/ReconfigurationRules/ReconfigurationRulesPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
+import { SafeQueueSuccess } from './components/pages/ReviewDeploy/components/SafeQueueSuccess'
 import { ReviewDeployPage } from './components/pages/ReviewDeploy/ReviewDeployPage'
 import { SaveCreateStateToFile } from './components/pages/ReviewDeploy/SaveCreateStateToFile'
 import { Wizard } from './components/Wizard/Wizard'
@@ -32,7 +37,12 @@ const SaveLoadIcons = () => {
 export default function Create() {
   const router = useRouter()
   const projectIdsRaw = router.query.projectIds as string
+  const safeQueuedRaw = router.query.safeQueued as string
+  const chainsRaw = router.query.chains as string
   const initialStateLoading = useLoadingInitialStateFromQuery()
+  const { userAddress } = useWallet()
+  const { inputProjectOwner,
+    } = useAppSelector(state => state.creatingV2Project)
   const projectIds = useMemo(() => {
     if (!projectIdsRaw) {
       return undefined
@@ -50,10 +60,24 @@ export default function Create() {
     }
   }, [projectIdsRaw])
 
+  const isSafeQueued = safeQueuedRaw === 'true'
+  const queuedChains = useMemo(() => {
+    if (!chainsRaw) return []
+    try {
+      return chainsRaw.split(',').map(id => parseInt(id) as JBChainId)
+    } catch {
+      return []
+    }
+  }, [chainsRaw])
+
   if (initialStateLoading) return <Loading />
 
   if (projectIds) {
     return <DeploySuccess projectIds={projectIds} />
+  }
+
+  if (isSafeQueued) {
+    return <SafeQueueSuccess chains={queuedChains} safeAddress={inputProjectOwner ?? userAddress ?? zeroAddress}/>
   }
 
   return (

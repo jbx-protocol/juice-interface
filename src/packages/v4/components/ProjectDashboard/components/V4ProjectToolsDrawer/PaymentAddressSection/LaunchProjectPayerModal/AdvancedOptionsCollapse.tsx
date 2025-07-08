@@ -1,13 +1,13 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Form, FormInstance, Input, Switch } from 'antd'
+import { useContext, useState } from 'react'
+
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import TooltipLabel from 'components/TooltipLabel'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { useContext, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
-
 import type { AdvancedOptionsFields } from './LaunchProjectPayerModal'
 
 const defaultAdvancedOptions: AdvancedOptionsFields = {
@@ -118,12 +118,17 @@ export default function AdvancedOptionsCollapse({
             </div>
           ) : null}
           {tokenMintingEnabled && customBeneficiaryEnabled ? (
-            <EthAddressInput
-              value={form.getFieldValue('customBeneficiaryAddress')}
-              onChange={value =>
-                form.setFieldsValue({ customBeneficiaryAddress: value })
-              }
-            />
+            <>
+              <div className="mb-2 text-sm text-grey-600 dark:text-grey-400">
+                <Trans>Ensure this address exists on all chains where your project is deployed</Trans>
+              </div>
+              <EthAddressInput
+                value={form.getFieldValue('customBeneficiaryAddress')}
+                onChange={value =>
+                  form.setFieldsValue({ customBeneficiaryAddress: value })
+                }
+              />
+            </>
           ) : null}
         </Form>
       </div>

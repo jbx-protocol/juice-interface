@@ -33,7 +33,7 @@ export const RemainingSupplyWithTooltip: React.FC<RemainingSupplyWithTooltipProp
     ? t`Unlimited`
     : t`${remainingSupply}${aggregatedMaxSupplyText}`
   // If there's no per-chain data or only one chain, show simple text
-  if (!perChainSupply || perChainSupply.length <= 1) {
+  if (!perChainSupply || perChainSupply.length <= 1 || !hasRemainingSupply) {
     return <span>{remainingSupplyText}</span>
   }
 

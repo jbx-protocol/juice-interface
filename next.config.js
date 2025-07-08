@@ -25,6 +25,11 @@ const ETH_SUCKS_URLS = [
   'https://ipfs.banny.eth.sucks/*',
 ]
 
+const V2EX_URLS = [
+  'https://cid.v2ex.pro',
+  'https://cid.v2ex.pro/*',
+]
+
 const SCRIPT_SRC = [
   'https://juicebox.money', // Trusted host
   'https://*.juicebox.money', // Trusted subdomains
@@ -46,6 +51,7 @@ const IMG_SRC = [
   'https://juicebox.money',
   ...INFURA_IPFS_URLS,
   ...ETH_SUCKS_URLS,
+  ...V2EX_URLS,
   'https://jbx.mypinata.cloud',
   'https://gateway.pinata.cloud',
   'https://cdn.stamp.fyi',
@@ -62,6 +68,7 @@ const CONNECT_SRC = [
   'https://*.infura.io',
   ...INFURA_IPFS_URLS,
   ...ETH_SUCKS_URLS,
+  ...V2EX_URLS,
   'https://api.pinata.cloud',
   'https://jbx.mypinata.cloud',
   'https://api.studio.thegraph.com',
@@ -118,7 +125,7 @@ const ContentSecurityPolicy = `
   connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';
   frame-src ${FRAME_SRC.join(' ')};
-  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')} ${ETH_SUCKS_URLS.join(' ')};
+  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')} ${ETH_SUCKS_URLS.join(' ')} ${V2EX_URLS.join(' ')};
   frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
 `
@@ -287,6 +294,12 @@ const nextConfig = removeImports({
       {
         protocol: 'https',
         hostname: 'ipfs.banny.eth.sucks',
+        port: '',
+        pathname: '/ipfs/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cid.v2ex.pro',
         port: '',
         pathname: '/ipfs/**',
       },

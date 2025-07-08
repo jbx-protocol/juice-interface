@@ -42,6 +42,7 @@ async function fetchRewardTierMetadata({
     // Some projects have image links hard-coded to the old IPFS gateway.
     const pinataRegex = /^(https?:\/\/jbx\.mypinata\.cloud)/
     const infuraRegex = /^(https?:\/\/jbm\.infura-ipfs\.io\/ipfs\/)/
+    const ipfsIoRegex = /^(https?:\/\/ipfs\.io\/ipfs\/)/
     
     if (tierMetadata?.image && pinataRegex.test(tierMetadata.image)) {
       const imageUrlCid = cidFromUrl(tierMetadata.image)
@@ -49,6 +50,9 @@ async function fetchRewardTierMetadata({
     } else if (tierMetadata?.image && infuraRegex.test(tierMetadata.image)) {
       const imageUrlCid = cidFromUrl(tierMetadata.image)
       tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
+    } else if (tierMetadata?.image && ipfsIoRegex.test(tierMetadata.image)) {
+      const imageUrlCid = cidFromUrl(tierMetadata.image)
+      tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to eth.sucks
     }
 
     const rawContributionFloor = tier.price
@@ -68,6 +72,7 @@ async function fetchRewardTierMetadata({
       // Handle Pinata and Infura image links
       const pinataRegex = /^(https?:\/\/jbx\.mypinata\.cloud)/
       const infuraRegex = /^(https?:\/\/jbm\.infura-ipfs\.io\/ipfs\/)/
+      const ipfsIoRegex = /^(https?:\/\/ipfs\.io\/ipfs\/)/
       
       if (tierMetadata?.image && pinataRegex.test(tierMetadata.image)) {
         const imageUrlCid = cidFromUrl(tierMetadata.image)
@@ -75,6 +80,9 @@ async function fetchRewardTierMetadata({
       } else if (tierMetadata?.image && infuraRegex.test(tierMetadata.image)) {
         const imageUrlCid = cidFromUrl(tierMetadata.image)
         tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
+      } else if (tierMetadata?.image && ipfsIoRegex.test(tierMetadata.image)) {
+        const imageUrlCid = cidFromUrl(tierMetadata.image)
+        tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to eth.sucks
       }
 
       return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor, perChainSupply)
@@ -92,6 +100,7 @@ async function fetchRewardTierMetadata({
         // Handle Pinata and Infura image links
         const pinataRegex = /^(https?:\/\/jbx\.mypinata\.cloud)/
         const infuraRegex = /^(https?:\/\/jbm\.infura-ipfs\.io\/ipfs\/)/
+        const ipfsIoRegex = /^(https?:\/\/ipfs\.io\/ipfs\/)/
         
         if (tierMetadata?.image && pinataRegex.test(tierMetadata.image)) {
           const imageUrlCid = cidFromUrl(tierMetadata.image)
@@ -99,6 +108,9 @@ async function fetchRewardTierMetadata({
         } else if (tierMetadata?.image && infuraRegex.test(tierMetadata.image)) {
           const imageUrlCid = cidFromUrl(tierMetadata.image)
           tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
+        } else if (tierMetadata?.image && ipfsIoRegex.test(tierMetadata.image)) {
+          const imageUrlCid = cidFromUrl(tierMetadata.image)
+          tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to eth.sucks
         }
 
         return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor, perChainSupply)

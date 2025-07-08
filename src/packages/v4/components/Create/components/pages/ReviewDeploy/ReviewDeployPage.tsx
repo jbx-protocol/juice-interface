@@ -301,7 +301,8 @@ export const ReviewDeployPage = () => {
     }
 
     // For Safe wallets with multiple chains, use the Safe queue flow
-    if (isProjectOwnerSafe && isMultiChainSelected) {
+    // DISABLED FOR NOW, NOT COMPLETE
+    if (isProjectOwnerSafe && isMultiChainSelected && false) {
       const uploadResult = await uploadMetadata()
       if (!uploadResult) {
         return

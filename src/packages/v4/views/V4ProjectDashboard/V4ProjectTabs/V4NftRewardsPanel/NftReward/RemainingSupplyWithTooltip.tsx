@@ -24,7 +24,7 @@ export const RemainingSupplyWithTooltip: React.FC<RemainingSupplyWithTooltipProp
   
   const perChainMaxSupplyText = !isUnlimited && maxSupply ? ` / ${maxSupply}` : ''
 
-  const aggregatedMaxSupply = perChainSupply && !isUnlimited && maxSupply ? perChainSupply.length * maxSupply : undefined
+  const aggregatedMaxSupply = !isUnlimited && maxSupply ? (perChainSupply?.length ?? 1) * maxSupply : undefined
   const aggregatedMaxSupplyText = showMaxSupply && aggregatedMaxSupply ? ` / ${aggregatedMaxSupply}` : ''
   
   const remainingSupplyText = !hasRemainingSupply

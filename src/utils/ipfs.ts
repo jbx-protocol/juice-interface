@@ -34,6 +34,15 @@ export const pinataGatewayUrl = (cid: string | undefined): string => {
 }
 
 /**
+ * Return a URL to v2ex.pro gateway for the given CID.
+ * Uses the cid.v2ex.pro subdomain format.
+ */
+export const v2exGatewayUrl = (cid: string | undefined): string => {
+  if (!cid) return ''
+  return `https://cid.v2ex.pro/ipfs/${cid}`
+}
+
+/**
  * Converts IPFS CID v0 to CID v1
  * Example: QmeXh2xA846Pb6NdRUWXtPHG1WFnQ7uk3944Rgq57znzKV -> bafybeihqr4bc32lg74ovmyjfv1mszxhhwtrc2dckiojbskdjcrgr5barq
  */

@@ -6,7 +6,8 @@ import {
   decodeEncodedIpfsUri,
   ethSucksGatewayUrl,
   ipfsGatewayUrl,
-  pinataGatewayUrl
+  pinataGatewayUrl,
+  v2exGatewayUrl
 } from 'utils/ipfs'
 
 import axios from 'axios'
@@ -52,7 +53,7 @@ async function fetchRewardTierMetadata({
       tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
     } else if (tierMetadata?.image && ipfsIoRegex.test(tierMetadata.image)) {
       const imageUrlCid = cidFromUrl(tierMetadata.image)
-      tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to eth.sucks
+      tierMetadata.image = v2exGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to v2ex.pro gateway
     }
 
     const rawContributionFloor = tier.price
@@ -82,7 +83,7 @@ async function fetchRewardTierMetadata({
         tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
       } else if (tierMetadata?.image && ipfsIoRegex.test(tierMetadata.image)) {
         const imageUrlCid = cidFromUrl(tierMetadata.image)
-        tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to eth.sucks
+        tierMetadata.image = v2exGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to v2ex.pro gateway
       }
 
       return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor, perChainSupply)
@@ -110,7 +111,7 @@ async function fetchRewardTierMetadata({
           tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
         } else if (tierMetadata?.image && ipfsIoRegex.test(tierMetadata.image)) {
           const imageUrlCid = cidFromUrl(tierMetadata.image)
-          tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to eth.sucks
+          tierMetadata.image = v2exGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to v2ex.pro gateway
         }
 
         return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor, perChainSupply)

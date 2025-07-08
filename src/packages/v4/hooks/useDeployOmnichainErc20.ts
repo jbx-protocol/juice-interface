@@ -1,5 +1,5 @@
-import { JBChainId, jbProjectDeploymentAddresses } from 'juice-sdk-core'
-import { jbControllerAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, jbController4_1Abi, jbProjectDeploymentAddresses } from 'juice-sdk-core'
+import { jbControllerAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
@@ -11,6 +11,10 @@ export function useDeployOmnichainErc20() {
   const { sendRelayrTx } = useSendRelayrTx()
   const relayrBundle = useGetRelayrTxBundle()
 
+  const { contracts } = useJBContractContext()
+
+  const projectControllerAddress = contracts.controller.data
+
   async function deployOmnichainErc20(
     deployData: {
       [k in JBChainId]?: ContractFunctionArgs<typeof jbControllerAbi, 'nonpayable', 'deployERC20For'>
@@ -21,14 +25,26 @@ export function useDeployOmnichainErc20() {
 
     const relayrTransactions = chainIds.map(chainId => {
       const args = deployData[chainId]
+      let encoded
       if (!args) throw new Error('No deploy data for chain ' + chainId)
-      const encoded = encodeFunctionData({
-        abi: jbControllerAbi,
-        functionName: 'deployERC20For',
-        args,
-      })
-      // use controller address for each chain
-      const to = jbProjectDeploymentAddresses.JBController[chainId] as Address
+      
+        if (projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]) {
+        // Use v4.1 controller ABI
+        encoded = encodeFunctionData({
+          abi: jbController4_1Abi,
+          functionName: 'deployERC20For',
+          args,
+        })
+      } else {
+        // Use v4 controller ABI
+        encoded = encodeFunctionData({
+          abi: jbControllerAbi,
+          functionName: 'deployERC20For',
+          args,
+        })
+      }
+
+      const to = projectControllerAddress as Address
       return {
         data: {
           from: userAddress,

@@ -99,7 +99,7 @@ export const V4CurrentUpcomingSubPanel = ({
   return (
     <>
       <div>
-        <div className="absolute left-44 top-[-6px]">
+        <div className="absolute left-32 top-[-6px]">
           {selectedChainId ? (
             <div className="flex items-center gap-1">
               {suckers && suckers.length > 1 ? (

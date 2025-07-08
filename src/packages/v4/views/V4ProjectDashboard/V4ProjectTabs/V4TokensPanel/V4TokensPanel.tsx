@@ -153,7 +153,7 @@ export const V4TokensPanel = () => {
               <ProjectTokenCard />
               <TitleDescriptionDisplayCard
                 className="w-full"
-                title={t`Total supply`}
+                title={t`Current total supply`}
                 description={totalTokenSupplyElement}
               />
             </div>

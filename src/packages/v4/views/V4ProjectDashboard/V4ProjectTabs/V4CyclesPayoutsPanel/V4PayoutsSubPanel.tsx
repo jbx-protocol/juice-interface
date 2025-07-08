@@ -61,7 +61,7 @@ export const V4PayoutsSubPanel = ({
           <>
             <TitleDescriptionDisplayCard
               className="w-full"
-              title={t`Treasury balance`}
+              title={t`Balance`}
               description={totalTreasuryBalance}
             >
               <div className="mt-4 flex flex-col divide-y divide-grey-200 dark:divide-slate-600">

@@ -1925,6 +1925,9 @@ msgstr ""
 msgid "Existing project payer addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
+msgid "Current total supply"
+msgstr ""
+
 msgid "Total raised"
 msgstr ""
 
@@ -2799,9 +2802,6 @@ msgid "Edit project"
 msgstr ""
 
 msgid "Fund your thing"
-msgstr ""
-
-msgid "Execute transactions in Safe:"
 msgstr ""
 
 msgid "Compare"

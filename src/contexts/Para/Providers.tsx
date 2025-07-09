@@ -44,7 +44,6 @@ const SUPPORTED_WALLETS: TExternalWallet[] = [
   'METAMASK',
   'COINBASE',
   'SAFE',
-  'RABBY',
   'WALLETCONNECT',
   'ZERION',
   'PHANTOM',
@@ -114,6 +113,7 @@ const paraModalConfig: (theme: ThemeOption) => ParaModalProps = (
 ) => ({
   disableEmailLogin: false,
   disablePhoneLogin: false,
+  authLayout: ['AUTH:FULL', 'EXTERNAL:FULL'],
   oAuthMethods: OAUTH_METHODS,
   theme: {
     backgroundColor: theme === ThemeOption.light ? '#ffffff' : '#16141d',

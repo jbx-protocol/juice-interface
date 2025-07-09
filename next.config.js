@@ -203,6 +203,8 @@ const nextConfig = removeImports({
   },
   staticPageGenerationTimeout: 90,
   transpilePackages: [
+    '@getpara/react-sdk',
+    '@getpara/evm-wallet-connectors',
     '@getpara/ethers-v5-integration',
     '@ant-design/icons',
     '@ant-design/icons-svg',

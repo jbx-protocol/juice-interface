@@ -107,7 +107,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
     }
 
     const ownerPayout = projectOwnerAddress
-      ? v4GetProjectOwnerRemainderSplit(projectOwnerAddress, splits)
+      ? v4GetProjectOwnerRemainderSplit(projectOwnerAddress as `0x${string}`, splits)
       : undefined
 
     return [

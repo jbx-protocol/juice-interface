@@ -20,7 +20,7 @@ export const useV4ReservedSplits = (chainId?: JBChainId) => {
   )
   let _ruleset = ruleset
   if (ruleset?.cycleNumber === 0) {
-    _ruleset = upcomingRuleset
+    _ruleset = upcomingRuleset as typeof ruleset
   }
   const { data: _splits, isLoading: currentSplitsLoading } =
     useReadJbSplitsSplitsOf({

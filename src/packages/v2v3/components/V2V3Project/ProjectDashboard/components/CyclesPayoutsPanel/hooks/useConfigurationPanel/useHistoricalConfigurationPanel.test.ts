@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import { useHistoricalConfigurationPanel } from './useHistoricalConfigurationPanel'
 
 // Mock the hooks you used inside your custom hook

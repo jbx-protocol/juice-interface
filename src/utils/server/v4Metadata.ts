@@ -6,7 +6,7 @@ import {
   getProjectMetadata as sdkGetProjectMetadata,
 } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
-import { wagmiConfig } from 'contexts/Para/Providers'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { PublicClient } from 'viem'
 
 export const getV4ProjectMetadata = async (

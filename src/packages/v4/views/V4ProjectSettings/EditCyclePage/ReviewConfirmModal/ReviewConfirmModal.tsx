@@ -99,8 +99,8 @@ export function ReviewConfirmModal({
         // Calculate specific args for this chain using its projectId
         const chainArgs = transformEditCycleFormFieldsToTxArgs({
           formValues: formVals,
-          primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
-          tokenAddress: NATIVE_TOKEN as `0x${string}`,
+          primaryNativeTerminal: contracts.primaryNativeTerminal.data,
+          tokenAddress: NATIVE_TOKEN,
           projectId: BigInt(chainProjectId),
         })
         

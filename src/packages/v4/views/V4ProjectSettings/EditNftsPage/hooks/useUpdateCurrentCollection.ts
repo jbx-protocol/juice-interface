@@ -12,7 +12,7 @@ import { waitForTransactionReceipt } from '@wagmi/core'
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
-import { wagmiConfig } from 'contexts/Para/Providers'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { emitErrorNotification } from 'utils/notifications'
 
 export function useUpdateCurrentCollection({

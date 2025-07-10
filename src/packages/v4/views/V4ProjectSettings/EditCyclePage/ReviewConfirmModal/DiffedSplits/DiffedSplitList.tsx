@@ -40,12 +40,12 @@ export default function DiffedSplitList({
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
   const ownerSplit = useMemo(() => {
     if (!projectOwnerAddress) return
-    return v4GetProjectOwnerRemainderSplit(projectOwnerAddress as `0x${string}`, splits)
+    return v4GetProjectOwnerRemainderSplit(projectOwnerAddress, splits)
   }, [projectOwnerAddress, splits])
 
   const diffOwnerSplit = useMemo(() => {
     if (!diffSplits || !projectOwnerAddress || !showDiffs) return
-    return v4GetProjectOwnerRemainderSplit(projectOwnerAddress as `0x${string}`, diffSplits)
+    return v4GetProjectOwnerRemainderSplit(projectOwnerAddress, diffSplits)
   }, [projectOwnerAddress, diffSplits, showDiffs])
 
   const ownerSplitIsRemoved =

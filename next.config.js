@@ -41,6 +41,7 @@ const SCRIPT_SRC = [
   `'unsafe-inline'`, // MetaMask
   'https://*.getpara.com', // Para API
   'https://*.usecapsule.com', // Para (Formerly Capsule) API
+  'https://vercel.live', // Vercel Live feedback
 ]
 
 const WORKER_SRC = [
@@ -104,6 +105,7 @@ const CONNECT_SRC = [
   'https://*.usecapsule.com', // Para (Formerly Capsule) API
   'wss://*.getpara.com',
   'wss://*.usecapsule.com',
+  'https://*.sentry.io', // Sentry error tracking
   'https://*.ingest.sentry.io', // Sentry error tracking for Para
   'https://*.ingest.us.sentry.io', // Sentry US region
   'https://ipfs.io',
@@ -128,6 +130,7 @@ const FRAME_SRC = [
   'https://www.youtube.com/',
   'https://*.getpara.com', // Para API
   'https://*.usecapsule.com', // Para (Formerly Capsule) API
+  'https://vercel.live', // Vercel Live feedback
 ]
 
 const ContentSecurityPolicy = `

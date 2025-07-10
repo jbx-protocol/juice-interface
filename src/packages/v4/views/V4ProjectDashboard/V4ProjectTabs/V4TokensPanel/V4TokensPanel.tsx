@@ -226,7 +226,7 @@ const ProjectTokenCard = () => {
           {projectTokenAddress && projectHasErc20Token && (
             <AddTokenToMetamaskButton
               className="mt-2"
-              tokenAddress={projectTokenAddress as `0x${string}`}
+              tokenAddress={projectTokenAddress}
             />
           )}
           {canCreateErc20Token ? (

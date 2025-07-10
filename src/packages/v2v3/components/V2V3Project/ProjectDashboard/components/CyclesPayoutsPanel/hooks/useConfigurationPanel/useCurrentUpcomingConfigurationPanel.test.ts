@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
 import { useCurrentUpcomingConfigurationPanel } from './useCurrentUpcomingConfigurationPanel'
 import { useCycleSection } from './useCycleSection'
 import { useOtherRulesSection } from './useOtherRulesSection'

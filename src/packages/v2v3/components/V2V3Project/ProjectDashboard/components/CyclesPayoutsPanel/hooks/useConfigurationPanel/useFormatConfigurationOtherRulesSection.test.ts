@@ -3,7 +3,7 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { renderHook } from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { useFormatConfigurationOtherRulesSection } from './useFormatConfigurationOtherRulesSection'
 

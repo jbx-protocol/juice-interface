@@ -1,7 +1,7 @@
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
 import round from 'lodash/round'
-import { CID } from 'multiformats'
+import { CID } from 'multiformats/cid'
 import { UploadProgressEvent } from 'rc-upload/lib/interface'
 
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
@@ -55,7 +55,7 @@ export const convertToV1CID = (cid: string): string => {
   try {
     // Parse the CID using multiformats library
     const parsedCid = CID.parse(cid)
-
+    
     // Convert to v1 and return as string
     return parsedCid.toV1().toString()
   } catch (e) {
@@ -120,7 +120,7 @@ export function pinataToGatewayUrl(url: string) {
   } else if (url.startsWith('ipfs://')) {
     return ipfsUriToGatewayUrl(url)
   }
-
+  
   return url
 }
 

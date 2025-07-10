@@ -4,7 +4,7 @@ import { readProvider } from 'constants/readProvider'
 import { getLogger } from 'lib/logger'
 import { NetworkName } from 'models/networkName'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { wagmiConfig } from 'contexts/Para/Providers'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { isAddress } from 'viem'
 
 const logger = getLogger('api/ens/resolve/[address]')
@@ -71,14 +71,11 @@ const resolveUsingWagmiClient = async (addressOrEnsName: string) => {
   if (readNetwork.name !== NetworkName.sepolia) {
     throw new Error('wagmi resolution only supported for sepolia')
   }
+
   const client = getPublicClient(wagmiConfig, {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     chainId: readNetwork.chainId as any,
   })
-
-  if (!client) {
-    throw new Error('Failed to get public client')
-  }
 
   let response
 

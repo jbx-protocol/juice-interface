@@ -1,6 +1,6 @@
 import { getTransactionReceipt } from '@wagmi/core'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxStatus } from 'models/transaction'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { ReactNode, useEffect } from 'react'
 import { TransactionLog, TxHistoryContext } from './TxHistoryContext'
 import { useTransactions } from './useTransactions'

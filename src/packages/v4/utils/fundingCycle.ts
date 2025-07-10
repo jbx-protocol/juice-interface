@@ -16,7 +16,7 @@ export const isFinitePayoutLimit = (
   )
 }
 
-const MaxUint54 = (1n << 54n) - 1n
+const MaxUint54 = 2n ** 54n - 1n
 
 /**
  * _mustStartAtOrAfter + _duration > type(uint54).max

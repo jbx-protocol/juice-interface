@@ -45,8 +45,8 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
       // Transform form values to transaction arguments
       const args = transformEditCycleFormFieldsToTxArgs({
         formValues,
-        primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
-        tokenAddress: NATIVE_TOKEN as `0x${string}`,
+        primaryNativeTerminal: contracts.primaryNativeTerminal.data,
+        tokenAddress: NATIVE_TOKEN,
         projectId: chainProjectId,
       })
 

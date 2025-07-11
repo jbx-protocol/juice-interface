@@ -69,7 +69,7 @@ export const useV4ExportSplitsToCsv = (
     setLoading(true)
 
     try {
-      const csvContent = prepareSplitsCsv(splits, projectOwnerAddress)
+      const csvContent = prepareSplitsCsv(splits, projectOwnerAddress as `0x${string}`)
       const projectIdentifier = handle ? `@${handle}` : `project-${projectId}`
       const filename = `${projectIdentifier}_${splitName}${
         fcNumber ? `_fc-${fcNumber}` : ''

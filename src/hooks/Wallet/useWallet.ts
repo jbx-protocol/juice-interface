@@ -70,7 +70,10 @@ export function useWallet(): WalletHookReturn {
     if (!isConnected) return undefined
 
     // External wallets (MetaMask, etc.) - use wagmi's provider
-    if (connectionType === 'external' && walletClient) {
+    if (
+      (connectionType === 'external' || connectionType === 'both') &&
+      walletClient
+    ) {
       const provider = new providers.Web3Provider(
         walletClient.transport as providers.ExternalProvider,
       )
@@ -79,10 +82,7 @@ export function useWallet(): WalletHookReturn {
 
     // Embedded wallets or 'both' - use Para's signer
     // When 'both', we prioritize embedded for consistency
-    if (
-      (connectionType === 'embedded' || connectionType === 'both') &&
-      client
-    ) {
+    if (connectionType === 'embedded' && client) {
       return new ParaEthersV5Signer(client)
     }
 

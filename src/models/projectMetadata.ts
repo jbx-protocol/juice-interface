@@ -111,10 +111,21 @@ export const consolidateMetadata = (
 ): ProjectMetadata => {
   return {
     ...metadata,
+    name: sanitizeUnicode(metadata.name),
+    description: sanitizeUnicode(metadata.description),
     tags: filterValidTags((metadata as ProjectMetadataV8).tags),
     payButton:
       (metadata as ProjectMetadataV3).payButton ??
       (metadata as ProjectMetadataV2).payText,
     version: LATEST_METADATA_VERSION,
   }
+}
+
+// unsanitized unicode cannot be stored in supabase
+const sanitizeUnicode = (
+  input: string | undefined,
+): string | undefined => {
+  return input
+    ?.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, '') // high surrogate not followed by low
+    .replace(/(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, '') // low surrogate not preceded by high
 }

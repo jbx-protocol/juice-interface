@@ -67,7 +67,11 @@ export async function updateDBProjects(
     )
 
     if (error) {
-      throw new Error('Error writing projects to database: ' + error.message)
+      throw new Error(
+        'Error writing projects to database: ' +
+          error.message +
+          `--d: ${error.details}, --h: ${error.hint}`,
+      )
     }
 
     // Formatted message used for log reporting

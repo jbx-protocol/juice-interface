@@ -107,7 +107,7 @@ export const useLoadEditCycleData = () => {
         unit: deriveDurationUnit(duration),
       }),
       durationUnit: deriveDurationOption(duration),
-      approvalHook: ruleset?.approvalHook,
+      approvalHook: (ruleset?.approvalHook ?? '0x0000000000000000000000000000000000000000') as `0x${string}`,
       allowSetTerminals: rulesetMetadata?.allowSetTerminals,
       allowSetController: rulesetMetadata?.allowSetController,
       allowTerminalMigration: rulesetMetadata?.allowSetController,

@@ -11,7 +11,7 @@ import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/Ed
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
 import { useWallet } from 'hooks/Wallet'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { waitForTransactionReceipt } from '@wagmi/core'
 
 export interface EditMetadataTxOpts {
@@ -33,7 +33,7 @@ export function useEditRulesetTx() {
 
   const { contracts, projectId } = useJBContractContext()
   const projectControllerAddress = contracts.controller.data
-  
+
   let writeEditRuleset = writeEditController4Ruleset
 
   if (projectControllerAddress && projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]) {
@@ -66,8 +66,8 @@ export function useEditRulesetTx() {
 
       const args = transformEditCycleFormFieldsToTxArgs({
         formValues,
-        primaryNativeTerminal: contracts.primaryNativeTerminal.data,
-        tokenAddress: NATIVE_TOKEN,
+        primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
+        tokenAddress: NATIVE_TOKEN as `0x${string}`,
         projectId,
       })
 

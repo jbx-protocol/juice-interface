@@ -211,7 +211,7 @@ export function useProjectTimeline({
       ),
       lastPoint,
     ]
-  }, [v4QueryResult, timestamps, project?.project?.createdAt])
+  }, [v4QueryResult, timestamps, project?.project])
 
   return {
     v1v2v3Points,

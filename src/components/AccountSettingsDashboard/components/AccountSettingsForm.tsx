@@ -117,6 +117,7 @@ const AvatarImage = ({
     <img
       className={twMerge('rounded-full', className)}
       src={avatarImgUrl}
+      alt=""
     ></img>
   )
 }

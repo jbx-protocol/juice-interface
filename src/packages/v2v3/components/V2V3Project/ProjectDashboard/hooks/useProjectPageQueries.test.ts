@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react'
 import { useRouter } from 'next/router'
 import { useProjectPageQueries } from './useProjectPageQueries'
 

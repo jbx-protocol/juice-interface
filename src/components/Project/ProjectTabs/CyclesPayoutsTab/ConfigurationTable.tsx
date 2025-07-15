@@ -52,7 +52,7 @@ export const ConfigurationTable = ({
           easyCopy: d.easyCopy,
         }
       }),
-    [data],
+    [data, firstCycleNotStarted],
   )
 
   return (

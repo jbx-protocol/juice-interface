@@ -47,7 +47,7 @@ export const PayProjectModal: React.FC = () => {
 
   useEffect(() => {
     setSelectedChainId(defaultChainId)
-  }, [open])
+  }, [open, defaultChainId])
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()
 

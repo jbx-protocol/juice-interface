@@ -43,3 +43,4 @@ src/generated
 *.tsbuildinfo
 
 .vercel
+.env*.local

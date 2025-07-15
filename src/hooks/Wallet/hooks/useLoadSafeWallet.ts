@@ -5,7 +5,8 @@ export function useLoadSafeWallet() {
   const { connect } = useWallet()
 
   const loadSafeWallet = useCallback(async () => {
-    await connect({ autoSelect: { label: 'Safe', disableModals: true } })
+    // @ts-ignore - Para wallet doesn't support Safe-specific options
+    await connect()
   }, [connect])
   return loadSafeWallet
 }

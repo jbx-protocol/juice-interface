@@ -5,7 +5,7 @@ import {
   useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
 } from 'juice-sdk-react'
 import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { useContext } from 'react'
 import { WaitForTransactionReceiptReturnType } from 'viem'
 import { LaunchTxOpts } from '../../useLaunchProjectTx'

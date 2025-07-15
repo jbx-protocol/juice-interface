@@ -1,15 +1,8 @@
-import * as providers from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import type { MetaMaskInpageProvider } from '@metamask/providers'
 import { Button } from 'antd'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { twMerge } from 'tailwind-merge'
-
-declare global {
-  interface Window {
-    ethereum?: providers.ExternalProvider
-  }
-}
 
 // const useProviderIsMetamask = () => {
 //   const { signer } = useWallet()
@@ -20,6 +13,7 @@ declare global {
 // }
 
 const useMetamask = () => {
+  // @ts-ignore - ethereum is added by metamask/other wallets
   const ethereum = global?.window?.ethereum
   if (!ethereum || !ethereum.isMetaMask) return
   return ethereum as unknown as MetaMaskInpageProvider

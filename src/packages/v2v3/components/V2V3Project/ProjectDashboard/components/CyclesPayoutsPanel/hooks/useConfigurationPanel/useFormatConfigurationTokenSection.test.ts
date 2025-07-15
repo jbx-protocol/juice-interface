@@ -3,7 +3,7 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumber } from '@ethersproject/bignumber'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import {

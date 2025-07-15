@@ -84,7 +84,7 @@ export const useV4YourBalanceMenuItems = () => {
     //   })
     // }
     return tokenMenuItems
-  }, [canBurnTokens, canClaimErcTokens, canMintTokens])
+  }, [canClaimErcTokens, canMintTokens])
 
   return {
     items,

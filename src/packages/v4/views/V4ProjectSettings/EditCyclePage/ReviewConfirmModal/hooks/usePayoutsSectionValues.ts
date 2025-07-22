@@ -24,18 +24,17 @@ export const usePayoutsSectionValues = () => {
 
   const newDistributionLimitNum: number =
     editCycleForm?.getFieldValue('payoutLimit')
+
   const newDistributionLimit =
-    newDistributionLimitNum === undefined ||
-    newDistributionLimitNum?.toString() === MAX_PAYOUT_LIMIT.toString()
+    newDistributionLimitNum === undefined
       ? MAX_PAYOUT_LIMIT
-      : parseWad(newDistributionLimitNum).toBigInt()
+      : parseWad(BigInt(newDistributionLimitNum)).toBigInt()
 
   const currentDistributionLimitNum = initialFormData?.payoutLimit
   const currentDistributionLimit =
-    currentDistributionLimitNum === undefined ||
-    currentDistributionLimitNum?.toString() === MAX_PAYOUT_LIMIT.toString()
+    currentDistributionLimitNum === undefined
       ? MAX_PAYOUT_LIMIT
-      : parseWad(currentDistributionLimitNum).toBigInt()
+      : parseWad(BigInt(currentDistributionLimitNum)).toBigInt()
 
   const distributionLimitHasDiff =
     !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||

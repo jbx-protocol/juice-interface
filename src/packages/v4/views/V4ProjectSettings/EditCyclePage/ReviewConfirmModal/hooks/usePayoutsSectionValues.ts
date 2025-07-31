@@ -1,41 +1,45 @@
 import { CurrencyName } from 'constants/currency'
 import { JBSplit } from 'juice-sdk-core'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { distributionLimitsEqual } from 'packages/v4/utils/distributions'
-import { parseWad } from 'utils/format/formatNumber'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
+import { parseWad } from 'utils/format/formatNumber'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
 export const usePayoutsSectionValues = () => {
-
   const { editCycleForm, initialFormData } = useEditCycleFormContext()
 
-  const newPayoutSplits: JBSplit[] = editCycleForm?.getFieldValue('payoutSplits') ?? []
+  const newPayoutSplits: JBSplit[] =
+    editCycleForm?.getFieldValue('payoutSplits') ?? []
   const currentPayoutSplits = initialFormData?.payoutSplits ?? []
   const payoutSplitsHasDiff = splitsListsHaveDiff(
     currentPayoutSplits,
     newPayoutSplits,
   )
 
-  const newCurrency: CurrencyName = editCycleForm?.getFieldValue(
-    'distributionLimitCurrency',
-  ) ?? 'ETH'
-  const currentCurrency =
-    initialFormData?.payoutLimitCurrency ??
-    'ETH'
+  const newCurrency: CurrencyName =
+    editCycleForm?.getFieldValue('distributionLimitCurrency') ?? 'ETH'
+  const currentCurrency = initialFormData?.payoutLimitCurrency ?? 'ETH'
   const currencyHasDiff = currentCurrency !== newCurrency
 
-  const newDistributionLimitNum: number = editCycleForm?.getFieldValue('payoutLimit')
+  const newDistributionLimitNum: number =
+    editCycleForm?.getFieldValue('payoutLimit')
+
   const newDistributionLimit =
-    newDistributionLimitNum !== undefined ? parseWad(newDistributionLimitNum).toBigInt() : MAX_PAYOUT_LIMIT
-  
+    newDistributionLimitNum === undefined
+      ? MAX_PAYOUT_LIMIT
+      : parseWad(BigInt(newDistributionLimitNum)).toBigInt()
+
   const currentDistributionLimitNum = initialFormData?.payoutLimit
-  const currentDistributionLimit = currentDistributionLimitNum !== undefined ? parseWad(currentDistributionLimitNum).toBigInt() : MAX_PAYOUT_LIMIT
+  const currentDistributionLimit =
+    currentDistributionLimitNum === undefined
+      ? MAX_PAYOUT_LIMIT
+      : parseWad(BigInt(currentDistributionLimitNum)).toBigInt()
 
   const distributionLimitHasDiff =
     !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||
     currencyHasDiff
-    // TODO: When no limit is set and doesnt change, distributionLimitHasDiff still true
+  // TODO: When no limit is set and doesnt change, distributionLimitHasDiff still true
   const distributionLimitIsInfinite =
     !newDistributionLimit || newDistributionLimit === MAX_PAYOUT_LIMIT
 

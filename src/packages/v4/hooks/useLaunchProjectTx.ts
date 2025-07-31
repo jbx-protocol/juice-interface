@@ -11,7 +11,7 @@ import { useCallback, useContext } from 'react'
 
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { jbController4_1Abi } from 'juice-sdk-core'
-import { wagmiConfig } from 'contexts/Para/Providers'
+import { wagmiConfig } from '../wagmiConfig'
 import { waitForTransactionReceipt } from '@wagmi/core'
 
 const CREATE_EVENT_IDX = 2

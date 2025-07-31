@@ -176,8 +176,8 @@ export function transformV2V3FundAccessConstraintsToV4({
   currencyTokenAddress: Address
 }): FundAccessLimitGroup[] {
   return v2V3FundAccessConstraints.map(constraint => ({
-    terminal: primaryNativeTerminal as `0x${string}`,
-    token: currencyTokenAddress as `0x${string}`,
+    terminal: primaryNativeTerminal,
+    token: currencyTokenAddress,
     payoutLimits: [
       {
         amount: constraint.distributionLimit.toBigInt(),
@@ -206,7 +206,7 @@ function generateV4LaunchTerminalConfigurationsArg({
     terminal: terminal as Address,
     accountingContextsToAccept: [
       {
-        token: currencyTokenAddress as `0x${string}`, // NATIVE_TOKEN
+        token: currencyTokenAddress, // NATIVE_TOKEN
         decimals: NATIVE_TOKEN_DECIMALS,
         currency: NATIVE_TOKEN_CURRENCY_ID, //61166
         // Jango - "anytime the NATIVE_TOKEN (0x00...eee) is being associated with a currency, use 61166"

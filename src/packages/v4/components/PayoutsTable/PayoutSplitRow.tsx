@@ -57,7 +57,6 @@ export function PayoutSplitRow({
         editedPayoutSplit: payoutSplit,
         newPayoutSplit: {
           ...payoutSplit,
-          beneficiary: payoutSplit.beneficiary as `0x${string}`,
           projectId: payoutSplit.projectId.toString(),
           projectOwner: false,
           amount: {

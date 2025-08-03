@@ -1,11 +1,11 @@
-import { Trans } from '@lingui/macro'
-import { useWatch } from 'antd/lib/form/Form'
+import { CASH_OUT_TAX_RATE_EXPLANATION } from 'components/strings'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
-import { CASH_OUT_TAX_RATE_EXPLANATION } from 'components/strings'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
-import { useState } from 'react'
+import { Trans } from '@lingui/macro'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { useState } from 'react'
+import { useWatch } from 'antd/lib/form/Form'
 
 export const zeroPercentDisabledNoticed = (
   <span className="text-tertiary text-xs">
@@ -21,7 +21,7 @@ export function RedemptionRateField() {
 
   const [cashOutTaxRateSwitchEnabled, setRedemptionRateSwitchEnabled] =
     useState<boolean>(
-      (editCycleForm?.getFieldValue('cashOutTaxRate') ?? 100) > 0,
+      (editCycleForm?.getFieldValue('cashOutTaxRate') ?? 100) < 100,
     )
   return (
     <div className="flex flex-col gap-5">

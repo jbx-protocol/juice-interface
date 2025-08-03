@@ -89,7 +89,7 @@ const PendingTransactionModalBody = ({
  * are replaced with a juicy loading state.
  */
 export default function TransactionModal(props: TransactionModalProps) {
-  const { isConnected, chainUnsupported } = useWallet()
+  const { isConnected, chainUnsupported, connect } = useWallet()
   const okText = useMemo(() => {
     if (chainUnsupported) {
       return (
@@ -116,6 +116,7 @@ export default function TransactionModal(props: TransactionModalProps) {
       okButtonProps: {
         ...props.okButtonProps,
       },
+      onOk: !isConnected ? connect : props.onOk,
       okText: okText,
       zIndex: 1,
     },

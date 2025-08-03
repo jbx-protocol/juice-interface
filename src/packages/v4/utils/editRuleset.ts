@@ -1,10 +1,11 @@
 import { ETH_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
 
-import round from 'lodash/round'
-import { issuanceRateFrom } from 'packages/v2v3/utils/math'
-import { parseWad } from 'utils/format/formatNumber'
-import { otherUnitToSeconds } from 'utils/format/formatTime'
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { isZeroAddress } from 'utils/address'
+import { issuanceRateFrom } from 'packages/v2v3/utils/math'
+import { otherUnitToSeconds } from 'utils/format/formatTime'
+import { parseWad } from 'utils/format/formatNumber'
+import round from 'lodash/round'
 
 export type EditCycleTxArgs = readonly [
   projectId: bigint,
@@ -68,11 +69,13 @@ export function transformEditCycleFormFieldsToTxArgs({
   formValues,
   primaryNativeTerminal,
   tokenAddress,
+  dataHook,
   projectId,
 }: {
   formValues: EditCycleFormFields
   primaryNativeTerminal: `0x${string}`
   tokenAddress: `0x${string}`
+  dataHook: `0x${string}`
   projectId: bigint
 }): EditCycleTxArgs {
   const now = round(new Date().getTime() / 1000)
@@ -113,9 +116,9 @@ export function transformEditCycleFormFieldsToTxArgs({
         ownerMustSendPayouts: false, // Defaulting to false as it's not in formValues
         holdFees: formValues.holdFees,
         useTotalSurplusForCashOuts: false, // Defaulting to false as it's not in formValues
-        useDataHookForPay: false, // Defaulting to false as it's not in formValues
+        useDataHookForPay: Boolean(dataHook) && isZeroAddress(dataHook),
         useDataHookForCashOut: false, // Defaulting to false as it's not in formValues
-        dataHook: '0x0000000000000000000000000000000000000000' as `0x${string}`, // Defaulting to a null address
+        dataHook, // doesn't change in edit ruleset
         metadata: 0, // Assuming no additional metadata is provided
         allowCrosschainSuckerExtension: false,
       },

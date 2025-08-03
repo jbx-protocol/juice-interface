@@ -1,36 +1,37 @@
-import { Trans, t } from '@lingui/macro'
-import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
-import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
 import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4/utils/editRuleset'
+import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
+import { Trans, t } from '@lingui/macro'
 import { useEffect, useState } from 'react'
+import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { Form } from 'antd'
 import { Callout } from 'components/Callout/Callout'
-import ETHAmount from 'components/currency/ETHAmount'
-import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import TransactionModal from 'components/modals/TransactionModal'
-import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
-import { useWallet } from 'hooks/Wallet'
-import type { RelayrPostBundleResponse } from 'juice-sdk-react'
-import moment from 'moment'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
-import QueueSafeEditRulesetTxsModal from 'packages/v4/components/QueueSafeEditRulesetTxsModal'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
-import { emitErrorNotification } from 'utils/notifications'
-import { useChainId } from 'wagmi'
-import { useEditCycleFormContext } from '../EditCycleFormContext'
-import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
-import { TransactionSuccessModal } from '../TransactionSuccessModal'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
-import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
-import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
-import { useTokensSectionValues } from './hooks/useTokensSectionValues'
+import ETHAmount from 'components/currency/ETHAmount'
+import { Form } from 'antd'
+import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { PayoutsSectionDiff } from './PayoutsSectionDiff'
+import QueueSafeEditRulesetTxsModal from 'packages/v4/components/QueueSafeEditRulesetTxsModal'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
 import { SectionCollapseHeader } from './SectionCollapseHeader'
 import { TokensSectionDiff } from './TokensSectionDiff'
+import TransactionModal from 'components/modals/TransactionModal'
+import { TransactionSuccessModal } from '../TransactionSuccessModal'
+import { emitErrorNotification } from 'utils/notifications'
+import moment from 'moment'
+import { useChainId } from 'wagmi'
+import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
+import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
+import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
+import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
+import { useTokensSectionValues } from './hooks/useTokensSectionValues'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { useWallet } from 'hooks/Wallet'
 
 export function ReviewConfirmModal({
   open,
@@ -77,6 +78,12 @@ export function ReviewConfirmModal({
   const txQuoteCostHex = txQuote?.payment_info.find(p => Number(p.chain) === selectedGasChain)?.amount
   const txQuoteCost = txQuoteCostHex ? BigInt(txQuoteCostHex) : null
 
+  const { projectId } = useJBProjectId()
+  const { rulesetMetadata } = useJBRuleset({
+    projectId,
+    chainId
+  })
+    
   // Fetch omnichain edit quote
   const { contracts } = useJBContractContext()
 
@@ -101,6 +108,7 @@ export function ReviewConfirmModal({
           formValues: formVals,
           primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
           tokenAddress: NATIVE_TOKEN as `0x${string}`,
+          dataHook: rulesetMetadata?.dataHook as `0x${string}`,
           projectId: BigInt(chainProjectId),
         })
         

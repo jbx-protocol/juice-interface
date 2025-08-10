@@ -1,16 +1,17 @@
 import { JBChainId, NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import {
-    jbController4_1Abi,
-    jbControllerAbi,
-    useJBContractContext,
-    useSuckers
+  JBRulesetContext,
+  jbController4_1Abi,
+  jbControllerAbi,
+  useJBContractContext,
+  useSuckers
 } from 'juice-sdk-react'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
+import { useCallback, useContext } from 'react'
 
-import { useCallback } from 'react'
+import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
 import { encodeFunctionData } from 'viem'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
-import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
 
 export interface ProposeSafeEditRulesetTxProps {
   safeAddress: string
@@ -21,6 +22,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
   const { contracts, projectId } = useJBContractContext()
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress })
   const { data: suckers } = useSuckers()
+  const { rulesetMetadata } = useContext(JBRulesetContext)
 
   const proposeEditRulesetTx = useCallback(
     async (
@@ -47,6 +49,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
         formValues,
         primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
         tokenAddress: NATIVE_TOKEN as `0x${string}`,
+        dataHook: (rulesetMetadata.data?.dataHook ?? '0x0000000000000000000000000000000000000000') as `0x${string}`,
         projectId: chainProjectId,
       })
 
@@ -83,6 +86,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
       contracts.primaryNativeTerminal.data,
       proposeTransaction,
       suckers,
+      rulesetMetadata.data?.dataHook,
     ],
   )
 

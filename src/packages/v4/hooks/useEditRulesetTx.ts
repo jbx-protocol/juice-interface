@@ -68,6 +68,7 @@ export function useEditRulesetTx() {
         formValues,
         primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
         tokenAddress: NATIVE_TOKEN as `0x${string}`,
+        dataHook: (rulesetMetadata.data?.dataHook ?? '0x0000000000000000000000000000000000000000') as `0x${string}`,
         projectId,
       })
 
@@ -106,6 +107,7 @@ export function useEditRulesetTx() {
       writeEditRuleset,
       contracts.primaryNativeTerminal.data,
       addTransaction,
+      rulesetMetadata.data?.dataHook,
     ],
   )
 }

@@ -8,7 +8,7 @@ export default function AboutPage() {
   return (
     <>
       <Head
-        title="About Juicebox | Crypto Fundraising & DAO Management"
+        title="About Juicebox | Fund Your Thing"
         overrideFormattedTitle
         url={SiteBaseUrl + '/about'}
         description="Juicebox is the programmable funding platform for crypto and web3. Fund, operate, and scale your project transparently. Community DAO owned, on Ethereum."

@@ -1,8 +1,7 @@
 import { CurrencyName } from 'constants/currency'
 import { JBSplit } from 'juice-sdk-core'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { distributionLimitsEqual } from 'packages/v4/utils/distributions'
-import { parseWad } from 'utils/format/formatNumber'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
@@ -25,12 +24,19 @@ export const usePayoutsSectionValues = () => {
     'ETH'
   const currencyHasDiff = currentCurrency !== newCurrency
 
-  const newDistributionLimitNum: number = editCycleForm?.getFieldValue('payoutLimit')
+  const newDistributionLimitNum: bigint =
+    editCycleForm?.getFieldValue('payoutLimit')
+
   const newDistributionLimit =
-    newDistributionLimitNum !== undefined ? parseWad(newDistributionLimitNum).toBigInt() : MAX_PAYOUT_LIMIT
-  
+    newDistributionLimitNum === undefined
+      ? MAX_PAYOUT_LIMIT
+      : newDistributionLimitNum
+
   const currentDistributionLimitNum = initialFormData?.payoutLimit
-  const currentDistributionLimit = currentDistributionLimitNum !== undefined ? parseWad(currentDistributionLimitNum).toBigInt() : MAX_PAYOUT_LIMIT
+  const currentDistributionLimit =
+    currentDistributionLimitNum === undefined
+      ? MAX_PAYOUT_LIMIT
+      : BigInt(currentDistributionLimitNum)
 
   const distributionLimitHasDiff =
     !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||

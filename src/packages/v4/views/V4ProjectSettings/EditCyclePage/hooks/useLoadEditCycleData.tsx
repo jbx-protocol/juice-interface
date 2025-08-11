@@ -1,19 +1,20 @@
+import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   deriveDurationOption,
   deriveDurationUnit,
   secondsToOtherUnit,
 } from 'utils/format/formatTime'
-import { useEffect, useMemo, useState } from 'react'
-import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 
-import { EditCycleFormFields } from '../EditCycleFormFields'
-import { Ether } from 'juice-sdk-core'
 import { Form } from 'antd'
-import { V4CurrencyName } from 'packages/v4/utils/currency'
+import { Ether } from 'juice-sdk-core'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
+import { V4CurrencyName } from 'packages/v4/utils/currency'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { EditCycleFormFields } from '../EditCycleFormFields'
 
 /** Loads project FC data directly into an AntD form instance */
 export const useLoadEditCycleData = () => {
@@ -29,9 +30,8 @@ export const useLoadEditCycleData = () => {
   const { data: payoutLimit, isLoading: payoutLimitLoading } = usePayoutLimit()
 
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
-
   const payoutLimitAmount = useMemo(
-    () => (payoutLimit ? new Ether(payoutLimit.amount).toFloat() : undefined),
+    () => (payoutLimit && payoutLimit.amount !== MAX_PAYOUT_LIMIT ? new Ether(payoutLimit.amount).toFloat() : undefined),
     [payoutLimit]
   )
 

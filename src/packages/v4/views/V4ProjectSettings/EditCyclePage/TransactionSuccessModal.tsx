@@ -1,11 +1,11 @@
+import { Button, Modal } from 'antd'
+import { useJBChainId, useJBProjectId } from 'juice-sdk-react'
+import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
+
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { Button, Modal } from 'antd'
-import { useJBContractContext } from 'juice-sdk-react'
 import Link from 'next/link'
-import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
 import { ReactNode } from 'react'
-import { useChainId } from 'wagmi'
 
 export function TransactionSuccessModal({
   open,
@@ -16,9 +16,8 @@ export function TransactionSuccessModal({
   onClose: VoidFunction
   content: ReactNode
 }) {
-  const { projectId: projectIdBigInt } = useJBContractContext()
-  const projectId = Number(projectIdBigInt)
-  const chainId = useChainId()
+  const chainId = useJBChainId()
+  const { projectId } = useJBProjectId(chainId)
 
   const checkIconWithBackground = (
     <div className="flex h-20 w-20 items-center justify-center rounded-full bg-melon-100 dark:bg-melon-950">
@@ -29,6 +28,7 @@ export function TransactionSuccessModal({
   )
 
   const buttonClasses = 'w-[185px] h-12'
+  if (!projectId || !chainId) return null
   return (
     <Modal
       open={open}
@@ -40,12 +40,12 @@ export function TransactionSuccessModal({
         {checkIconWithBackground}
         {content}
         <div className="flex gap-2.5">
-          <Link href={settingsPagePath({ projectId, chainId }, undefined)}>
+          <Link href={settingsPagePath({ projectId: Number(projectId), chainId }, undefined)}>
             <Button type="ghost" className={buttonClasses}>
               <Trans>Back to settings</Trans>
             </Button>
           </Link>
-          <Link href={v4ProjectRoute({ projectId, chainId })}>
+          <Link href={v4ProjectRoute({ projectId: Number(projectId), chainId })}>
             <Button type="primary" className={buttonClasses}>
               <Trans>Go to project</Trans>
             </Button>

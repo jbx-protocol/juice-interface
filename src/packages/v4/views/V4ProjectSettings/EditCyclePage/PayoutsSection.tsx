@@ -1,16 +1,16 @@
 import { JBSplit, MAX_PAYOUT_LIMIT } from 'juice-sdk-core'
 
+import { Trans } from '@lingui/macro'
+import { Form } from 'antd'
+import { useWatch } from 'antd/lib/form/Form'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import { CurrencyName } from 'constants/currency'
-import { Form } from 'antd'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
-import { Trans } from '@lingui/macro'
 import { useEditCycleFormContext } from './EditCycleFormContext'
-import { useWatch } from 'antd/lib/form/Form'
 
 export function PayoutsSection() {
-  const { editCycleForm } = useEditCycleFormContext()
+  const { editCycleForm, initialFormData } = useEditCycleFormContext()
   const payoutSplits = useWatch('payoutSplits', editCycleForm) ?? []
   const currency = useWatch('payoutLimitCurrency', editCycleForm) ?? 'ETH'
   const payoutLimit = useWatch('payoutLimit', editCycleForm)
@@ -25,8 +25,7 @@ export function PayoutsSection() {
 
   const setPayoutLimit = (payoutLimit: number | undefined) =>
     editCycleForm?.setFieldsValue({ payoutLimit })
-
-  const payoutLimitIsInfinite = payoutLimit === undefined || BigInt(payoutLimit) === MAX_PAYOUT_LIMIT
+  const payoutLimitIsInfinite = payoutLimit === undefined || payoutLimit === Number(MAX_PAYOUT_LIMIT)
   return (
     <div className="flex flex-col gap-3">
       <PayoutsTable

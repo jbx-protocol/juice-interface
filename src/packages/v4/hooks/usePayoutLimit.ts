@@ -42,11 +42,18 @@ export function usePayoutLimit() {
         enabled: Boolean(fundAccessLimits.data && primaryNativeTerminal.data),
       },
     })
-
+  if (payoutLimits === undefined) {
+    return {
+      data: {
+        amount: 0n,
+        currency: V4_CURRENCY_ETH,
+      },
+      isLoading: true,
+    }
+  }
   const payoutLimit = payoutLimits?.[0]
-
   return {
-    data: payoutLimit
+    data: payoutLimit !== undefined
       ? {
           ...payoutLimit,
           currency: Number(payoutLimit.currency) as V4CurrencyOption,

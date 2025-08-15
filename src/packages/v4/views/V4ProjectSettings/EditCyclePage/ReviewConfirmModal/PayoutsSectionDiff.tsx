@@ -37,7 +37,6 @@ export function PayoutsSectionDiff() {
   }
 
   const roundingPrecision = newCurrency === 'ETH' ? 4 : 2
-
   return (
     <DiffSection
       content={

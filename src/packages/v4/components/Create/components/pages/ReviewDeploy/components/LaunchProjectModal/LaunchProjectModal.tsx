@@ -353,13 +353,7 @@ export const LaunchProjectModal: React.FC<{
                     onChange={c => {
                       setSelectedGasChain(c)
                     }}
-                    // TODO ask Ba5ed about how to specifiy chain ID to get quote for
-                    // chainIds={selectedChains.map(c => c.chainId)}
-                    chainIds={[
-                      process.env.NEXT_PUBLIC_TESTNET == 'true'
-                        ? sepolia.id
-                        : mainnet.id,
-                    ]}
+                    chainIds={chainIds}
                   />
                 </div>
               </div>

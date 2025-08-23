@@ -192,11 +192,13 @@ export function useProjectTimeline({
         }
 
     // extrapolate last point to fill in data since last project update.
+    // If there's no final point in range, use the previous point data to maintain continuity
+    const lastPointData = final || previous
     const lastPoint = {
       timestamp: timestamps?.[timestamps.length - 1],
-      volume: wadToFloat(final?.volume),
-      balance: wadToFloat(final?.balance),
-      trendingScore: wadToFloat(final?.trendingScore),
+      volume: wadToFloat(lastPointData?.volume) || firstPoint.volume,
+      balance: wadToFloat(lastPointData?.balance) || firstPoint.balance,
+      trendingScore: wadToFloat(lastPointData?.trendingScore) || firstPoint.trendingScore,
     }
 
     return [

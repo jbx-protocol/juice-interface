@@ -1,18 +1,18 @@
+import { NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import {
   JBRulesetContext,
   useJBContractContext,
   useWriteJbController4_1QueueRulesetsOf,
   useWriteJbControllerQueueRulesetsOf
 } from 'juice-sdk-react'
-import { NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import { useCallback, useContext } from 'react'
 
-import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
-import { useWallet } from 'hooks/Wallet'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { waitForTransactionReceipt } from '@wagmi/core'
+import { wagmiConfig } from 'contexts/Para/Providers'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useWallet } from 'hooks/Wallet'
+import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
+import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
 
 export interface EditMetadataTxOpts {
   onTransactionPending: (hash: `0x${string}`) => void
@@ -23,6 +23,7 @@ export interface EditMetadataTxOpts {
 /**
  * Takes data in EditCycleFormFields format, converts it to Edit Ruleset tx format and passes it to `writeEditRuleset`
  * @returns A function that deploys a project.
+ * CURRENTLY UN-USED, using useOmnichainEditCycle everywhere
  */
 export function useEditRulesetTx() {
   const { writeContractAsync: writeEditController4Ruleset } =

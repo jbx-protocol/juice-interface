@@ -1,7 +1,8 @@
+import { useJBChainId, useJBContractContext, useJBProjectId, useWriteJbControllerSetUriOf } from 'juice-sdk-react'
+import { useCallback, useContext } from 'react'
+
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { useJBContractContext, useWriteJbControllerSetUriOf } from 'juice-sdk-react'
-import { useCallback, useContext } from 'react'
 
 export interface EditRulesetTxOpts {
   onTransactionPending: (hash: `0x${string}`) => void
@@ -15,7 +16,9 @@ export interface EditRulesetTxOpts {
  */
 export function useEditProjectDetailsTx() {
   const { writeContractAsync: writeEditMetadata } = useWriteJbControllerSetUriOf()
-  const { contracts, projectId } = useJBContractContext()
+  const chainId = useJBChainId()
+  const { projectId } = useJBProjectId(chainId)
+  const { contracts } = useJBContractContext()
 
   const { addTransaction } = useContext(TxHistoryContext)
 
@@ -32,7 +35,8 @@ export function useEditProjectDetailsTx() {
       if (
         !contracts.controller.data ||
         !contracts.primaryNativeTerminal.data ||
-        !userAddress
+        !userAddress ||
+        !projectId
       ) {
         return
       }

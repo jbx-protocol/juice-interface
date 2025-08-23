@@ -1,4 +1,4 @@
-import { useJBProjectId, useJBRuleset, useJBUpcomingRuleset } from 'juice-sdk-react'
+import { useJBChainId, useJBProjectId, useJBRuleset, useJBUpcomingRuleset } from 'juice-sdk-react'
 import { useEffect, useMemo, useState } from 'react'
 import {
   deriveDurationOption,
@@ -20,8 +20,8 @@ export const useLoadEditCycleData = () => {
   const [initialFormData, setInitialFormData] = useState<
     EditCycleFormFields | undefined
   >(undefined)
-
-  const { projectId, chainId } = useJBProjectId()
+  const chainId = useJBChainId()
+  const { projectId } = useJBProjectId(chainId)
   const { ruleset, rulesetMetadata, isLoading: rulesetLoading } = useJBRuleset({ projectId, chainId })
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } = useJBUpcomingRuleset({ projectId, chainId })
 

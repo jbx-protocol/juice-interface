@@ -10,6 +10,7 @@ import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import Link from 'next/link'
+import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
 import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
@@ -60,6 +61,8 @@ function SettingsGroupCard({
 export function ProjectSettingsDashboard() {
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
 
+  const { nftRewards } = useV4NftRewards()
+
   const { projectId } = useJBContractContext()
   const { metadata } = useJBProjectMetadataContext()
 
@@ -84,6 +87,8 @@ export function ProjectSettingsDashboard() {
   const canCreateErc20Token = !projectHasErc20Token && hasIssueTicketsPermission
 
   const erc20Path = useSettingsPagePath('createerc20')
+
+  const nftsPath = useSettingsPagePath('nfts') ?? ''
 
   return (
     <ProjectSettingsLayout>
@@ -187,18 +192,20 @@ export function ProjectSettingsDashboard() {
               <Trans>Edit next ruleset</Trans>
             </Link>
           </SettingsGroupCard>
-          <SettingsGroupCard
-            title={<Trans>NFTs & Rewards</Trans>}
-            subtitle={<Trans>Manage your project's NFTs and rewards</Trans>}
-          >
-            <ul>
-              <li>
-                <Link href={useSettingsPagePath('nfts') ?? ''}>
-                  <Trans>NFTs</Trans>
-                </Link>
-              </li>
-            </ul>
-          </SettingsGroupCard>
+          {nftRewards.rewardTiers?.length ? 
+            <SettingsGroupCard
+              title={<Trans>NFTs & Rewards</Trans>}
+              subtitle={<Trans>Manage your project's NFTs and rewards</Trans>}
+            >
+              <ul>
+                <li>
+                  <Link href={nftsPath ?? ''}>
+                    <Trans>NFTs</Trans>
+                  </Link>
+                </li>
+              </ul>
+            </SettingsGroupCard>
+          : null}
           {canCreateErc20Token && (
             <SettingsGroupCard
               title={<Trans>Tools</Trans>}

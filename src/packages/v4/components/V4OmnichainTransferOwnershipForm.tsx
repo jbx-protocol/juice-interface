@@ -159,7 +159,7 @@ export function V4OmnichainTransferOwnershipForm({
         title={<Trans>Transfer Ownership on All Chains</Trans>}
         description={
           <Trans>
-            Transfer project ownership on each chain where your project exists. You'll need to confirm each transaction separately.
+            Transfer project ownership on each chain where your project exists. The system will automatically detect the current owner on each chain and transfer accordingly. You'll need to confirm each transaction separately.
           </Trans>
         }
         onExecuteChain={async (chainId: JBChainId) => {

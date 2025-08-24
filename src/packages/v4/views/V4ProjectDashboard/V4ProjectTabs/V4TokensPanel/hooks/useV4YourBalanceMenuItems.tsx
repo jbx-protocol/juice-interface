@@ -8,6 +8,7 @@ import { ReactNode, useMemo, useState } from 'react'
 import { t } from '@lingui/macro'
 import { PopupMenuItem } from 'components/ui/PopupMenu'
 import { useWallet } from 'hooks/Wallet'
+import { useSuckersUnclaimedBalance } from 'packages/v4/hooks/useSuckersUnclaimedBalance'
 import { zeroAddress } from 'viem'
 import { useV4BalanceMenuItemsUserFlags } from './useV4BalanceMenuItemsUserFlags'
 
@@ -31,6 +32,14 @@ export const useV4YourBalanceMenuItems = () => {
     args: [userAddress ?? zeroAddress, projectId ?? 0n],
     chainId
   })
+
+  const { data: suckersUnclaimedBalance } = useSuckersUnclaimedBalance()
+
+  const aggregatedUnclaimedBalance =
+    suckersUnclaimedBalance?.reduce(
+      (acc, curr) => acc + curr.unclaimedBalance,
+      0n,
+    ) ?? 0n
 
   const items = useMemo(() => {
     const tokenMenuItems: PopupMenuItem[] = []
@@ -96,7 +105,8 @@ export const useV4YourBalanceMenuItems = () => {
     setMintModalVisible,
     transferUnclaimedTokensModalVisible,
     setTransferUnclaimedTokensModalVisible,
-    unclaimedBalance
+    unclaimedBalance,
+    aggregatedUnclaimedBalance
   }
 }
 

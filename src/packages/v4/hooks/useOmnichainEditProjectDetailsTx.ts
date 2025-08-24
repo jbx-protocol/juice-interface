@@ -1,9 +1,9 @@
-import { JBChainId, createSalt, jbControllerAbi, jbProjectDeploymentAddresses } from 'juice-sdk-core'
-import { useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, createSalt, jbControllerAbi } from 'juice-sdk-core'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
 
-import { encodeFunctionData } from 'viem'
-import { useSuckers } from 'juice-sdk-react'
 import { useWallet } from 'hooks/Wallet'
+import { useSuckers } from 'juice-sdk-react'
+import { encodeFunctionData } from 'viem'
 
 export function useOmnichainEditProjectDetailsTx() {
   const { userAddress } = useWallet()
@@ -11,11 +11,12 @@ export function useOmnichainEditProjectDetailsTx() {
   const { sendRelayrTx } = useSendRelayrTx()
   const relayrBundle = useGetRelayrTxBundle()
   const { data: suckers } = useSuckers()
+  const { contracts: { controller: { data: controllerAddress } } } = useJBContractContext()
 
   async function getEditQuote(
     cid: `0x${string}`
   ) {
-    if (!userAddress) return
+    if (!userAddress || !controllerAddress) return
     if (!suckers || suckers.length === 0) throw new Error('No project chains available')
     const salt = createSalt()
     const txs = suckers.map(sucker => {
@@ -26,7 +27,7 @@ export function useOmnichainEditProjectDetailsTx() {
         functionName: 'setUriOf',
         args: [projectId, cid],
       })
-      const to = jbProjectDeploymentAddresses.JBController[chainId] as `0x${string}`
+      const to = controllerAddress as `0x${string}`
       return {
         data: { from: userAddress, to, value: 0n, gas: 200_000n * BigInt(suckers.length), data: encoded },
         chainId,

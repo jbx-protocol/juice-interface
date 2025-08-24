@@ -53,6 +53,7 @@ export const V4TokensPanel = () => {
     mintModalVisible,
     setMintModalVisible,
     unclaimedBalance,
+    aggregatedUnclaimedBalance,
     // transferUnclaimedTokensModalVisible,
     // setTransferUnclaimedTokensModalVisible,
   } = useV4YourBalanceMenuItems()
@@ -122,8 +123,8 @@ export const V4TokensPanel = () => {
 
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
                     {projectHasErc20Token &&
-                    unclaimedBalance &&
-                    unclaimedBalance > 0n ? (
+                    aggregatedUnclaimedBalance &&
+                    aggregatedUnclaimedBalance > 0n ? (
                       <Button
                         className="p-0 text-start md:text-end"
                         type="link"

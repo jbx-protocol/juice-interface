@@ -4121,9 +4121,6 @@ msgstr ""
 msgid "Pay out ETH to Ethereum wallets or Juicebox projects. You can use this to pay your contributors, charities, projects you depend on, or anyone else."
 msgstr ""
 
-msgid "Claim {0} {tokenTextShort} as ERC-20 tokens"
-msgstr ""
-
 msgid "Deploy project to {0}"
 msgstr ""
 

@@ -1,13 +1,16 @@
 import { Trans, t } from '@lingui/macro'
 import { Descriptions, Form } from 'antd'
+import { Ether, JBChainId } from 'juice-sdk-core'
 import {
   useJBChainId,
-  useJBContractContext,
   useJBProjectId,
   useJBTokenContext,
+  useReadJbDirectoryControllerOf,
+  useReadJbTokensCreditBalanceOf,
+  useSuckers,
   useWriteJbControllerClaimTokensFor,
 } from 'juice-sdk-react'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 
 import { WarningOutlined } from '@ant-design/icons'
@@ -16,16 +19,16 @@ import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { Ether } from 'juice-sdk-core'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { getChainName } from 'packages/v4/utils/networks'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { zeroAddress } from 'viem'
 import { useChainId } from 'wagmi'
-import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
 
 export function V4ClaimTokensModal({
   open,
@@ -36,12 +39,37 @@ export function V4ClaimTokensModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { token } = useJBTokenContext()
+  const { userAddress, changeNetworks } = useWallet()
 
-  const { unclaimedBalance } = useV4YourBalanceMenuItems()
+  // Chain selection state
+  const defaultChainId = useJBChainId()
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId>(defaultChainId!)
+  const { data: suckers } = useSuckers()
+
+  // Reset to default chain when modal opens
+  useEffect(() => {
+    if (open && defaultChainId) {
+      setSelectedChainId(defaultChainId)
+    }
+  }, [open, defaultChainId])
+
+  // Get data for the selected chain
+  const { projectId } = useJBProjectId(selectedChainId)
+
+  // Get controller address for the selected chain
+  const { data: controllerAddress } = useReadJbDirectoryControllerOf({
+    chainId: selectedChainId,
+    args: [projectId ?? 0n],
+  })
+
+  // Get unclaimed balance for selected chain
+  const { data: unclaimedBalance } = useReadJbTokensCreditBalanceOf({
+    args: [userAddress ?? zeroAddress, projectId ?? 0n],
+    chainId: selectedChainId
+  })
 
   const tokenAddress = token?.data?.address
   const tokenSymbol = token?.data?.symbol
@@ -50,18 +78,13 @@ export function V4ClaimTokensModal({
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [claimAmount, setClaimAmount] = useState<string>()
 
-  const { userAddress, changeNetworks } = useWallet()
-
   const { writeContractAsync: writeClaimTokens } =
     useWriteJbControllerClaimTokensFor()
-
-  const chainId = useJBChainId()
-  const { projectId } = useJBProjectId()
 
   const hasIssuedTokens = useProjectHasErc20Token()
 
   const walletChainId = useChainId()
-  const walletConnectedToWrongChain = chainId !== walletChainId
+  const walletConnectedToWrongChain = selectedChainId !== walletChainId
 
   useLayoutEffect(() => {
     setClaimAmount(fromWad(unclaimedBalance))
@@ -69,7 +92,7 @@ export function V4ClaimTokensModal({
 
   async function executeClaimTokensTx() {
     if (
-      !contracts.controller.data ||
+      !controllerAddress ||
       !claimAmount ||
       !userAddress ||
       !projectId
@@ -77,8 +100,8 @@ export function V4ClaimTokensModal({
       return
 
     if (walletConnectedToWrongChain) {
-      if (chainId) {
-        await changeNetworks(chainId)
+      if (selectedChainId) {
+        await changeNetworks(selectedChainId)
       }
       return
     }
@@ -103,9 +126,9 @@ export function V4ClaimTokensModal({
       // console.log('contract:', contracts.controller.data)
 
       const hash = await writeClaimTokens({
-        address: contracts.controller.data,
+        address: controllerAddress,
         args,
-        chainId,
+        chainId: selectedChainId,
       })
       setTransactionPending(true)
 
@@ -135,13 +158,11 @@ export function V4ClaimTokensModal({
     plural: true,
   })
 
-  if (!chainId) return null
+  if (!selectedChainId) return null
 
   return (
     <TransactionModal
-      title={t`Claim ${getChainName(
-        chainId,
-      )} ${tokenTextShort} as ERC-20 tokens`}
+      title={t`Claim ${tokenTextShort} as ERC-20 tokens`}
       connectWalletText={t`Connect wallet to claim`}
       open={open}
       onOk={executeClaimTokensTx}
@@ -190,11 +211,24 @@ export function V4ClaimTokensModal({
           </p>
         </div>
 
+        {suckers && suckers.length > 1 && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium">Chain:</span>
+            <ChainSelect
+              className="min-w-[175px]"
+              value={selectedChainId}
+              onChange={setSelectedChainId}
+              chainIds={suckers.map(sucker => sucker.peerChainId)}
+              showTitle
+            />
+          </div>
+        )}
+
         <Descriptions size="small" layout="horizontal" column={1}>
           <Descriptions.Item
             label={
               <Trans>
-                Your unclaimed {getChainName(chainId)} {tokenTextLong}
+                Your unclaimed {getChainName(selectedChainId)} {tokenTextLong}
               </Trans>
             }
           >
@@ -205,7 +239,7 @@ export function V4ClaimTokensModal({
             <Descriptions.Item
               label={<Trans>{tokenSymbol} ERC-20 address</Trans>}
             >
-              <EthereumAddress address={tokenAddress} chainId={chainId} />
+              <EthereumAddress address={tokenAddress} chainId={selectedChainId} />
             </Descriptions.Item>
           )}
         </Descriptions>
@@ -213,7 +247,7 @@ export function V4ClaimTokensModal({
         <Form layout="vertical">
           <Form.Item
             label={t`Amount of ${getChainName(
-              chainId,
+              selectedChainId,
             )} ${tokenTextShort} to claim as ERC-20`}
           >
             <FormattedNumberInput

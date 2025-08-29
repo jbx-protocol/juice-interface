@@ -45,7 +45,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
             label: (
               <WalletItemContainer
                 icon={<CreditCardIcon />}
-                label={t`Get ETH with credit card or bank`}
+                label={t`Get ETH`}
               />
             ),
             onClick: () =>

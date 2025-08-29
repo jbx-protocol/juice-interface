@@ -632,9 +632,6 @@ msgstr ""
 msgid "Flexible"
 msgstr ""
 
-msgid "Get ETH with credit card or bank"
-msgstr ""
-
 msgid "Export draft to file"
 msgstr ""
 
@@ -1332,6 +1329,9 @@ msgid "{receivedTokenSymbolText} Token"
 msgstr ""
 
 msgid "Ruleset #1 starts when you create your project. With unlocked rulesets, you can edit your project's rules at any time. This gives you more flexibility, but may appear risky to supporters. Switching to locked rulesets will help you build supporter confidence."
+msgstr ""
+
+msgid "Get ETH"
 msgstr ""
 
 msgid "Issuance reduction rate:"

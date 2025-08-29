@@ -632,6 +632,9 @@ msgstr ""
 msgid "Flexible"
 msgstr ""
 
+msgid "Get ETH with credit card or bank"
+msgstr ""
+
 msgid "Export draft to file"
 msgstr ""
 

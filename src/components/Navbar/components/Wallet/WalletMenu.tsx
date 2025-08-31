@@ -1,6 +1,8 @@
+import { ModalStep, useModal } from '@getpara/react-sdk'
 import {
   ArrowRightOnRectangleIcon,
   ClipboardDocumentIcon,
+  CreditCardIcon,
   UserIcon,
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
@@ -24,7 +26,8 @@ const WalletItemContainer = ({
 )
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
-  const { disconnect } = useWallet()
+  const { disconnect, balance, isConnected } = useWallet()
+  const { openModal } = useModal()
   const [copied, setCopied] = useState<boolean>(false)
 
   const onCopyAddressClicked = useCallback(() => {
@@ -34,6 +37,24 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
   }, [userAddress])
 
   const items: DropdownMenuItem[] = [
+    // Conditional "Get ETH" option when connected & balance is 0.
+    ...(isConnected && Number(balance) === 0
+      ? [
+          {
+            id: 'add-funds',
+            label: (
+              <WalletItemContainer
+                icon={<CreditCardIcon />}
+                label={t`Get ETH`}
+              />
+            ),
+            onClick: () =>
+              openModal({
+                step: ModalStep.ADD_FUNDS_BUY,
+              }),
+          } satisfies DropdownMenuItem,
+        ]
+      : []),
     {
       id: 'copyable-address',
       label: (

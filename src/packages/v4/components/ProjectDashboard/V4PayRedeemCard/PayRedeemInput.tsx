@@ -1,3 +1,4 @@
+import { ModalStep, useModal } from '@getpara/react-sdk'
 import {
   ArrowDownIcon,
   MinusIcon,
@@ -5,26 +6,27 @@ import {
 } from '@heroicons/react/24/outline'
 import React, { ReactNode, useCallback, useMemo } from 'react'
 
-import { CURRENCY_METADATA } from 'constants/currency'
-import CurrencySymbol from 'components/currency/CurrencySymbol'
-import { EthereumLogo } from './EthereumLogo'
-import { NftRewardTier } from 'models/nftRewards'
-import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
-import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
-import { Tooltip } from 'antd'
-import { TruncatedText } from 'components/TruncatedText'
-import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
-import { formatAmount } from 'utils/format/formatAmount'
-import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
 import { t } from '@lingui/macro'
-import { twMerge } from 'tailwind-merge'
+import { Tooltip } from 'antd'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
+import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
+import { TruncatedText } from 'components/TruncatedText'
+import { CURRENCY_METADATA } from 'constants/currency'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
-import { usePayAmounts } from './PayProjectModal/hooks/usePayAmounts'
-import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { useWallet } from 'hooks/Wallet'
+import { NftRewardTier } from 'models/nftRewards'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
+import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
+import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { twMerge } from 'tailwind-merge'
+import { formatAmount } from 'utils/format/formatAmount'
+import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
+import { EthereumLogo } from './EthereumLogo'
+import { usePayAmounts } from './PayProjectModal/hooks/usePayAmounts'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -62,6 +64,8 @@ export const PayRedeemInput = ({
   const {
     nftRewards: { rewardTiers: nfts },
   } = useV4NftRewards()
+  const { openModal } = useModal();
+  const { userAddress } = useWallet()
 
   const converter = useCurrencyConverter()
 
@@ -113,6 +117,7 @@ export const PayRedeemInput = ({
     return null
   }
 
+  const showGetEth = token.balance === '0' && userAddress;
   return (
     <div className="relative">
       <div
@@ -149,9 +154,20 @@ export const PayRedeemInput = ({
                 </span>
                 {cardType === 'input' ? <NftCreditsDisplay />: null}
               </div>
-              <span>
-                {token.balance && <>Balance: {formatAmount(token.balance)}</>}
-              </span>
+              <div className="flex flex-col items-end">
+                <span>
+                  {token.balance && <>Balance: {formatAmount(token.balance)}</>}
+                </span>
+                {showGetEth && (
+                  <button
+                    type="button"
+                    className="hover:text-grey-700 dark:text-grey-300 underline underline-offset-2 text-xs mt-1 cursor-pointer dark:hover:text-grey-400"
+                    onClick={() => openModal({ step: ModalStep.ADD_FUNDS_BUY })}
+                  >
+                    Get ETH
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}

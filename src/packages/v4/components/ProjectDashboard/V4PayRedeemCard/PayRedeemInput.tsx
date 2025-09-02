@@ -1,4 +1,3 @@
-import { ModalStep, useModal } from '@getpara/react-sdk'
 import {
   ArrowDownIcon,
   MinusIcon,
@@ -6,6 +5,7 @@ import {
 } from '@heroicons/react/24/outline'
 import React, { ReactNode, useCallback, useMemo } from 'react'
 
+import { useModal } from '@getpara/react-sdk'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
@@ -117,7 +117,7 @@ export const PayRedeemInput = ({
     return null
   }
 
-  const showGetEth = token.balance === '0' && userAddress;
+  const showGetEth = actionType === 'pay' && token.balance === '0' && userAddress;
   return (
     <div className="relative">
       <div

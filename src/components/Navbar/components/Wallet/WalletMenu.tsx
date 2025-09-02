@@ -37,24 +37,19 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
   }, [userAddress])
 
   const items: DropdownMenuItem[] = [
-    // Conditional "Get ETH" option when connected & balance is 0.
-    ...(isConnected && Number(balance) === 0
-      ? [
-          {
-            id: 'add-funds',
-            label: (
-              <WalletItemContainer
-                icon={<CreditCardIcon />}
-                label={t`Get ETH`}
-              />
-            ),
-            onClick: () =>
-              openModal({
-                step: ModalStep.ADD_FUNDS_BUY,
-              }),
-          } satisfies DropdownMenuItem,
-        ]
-      : []),
+    {
+      id: 'add-funds',
+      label: (
+        <WalletItemContainer
+          icon={<CreditCardIcon />}
+          label={t`Get ETH`}
+        />
+      ),
+      onClick: () =>
+        openModal({
+          step: ModalStep.ADD_FUNDS_BUY,
+        }),
+    } satisfies DropdownMenuItem,
     {
       id: 'copyable-address',
       label: (

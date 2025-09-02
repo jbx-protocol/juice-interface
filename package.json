@@ -55,9 +55,9 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
-    "@getpara/ethers-v5-integration": "2.0.0-alpha.32",
-    "@getpara/evm-wallet-connectors": "2.0.0-alpha.32",
-    "@getpara/react-sdk": "2.0.0-alpha.32",
+    "@getpara/ethers-v5-integration": "2.0.0-alpha.51",
+    "@getpara/evm-wallet-connectors": "2.0.0-alpha.51",
+    "@getpara/react-sdk-lite": "2.0.0-alpha.51",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.4",
     "@jbx-protocol/contracts-v1": "2.0.0",

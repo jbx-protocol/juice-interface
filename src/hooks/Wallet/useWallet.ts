@@ -5,7 +5,7 @@ import {
   useLogout,
   useModal,
   useWallet as useParaWallet,
-} from '@getpara/react-sdk'
+} from '@getpara/react-sdk-lite'
 import { readNetwork } from 'constants/networks'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { providers, utils } from 'ethers'

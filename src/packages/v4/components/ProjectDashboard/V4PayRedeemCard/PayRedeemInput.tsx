@@ -117,7 +117,7 @@ export const PayRedeemInput = ({
     return null
   }
 
-  const showGetEth = token.balance === '0' && userAddress;
+  const showGetEth = actionType === 'pay' && token.balance === '0' && userAddress;
   return (
     <div className="relative">
       <div

@@ -1772,7 +1772,7 @@
 
 "@ethersproject/hash@5.8.0", "@ethersproject/hash@^5.8.0":
   version "5.8.0"
-  resolved "https://registry.npmjs.org/@ethersproject/hash/-/hash-5.8.0.tgz#b8893d4629b7f8462a90102572f8cd65a0192b4c"
+  resolved "https://registry.yarnpkg.com/@ethersproject/hash/-/hash-5.8.0.tgz#b8893d4629b7f8462a90102572f8cd65a0192b4c"
   integrity sha512-ac/lBcTbEWW/VGJij0CNSw/wPcw9bSRgCB0AIBz8CvED/jfvDoV9hsIIiWfvWmFEi8RcXtlNwp2jv6ozWOsooA==
   dependencies:
     "@ethersproject/abstract-signer" "^5.8.0"
@@ -2277,7 +2277,7 @@
 
 "@getpara/core-components@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/core-components/-/core-components-2.0.0-alpha.32.tgz#60e8802baaac097ddadb9d9602780f42d488a0fb"
+  resolved "https://registry.yarnpkg.com/@getpara/core-components/-/core-components-2.0.0-alpha.32.tgz#60e8802baaac097ddadb9d9602780f42d488a0fb"
   integrity sha512-sOrV56fPPneZLzsNe7JwYfbxM0lWSHfQ3kCPn/tRwqLKseawlc+vOgHsaTBlZA7hoCztllpkyp9iKAwqYjzl0w==
   dependencies:
     "@stencil/core" "^4.7.0"
@@ -2289,7 +2289,7 @@
 
 "@getpara/core-sdk@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/core-sdk/-/core-sdk-2.0.0-alpha.32.tgz#4a983dc3a1927a6f32419ffb743e2bc5f64a6769"
+  resolved "https://registry.yarnpkg.com/@getpara/core-sdk/-/core-sdk-2.0.0-alpha.32.tgz#4a983dc3a1927a6f32419ffb743e2bc5f64a6769"
   integrity sha512-YZyBc9VCnqrBwzvybDXzsI63FVELKbG4Sbb7ez/IQAcrThn14RPWOdL8RZrJYZ0cUkrbmQ1EMljyplXyUfpStQ==
   dependencies:
     "@celo/utils" "^8.0.2"
@@ -2304,14 +2304,14 @@
 
 "@getpara/ethers-v5-integration@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/ethers-v5-integration/-/ethers-v5-integration-2.0.0-alpha.32.tgz#6ad799e9a2bb68c363d088261308c4e76f38cf1e"
+  resolved "https://registry.yarnpkg.com/@getpara/ethers-v5-integration/-/ethers-v5-integration-2.0.0-alpha.32.tgz#6ad799e9a2bb68c363d088261308c4e76f38cf1e"
   integrity sha512-nfn6VdMN8FL5xVHicTTyNYYSLDFMl7p+HijGwvB+GPlKUpX4kXdGDIhoFL7U5fnzFrBg8SfZnF3kcKbUKXnPIA==
   dependencies:
     "@getpara/core-sdk" "2.0.0-alpha.32"
 
 "@getpara/evm-wallet-connectors@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/evm-wallet-connectors/-/evm-wallet-connectors-2.0.0-alpha.32.tgz#b4613652b2e23c4894a831869c3979c8f01abe05"
+  resolved "https://registry.yarnpkg.com/@getpara/evm-wallet-connectors/-/evm-wallet-connectors-2.0.0-alpha.32.tgz#b4613652b2e23c4894a831869c3979c8f01abe05"
   integrity sha512-cFJz8DVtDkEzqv+6P/1j+8lVgVNrBIRX2FocNtpSgdr6G9efNc8GydshoRXTuYBMh7J8oCQ2rl9VI4oX7G4S+Q==
   dependencies:
     "@coinbase/wallet-sdk" "4.3.0"
@@ -2322,7 +2322,7 @@
 
 "@getpara/react-common@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/react-common/-/react-common-2.0.0-alpha.32.tgz#022389d6ab361efbf4e3c0e11c532d8fd223b539"
+  resolved "https://registry.yarnpkg.com/@getpara/react-common/-/react-common-2.0.0-alpha.32.tgz#022389d6ab361efbf4e3c0e11c532d8fd223b539"
   integrity sha512-D+IUAWQG7xhsp9JVjRUenw6xLfgNqbIt/0fRWwkERnWN3Kz0j3a37uOuy1s8hG5BvfG7V9vQjVNGyZCJ9nLPrA==
   dependencies:
     "@getpara/react-components" "2.0.0-alpha.32"
@@ -2335,14 +2335,14 @@
 
 "@getpara/react-components@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/react-components/-/react-components-2.0.0-alpha.32.tgz#bee7688f2991ec7ce3288db736a89b207d9d729e"
+  resolved "https://registry.yarnpkg.com/@getpara/react-components/-/react-components-2.0.0-alpha.32.tgz#bee7688f2991ec7ce3288db736a89b207d9d729e"
   integrity sha512-ec9kyfgAS+zd+gqUl0opqS2y3EpEYhunsUI/l7TyMSOsHgHlx67vUiZsDcaGBRfEyarztVpwbQlqhPz5OrZn9Q==
   dependencies:
     "@getpara/core-components" "2.0.0-alpha.32"
 
 "@getpara/react-sdk@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/react-sdk/-/react-sdk-2.0.0-alpha.32.tgz#7e08ab2e7e78fc0f014c28bfbed6765d8f7e5647"
+  resolved "https://registry.yarnpkg.com/@getpara/react-sdk/-/react-sdk-2.0.0-alpha.32.tgz#7e08ab2e7e78fc0f014c28bfbed6765d8f7e5647"
   integrity sha512-N2L7YgEEqjJC+9aM6OC2764opEn7/9ns1aTQiqqo5HaCk7ztU5B0QV84dc5LNpVJTd1J6ELgENFYTuuAVRikGw==
   dependencies:
     "@getpara/react-common" "2.0.0-alpha.32"
@@ -2357,7 +2357,7 @@
 
 "@getpara/user-management-client@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/user-management-client/-/user-management-client-2.0.0-alpha.32.tgz#516894df842f00d1eb80e88d5ad38f35fdb8a65a"
+  resolved "https://registry.yarnpkg.com/@getpara/user-management-client/-/user-management-client-2.0.0-alpha.32.tgz#516894df842f00d1eb80e88d5ad38f35fdb8a65a"
   integrity sha512-B5gl3ZmaJ+WspZOsWxb5SlDuI1FmxoTAPxDkN2kBaNtYrRTSNDeARhJgRIZ9T2mJ/SAPff38/5mOtjpsePH1+w==
   dependencies:
     axios "^1.8.4"
@@ -2365,14 +2365,14 @@
 
 "@getpara/viem-v2-integration@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/viem-v2-integration/-/viem-v2-integration-2.0.0-alpha.32.tgz#41bb2e04fd33255590eca1d97a4ce88d57e2e0fe"
+  resolved "https://registry.yarnpkg.com/@getpara/viem-v2-integration/-/viem-v2-integration-2.0.0-alpha.32.tgz#41bb2e04fd33255590eca1d97a4ce88d57e2e0fe"
   integrity sha512-hW4W0uyVoXWAlEpBc04JFEnM8Yu4lu9ys+po15y83E5fl9vNUlbfATqb1D93bb6hFDH4PElhxuFasZtiye3kCA==
   dependencies:
     "@getpara/core-sdk" "2.0.0-alpha.32"
 
 "@getpara/wagmi-v2-connector@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/wagmi-v2-connector/-/wagmi-v2-connector-2.0.0-alpha.32.tgz#dbc606066f67de1c8a1587e77a74dfa8fc9e2195"
+  resolved "https://registry.yarnpkg.com/@getpara/wagmi-v2-connector/-/wagmi-v2-connector-2.0.0-alpha.32.tgz#dbc606066f67de1c8a1587e77a74dfa8fc9e2195"
   integrity sha512-qW/F9xzpDPnMln7Q46g1ON/nR20jNFrHr9qQZgyb9V1fViQWazGGbEGqgn3y7y/j65sFAyyBintz+H5QgiKcrA==
   dependencies:
     "@getpara/viem-v2-integration" "2.0.0-alpha.32"
@@ -2380,7 +2380,7 @@
 
 "@getpara/web-sdk@2.0.0-alpha.32":
   version "2.0.0-alpha.32"
-  resolved "https://registry.npmjs.org/@getpara/web-sdk/-/web-sdk-2.0.0-alpha.32.tgz#1370490afc2eba7d3c9f5568bd35612637db4c0b"
+  resolved "https://registry.yarnpkg.com/@getpara/web-sdk/-/web-sdk-2.0.0-alpha.32.tgz#1370490afc2eba7d3c9f5568bd35612637db4c0b"
   integrity sha512-x8SeSVrPz2ncuUVUOaZom2/QQY90760SMucrMsek4IlDrRPel3BQuMAz6EwmxmtguWOBzHAoJdcJ5dEhJVWUdA==
   dependencies:
     "@getpara/core-sdk" "2.0.0-alpha.32"
@@ -4760,51 +4760,51 @@
     "@noble/hashes" "~1.8.0"
     "@scure/base" "~1.2.5"
 
-"@sentry-internal/browser-utils@9.34.0":
-  version "9.34.0"
-  resolved "https://registry.npmjs.org/@sentry-internal/browser-utils/-/browser-utils-9.34.0.tgz#d994a3c8feff84e6bc4577d29b7f468f7348aafc"
-  integrity sha512-pXVznvP4CROejYtk6y7UQvPTieWz2vXjukGlO45fsnQa9nNo30lkQh3Ws2HZw2YbTxYZQYx75FBDezwKl2q0hQ==
+"@sentry-internal/browser-utils@9.46.0":
+  version "9.46.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/browser-utils/-/browser-utils-9.46.0.tgz#d53baeebc4d0f3cd3a3fb3ccbad865ef32a83f5c"
+  integrity sha512-Q0CeHym9wysku8mYkORXmhtlBE0IrafAI+NiPSqxOBKXGOCWKVCvowHuAF56GwPFic2rSrRnub5fWYv7T1jfEQ==
   dependencies:
-    "@sentry/core" "9.34.0"
+    "@sentry/core" "9.46.0"
 
-"@sentry-internal/feedback@9.34.0":
-  version "9.34.0"
-  resolved "https://registry.npmjs.org/@sentry-internal/feedback/-/feedback-9.34.0.tgz#ed07b192f11f650c24d61c21dd1d152db98e8637"
-  integrity sha512-HT/EBRl1DR8XqlJk2wFNPJFcnIzNcEDjmW7C/o7K0GeP5jcSH0dKpcH7ykz2bi46gMRPrkO5EK2eXGK81KYI3g==
+"@sentry-internal/feedback@9.46.0":
+  version "9.46.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-9.46.0.tgz#f2bea2c882d57c251df1bd3f9ca77305c39424ca"
+  integrity sha512-KLRy3OolDkGdPItQ3obtBU2RqDt9+KE8z7r7Gsu7c6A6A89m8ZVlrxee3hPQt6qp0YY0P8WazpedU3DYTtaT8w==
   dependencies:
-    "@sentry/core" "9.34.0"
+    "@sentry/core" "9.46.0"
 
-"@sentry-internal/replay-canvas@9.34.0":
-  version "9.34.0"
-  resolved "https://registry.npmjs.org/@sentry-internal/replay-canvas/-/replay-canvas-9.34.0.tgz#321a66c12a748f7e0097e80024a12bde514b0de8"
-  integrity sha512-GCtqMFk9WwrU3JNz1tlCFAhzmNfgZhLRaS0cLzoTuxPbG3CC2VUIWYEOw7+AdCJZGm8ElTMxu+BkChgGb8qthQ==
+"@sentry-internal/replay-canvas@9.46.0":
+  version "9.46.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-9.46.0.tgz#3d520646fa765e7f0aa65a324341f5f3d8c2b6cd"
+  integrity sha512-QcBjrdRWFJrrrjbmrr2bbrp2R9RYj1KMEbhHNT2Lm1XplIQw+tULEKOHxNtkUFSLR1RNje7JQbxhzM1j95FxVQ==
   dependencies:
-    "@sentry-internal/replay" "9.34.0"
-    "@sentry/core" "9.34.0"
+    "@sentry-internal/replay" "9.46.0"
+    "@sentry/core" "9.46.0"
 
-"@sentry-internal/replay@9.34.0":
-  version "9.34.0"
-  resolved "https://registry.npmjs.org/@sentry-internal/replay/-/replay-9.34.0.tgz#644e280b031e4692bc88bd4b234aa230f52974a6"
-  integrity sha512-joYSqWltmpkcqI8Gg8jwFtPv0F01whmuQfNGoGaL7Z6B/xO1vvkqEudrg1tmswUHhqtYpZYaEaCvrmv0sPGCfA==
+"@sentry-internal/replay@9.46.0":
+  version "9.46.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay/-/replay-9.46.0.tgz#5156c00f95fa6be036cd642c427be66f0feee707"
+  integrity sha512-+8JUblxSSnN0FXcmOewbN+wIc1dt6/zaSeAvt2xshrfrLooVullcGsuLAiPhY0d/e++Fk06q1SAl9g4V0V13gg==
   dependencies:
-    "@sentry-internal/browser-utils" "9.34.0"
-    "@sentry/core" "9.34.0"
+    "@sentry-internal/browser-utils" "9.46.0"
+    "@sentry/core" "9.46.0"
 
 "@sentry/browser@^9.1.0":
-  version "9.34.0"
-  resolved "https://registry.npmjs.org/@sentry/browser/-/browser-9.34.0.tgz#aedc43710153d2fd448f969ec829a9541e866e83"
-  integrity sha512-6oJxU7JEA/RCgMTVlHXT54U9d0DWg61GgzyLTM+FUa8OUrAoK/t+CZGSMc/13nYN8xs7vcpiORdRx0ogch9zGw==
+  version "9.46.0"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-9.46.0.tgz#9fcc136cc0a076f3e897fde09cf2740cdcacc5ab"
+  integrity sha512-NOnCTQCM0NFuwbyt4DYWDNO2zOTj1mCf43hJqGDFb1XM9F++7zAmSNnCx4UrEoBTiFOy40McJwBBk9D1blSktA==
   dependencies:
-    "@sentry-internal/browser-utils" "9.34.0"
-    "@sentry-internal/feedback" "9.34.0"
-    "@sentry-internal/replay" "9.34.0"
-    "@sentry-internal/replay-canvas" "9.34.0"
-    "@sentry/core" "9.34.0"
+    "@sentry-internal/browser-utils" "9.46.0"
+    "@sentry-internal/feedback" "9.46.0"
+    "@sentry-internal/replay" "9.46.0"
+    "@sentry-internal/replay-canvas" "9.46.0"
+    "@sentry/core" "9.46.0"
 
-"@sentry/core@9.34.0":
-  version "9.34.0"
-  resolved "https://registry.npmjs.org/@sentry/core/-/core-9.34.0.tgz#932be2112635e0b6fea97b27442de6c1d9c9516c"
-  integrity sha512-M/zikVaE3KLkhCFDyrHB35sF7pVkB2RPy07BcRsdFsSsdpjoG+Zq2Sxth2tMTbjd0x9Vtb/X6LVjyCj9GSEvVg==
+"@sentry/core@9.46.0":
+  version "9.46.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-9.46.0.tgz#be4824d8b028b3184f9a05be9b232c9440cb35ac"
+  integrity sha512-it7JMFqxVproAgEtbLgCVBYtQ9fIb+Bu0JD+cEplTN/Ukpe6GaolyYib5geZqslVxhp2sQgT+58aGvfd/k0N8Q==
 
 "@sideway/address@^4.1.3":
   version "4.1.5"

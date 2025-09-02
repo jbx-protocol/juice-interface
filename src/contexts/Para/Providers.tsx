@@ -64,7 +64,7 @@ const requiredEnvVars = {
   PARA_API_KEY: process.env.NEXT_PUBLIC_PARA_API_KEY,
   INFURA_ID: process.env.NEXT_PUBLIC_INFURA_ID,
   WALLET_CONNECT_PROJECT_ID: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
-}
+} as const
 
 const missingEnvVars = Object.entries(requiredEnvVars)
   .filter(([_, value]) => !value)
@@ -76,7 +76,10 @@ if (missingEnvVars.length > 0) {
   )
 }
 
-const { PARA_API_KEY, INFURA_ID, WALLET_CONNECT_PROJECT_ID } = requiredEnvVars
+// Type narrowing: after the check above, we know these values are defined
+const PARA_API_KEY = requiredEnvVars.PARA_API_KEY as string
+const INFURA_ID = requiredEnvVars.INFURA_ID as string
+const WALLET_CONNECT_PROJECT_ID = requiredEnvVars.WALLET_CONNECT_PROJECT_ID as string
 
 const createInfuraTransport = (network: string) => {
   const url = `https://${network}.infura.io/v3/${INFURA_ID}`
@@ -139,7 +142,7 @@ const externalWalletConfig = {
   },
   wallets: SUPPORTED_WALLETS,
   walletConnect: {
-    projectId: WALLET_CONNECT_PROJECT_ID!,
+    projectId: WALLET_CONNECT_PROJECT_ID,
   },
 }
 

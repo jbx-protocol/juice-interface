@@ -1,4 +1,4 @@
-import { ModalStep, useModal } from '@getpara/react-sdk'
+import { ModalStep, useModal } from '@getpara/react-sdk-lite'
 import {
   ArrowRightOnRectangleIcon,
   ClipboardDocumentIcon,
@@ -40,10 +40,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
     {
       id: 'add-funds',
       label: (
-        <WalletItemContainer
-          icon={<CreditCardIcon />}
-          label={t`Get ETH`}
-        />
+        <WalletItemContainer icon={<CreditCardIcon />} label={t`Get ETH`} />
       ),
       onClick: () =>
         openModal({

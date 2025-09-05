@@ -1,9 +1,5 @@
-import { ModalStep, useModal } from '@getpara/react-sdk'
-import {
-  ArrowDownIcon,
-  MinusIcon,
-  PlusIcon
-} from '@heroicons/react/24/outline'
+import { ModalStep, useModal } from '@getpara/react-sdk-lite'
+import { ArrowDownIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
 import React, { ReactNode, useCallback, useMemo } from 'react'
 
 import { t } from '@lingui/macro'
@@ -64,7 +60,7 @@ export const PayRedeemInput = ({
   const {
     nftRewards: { rewardTiers: nfts },
   } = useV4NftRewards()
-  const { openModal } = useModal();
+  const { openModal } = useModal()
   const { userAddress } = useWallet()
 
   const converter = useCurrencyConverter()
@@ -117,7 +113,8 @@ export const PayRedeemInput = ({
     return null
   }
 
-  const showGetEth = actionType === 'pay' && token.balance === '0' && userAddress;
+  const showGetEth =
+    actionType === 'pay' && token.balance === '0' && userAddress
   return (
     <div className="relative">
       <div
@@ -152,7 +149,7 @@ export const PayRedeemInput = ({
                 <span>
                   {convertedValue ? formatCurrencyAmount(convertedValue) : null}
                 </span>
-                {cardType === 'input' ? <NftCreditsDisplay />: null}
+                {cardType === 'input' ? <NftCreditsDisplay /> : null}
               </div>
               <div className="flex flex-col items-end">
                 <span>
@@ -161,7 +158,7 @@ export const PayRedeemInput = ({
                 {showGetEth && (
                   <button
                     type="button"
-                    className="hover:text-grey-700 dark:text-grey-300 underline underline-offset-2 text-xs mt-1 cursor-pointer dark:hover:text-grey-400"
+                    className="mt-1 cursor-pointer text-xs underline underline-offset-2 hover:text-grey-700 dark:text-grey-300 dark:hover:text-grey-400"
                     onClick={() => openModal({ step: ModalStep.ADD_FUNDS_BUY })}
                   >
                     Get ETH
@@ -361,10 +358,11 @@ const NftCreditsDisplay = () => {
   const { data: nftCredits } = useV4UserNftCredits()
   const { formattedNftCredits } = usePayAmounts()
 
-  if (!nftCredits || nftCredits <= 0n || !formattedNftCredits?.primaryAmount) return null
+  if (!nftCredits || nftCredits <= 0n || !formattedNftCredits?.primaryAmount)
+    return null
 
   return (
-    <div className="text-xs text-grey-600 dark:text-slate-200 pb-1">
+    <div className="pb-1 text-xs text-grey-600 dark:text-slate-200">
       <strong>{t`${formattedNftCredits.primaryAmount} NFT credits will apply`}</strong>
     </div>
   )

@@ -5,7 +5,7 @@ import ParaWeb, {
   type Environment,
   type ParaModalProps,
   type TOAuthMethod,
-} from '@getpara/react-sdk'
+} from '@getpara/react-sdk-lite'
 import { ThemeOption } from 'constants/theme/themeOption'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
@@ -79,7 +79,8 @@ if (missingEnvVars.length > 0) {
 // Type narrowing: after the check above, we know these values are defined
 const PARA_API_KEY = requiredEnvVars.PARA_API_KEY as string
 const INFURA_ID = requiredEnvVars.INFURA_ID as string
-const WALLET_CONNECT_PROJECT_ID = requiredEnvVars.WALLET_CONNECT_PROJECT_ID as string
+const WALLET_CONNECT_PROJECT_ID =
+  requiredEnvVars.WALLET_CONNECT_PROJECT_ID as string
 
 const createInfuraTransport = (network: string) => {
   const url = `https://${network}.infura.io/v3/${INFURA_ID}`

@@ -647,6 +647,9 @@ msgstr ""
 msgid "You must grant permission to migrate your V2 tokens."
 msgstr ""
 
+msgid "Ruleset start time"
+msgstr ""
+
 msgid "Project owner"
 msgstr ""
 
@@ -2514,9 +2517,6 @@ msgid "<0>View transactions.</0>"
 msgstr ""
 
 msgid "to close"
-msgstr ""
-
-msgid "Set your new ruleset to begin after you expect all required signatures and executions across every chain to be completed."
 msgstr ""
 
 msgid "Change networks to mint tokens"

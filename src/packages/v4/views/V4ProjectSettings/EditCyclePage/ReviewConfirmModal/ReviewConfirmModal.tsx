@@ -1,36 +1,36 @@
-import { Trans, t } from '@lingui/macro'
-import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
-import { useJBChainId, useJBContractContext, useJBProjectId, useJBRuleset, useSuckers } from 'juice-sdk-react'
 import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4/utils/editRuleset'
+import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
+import { Trans, t } from '@lingui/macro'
 import { useEffect, useState } from 'react'
+import { useJBChainId, useJBContractContext, useJBProjectId, useJBRuleset, useSuckers } from 'juice-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { Form } from 'antd'
 import { Callout } from 'components/Callout/Callout'
-import ETHAmount from 'components/currency/ETHAmount'
-import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import TransactionModal from 'components/modals/TransactionModal'
-import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
-import { useWallet } from 'hooks/Wallet'
-import type { RelayrPostBundleResponse } from 'juice-sdk-react'
-import moment from 'moment'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
-import QueueSafeEditRulesetTxsModal from 'packages/v4/components/QueueSafeEditRulesetTxsModal'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
-import { emitErrorNotification } from 'utils/notifications'
-import { useChainId } from 'wagmi'
-import { useEditCycleFormContext } from '../EditCycleFormContext'
-import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
-import { TransactionSuccessModal } from '../TransactionSuccessModal'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
-import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
-import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
-import { useTokensSectionValues } from './hooks/useTokensSectionValues'
+import ETHAmount from 'components/currency/ETHAmount'
+import { Form } from 'antd'
+import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { PayoutsSectionDiff } from './PayoutsSectionDiff'
+import QueueSafeEditRulesetTxsModal from 'packages/v4/components/QueueSafeEditRulesetTxsModal'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
 import { SectionCollapseHeader } from './SectionCollapseHeader'
 import { TokensSectionDiff } from './TokensSectionDiff'
+import TransactionModal from 'components/modals/TransactionModal'
+import { TransactionSuccessModal } from '../TransactionSuccessModal'
+import { emitErrorNotification } from 'utils/notifications'
+import moment from 'moment'
+import { useChainId } from 'wagmi'
+import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
+import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
+import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
+import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
+import { useTokensSectionValues } from './hooks/useTokensSectionValues'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { useWallet } from 'hooks/Wallet'
 
 export function ReviewConfirmModal({
   open,
@@ -182,7 +182,40 @@ export function ReviewConfirmModal({
 
   const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
   const okText = isProjectOwnerGnosisSafe ? <Trans>Queue on Safe</Trans> : !txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>
-
+  const mustStartAtOrAfterField = (
+    <div className="mt-1">
+      <Form.Item 
+        name="mustStartAtOrAfter" 
+        label={<Trans>Ruleset must start at or after</Trans>}
+        noStyle
+      />
+      <JuiceDatePicker
+        showNow={false}
+        showToday={false}
+        format="YYYY-MM-DD HH:mm:ss"
+        value={editCycleForm?.getFieldValue('mustStartAtOrAfter') ? moment.unix(editCycleForm.getFieldValue('mustStartAtOrAfter')) : undefined}
+        onChange={(moment)=> {
+          if (moment) {
+            editCycleForm?.setFieldsValue({
+              mustStartAtOrAfter: moment.unix(),
+            })
+          }
+        }}
+        disabledDate={current => {
+          if (!current) return false
+          const now = moment()
+          if (
+            current.isSame(now, 'day') ||
+            current.isAfter(now, 'day')
+          )
+            return false
+          return true
+        }}
+        showTime={{ defaultValue: moment('00:00:00') }}
+      />
+      {/* </Form.Item> */}
+    </div>
+  )
   return (
     <>      
       <TransactionModal
@@ -250,50 +283,23 @@ export function ReviewConfirmModal({
             showCount={true}
           />
         </Form.Item>
+        {!(isProjectOwnerGnosisSafe && isOmnichainProject) ? (
+          <div>
+          <div className="mt-8 mb-0 font-medium">
+            <Trans>
+              Ruleset start time
+            </Trans>
+          </div>
+          {mustStartAtOrAfterField}
+          </div>
+          ) : null}
         {!txQuote && (
           <div className="mt-10 py-4 text-sm stroke-tertiary border-t rounded-none">
               <Callout.Info>
               {isProjectOwnerGnosisSafe && isOmnichainProject ? (
-                <>
-                <Trans>
-                    Set your new ruleset to begin after you expect all required signatures and executions across every chain to be completed.
-                </Trans>
-                
-                <Form.Item name="mustStartAtOrAfter" noStyle>
-                <div className="mt-4">
-                    <Form.Item 
-                      name="mustStartAtOrAfter" 
-                      label={<Trans>Ruleset must start at or after</Trans>}
-                      noStyle
-                    />
-                    <JuiceDatePicker
-                      showNow={false}
-                      showToday={false}
-                      format="YYYY-MM-DD HH:mm:ss"
-                      value={editCycleForm?.getFieldValue('mustStartAtOrAfter') ? moment.unix(editCycleForm.getFieldValue('mustStartAtOrAfter')) : undefined}
-                      onChange={(moment)=> {
-                        if (moment) {
-                          editCycleForm?.setFieldsValue({
-                            mustStartAtOrAfter: moment.unix(),
-                          })
-                        }
-                      }}
-                      disabledDate={current => {
-                        if (!current) return false
-                        const now = moment()
-                        if (
-                          current.isSame(now, 'day') ||
-                          current.isAfter(now, 'day')
-                        )
-                          return false
-                        return true
-                      }}
-                      showTime={{ defaultValue: moment('00:00:00') }}
-                    />
-                    {/* </Form.Item> */}
-                  </div>
-                </Form.Item>
-                </>
+                <div className="mt-3">
+                  {mustStartAtOrAfterField}
+                </div>
               ) : (
                 <Trans>
                   You'll be prompted a wallet signature for each of this project's chains before submitting the final transaction.

@@ -1,28 +1,28 @@
-import { ModalStep, useModal } from '@getpara/react-sdk-lite'
 import { ArrowDownIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { ModalStep, useModal } from '@getpara/react-sdk-lite'
 import React, { ReactNode, useCallback, useMemo } from 'react'
 
-import { t } from '@lingui/macro'
-import { Tooltip } from 'antd'
-import CurrencySymbol from 'components/currency/CurrencySymbol'
-import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
-import { TruncatedText } from 'components/TruncatedText'
 import { CURRENCY_METADATA } from 'constants/currency'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
-import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useWallet } from 'hooks/Wallet'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
+import { EthereumLogo } from './EthereumLogo'
 import { NftRewardTier } from 'models/nftRewards'
+import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
+import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
+import { Tooltip } from 'antd'
+import { TruncatedText } from 'components/TruncatedText'
+import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
+import { formatAmount } from 'utils/format/formatAmount'
+import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { t } from '@lingui/macro'
+import { twMerge } from 'tailwind-merge'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
+import { usePayAmounts } from './PayProjectModal/hooks/usePayAmounts'
+import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
-import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
-import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
-import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
-import { twMerge } from 'tailwind-merge'
-import { formatAmount } from 'utils/format/formatAmount'
-import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
-import { EthereumLogo } from './EthereumLogo'
-import { usePayAmounts } from './PayProjectModal/hooks/usePayAmounts'
+import { useWallet } from 'hooks/Wallet'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -113,8 +113,9 @@ export const PayRedeemInput = ({
     return null
   }
 
+
   const showGetEth =
-    actionType === 'pay' && token.balance === '0' && userAddress
+    actionType === 'pay'
   return (
     <div className="relative">
       <div
@@ -173,7 +174,7 @@ export const PayRedeemInput = ({
           <div className="my-2 h-[1px] w-full border-t border-grey-200 dark:border-slate-600" />
         )}
 
-        {nfts && nfts?.length > 0 && readOnly && actionType === 'pay' && (
+        {nfts && nfts?.length > 0 && readOnly && actionType === 'redeem' && (
           <div className="mt-4 space-y-4">
             {nfts.map((nft, i) => {
               const quantity =
@@ -293,7 +294,8 @@ export const PayRedeemCardNftReward: React.FC<{
       decreaseQuantity()
     }
   }, [decreaseQuantity, handleRemove, quantity])
-
+  
+  const remaining = nft.remainingSupply
   return (
     <div
       className={twMerge('flex items-center justify-between gap-3', className)}
@@ -326,11 +328,14 @@ export const PayRedeemCardNftReward: React.FC<{
       </div>
 
       <div className="flex items-center gap-3">
-        <QuantityControl
-          quantity={quantity}
-          onIncrease={handleIncreaseQuantity}
-          onDecrease={handleDecreaseQuantity}
-        />
+        <Tooltip title={remaining === 0 ? t`NFT is sold out` : undefined}>
+          <QuantityControl
+            quantity={quantity}
+            onIncrease={handleIncreaseQuantity}
+            onDecrease={handleDecreaseQuantity}
+            disabled={remaining === 0}
+          />
+        </Tooltip>
       </div>
     </div>
   )
@@ -340,14 +345,24 @@ const QuantityControl: React.FC<{
   quantity: number
   onIncrease: () => void
   onDecrease: () => void
-}> = ({ quantity, onIncrease, onDecrease }) => {
+  disabled?: boolean
+}> = ({ quantity, onIncrease, onDecrease, disabled }) => {
   return (
     <span className="flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600">
-      <button data-testid="cart-item-decrease-button" onClick={onDecrease}>
+      <button 
+        data-testid="cart-item-decrease-button" 
+        onClick={quantity === 0 ? undefined: onDecrease}
+        className={quantity === 0 ? "opacity-50 cursor-not-allowed" : ""}
+      >
         <MinusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
       </button>
       {quantity}
-      <button data-testid="cart-item-increase-button" onClick={onIncrease}>
+      <button 
+        data-testid="cart-item-increase-button" 
+        onClick={onIncrease}
+        disabled={disabled}
+        className={disabled ? "opacity-50 cursor-not-allowed" : ""}
+      >
         <PlusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
       </button>
     </span>

@@ -4673,6 +4673,9 @@ msgstr ""
 msgid "A reserved rate"
 msgstr ""
 
+msgid "NFT is sold out"
+msgstr ""
+
 msgid "Manage"
 msgstr ""
 

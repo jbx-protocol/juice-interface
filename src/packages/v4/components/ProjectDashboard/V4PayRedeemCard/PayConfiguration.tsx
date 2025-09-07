@@ -1,22 +1,22 @@
-import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { useJBChainId, useJBProjectId, useJBRuleset, useJBTokenContext } from 'juice-sdk-react'
+import { Trans, t } from '@lingui/macro'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useJBChainId, useJBProjectId, useJBRuleset, useJBTokenContext } from 'juice-sdk-react'
 import { useProjectDispatch, useProjectSelector, useProjectStore } from '../redux/hooks'
 
-import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
-import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
-import { useWallet } from 'hooks/Wallet'
-import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
-import { usePayProjectDisabled } from 'packages/v4/hooks/usePayProjectDisabled'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
-import { useBalance } from 'wagmi'
-import { projectCartActions } from '../redux/projectCartSlice'
 import { EthereumLogo } from './EthereumLogo'
 import { FirstCycleCountdownCallout } from './FirstCycleCountdownCallout'
-import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
 import { PayRedeemInput } from './PayRedeemInput'
 import { PreventOverspendingPayCard } from './PreventOverspendingPayCard'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { projectCartActions } from '../redux/projectCartSlice'
+import { useBalance } from 'wagmi'
+import { usePayProjectDisabled } from 'packages/v4/hooks/usePayProjectDisabled'
+import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
+import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
+import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useWallet } from 'hooks/Wallet'
 
 type PayConfigurationProps = {
   userTokenBalance: number | undefined
@@ -136,9 +136,10 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
                 value={payAmount ?? cartPayAmount?.toString()}
                 onChange={handleUserPayAmountChange}
                 cardType="input"
+                actionType="pay"
               />
               <PayRedeemInput
-                actionType="pay"
+                actionType="redeem"
                 label={t`You receive`}
                 redeemUnavailable={!isIssuingTokens}
                 downArrow

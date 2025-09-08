@@ -19,7 +19,7 @@ query SuckerGroupTL(
   $startTimestamp: Int
   $endTimestamp: Int
 ) {
-  range: suckerGroupMoments(where: {suckerGroupId: $suckerGroupId, timestamp_gte: $startTimestamp, timestamp_lte: $endTimestamp}, orderBy: "timestamp", orderDirection: "asc") {
+  range: suckerGroupMoments(where: {suckerGroupId: $suckerGroupId, timestamp_gte: $startTimestamp, timestamp_lte: $endTimestamp}, orderBy: "timestamp", orderDirection: "asc", limit: 1000) {
     items {
       balance
       volume

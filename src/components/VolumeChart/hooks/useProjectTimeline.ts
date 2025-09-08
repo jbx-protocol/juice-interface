@@ -198,7 +198,8 @@ export function useProjectTimeline({
       timestamp: timestamps?.[timestamps.length - 1],
       volume: wadToFloat(lastPointData?.volume) || firstPoint.volume,
       balance: wadToFloat(lastPointData?.balance) || firstPoint.balance,
-      trendingScore: wadToFloat(lastPointData?.trendingScore) || firstPoint.trendingScore,
+      trendingScore:
+        wadToFloat(lastPointData?.trendingScore) || firstPoint.trendingScore,
     }
 
     return [

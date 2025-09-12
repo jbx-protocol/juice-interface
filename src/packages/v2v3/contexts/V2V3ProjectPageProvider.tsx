@@ -19,7 +19,7 @@ export const V2V3ProjectPageProvider: React.FC<
       <V2V3ProjectContractsProvider projectId={projectId}>
         <V2V3ProjectMetadataProvider projectId={projectId} metadata={metadata}>
           <V2V3ProjectProvider projectId={projectId}>
-            <ProjectOFACProvider>
+            <ProjectOFACProvider ofacEnabled={Boolean(metadata?.projectRequiredOFACCheck)}>
               <JB721DelegateContractsProvider>
                 <NftRewardsProvider>{children}</NftRewardsProvider>
               </JB721DelegateContractsProvider>

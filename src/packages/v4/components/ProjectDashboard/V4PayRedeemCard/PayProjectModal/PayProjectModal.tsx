@@ -4,6 +4,7 @@ import {
   usePayProjectModal,
 } from './hooks/usePayProjectModal/usePayProjectModal'
 import { Trans, t } from '@lingui/macro'
+import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 import { useEffect, useState } from 'react'
 import { useProjectDispatch, useProjectSelector } from '../../redux/hooks'
 
@@ -15,11 +16,11 @@ import Image from 'next/legacy/image'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
-import { emitInfoNotification } from 'utils/notifications'
 import { helpPagePath } from 'utils/helpPagePath'
 import { payRedeemActions } from '../../redux/payRedeemSlice'
 import { twMerge } from 'tailwind-merge'
 import { usePayAmounts } from './hooks/usePayAmounts'
+import { useProjectIsOFACListed } from 'hooks/useProjectIsOFACListed'
 import { useSuckers } from 'juice-sdk-react'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { useWallet } from 'hooks/Wallet'
@@ -44,6 +45,8 @@ export const PayProjectModal: React.FC = () => {
     useState<JBChainId>(defaultChainId)
   const dispatch = useProjectDispatch()
   const { data: suckers } = useSuckers()
+  const { isAddressListedInOFAC, isLoading: isOFACLoading } =
+      useProjectIsOFACListed()
 
   useEffect(() => {
     setSelectedChainId(defaultChainId)
@@ -70,6 +73,12 @@ export const PayProjectModal: React.FC = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={async (values, actions) => {
+        if (isAddressListedInOFAC) {
+          emitErrorNotification(
+            t`You can't pay this project because your wallet address failed a compliance check set up by the project owner.`,
+          )
+          return
+        }
         const walletConnectedToWrongChain = selectedChainId !== walletChainId
         if (walletConnectedToWrongChain) {
           await changeNetworks(selectedChainId as JBChainId)
@@ -99,7 +108,7 @@ export const PayProjectModal: React.FC = () => {
               buttonPosition="stretch"
               title={t`Pay ${projectName}`}
               position="top"
-              okLoading={props.isSubmitting || isTransactionPending}
+              okLoading={props.isSubmitting || isTransactionPending || isOFACLoading}
               okButtonForm="PayProjectModalForm"
               okText={
                 walletConnectedToWrongChain
@@ -118,6 +127,7 @@ export const PayProjectModal: React.FC = () => {
                 setOpen(false)
                 setTimeout(() => props.resetForm(), 300)
               }}
+              disableOkButton={Boolean(isAddressListedInOFAC)}
             >
               {isTransactionPending ? (
                 <div className="flex h-full w-full flex-col items-center justify-center">

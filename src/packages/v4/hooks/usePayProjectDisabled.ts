@@ -1,8 +1,8 @@
 import { useJBChainId, useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 
 import { t } from '@lingui/macro'
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useProjectIsOFACListed } from 'hooks/useProjectIsOFACListed'
+import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 
 export enum PayDisabledReason {
   BLOCKED = 'BLOCKED',

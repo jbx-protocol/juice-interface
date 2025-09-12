@@ -32,7 +32,6 @@ export function usePayProjectDisabled(): {
   // const isBlockedProject = useV2v3BlockedProject()
   const { isAddressListedInOFAC, isLoading: isOFACLoading } =
     useProjectIsOFACListed()
-
   if (isLoading || isOFACLoading) {
     return {
       loading: true,

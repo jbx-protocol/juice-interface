@@ -3,6 +3,7 @@ import { ReactNode, createContext } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useWallet } from 'hooks/Wallet'
+import { useJBProjectMetadataContext } from 'juice-sdk-react'
 
 interface ProjectOFACContextType {
   isLoading?: boolean
@@ -16,14 +17,21 @@ export const ProjectOFACContext = createContext<ProjectOFACContextType>({
 
 export default function ProjectOFACProvider({
   ofacEnabled,
+  isV4,
   children,
 }: {
-  ofacEnabled: boolean,
+  ofacEnabled?: boolean,
+  isV4?: boolean,
   children?: ReactNode,
 }) {
   const { userAddress, isConnected } = useWallet()
   
-  const enabled = ofacEnabled && isConnected 
+  // v4 metadata only
+  const { metadata } = useJBProjectMetadataContext()
+
+  const _ofacEnabled = isV4 ? metadata?.data?.projectRequiredOFACCheck : ofacEnabled
+  
+  const enabled = _ofacEnabled && isConnected 
 
   const { data: isAddressListedInOFAC, isLoading } = useQuery({
     queryKey: ['isAddressListedInOFAC', userAddress],
@@ -36,7 +44,6 @@ export default function ProjectOFACProvider({
         const { data } = await axios.get<{ isGoodAddress: boolean }>(
           `/api/ofac/validate/${userAddress}`,
         )
-
         return !data.isGoodAddress
       } catch (e) {
         console.warn(e)

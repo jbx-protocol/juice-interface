@@ -26,7 +26,7 @@ const V4ProjectProviders: React.FC<
         }}
       >
         <V4ProjectMetadataProvider projectId={projectId}>
-          <ProjectOFACProvider ofacEnabled={Boolean(metadata?.data?.projectRequiredOFACCheck)}>
+          <ProjectOFACProvider isV4>
             <Provider store={store}>
               <V4UserNftCreditsProvider>
                 <V4UserTotalTokensBalanceProvider>

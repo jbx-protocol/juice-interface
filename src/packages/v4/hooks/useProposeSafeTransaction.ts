@@ -34,7 +34,7 @@ export interface SafeProposeTransactionResponse {
 export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactionProps) {
   const { signer, userAddress, eip1193Provider } = useWallet()
 
-  const signerAddress = signer?.getAddress() ?? '0x0';
+  const signerAddress = signer ? await signer.getAddress() : '0x0';
   
   const [isLoading, setIsLoading] = useState(false)
 

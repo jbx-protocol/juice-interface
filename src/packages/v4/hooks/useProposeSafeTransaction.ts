@@ -33,8 +33,6 @@ export interface SafeProposeTransactionResponse {
 
 export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactionProps) {
   const { signer, userAddress, eip1193Provider } = useWallet()
-
-  const signerAddress = signer ? await signer.getAddress() : '0x0';
   
   const [isLoading, setIsLoading] = useState(false)
 
@@ -56,6 +54,8 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       
       const apiKit = new SafeApiKit({ chainId: BigInt(chainId) })
       
+      const signerAddress = signer ? await signer.getAddress() : '0x0';
+
       // Convert addresses to checksum format
       const checksumSignerAddress = getAddress(signerAddress)
       const checksumSafeAddress = getAddress(safeAddress)

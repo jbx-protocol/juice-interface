@@ -97,7 +97,7 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
 
       const signedSafeTx = await protocolKit.signTransaction(safeTx)
       const safeTxHash = await protocolKit.getTransactionHash(signedSafeTx)
-      const signature = signedSafeTx.getSignature(userAddress)
+      const signature = signedSafeTx.getSignature(checksumUserAddress)
       
       // propose transaction to service
       await apiKit.proposeTransaction({

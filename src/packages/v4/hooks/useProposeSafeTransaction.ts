@@ -7,7 +7,7 @@ import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { JBChainId } from 'juice-sdk-core'
 import { useState } from 'react'
-import { emitErrorNotification } from 'utils/notifications'
+import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 import { getAddress } from 'viem'
 
 // constants for gas estimation
@@ -56,6 +56,8 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       
       const signerAddress = signer ? await signer.getAddress() : '0x0';
 
+      emitInfoNotification(`${userAddress} ${signerAddress} ${safeAddress}`);
+      
       // Convert addresses to checksum format
       const checksumSignerAddress = getAddress(signerAddress)
       const checksumSafeAddress = getAddress(safeAddress)
@@ -97,20 +99,20 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
         options,
         onlyCalls: true,
       })
-      const txHash = await protocolKit.getTransactionHash(safeTx)
-      const signature = await protocolKit.signHash(txHash)
+      const safeTxHash = await protocolKit.getTransactionHash(safeTx)
+      const signature = await protocolKit.signTypedData(safeTx)
 
       // propose transaction to service
       await apiKit.proposeTransaction({
         safeAddress: checksumSafeAddress,
         safeTransactionData: safeTx.data,
-        safeTxHash: txHash,
+        safeTxHash,
         senderAddress: checksumSignerAddress,
         senderSignature: signature.data,
       })
 
       return {
-        safeTxHash: txHash,
+        safeTxHash,
         nonce: safeTx.data.nonce.toString(),
       }
     } catch (error: unknown) {

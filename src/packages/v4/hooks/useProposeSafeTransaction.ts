@@ -33,6 +33,8 @@ export interface SafeProposeTransactionResponse {
 
 export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactionProps) {
   const { signer, userAddress, eip1193Provider } = useWallet()
+  // todo remove
+  emitErrorNotification(`${signer.address} ${userAddress}`)
   const [isLoading, setIsLoading] = useState(false)
 
   const proposeTransaction = async (
@@ -54,12 +56,12 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       const apiKit = new SafeApiKit({ chainId: BigInt(chainId) })
       
       // Convert addresses to checksum format
-      const checksumUserAddress = getAddress(userAddress)
+      const checksumSignerAddress = getAddress(signer.address)
       const checksumSafeAddress = getAddress(safeAddress)
       
       const protocolKit = await Safe.init({
         provider: eip1193Provider as unknown as Eip1193Provider,
-        signer: checksumUserAddress,
+        signer: checksumSignerAddress,
         safeAddress: checksumSafeAddress,
       })
 
@@ -102,7 +104,7 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
         safeAddress: checksumSafeAddress,
         safeTransactionData: safeTx.data,
         safeTxHash: txHash,
-        senderAddress: checksumUserAddress,
+        senderAddress: checksumSignerAddress,
         senderSignature: signature.data,
       })
 

@@ -94,23 +94,21 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
         options,
         onlyCalls: true,
       })
-
-      const signedSafeTx = await protocolKit.signTransaction(safeTx)
-      const safeTxHash = await protocolKit.getTransactionHash(signedSafeTx)
-      const signature = await protocolKit.signHash(safeTxHash)
+      const txHash = await protocolKit.getTransactionHash(safeTx)
+      const signature = await protocolKit.signHash(txHash)
 
       // propose transaction to service
       await apiKit.proposeTransaction({
         safeAddress: checksumSafeAddress,
-        safeTransactionData: signedSafeTx.data,
-        safeTxHash,
+        safeTransactionData: safeTx.data,
+        safeTxHash: txHash,
         senderAddress: checksumUserAddress,
         senderSignature: signature.data,
       })
 
       return {
-        safeTxHash,
-        nonce: signedSafeTx.data.nonce.toString(),
+        safeTxHash: txHash,
+        nonce: safeTx.data.nonce.toString(),
       }
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'An unknown error occurred.'

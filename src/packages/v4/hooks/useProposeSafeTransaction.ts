@@ -101,7 +101,7 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       await apiKit.proposeTransaction({
         safeAddress: checksumSafeAddress,
         safeTransactionData: safeTx.data,
-        safeTxHash,
+        safeTxHash: txHash,
         senderAddress: checksumUserAddress,
         senderSignature: signature.data,
       })

@@ -58,6 +58,11 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
 
       const signerAddress = getSignerAddress();
 
+      if (!signerAddress) {
+          emitErrorNotification('Wallet not connected to Safe.')
+          throw new Error('Wallet not connected to Safe.')
+      }
+
       emitInfoNotification(`${userAddress} ${signerAddress} ${safeAddress}`);
       
       // Convert addresses to checksum format

@@ -7,19 +7,22 @@ import { parseWad } from 'utils/format/formatNumber'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
 export const usePayoutsSectionValues = () => {
+
   const { editCycleForm, initialFormData } = useEditCycleFormContext()
 
-  const newPayoutSplits: JBSplit[] =
-    editCycleForm?.getFieldValue('payoutSplits') ?? []
+  const newPayoutSplits: JBSplit[] = editCycleForm?.getFieldValue('payoutSplits') ?? []
   const currentPayoutSplits = initialFormData?.payoutSplits ?? []
   const payoutSplitsHasDiff = splitsListsHaveDiff(
     currentPayoutSplits,
     newPayoutSplits,
   )
 
-  const newCurrency: CurrencyName =
-    editCycleForm?.getFieldValue('distributionLimitCurrency') ?? 'ETH'
-  const currentCurrency = initialFormData?.payoutLimitCurrency ?? 'ETH'
+  const newCurrency: CurrencyName = editCycleForm?.getFieldValue(
+    'distributionLimitCurrency',
+  ) ?? 'ETH'
+  const currentCurrency =
+    initialFormData?.payoutLimitCurrency ??
+    'ETH'
   const currencyHasDiff = currentCurrency !== newCurrency
 
   const newDistributionLimitForm: bigint =
@@ -39,7 +42,7 @@ export const usePayoutsSectionValues = () => {
   const distributionLimitHasDiff =
     !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||
     currencyHasDiff
-  // TODO: When no limit is set and doesnt change, distributionLimitHasDiff still true
+    // TODO: When no limit is set and doesnt change, distributionLimitHasDiff still true
   const distributionLimitIsInfinite =
     !newDistributionLimit || newDistributionLimit === MAX_PAYOUT_LIMIT
 

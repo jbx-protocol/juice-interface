@@ -1,5 +1,6 @@
 import Safe, { Eip1193Provider, SafeTransactionOptionalProps } from '@safe-global/protocol-kit'
 import { MetaTransactionData, OperationType } from '@safe-global/types-kit'
+import { useSafe } from '@safe-global/safe-react-hooks'
 
 import SafeApiKit from '@safe-global/api-kit'
 import { estimateTxBaseGas } from '@safe-global/protocol-kit'
@@ -33,7 +34,8 @@ export interface SafeProposeTransactionResponse {
 
 export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactionProps) {
   const { signer, userAddress, eip1193Provider } = useWallet()
-  
+  const { getSignerAddress } = useSafe();
+
   const [isLoading, setIsLoading] = useState(false)
 
   const proposeTransaction = async (
@@ -53,8 +55,8 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       }
       
       const apiKit = new SafeApiKit({ chainId: BigInt(chainId) })
-      
-      const signerAddress = signer ? await signer.getAddress() : '0x0';
+
+      const signerAddress = getSignerAddress();
 
       emitInfoNotification(`${userAddress} ${signerAddress} ${safeAddress}`);
       

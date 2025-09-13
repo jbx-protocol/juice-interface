@@ -107,7 +107,7 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       })
 
       return {
-        safeTxHash,
+        safeTxHash: txHash,
         nonce: safeTx.data.nonce.toString(),
       }
     } catch (error: unknown) {

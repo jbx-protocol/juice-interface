@@ -2,7 +2,7 @@ import { Button, Modal, Spin, Tooltip } from 'antd'
 import { JBChainId, useSuckers } from 'juice-sdk-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
-import { SafeProvider, createConfig } from '@safe-global/safe-react-hooks';
+import { SafeProvider, createConfig, EIP1193Provider } from '@safe-global/safe-react-hooks';
 
 import { ApiFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
@@ -129,7 +129,7 @@ export default function QueueSafeTxsModal({
   }, [router, suckers])
 
   const config = createConfig({
-    provider: eip1193Provider
+    ...(eip1193Provider && { provider: eip1193Provider as unknown as Eip1193Provider })
   })
   
   return (

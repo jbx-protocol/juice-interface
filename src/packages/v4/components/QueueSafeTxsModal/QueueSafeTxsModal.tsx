@@ -13,7 +13,6 @@ import { SafeProposeTransactionResponse } from 'packages/v4/hooks/useProposeSafe
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { twMerge } from 'tailwind-merge'
 import { safeTxUrl } from 'utils/safe'
-import { mainnet } from 'viem/chains'
 
 export interface QueueSafeTxsModalProps {
   open: boolean
@@ -130,7 +129,6 @@ export default function QueueSafeTxsModal({
   }, [router, suckers])
 
   const config = createConfig({
-    chain: mainnet, //unused
     provider: eip1193Provider
   })
   

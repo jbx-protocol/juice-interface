@@ -2,6 +2,7 @@ import { Button, Modal, Spin, Tooltip } from 'antd'
 import { JBChainId, useSuckers } from 'juice-sdk-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
+import { SafeProvider, createConfig } from '@safe-global/safe-react-hooks';
 
 import { ApiFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
@@ -48,7 +49,7 @@ export default function QueueSafeTxsModal({
   const [completedChains, setCompletedChains] = useState<Set<JBChainId>>(new Set())
   const [txResults, setTxResults] = useState<Map<JBChainId, SafeProposeTransactionResponse>>(new Map())
   
-  const { chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
+  const { eip1193Provider, chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
   const router = useRouter()
 
   const { data: suckers } = useSuckers()
@@ -127,6 +128,11 @@ export default function QueueSafeTxsModal({
     router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId  }))
   }, [router, suckers])
 
+  const config = createConfig({
+    chain: chainId,
+    provider: eip1193Provider
+  })
+  
   return (
     <Modal
       open={open}
@@ -143,7 +149,7 @@ export default function QueueSafeTxsModal({
         ),
       ].filter(Boolean)}
       width={600}
-    >
+    ><SafeProvider config={config}>
       <div className="space-y-4">
         <div className="text-sm text-grey-500 dark:text-slate-200">
           {description}
@@ -245,6 +251,6 @@ export default function QueueSafeTxsModal({
           </div>
         ): null}
       </div>
-    </Modal>
+    </SafeProvider></Modal>
   )
 }

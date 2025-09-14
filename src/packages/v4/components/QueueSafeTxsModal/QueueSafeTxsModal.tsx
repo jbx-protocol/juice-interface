@@ -60,7 +60,7 @@ export default function QueueSafeTxsModal({
 
   // Use provided chains or fall back to suckers chains
   const chains = chainsProps || suckersChains
-
+  
   const handleExecuteOnChain = useCallback(async (chainId: JBChainId) => {
     // Check if wallet is connected
     if (!userAddress) {
@@ -129,7 +129,7 @@ export default function QueueSafeTxsModal({
   }, [router, suckers])
 
   const config = createConfig({
-    chain: chainId,
+    chain: chains[0],
     provider: eip1193Provider
   })
   

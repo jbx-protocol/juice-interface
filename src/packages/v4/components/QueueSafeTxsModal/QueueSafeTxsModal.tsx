@@ -2,8 +2,6 @@ import { Button, Modal, Spin, Tooltip } from 'antd'
 import { JBChainId, useSuckers } from 'juice-sdk-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
-import { SafeProvider, createConfig, EIP1193Provider } from '@safe-global/safe-react-hooks';
-import { mainnet } from 'viem/chains'
 import { ApiFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { NETWORKS } from 'constants/networks'
@@ -127,12 +125,6 @@ export default function QueueSafeTxsModal({
   const goToProject = useCallback(() => {
     router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId  }))
   }, [router, suckers])
-
-  const config = createConfig({
-    provider: eip1193Provider!,
-    chain: mainnet,
-    signer: undefined
-  })
   
   return (
     <Modal
@@ -150,7 +142,7 @@ export default function QueueSafeTxsModal({
         ),
       ].filter(Boolean)}
       width={600}
-    ><SafeProvider config={config}>
+    >
       <div className="space-y-4">
         <div className="text-sm text-grey-500 dark:text-slate-200">
           {description}
@@ -252,6 +244,6 @@ export default function QueueSafeTxsModal({
           </div>
         ): null}
       </div>
-    </SafeProvider></Modal>
+    </Modal>
   )
 }

@@ -81,7 +81,6 @@
     "@safe-global/safe-apps-provider": "^0.18.3",
     "@safe-global/safe-apps-sdk": "^8.0.0",
     "@safe-global/types-kit": "^2.0.1",
-    "@safe-global/safe-react-hooks": "^0.3.0",
     "@supabase/auth-helpers-nextjs": "^0.5.4",
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/supabase-js": "^2.10.0",
@@ -152,7 +151,6 @@
     "yarn": "^1.22.22",
     "yup": "^1.4.0"
   },
-  "resolutions": { "viem": "^2.31.6" },
   "devDependencies": {
     "@babel/core": "^7.24.7",
     "@graphql-codegen/add": "^5.0.3",

@@ -53,11 +53,6 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       }
       
       const apiKit = new SafeApiKit({ chainId: BigInt(chainId) })
-
-      if (!signerAddress) {
-          emitErrorNotification('Wallet not connected to Safe.')
-          throw new Error('Wallet not connected to Safe.')
-      }
       
       // Convert addresses to checksum format
       const checksumSignerAddress = getAddress(userAddress)

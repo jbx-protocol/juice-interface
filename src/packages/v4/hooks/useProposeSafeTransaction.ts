@@ -1,6 +1,5 @@
 import Safe, { Eip1193Provider, SafeTransactionOptionalProps } from '@safe-global/protocol-kit'
 import { MetaTransactionData, OperationType } from '@safe-global/types-kit'
-import { useSafe } from '@safe-global/safe-react-hooks'
 
 import SafeApiKit from '@safe-global/api-kit'
 import { estimateTxBaseGas } from '@safe-global/protocol-kit'
@@ -8,7 +7,7 @@ import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { JBChainId } from 'juice-sdk-core'
 import { useState } from 'react'
-import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
+import { emitErrorNotification } from 'utils/notifications'
 import { getAddress } from 'viem'
 
 // constants for gas estimation
@@ -34,7 +33,6 @@ export interface SafeProposeTransactionResponse {
 
 export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactionProps) {
   const { signer, userAddress, eip1193Provider } = useWallet()
-  const { getSignerAddress } = useSafe();
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -56,17 +54,13 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       
       const apiKit = new SafeApiKit({ chainId: BigInt(chainId) })
 
-      const signerAddress = getSignerAddress();
-
       if (!signerAddress) {
           emitErrorNotification('Wallet not connected to Safe.')
           throw new Error('Wallet not connected to Safe.')
       }
-
-      emitInfoNotification(`${userAddress} ${signerAddress} ${safeAddress}`);
       
       // Convert addresses to checksum format
-      const checksumSignerAddress = getAddress(signerAddress)
+      const checksumSignerAddress = getAddress(userAddress)
       const checksumSafeAddress = getAddress(safeAddress)
       
       const protocolKit = await Safe.init({

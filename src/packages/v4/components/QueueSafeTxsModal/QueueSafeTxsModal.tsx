@@ -3,7 +3,7 @@ import { JBChainId, useSuckers } from 'juice-sdk-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 import { SafeProvider, createConfig, EIP1193Provider } from '@safe-global/safe-react-hooks';
-
+import { mainnet } from 'viem/chains'
 import { ApiFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { NETWORKS } from 'constants/networks'
@@ -129,7 +129,9 @@ export default function QueueSafeTxsModal({
   }, [router, suckers])
 
   const config = createConfig({
-    ...(eip1193Provider && { provider: eip1193Provider as unknown as Eip1193Provider })
+    provider: eip1193Provider!,
+    chain: mainnet,
+    signer: undefined
   })
   
   return (

@@ -152,6 +152,7 @@
     "yarn": "^1.22.22",
     "yup": "^1.4.0"
   },
+  "resolutions": { "viem": "^2.31.6" },
   "devDependencies": {
     "@babel/core": "^7.24.7",
     "@graphql-codegen/add": "^5.0.3",

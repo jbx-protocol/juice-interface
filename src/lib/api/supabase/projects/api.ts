@@ -1,6 +1,5 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { V2_BLOCKLISTED_PROJECTS } from 'constants/blocklist'
-import { PV_V4 } from 'constants/pv'
 import {
   DbProjectsDocument,
   DbProjectsQuery,
@@ -10,17 +9,19 @@ import {
 
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { readNetwork } from 'constants/networks'
+import { PV_V4 } from 'constants/pv'
 import { bendystrawUri } from 'lib/apollo/bendystrawUri'
 import { paginateDepleteBendystrawQuery } from 'lib/apollo/paginateDepleteBendystrawQuery'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient } from 'lib/apollo/serverClient'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
+import { PV4, PV5 } from 'models/pv'
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
-  Dbv4ProjectsDocument,
-  Dbv4ProjectsQuery,
-  Dbv4ProjectsQueryVariables,
+  Dbv4V5ProjectsDocument,
+  Dbv4V5ProjectsQuery,
+  Dbv4V5ProjectsQueryVariables,
 } from 'packages/v4/graphql/client/graphql'
 import { Database } from 'types/database.types'
 import { isHardArchived } from 'utils/archived'
@@ -36,7 +37,7 @@ import { dbProjects } from '../clients'
  * Query all projects from subgraph using apollo serverClient which is safe to use in edge runtime.
  */
 export async function queryAllSGProjectsForServer() {
-  const [v1v2v3, v4] = await Promise.all([
+  const [v1v2v3, v4v5] = await Promise.all([
     paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
       client: serverClient,
       document: DbProjectsDocument,
@@ -44,14 +45,14 @@ export async function queryAllSGProjectsForServer() {
     ...(process.env.NEXT_PUBLIC_V4_ENABLED === 'true'
       ? [
           paginateDepleteBendystrawQuery<
-            Dbv4ProjectsQuery,
-            Dbv4ProjectsQueryVariables
+            Dbv4V5ProjectsQuery,
+            Dbv4V5ProjectsQueryVariables
           >({
             client: new ApolloClient({
               uri: `${bendystrawUri()}/graphql`,
               cache: new InMemoryCache(),
             }),
-            document: Dbv4ProjectsDocument,
+            document: Dbv4V5ProjectsDocument,
           }),
         ]
       : []),
@@ -66,23 +67,22 @@ export async function queryAllSGProjectsForServer() {
   }) as unknown as Json<
     Pick<Project & { chainId: number; suckerGroupId: string }, SGSBCompareKey>
   >[]
-  let v4Parsed = process.env.NEXT_PUBLIC_V4_ENABLED
-    ? (v4.map(p => {
-        return {
-          ...p,
-          id: getSubgraphIdForProject(PV_V4, p.projectId) + `_${p.chainId}`, // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
-          currentBalance: p.balance, // currentBalance renamed -> balance in bendystraw
-          pv: PV_V4, // Patch in the PV for V4 projects,
-        }
-      }) as unknown as Json<
-        Pick<
-          Project & { chainId: number; suckerGroupId: string },
-          SGSBCompareKey
-        >
-      >[])
-    : []
 
-  return [...v1v2v3WithChainId, ...v4Parsed].map(formatSGProjectForDB)
+  const v4v5Parsed = v4v5.map(p => {
+    // p.version is non-null, but treat as optional to support bendystraw pre-v5 integration
+    const pv = (p.version?.toString() as PV4 | PV5) ?? PV_V4
+
+    return {
+      ...p,
+      id: getSubgraphIdForProject(pv, p.projectId) + `_${p.chainId}`, // Patch in the subgraph ID for V4/V5 projects (to be consistent with legacy subgraph)
+      currentBalance: p.balance, // currentBalance renamed -> balance in bendystraw
+      pv, // Patch in the PV for V4/V5 projects,
+    }
+  }) as unknown as Json<
+    Pick<Project & { chainId: number; suckerGroupId: string }, SGSBCompareKey>
+  >[]
+
+  return [...v1v2v3WithChainId, ...v4v5Parsed].map(formatSGProjectForDB)
 }
 
 /**

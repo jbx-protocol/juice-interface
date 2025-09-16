@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import { PV_V4 } from 'constants/pv'
 import { usePayEventsQuery, useProjectQuery } from 'generated/v4/graphql'
 import { Ether } from 'juice-sdk-core'
 import { useJBChainId } from 'juice-sdk-react'
@@ -16,6 +17,7 @@ export const useDownloadPayments = (blockNumber: number, projectId: number) => {
     variables: {
       chainId: Number(chainId),
       projectId,
+      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
     },
     skip: !chainId,
   })

@@ -10,6 +10,7 @@ import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import { TokenAmount } from 'components/TokenAmount'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
+import { PV_V4 } from 'constants/pv'
 import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
 import { JBChainId } from 'juice-sdk-core'
 import { NativeTokenValue, useJBChainId } from 'juice-sdk-react'
@@ -90,6 +91,7 @@ export default function HoldersList({
     variables: {
       projectId: Number(projectId),
       chainId: Number(chainId),
+      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
     },
     skip: !projectId || !chainId,
   })

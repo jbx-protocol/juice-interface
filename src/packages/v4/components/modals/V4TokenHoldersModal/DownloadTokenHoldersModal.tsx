@@ -4,6 +4,7 @@ import { Modal } from 'antd'
 import axios from 'axios'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { PV_V4 } from 'constants/pv'
 import {
   ParticipantSnapshotsQuery,
   useProjectQuery,
@@ -40,6 +41,7 @@ export function DownloadTokenHoldersModal({
     variables: {
       projectId: Number(projectId),
       chainId: Number(chainId),
+      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
     },
     skip: !projectId || !chainId,
   })

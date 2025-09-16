@@ -13,6 +13,7 @@ import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
 import { NETWORKS } from 'constants/networks'
+import { PV_V4 } from 'constants/pv'
 import { useActivityEventsQuery, useProjectQuery } from 'generated/v4/graphql'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
@@ -49,6 +50,7 @@ export function V4ActivityList() {
     variables: {
       chainId: Number(chainId),
       projectId: Number(projectId),
+      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
     },
     skip: !chainId || !projectId,
   })

@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
+import { PV_V4 } from 'constants/pv'
 import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
 import {
   useJBChainId,
@@ -35,6 +36,7 @@ export const V4TokenHoldersModal = ({
     variables: {
       projectId: Number(projectId),
       chainId: Number(chainId),
+      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
     },
     skip: !projectId || !open || !chainId,
   })

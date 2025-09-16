@@ -109,6 +109,7 @@ export function useProjectTimeline({
     variables: {
       chainId: chainId || 0,
       projectId,
+      version: parseInt(pv)
     },
     skip: pv !== PV_V4 || !chainId || !projectId,
   })

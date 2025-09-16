@@ -18,6 +18,7 @@ export function V4ActivityPanel() {
     variables: {
       projectId: Number(projectId),
       chainId: chainId || 0,
+      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
     },
   })
 

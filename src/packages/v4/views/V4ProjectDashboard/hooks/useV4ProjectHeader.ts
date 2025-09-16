@@ -6,6 +6,7 @@ import {
 } from 'juice-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
+import { PV_V4 } from 'constants/pv'
 import { useProjectQuery, useSuckerGroupQuery } from 'generated/v4/graphql'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
@@ -41,6 +42,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
     variables: {
       projectId: projectIdNum,
       chainId: Number(chainId),
+      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
     },
     skip: !projectId || !chainId,
   })

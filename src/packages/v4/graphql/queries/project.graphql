@@ -12,8 +12,8 @@ query Projects($where: projectFilter) {
   }
 }
 
-query Project($chainId: Float!, $projectId: Float!) {
-  project(chainId: $chainId, projectId: $projectId) {
+query Project($chainId: Float!, $projectId: Float!, $version: Float!) {
+  project(chainId: $chainId, projectId: $projectId, version: $version) {
     suckerGroupId
     createdAt
   }

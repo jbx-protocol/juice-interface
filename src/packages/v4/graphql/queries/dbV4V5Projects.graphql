@@ -1,4 +1,4 @@
-query DBV4Projects($where: projectFilter, $limit: Int, $after: String) {
+query DBV4V5Projects($where: projectFilter, $limit: Int, $after: String) {
   projects(where: $where, limit: $limit, after: $after) {
     pageInfo {
       hasNextPage
@@ -6,6 +6,7 @@ query DBV4Projects($where: projectFilter, $limit: Int, $after: String) {
     }
     items {
       id
+      version
       suckerGroupId
       projectId
       chainId

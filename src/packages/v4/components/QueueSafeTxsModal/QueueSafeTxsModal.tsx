@@ -2,7 +2,6 @@ import { Button, Modal, Spin, Tooltip } from 'antd'
 import { JBChainId, useSuckers } from 'juice-sdk-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
-
 import { ApiFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { NETWORKS } from 'constants/networks'
@@ -48,7 +47,7 @@ export default function QueueSafeTxsModal({
   const [completedChains, setCompletedChains] = useState<Set<JBChainId>>(new Set())
   const [txResults, setTxResults] = useState<Map<JBChainId, SafeProposeTransactionResponse>>(new Map())
   
-  const { chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
+  const { eip1193Provider, chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
   const router = useRouter()
 
   const { data: suckers } = useSuckers()
@@ -59,7 +58,7 @@ export default function QueueSafeTxsModal({
 
   // Use provided chains or fall back to suckers chains
   const chains = chainsProps || suckersChains
-
+  
   const handleExecuteOnChain = useCallback(async (chainId: JBChainId) => {
     // Check if wallet is connected
     if (!userAddress) {
@@ -126,7 +125,7 @@ export default function QueueSafeTxsModal({
   const goToProject = useCallback(() => {
     router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId  }))
   }, [router, suckers])
-
+  
   return (
     <Modal
       open={open}

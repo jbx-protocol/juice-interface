@@ -33,6 +33,7 @@ export interface SafeProposeTransactionResponse {
 
 export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactionProps) {
   const { signer, userAddress, eip1193Provider } = useWallet()
+
   const [isLoading, setIsLoading] = useState(false)
 
   const proposeTransaction = async (
@@ -54,12 +55,12 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       const apiKit = new SafeApiKit({ chainId: BigInt(chainId) })
       
       // Convert addresses to checksum format
-      const checksumUserAddress = getAddress(userAddress)
+      const checksumSignerAddress = getAddress(userAddress)
       const checksumSafeAddress = getAddress(safeAddress)
       
       const protocolKit = await Safe.init({
         provider: eip1193Provider as unknown as Eip1193Provider,
-        signer: checksumUserAddress,
+        signer: checksumSignerAddress,
         safeAddress: checksumSafeAddress,
       })
 
@@ -94,20 +95,20 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
         options,
         onlyCalls: true,
       })
-      const txHash = await protocolKit.getTransactionHash(safeTx)
-      const signature = await protocolKit.signHash(txHash)
+      const safeTxHash = await protocolKit.getTransactionHash(safeTx)
+      const signature = await protocolKit.signTypedData(safeTx)
 
       // propose transaction to service
       await apiKit.proposeTransaction({
         safeAddress: checksumSafeAddress,
         safeTransactionData: safeTx.data,
-        safeTxHash: txHash,
-        senderAddress: checksumUserAddress,
+        safeTxHash,
+        senderAddress: checksumSignerAddress,
         senderSignature: signature.data,
       })
 
       return {
-        safeTxHash: txHash,
+        safeTxHash,
         nonce: safeTx.data.nonce.toString(),
       }
     } catch (error: unknown) {

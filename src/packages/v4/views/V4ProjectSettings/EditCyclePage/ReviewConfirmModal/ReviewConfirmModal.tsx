@@ -1,36 +1,37 @@
-import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4/utils/editRuleset'
-import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
 import { Trans, t } from '@lingui/macro'
-import { useEffect, useState } from 'react'
+import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
 import { useJBChainId, useJBContractContext, useJBProjectId, useJBRuleset, useSuckers } from 'juice-sdk-react'
+import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4/utils/editRuleset'
+import { useEffect, useState } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { Callout } from 'components/Callout/Callout'
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
-import { DetailsSectionDiff } from './DetailsSectionDiff'
-import ETHAmount from 'components/currency/ETHAmount'
 import { Form } from 'antd'
+import { Callout } from 'components/Callout/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import { PayoutsSectionDiff } from './PayoutsSectionDiff'
-import QueueSafeEditRulesetTxsModal from 'packages/v4/components/QueueSafeEditRulesetTxsModal'
-import type { RelayrPostBundleResponse } from 'juice-sdk-react'
-import { SectionCollapseHeader } from './SectionCollapseHeader'
-import { TokensSectionDiff } from './TokensSectionDiff'
 import TransactionModal from 'components/modals/TransactionModal'
-import { TransactionSuccessModal } from '../TransactionSuccessModal'
-import { emitErrorNotification } from 'utils/notifications'
-import moment from 'moment'
-import { useChainId } from 'wagmi'
-import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
-import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
+import { useWallet } from 'hooks/Wallet'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
+import moment from 'moment'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
+import QueueSafeEditRulesetTxsModal from 'packages/v4/components/QueueSafeEditRulesetTxsModal'
+import { useEditRulesetTx } from 'packages/v4/hooks/useEditRulesetTx'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { emitErrorNotification } from 'utils/notifications'
+import { useChainId } from 'wagmi'
+import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
+import { TransactionSuccessModal } from '../TransactionSuccessModal'
+import { DetailsSectionDiff } from './DetailsSectionDiff'
+import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
 import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
-import { useWallet } from 'hooks/Wallet'
+import { PayoutsSectionDiff } from './PayoutsSectionDiff'
+import { SectionCollapseHeader } from './SectionCollapseHeader'
+import { TokensSectionDiff } from './TokensSectionDiff'
 
 export function ReviewConfirmModal({
   open,
@@ -65,9 +66,12 @@ export function ReviewConfirmModal({
 
   // Omnichain edit state
   const { getEditQuote, sendRelayrTx, relayrBundle } = useOmnichainEditCycle()
+  // Direct single-chain tx hook
+  const editRulesetTx = useEditRulesetTx()
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(chainId)
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
+  const [txPending, setTxPending] = useState(false) // single-chain pending state
 
   const { data: suckers } = useSuckers()
 
@@ -162,6 +166,45 @@ export function ReviewConfirmModal({
     }
   }
 
+  // Direct single-chain confirm (no relayr)
+  const handleConfirmSingle = async () => {
+    if (isOmnichainProject) return // safety guard
+    if (walletConnectedToWrongChain) {
+      try {
+        await changeNetworks(chainId as JBChainId)
+      } catch (error) {
+        emitErrorNotification(`Error changing networks: ${error}`)
+        return
+      }
+    }
+    const formVals = editCycleForm!.getFieldsValue(true)
+    setConfirmLoading(true)
+    setTxPending(false)
+    try {
+      await editRulesetTx(formVals, {
+        onTransactionPending: () => {
+          setTxPending(true)
+        },
+        onTransactionConfirmed: () => {
+          setTxPending(false)
+          setConfirmLoading(false)
+          editCycleForm!.resetFields()
+          setEditCycleSuccessModalOpen(true)
+          onClose()
+        },
+        onTransactionError: (e) => {
+          setTxPending(false)
+          setConfirmLoading(false)
+          emitErrorNotification(e.message)
+        },
+      })
+    } catch (e) {
+      setTxPending(false)
+      setConfirmLoading(false)
+      emitErrorNotification((e as Error).message)
+    }
+  }
+
   // Poll and handle completion
   useEffect(() => {
     if (relayrBundle.isComplete) {
@@ -181,7 +224,9 @@ export function ReviewConfirmModal({
   const panelProps = { className: 'text-lg' }
 
   const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
-  const okText = isProjectOwnerGnosisSafe ? <Trans>Queue on Safe</Trans> : !txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>
+  const okText = isOmnichainProject
+    ? (isProjectOwnerGnosisSafe ? <Trans>Queue on Safe</Trans> : !txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>)
+    : <Trans>Queue ruleset</Trans>
   const mustStartAtOrAfterField = (
     <div className="mt-1">
       <Form.Item 
@@ -221,13 +266,13 @@ export function ReviewConfirmModal({
       <TransactionModal
         open={open}
         title={<Trans>Review & confirm</Trans>}
-        onOk={handleConfirmOmni}
+        onOk={isOmnichainProject ? handleConfirmOmni : handleConfirmSingle}
         okText={okText}
         okButtonProps={{ disabled: !formHasChanges }}
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
-        transactionPending={txSigning}
-        chainIds={projectChains}
-        relayrResponse={relayrBundle.response}
+        transactionPending={isOmnichainProject ? txSigning : txPending}
+        chainIds={isOmnichainProject ? projectChains : undefined}
+        relayrResponse={isOmnichainProject ? relayrBundle.response : undefined}
         cancelButtonProps={{ hidden: true }}
         onCancel={onClose}
       >           
@@ -293,7 +338,16 @@ export function ReviewConfirmModal({
           {mustStartAtOrAfterField}
           </div>
           ) : null}
-        {!txQuote && (
+        {!isOmnichainProject && (
+          <div className="mt-10 py-4 text-sm stroke-tertiary border-t rounded-none">
+              <Callout.Info>
+                <Trans>
+                  You'll be prompted a wallet signature to queue the updated ruleset.
+                </Trans>
+              </Callout.Info>
+          </div>
+        )}
+        {isOmnichainProject && !txQuote && (
           <div className="mt-10 py-4 text-sm stroke-tertiary border-t rounded-none">
               <Callout.Info>
               {isProjectOwnerGnosisSafe && isOmnichainProject ? (
@@ -308,7 +362,7 @@ export function ReviewConfirmModal({
               </Callout.Info>
           </div>
         )}
-        {txQuote ? (
+        {isOmnichainProject && txQuote ? (
           <div className="mb-4 mt-10">
             <div className="flex items-center justify-between">
               <span><Trans>Gas quote</Trans>:</span>

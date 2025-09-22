@@ -518,6 +518,9 @@ msgstr ""
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
 msgstr ""
 
+msgid "Queue ruleset"
+msgstr ""
+
 msgid "Manage project on {0}"
 msgstr ""
 
@@ -4173,6 +4176,9 @@ msgid "Save rules"
 msgstr ""
 
 msgid "<0>This project has no ETH available for redemptions</0>. You won't receive any ETH for burning your tokens."
+msgstr ""
+
+msgid "You'll be prompted a wallet signature to queue the updated ruleset."
 msgstr ""
 
 msgid "Change network"

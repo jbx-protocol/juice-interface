@@ -1,13 +1,14 @@
 import { GithubFilled, TwitterCircleFilled } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
-import ExternalLink from 'components/ExternalLink'
-import Logo from 'components/Logo'
-import Discord from 'components/icons/Discord'
-import { TERMS_OF_SERVICE_URL } from 'constants/links'
-import { useWallet } from 'hooks/Wallet'
-import { useFetchDeveloperWallets } from 'hooks/useFetchDeveloperWallets'
-import { isEqualAddress } from 'utils/address'
 import { LinkColProps, LinkColumn } from './LinkColumn'
+
+import ExternalLink from 'components/ExternalLink'
+import Discord from 'components/icons/Discord'
+import Logo from 'components/Logo'
+import { TERMS_OF_SERVICE_URL } from 'constants/links'
+import { useFetchDeveloperWallets } from 'hooks/useFetchDeveloperWallets'
+import { useWallet } from 'hooks/Wallet'
+import { isEqualAddress } from 'utils/address'
 
 const ImageButtons = [
   {
@@ -160,7 +161,7 @@ export function Footer() {
         </div>
 
         <div className="mt-32 flex justify-between border-t border-slate-400 pb-16 pt-5">
-          <span className="text-slate-200">© Juicebox 2024</span>
+          <span className="text-slate-200">© Juicebox 2025</span>
 
           <div className="flex gap-x-7">
             {gitCommit && <AppVersion gitCommit={gitCommit} />}

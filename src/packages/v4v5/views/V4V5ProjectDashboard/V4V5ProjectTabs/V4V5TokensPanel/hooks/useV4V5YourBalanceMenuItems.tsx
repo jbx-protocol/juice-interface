@@ -12,11 +12,11 @@ import { PopupMenuItem } from 'components/ui/PopupMenu'
 import { useWallet } from 'hooks/Wallet'
 import { useSuckersUnclaimedBalance } from 'packages/v4v5/hooks/useSuckersUnclaimedBalance'
 import { zeroAddress } from 'viem'
-import { useV4BalanceMenuItemsUserFlags } from './useV4V5BalanceMenuItemsUserFlags'
+import { useV4V5BalanceMenuItemsUserFlags } from './useV4V5BalanceMenuItemsUserFlags'
 
-export const useV4YourBalanceMenuItems = () => {
+export const useV4V5YourBalanceMenuItems = () => {
   const { canBurnTokens, canClaimErcTokens, canMintTokens } =
-    useV4BalanceMenuItemsUserFlags()
+    useV4V5BalanceMenuItemsUserFlags()
 
   const [redeemModalVisible, setRedeemModalVisible] = useState(false)
   const [claimTokensModalVisible, setClaimTokensModalVisible] = useState(false)

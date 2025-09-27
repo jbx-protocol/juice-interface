@@ -7,7 +7,7 @@ import {
 } from 'juice-sdk-react'
 import { useReadContract } from 'wagmi'
 
-export const useV4CurrentPayoutSplits = (chainId?: JBChainId) => {
+export const useV4V5CurrentPayoutSplits = (chainId?: JBChainId) => {
   const { projectId } = useJBProjectId(chainId)
 
   const { contractAddress } = useJBContractContext()

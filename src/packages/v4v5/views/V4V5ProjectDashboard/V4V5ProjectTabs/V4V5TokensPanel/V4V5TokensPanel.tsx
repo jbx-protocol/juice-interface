@@ -15,18 +15,18 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
-import { V4TokenHoldersModal } from 'packages/v4v5/components/modals/V4V5TokenHoldersModal/V4V5TokenHoldersModal'
+import { V4V5TokenHoldersModal } from 'packages/v4v5/components/modals/V4V5TokenHoldersModal/V4V5TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
 import { reloadWindow } from 'utils/windowUtils'
 import { ReservedTokensSelectedChainProvider } from '../V4V5CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
-import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4V5BalanceMenuItemsUserFlags'
+import { useV4V5BalanceMenuItemsUserFlags } from './hooks/useV4V5BalanceMenuItemsUserFlags'
 import { useV4V5TokensPanel } from './hooks/useV4V5TokensPanel'
-import { useV4YourBalanceMenuItems } from './hooks/useV4V5YourBalanceMenuItems'
-import { V4ClaimTokensModal } from './V4ClaimTokensModal'
-import { V4MintModal } from './V4MintModal'
-import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
-import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
+import { useV4V5YourBalanceMenuItems } from './hooks/useV4V5YourBalanceMenuItems'
+import { V4V5ClaimTokensModal } from './V4V5ClaimTokensModal'
+import { V4V5MintModal } from './V4V5MintModal'
+import { V4V5ReservedTokensSubPanel } from './V4V5ReservedTokensSubPanel'
+import { V4V5TokenRedemptionCallout } from './V4V5TokenRedemptionCallout'
 
 export const V4V5TokensPanel = () => {
   const { userTokenBalanceLoading, projectToken, totalTokenSupplyElement } =
@@ -34,7 +34,7 @@ export const V4V5TokensPanel = () => {
   const projectHasErc20Token = useProjectHasErc20Token()
   const { data: suckersBalance } = useSuckersUserTokenBalance()
 
-  const { canMintTokens } = useV4BalanceMenuItemsUserFlags()
+  const { canMintTokens } = useV4V5BalanceMenuItemsUserFlags()
 
   const [tokenHolderModalOpen, setTokenHolderModalOpen] = useState(false)
   const openTokenHolderModal = useCallback(
@@ -56,7 +56,7 @@ export const V4V5TokensPanel = () => {
     aggregatedUnclaimedBalance,
     // transferUnclaimedTokensModalVisible,
     // setTransferUnclaimedTokensModalVisible,
-  } = useV4YourBalanceMenuItems()
+  } = useV4V5YourBalanceMenuItems()
 
   const totalBalance =
     suckersBalance?.reduce((acc, curr) => {

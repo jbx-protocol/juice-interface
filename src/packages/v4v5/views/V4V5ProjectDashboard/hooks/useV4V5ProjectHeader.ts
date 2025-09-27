@@ -6,7 +6,7 @@ import {
 } from 'juice-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { useProjectQuery, useSuckerGroupQuery } from 'generated/v4/graphql'
+import { useProjectQuery, useSuckerGroupQuery } from 'generated/v4v5/graphql'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'

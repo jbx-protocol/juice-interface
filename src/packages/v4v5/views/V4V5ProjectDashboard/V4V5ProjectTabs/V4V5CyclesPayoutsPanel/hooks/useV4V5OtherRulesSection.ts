@@ -2,9 +2,9 @@ import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/Cycl
 import { useJBRulesetByChain } from 'packages/v4v5/hooks/useJBRulesetByChain'
 import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { useCyclesPanelSelectedChain } from '../contexts/CyclesPanelSelectedChainContext'
-import { useV4FormatConfigurationOtherRulesSection } from './useV4V5FormatConfigurationOtherRulesSection'
+import { useV4V5FormatConfigurationOtherRulesSection } from './useV4V5FormatConfigurationOtherRulesSection'
 
-export const useV4OtherRulesSection = (
+export const useV4V5OtherRulesSection = (
   type: 'current' | 'upcoming',
 ): ConfigurationPanelTableData => {
   const { selectedChainId } = useCyclesPanelSelectedChain()
@@ -14,7 +14,7 @@ export const useV4OtherRulesSection = (
     rulesetMetadata: upcomingRulesetMetadata, 
   } = useJBUpcomingRuleset(selectedChainId)
 
-  return useV4FormatConfigurationOtherRulesSection({
+  return useV4V5FormatConfigurationOtherRulesSection({
     rulesetMetadata,
     upcomingRulesetMetadata,
     ...(type === 'current' && {

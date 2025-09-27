@@ -3,8 +3,8 @@ import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 import { twMerge } from 'tailwind-merge'
-import { useV4CurrentUpcomingPayoutSplits } from './hooks/useV4V5CurrentUpcomingPayoutSplits'
-import { useV4ExportSplitsToCsv } from './hooks/useV4V5ExportSplitsToCsv'
+import { useV4V5CurrentUpcomingPayoutSplits } from './hooks/useV4V5CurrentUpcomingPayoutSplits'
+import { useV4V5ExportSplitsToCsv } from './hooks/useV4V5ExportSplitsToCsv'
 
 export const V4V5ExportPayoutsCsvItem = ({
   type,
@@ -12,7 +12,7 @@ export const V4V5ExportPayoutsCsvItem = ({
   type: 'current' | 'upcoming'
 }) => {
   const { splits: payoutSplits, isLoading } =
-    useV4CurrentUpcomingPayoutSplits(type)
+    useV4V5CurrentUpcomingPayoutSplits(type)
   const { projectId, chainId } = useJBProjectId()
   const { ruleset } = useJBRuleset({
     projectId,
@@ -24,7 +24,7 @@ export const V4V5ExportPayoutsCsvItem = ({
       : Number(ruleset.cycleNumber) + 1
     : undefined
   const disabled = !payoutSplits?.length
-  const { exportSplitsToCsv } = useV4ExportSplitsToCsv(
+  const { exportSplitsToCsv } = useV4V5ExportSplitsToCsv(
     payoutSplits ?? [],
     'payouts',
     fcNumber,

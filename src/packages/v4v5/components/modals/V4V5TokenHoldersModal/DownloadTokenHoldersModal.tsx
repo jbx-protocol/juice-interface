@@ -7,7 +7,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import {
   ParticipantSnapshotsQuery,
   useProjectQuery,
-} from 'generated/v4/graphql'
+} from 'generated/v4v5/graphql'
 
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'

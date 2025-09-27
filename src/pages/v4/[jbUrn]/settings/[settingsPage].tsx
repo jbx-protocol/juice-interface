@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { V4SettingsProvider } from 'packages/v4v5/contexts/V4SettingsProvider'
+import { V4V5SettingsProvider } from 'packages/v4v5/contexts/V4V5SettingsProvider'
 import { ProjectSettingsContent } from 'packages/v4v5/views/V4V5ProjectSettings/ProjectSettingsContent'
 import { SettingsPageKey } from 'packages/v4v5/views/V4V5ProjectSettings/ProjectSettingsDashboard'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
@@ -11,11 +11,11 @@ export default function V4CycleSettingsPage() {
   if (!settingsPage) return null
 
   return (
-    <V4SettingsProvider>
+    <V4V5SettingsProvider>
       <ProjectSettingsContent
         settingsPageKey={settingsPage as SettingsPageKey}
       />
-    </V4SettingsProvider>
+    </V4V5SettingsProvider>
   )
 }
 

@@ -12,7 +12,7 @@ import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { useMemo } from 'react'
 
-export const useV4TreasuryStats = () => {
+export const useV4V5TreasuryStats = () => {
   const { data: rulesetMetadata } = useJBRulesetMetadata()
 
   const { data: suckersBalance } = useSuckersNativeTokenBalance()

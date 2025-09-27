@@ -23,16 +23,16 @@ import { useMemo } from 'react'
 import { useReservedTokensSelectedChain } from '../../V4V5CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 import { useSuckersPendingReservedTokens } from 'packages/v4v5/hooks/useSuckersPendingReservedTokens'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
-import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
+import { useV4V5ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
 
-export const useV4ReservedTokensSubPanel = () => {
+export const useV4V5ReservedTokensSubPanel = () => {
   const { selectedChainId, setSelectedChainId } =
     useReservedTokensSelectedChain()
 
   const { projectId } = useJBProjectId(selectedChainId)
 
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf(selectedChainId)
-  const { splits: reservedTokensSplits } = useV4ReservedSplits(selectedChainId)
+  const { splits: reservedTokensSplits } = useV4V5ReservedSplits(selectedChainId)
 
   const { rulesetMetadata, ruleset } = useJBRulesetByChain(selectedChainId)
   const { rulesetMetadata: upcomingRulesetMetadata } = useJBUpcomingRuleset({ projectId, chainId: selectedChainId })

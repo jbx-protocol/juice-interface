@@ -11,7 +11,7 @@ import { t } from '@lingui/macro'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useMemo } from 'react'
 
-export const useV4FormatConfigurationTokenSection = ({
+export const useV4V5FormatConfigurationTokenSection = ({
   ruleset,
   rulesetMetadata,
   tokenSymbol: tokenSymbolRaw,

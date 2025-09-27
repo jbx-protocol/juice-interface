@@ -3,13 +3,13 @@ import { Trans, t } from '@lingui/macro'
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { Skeleton } from 'antd'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { V4ExportReservedTokensCsvItem } from './V4ExportReservedTokensCsvItem'
-import { V4ProjectAllocationRow } from '../V4V5CyclesPayoutsPanel/V4ProjectAllocationRow'
-import { V4SendReservedTokensButton } from './V4SendReservedTokensButton'
+import { V4V5ExportReservedTokensCsvItem } from './V4V5ExportReservedTokensCsvItem'
+import { V4V5ProjectAllocationRow } from '../V4V5CyclesPayoutsPanel/V4V5ProjectAllocationRow'
+import { V4V5SendReservedTokensButton } from './V4V5SendReservedTokensButton'
 import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
 import { twMerge } from 'tailwind-merge'
 import { useSuckers } from 'juice-sdk-react'
-import { useV4ReservedTokensSubPanel } from './hooks/useV4V5ReservedTokensSubPanel'
+import { useV4V5ReservedTokensSubPanel } from './hooks/useV4V5ReservedTokensSubPanel'
 
 export const V4V5ReservedTokensSubPanel = ({
   className,
@@ -18,7 +18,7 @@ export const V4V5ReservedTokensSubPanel = ({
 }) => {
 
   const { selectedChainId, setSelectedChainId, reservedList, aggregatedPendingReservedTokens, pendingReservedTokensElement, reservedPercent } =
-    useV4ReservedTokensSubPanel()
+    useV4V5ReservedTokensSubPanel()
 
   const { data: suckers } = useSuckers()
 

@@ -4,12 +4,12 @@ import { SuccessPayView } from 'packages/v4v5/components/ProjectDashboard/compon
 import { useProjectDispatch } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
 import { payRedeemActions } from 'packages/v4v5/components/ProjectDashboard/redux/payRedeemSlice'
 import { projectCartActions } from 'packages/v4v5/components/ProjectDashboard/redux/projectCartSlice'
-import { V4PayRedeemCard } from 'packages/v4v5/components/ProjectDashboard/V4V5PayRedeemCard/V4V5PayRedeemCard'
+import { V4V5PayRedeemCard } from 'packages/v4v5/components/ProjectDashboard/V4V5PayRedeemCard/V4V5PayRedeemCard'
 import { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
-import { V4ProjectHeader } from './V4ProjectHeader'
-import { V4ProjectTabs } from './V4V5ProjectTabs/V4V5ProjectTabs'
+import { V4V5ProjectHeader } from './V4V5ProjectHeader'
+import { V4V5ProjectTabs } from './V4V5ProjectTabs/V4V5ProjectTabs'
 
 export default function V4V5ProjectDashboard() {
   const { projectPayReceipt } = useProjectPageQueries()

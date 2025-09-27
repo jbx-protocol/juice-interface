@@ -9,8 +9,8 @@ import {
 import { Form } from 'antd'
 import { Ether } from 'juice-sdk-core'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
-import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4V5CurrentPayoutSplits'
-import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
+import { useV4V5CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4V5CurrentPayoutSplits'
+import { useV4V5ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
 import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 import { EditCycleFormFields } from '../EditCycleFormFields'
@@ -25,8 +25,8 @@ export const useLoadEditCycleData = () => {
   const { ruleset, rulesetMetadata, isLoading: rulesetLoading } = useJBRuleset({ projectId, chainId })
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } = useJBUpcomingRuleset({ projectId, chainId })
 
-  const { splits: reservedTokensSplits, isLoading: reservedSplitsLoading } = useV4ReservedSplits()
-  const { data: payoutSplits, isLoading: payoutsLoading } = useV4CurrentPayoutSplits()
+  const { splits: reservedTokensSplits, isLoading: reservedSplitsLoading } = useV4V5ReservedSplits()
+  const { data: payoutSplits, isLoading: payoutsLoading } = useV4V5CurrentPayoutSplits()
   const { data: payoutLimit, isLoading: payoutLimitLoading } = usePayoutLimit()
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
   const payoutLimitAmount = useMemo(

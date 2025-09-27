@@ -7,7 +7,7 @@ import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { useV4V5UserTotalTokensBalance } from 'packages/v4v5/contexts/V4V5UserTotalTokensBalanceProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { useSuckersTotalSupply } from 'packages/v4v5/hooks/useSuckersTotalSupply'
-import { useV4TotalTokenSupply } from 'packages/v4v5/hooks/useV4V5TotalTokenSupply'
+import { useV4V5TotalTokenSupply } from 'packages/v4v5/hooks/useV4V5TotalTokenSupply'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -16,7 +16,7 @@ export const useV4V5TokensPanel = () => {
   const { token } = useJBTokenContext()
   const tokenAddress = token?.data?.address
 
-  const { data: _totalTokenSupply } = useV4TotalTokenSupply()
+  const { data: _totalTokenSupply } = useV4V5TotalTokenSupply()
 
   const projectToken = tokenSymbolText({
     tokenSymbol: token?.data?.symbol,

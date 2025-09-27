@@ -7,12 +7,12 @@ import { useOnScreen } from 'hooks/useOnScreen'
 import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
-import V4AboutPanel from './V4V5AboutPanel'
-import { V4ActivityPanel } from './V4V5ActivityPanel/V4V5ActivityPanel'
+import V4V5AboutPanel from './V4V5AboutPanel'
+import { V4V5ActivityPanel } from './V4V5ActivityPanel/V4V5ActivityPanel'
 import { CyclesPanelSelectedChainProvider } from './V4V5CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
-import { V4CyclesPayoutsPanel } from './V4V5CyclesPayoutsPanel/V4V5CyclesPayoutsPanel'
-import { V4NftRewardsPanel } from './V4V5NftRewardsPanel/V4V5NftRewardsPanel'
-import { V4TokensPanel } from './V4V5TokensPanel/V4V5TokensPanel'
+import { V4V5CyclesPayoutsPanel } from './V4V5CyclesPayoutsPanel/V4V5CyclesPayoutsPanel'
+import { V4V5NftRewardsPanel } from './V4V5NftRewardsPanel/V4V5NftRewardsPanel'
+import { V4V5TokensPanel } from './V4V5TokensPanel/V4V5TokensPanel'
 
 type ProjectTabConfig = {
   id: string

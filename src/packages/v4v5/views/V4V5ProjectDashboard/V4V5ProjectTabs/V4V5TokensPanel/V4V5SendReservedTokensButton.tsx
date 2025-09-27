@@ -4,10 +4,10 @@ import { useCallback, useState } from 'react'
 import { ArrowUpCircleIcon } from '@heroicons/react/24/outline'
 import { JBChainId } from 'juice-sdk-react'
 import { Trans } from '@lingui/macro'
-import V4DistributeReservedTokensModal from './V4DistributeReservedTokensModal'
+import V4V5DistributeReservedTokensModal from './V4V5DistributeReservedTokensModal'
 import { reloadWindow } from 'utils/windowUtils'
 import { twMerge } from 'tailwind-merge'
-import { useV4ReservedTokensSubPanel } from './hooks/useV4V5ReservedTokensSubPanel'
+import { useV4V5ReservedTokensSubPanel } from './hooks/useV4V5ReservedTokensSubPanel'
 
 export const V4V5SendReservedTokensButton = ({
   className,
@@ -18,7 +18,7 @@ export const V4V5SendReservedTokensButton = ({
   containerClassName?: string
   chainId: JBChainId | undefined
 }) => {
-  const { aggregatedPendingReservedTokens } = useV4ReservedTokensSubPanel()
+  const { aggregatedPendingReservedTokens } = useV4V5ReservedTokensSubPanel()
 
   const [open, setOpen] = useState(false)
   const openModal = useCallback(() => setOpen(true), [])

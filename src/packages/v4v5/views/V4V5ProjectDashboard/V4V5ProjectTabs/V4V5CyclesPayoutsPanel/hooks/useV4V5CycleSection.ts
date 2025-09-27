@@ -4,9 +4,9 @@ import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
 import { useUpcomingPayoutLimit } from 'packages/v4v5/hooks/useUpcomingPayoutLimit'
 import { useCyclesPanelSelectedChain } from '../contexts/CyclesPanelSelectedChainContext'
-import { useV4FormatConfigurationCycleSection } from './useV4V5FormatConfigurationCycleSection'
+import { useV4V5FormatConfigurationCycleSection } from './useV4V5FormatConfigurationCycleSection'
 
-export const useV4CycleSection = (
+export const useV4V5CycleSection = (
   type: 'current' | 'upcoming',
 ): ConfigurationPanelTableData => {
   const { selectedChainId } = useCyclesPanelSelectedChain()
@@ -23,7 +23,7 @@ export const useV4CycleSection = (
   const upcomingPayoutLimitAmount = upcomingPayoutLimit?.amount
   const upcomingPayoutLimitCurrency = upcomingPayoutLimit?.currency
   
-  return useV4FormatConfigurationCycleSection({
+  return useV4V5FormatConfigurationCycleSection({
     ruleset,
     payoutLimitAmountCurrency: {
       amount: payoutLimitAmount,

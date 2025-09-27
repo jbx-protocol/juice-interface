@@ -22,7 +22,7 @@ import { useWallet } from 'hooks/Wallet'
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { PayoutsTable } from 'packages/v4v5/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
-import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4V5CurrentPayoutSplits'
+import { useV4V5CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4V5CurrentPayoutSplits'
 import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { emitErrorNotification } from 'utils/notifications'
@@ -57,7 +57,7 @@ export default function V4V5DistributePayoutsModal({
     projectId: selectedChainProjectId,
   })
 
-  const { data: payoutSplits } = useV4CurrentPayoutSplits(selectedChainId)
+  const { data: payoutSplits } = useV4V5CurrentPayoutSplits(selectedChainId)
 
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()

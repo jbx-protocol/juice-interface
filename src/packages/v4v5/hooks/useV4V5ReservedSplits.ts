@@ -6,7 +6,7 @@ import {
 } from 'juice-sdk-react'
 import { useReadContract } from 'wagmi'
 const RESERVED_SPLITS_GROUP_ID = 1n
-export const useV4ReservedSplits = (chainId?: JBChainId) => {
+export const useV4V5ReservedSplits = (chainId?: JBChainId) => {
   const { projectId } = useJBProjectId(chainId)
   const { ruleset } = useJBRuleset({
     projectId,

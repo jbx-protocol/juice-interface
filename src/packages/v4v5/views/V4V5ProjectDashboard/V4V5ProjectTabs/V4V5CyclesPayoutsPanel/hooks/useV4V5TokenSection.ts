@@ -4,9 +4,9 @@ import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/Cycl
 import { useJBRulesetByChain } from 'packages/v4v5/hooks/useJBRulesetByChain'
 import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { useCyclesPanelSelectedChain } from '../contexts/CyclesPanelSelectedChainContext'
-import { useV4FormatConfigurationTokenSection } from './useV4V5FormatConfigurationTokenSection'
+import { useV4V5FormatConfigurationTokenSection } from './useV4V5FormatConfigurationTokenSection'
 
-export const useV4TokenSection = (
+export const useV4V5TokenSection = (
   type: 'current' | 'upcoming',
 ): ConfigurationPanelTableData => {
   const { token } = useJBTokenContext()
@@ -22,7 +22,7 @@ export const useV4TokenSection = (
     isLoading: upcomingRulesetLoading 
   } = useJBUpcomingRuleset(selectedChainId)
 
-  return useV4FormatConfigurationTokenSection({
+  return useV4V5FormatConfigurationTokenSection({
     ruleset,
     rulesetMetadata,
     tokenSymbol,

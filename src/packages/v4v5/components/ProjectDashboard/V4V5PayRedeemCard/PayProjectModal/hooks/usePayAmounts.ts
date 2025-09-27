@@ -56,7 +56,7 @@ export const usePayAmounts = () => {
       : nftCreditsData
 
     // And only up to the total pay amount
-    const nftCreditsApplied = payAmountRaw.eth.lt(maxApplicableCredits)
+    const nftCreditsApplied = payAmountRaw?.eth.lt(maxApplicableCredits)
       ? payAmountRaw.eth
       : maxApplicableCredits
 

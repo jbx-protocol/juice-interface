@@ -3,7 +3,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
 import { Fragment, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { V4CurrentUpcomingConfigurationPanel } from './V4CurrentUpcomingConfigurationPanel'
+import { V4V5CurrentUpcomingConfigurationPanel } from './V4V5CurrentUpcomingConfigurationPanel'
 
 export const V4V5ConfigurationDisplayCard = ({
   type,

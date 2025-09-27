@@ -2,11 +2,9 @@ import { Trans, t } from '@lingui/macro'
 import { DEADLINE_EXPLANATION, RULESET_EXPLANATION } from 'components/strings'
 
 import Loading from 'components/Loading'
-import { useWallet } from 'hooks/Wallet'
 import { JBChainId } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
@@ -39,9 +37,6 @@ export default function Create() {
   const safeQueuedRaw = router.query.safeQueued as string
   const chainsRaw = router.query.chains as string
   const initialStateLoading = useLoadingInitialStateFromQuery()
-  const { userAddress } = useWallet()
-  const { inputProjectOwner,
-    } = useAppSelector(state => state.creatingV2Project)
   const projectIds = useMemo(() => {
     if (!projectIdsRaw) {
       return undefined
@@ -86,10 +81,11 @@ export default function Create() {
           <Trans>Create a project</Trans>
         </span>
       </h1>
-      <div className="flex justify-end m-auto max-w-3xl mt-[-32px]"><SaveLoadIcons /></div>
+      <div className="m-auto mt-[-32px] flex max-w-3xl justify-end">
+        <SaveLoadIcons />
+      </div>
       {/* TODO: Remove wizard-create once form item css override is replaced */}
       <div className="wizard-create">
-
         <Wizard className="pb-28" doneText={<DeployProjectButtonText />}>
           <Wizard.Page
             name="projectDetails"
@@ -111,16 +107,16 @@ export default function Create() {
             description={
               <Trans>
                 <p>
-                  Anyone can pay ETH to your project. If you wish, specify to which Ethereum wallets or other Juicebox projects this ETH can be split as it comes in.
+                  Anyone can pay ETH to your project. If you wish, specify to
+                  which Ethereum wallets or other Juicebox projects this ETH can
+                  be split as it comes in.
                 </p>
                 <p>
-                  ETH which <em>isn't</em> paid out will be available for
-                  token cash outs, or for use in future rulesets. Payouts reset
-                  each ruleset.
+                  ETH which <em>isn't</em> paid out will be available for token
+                  cash outs, or for use in future rulesets. Payouts reset each
+                  ruleset.
                 </p>
-                <p>
-                  Payouts reset each ruleset.
-                </p>
+                <p>Payouts reset each ruleset.</p>
               </Trans>
             }
           >
@@ -131,9 +127,17 @@ export default function Create() {
             title={t`Token`}
             description={
               <Trans>
-                <p>When people pay your project, they receive its tokens.</p> 
-                <p>Tokens can be cashed out to reclaim ETH from your project depending on how you set your rules below – useful for refunds or sharing funds. They can also be used for utilities across other platforms, like governance or community access.</p> 
-                <p>You can reserve some of your tokens as they are issued and split to your choice of recipients.</p>
+                <p>When people pay your project, they receive its tokens.</p>
+                <p>
+                  Tokens can be cashed out to reclaim ETH from your project
+                  depending on how you set your rules below – useful for refunds
+                  or sharing funds. They can also be used for utilities across
+                  other platforms, like governance or community access.
+                </p>
+                <p>
+                  You can reserve some of your tokens as they are issued and
+                  split to your choice of recipients.
+                </p>
               </Trans>
             }
           >
@@ -150,7 +154,11 @@ export default function Create() {
             description={
               <Trans>
                 <p>Reward your supporters with custom NFTs.</p>
-                <p>You can modify each NFT's image later, as well as add new NFTs or remove ones you no longer want. You will not be able to modify any NFT's price or total supply after project launch.</p>
+                <p>
+                  You can modify each NFT's image later, as well as add new NFTs
+                  or remove ones you no longer want. You will not be able to
+                  modify any NFT's price or total supply after project launch.
+                </p>
               </Trans>
             }
           >

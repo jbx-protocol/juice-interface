@@ -13,7 +13,7 @@ import { useCyclesPanelSelectedChain } from '../V4V5ProjectTabs/V4V5CyclesPayout
 import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 
-export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
+export const useV4V5CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { selectedChainId } = useCyclesPanelSelectedChain()
   const { projectId } = useJBProjectId(selectedChainId)
   const { ruleset, isLoading: rulesetLoading } = useJBRuleset({

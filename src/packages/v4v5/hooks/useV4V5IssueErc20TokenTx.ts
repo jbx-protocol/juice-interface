@@ -9,7 +9,7 @@ import { Address, zeroAddress } from 'viem'
 import { BaseTxOpts } from '../models/transactions'
 import { wagmiConfig } from '../wagmiConfig'
 
-export function useV4IssueErc20TokenTx() {
+export function useV4V5IssueErc20TokenTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { projectId, contracts } = useJBContractContext()
 

@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { usePayEventsQuery, useProjectQuery } from 'generated/v4/graphql'
+import { usePayEventsQuery, useProjectQuery } from 'generated/v4v5/graphql'
 import { Ether } from 'juice-sdk-core'
 import { useJBChainId } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'

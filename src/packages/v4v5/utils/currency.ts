@@ -5,15 +5,15 @@ import {
 } from 'constants/currency'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import {
-  V4CurrencyETH,
+  V4V5CurrencyETH,
   V4V5CurrencyOption,
-  V4CurrencyUSD,
+  V4V5CurrencyUSD,
 } from '../models/v4CurrencyOption'
 
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 
-export const V4V5_CURRENCY_ETH: V4CurrencyETH = 1 
-export const V4V5_CURRENCY_USD: V4CurrencyUSD = 2
+export const V4V5_CURRENCY_ETH: V4V5CurrencyETH = 1
+export const V4V5_CURRENCY_USD: V4V5CurrencyUSD = 2
 
 export const V4V5_CURRENCY_METADATA: Record<V4V5CurrencyOption, CurrencyMetadata> =
   {

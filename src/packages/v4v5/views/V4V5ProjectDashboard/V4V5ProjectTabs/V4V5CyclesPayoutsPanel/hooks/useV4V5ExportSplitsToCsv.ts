@@ -47,7 +47,7 @@ const prepareSplitsCsv = (
   return rows
 }
 
-export const useV4ExportSplitsToCsv = (
+export const useV4V5ExportSplitsToCsv = (
   splits: JBSplit[],
   splitName = 'splits',
   fcNumber?: number,

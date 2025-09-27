@@ -17,6 +17,10 @@ const FEATURE_FLAG_DEFAULTS: {
     mainnet: true,
     sepolia: true, // really, this is just the testnet site now
   },
+  [FEATURE_FLAGS.V5]: {
+    mainnet: true,
+    sepolia: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

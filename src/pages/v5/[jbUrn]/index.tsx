@@ -79,8 +79,7 @@ const _Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
     return null
   }
 
-  // TODO: Update feature flag for V5
-  if (!featureFlagEnabled(FEATURE_FLAGS.V4)) {
+  if (!featureFlagEnabled(FEATURE_FLAGS.V5)) {
     return (
       <div className="flex h-screen w-screen items-center justify-center">
         Too early sir. Please come back later. 🫡

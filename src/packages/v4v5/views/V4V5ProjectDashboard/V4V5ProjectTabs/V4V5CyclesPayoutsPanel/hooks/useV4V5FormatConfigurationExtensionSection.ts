@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { etherscanLink } from 'utils/etherscan'
 
-export const useV4FormatConfigurationExtensionSection = ({
+export const useV4V5FormatConfigurationExtensionSection = ({
   rulesetMetadata,
   upcomingRulesetMetadata,
 }: {

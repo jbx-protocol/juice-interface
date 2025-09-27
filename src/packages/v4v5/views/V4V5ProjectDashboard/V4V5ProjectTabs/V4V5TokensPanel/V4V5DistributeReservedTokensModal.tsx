@@ -13,7 +13,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useMemo } from 'react'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
-import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
+import { useV4V5ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
 import { useWallet } from 'hooks/Wallet'
 import { wagmiConfig } from 'packages/v4v5/wagmiConfig'
 import { waitForTransactionReceipt } from '@wagmi/core'
@@ -45,7 +45,7 @@ export default function V4V5DistributeReservedTokensModal({
   // Get data for the selected chain in the modal
   const { projectId } = useJBProjectId(selectedChainId)
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf(selectedChainId)
-  const { splits: reservedTokensSplits } = useV4ReservedSplits(selectedChainId)
+  const { splits: reservedTokensSplits } = useV4V5ReservedSplits(selectedChainId)
 
   const { token } = useJBTokenContext()
   const tokenSymbol = token?.data?.symbol

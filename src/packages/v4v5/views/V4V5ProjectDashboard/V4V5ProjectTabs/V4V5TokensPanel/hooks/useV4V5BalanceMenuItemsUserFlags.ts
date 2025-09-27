@@ -8,7 +8,7 @@ import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { zeroAddress } from 'viem'
 
-export const useV4BalanceMenuItemsUserFlags = () => {
+export const useV4V5BalanceMenuItemsUserFlags = () => {
   const { data: rulesetMetadata } = useJBRulesetMetadata()
   const chainId = useChainId()
   const tokensAddress = jbContractAddress['4'][JBCoreContracts.JBTokens][chainId as unknown as keyof typeof jbContractAddress['4'][JBCoreContracts.JBTokens]]

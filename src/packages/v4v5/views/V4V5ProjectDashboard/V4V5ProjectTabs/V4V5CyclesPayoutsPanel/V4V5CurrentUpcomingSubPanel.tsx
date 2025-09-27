@@ -11,11 +11,11 @@ import { RulesetCountdownProvider } from 'packages/v4v5/contexts/RulesetCountdow
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
-import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4V5CurrentUpcomingSubPanel'
+import { useV4V5CurrentUpcomingSubPanel } from '../../hooks/useV4V5CurrentUpcomingSubPanel'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
-import { useV4UpcomingRulesetHasChanges } from './hooks/useV4V5UpcomingRulesetHasChanges'
-import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
-import { V4PayoutsSubPanel } from './V4PayoutsSubPanel'
+import { useV4V5UpcomingRulesetHasChanges } from './hooks/useV4V5UpcomingRulesetHasChanges'
+import { V4V5ConfigurationDisplayCard } from './V4V5ConfigurationDisplayCard'
+import { V4V5PayoutsSubPanel } from './V4V5PayoutsSubPanel'
 
 function CountdownClock({ rulesetUnlocked }: { rulesetUnlocked: boolean }) {
   const { timeRemainingText } = useRulesetCountdown()
@@ -36,8 +36,8 @@ export const V4V5CurrentUpcomingSubPanel = ({
   const [rulesetCrossChainDiffModalOpen, setRulesetCrossChainDiffModalOpen] =
     useState<boolean>(false)
 
-  const info = useV4CurrentUpcomingSubPanel(id)
-  const { hasChanges, loading } = useV4UpcomingRulesetHasChanges()
+  const info = useV4V5CurrentUpcomingSubPanel(id)
+  const { hasChanges, loading } = useV4V5UpcomingRulesetHasChanges()
   const { selectedChainId, setSelectedChainId } = useCyclesPanelSelectedChain()
   // const { data: rulesetsDiffAcrossChains } = useProjectRulesetsDiffAcrossChains({ rulesetNumber: info.rulesetNumber} )
 
@@ -178,7 +178,7 @@ export const V4V5CurrentUpcomingSubPanel = ({
               />
             )}
           </div>
-          {/* Gets data from useV4CurrentUpcomingConfigurationPanel */}
+          {/* Gets data from useV4V5CurrentUpcomingConfigurationPanel */}
           <V4V5ConfigurationDisplayCard type={info.type} />
         </div>
 

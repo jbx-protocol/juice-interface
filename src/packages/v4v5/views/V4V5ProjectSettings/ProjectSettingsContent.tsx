@@ -97,7 +97,7 @@ export function ProjectSettingsContent({
   )
 
   const hasExistingNfts = !isZeroAddress(rulesetMetadata?.data?.dataHook)
-  const pageTitle = V4SettingsPageKeyTitleMap(hasExistingNfts)[settingsPageKey]
+  const pageTitle = V4V5SettingsPageKeyTitleMap(hasExistingNfts)[settingsPageKey]
 
   return (
     <ProjectSettingsLayout>

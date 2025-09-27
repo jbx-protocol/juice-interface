@@ -1,8 +1,8 @@
 import { useMemo } from "react"
-import { useV4CurrentUpcomingConfigurationPanel } from "./useV4V5CurrentUpcomingConfigurationPanel"
+import { useV4V5CurrentUpcomingConfigurationPanel } from "./useV4V5CurrentUpcomingConfigurationPanel"
 
-export const useV4UpcomingRulesetHasChanges = () => {
-  const data = useV4CurrentUpcomingConfigurationPanel('upcoming')
+export const useV4V5UpcomingRulesetHasChanges = () => {
+  const data = useV4V5CurrentUpcomingConfigurationPanel('upcoming')
 
   const loading = useMemo(
     () =>

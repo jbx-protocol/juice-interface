@@ -10,8 +10,8 @@ import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
 import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import assert from 'utils/assert'
 import { feeForAmount } from 'utils/math'
-import { useV4CurrentUpcomingPayoutLimit } from './useV4V5CurrentUpcomingPayoutLimit'
-import { useV4CurrentUpcomingPayoutSplits } from './useV4V5CurrentUpcomingPayoutSplits'
+import { useV4V5CurrentUpcomingPayoutLimit } from './useV4V5CurrentUpcomingPayoutLimit'
+import { useV4V5CurrentUpcomingPayoutSplits } from './useV4V5CurrentUpcomingPayoutSplits'
 import { useV4V5DistributableAmount } from './useV4V5DistributableAmount'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4v5/utils/v4Splits'
@@ -34,8 +34,8 @@ const calculateSplitAmountWad = (
   return splitValue ? splitValue - feeAmount : undefined
 }
 
-export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
-  const { splits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
+export const useV4V5PayoutsSubPanel = (type: 'current' | 'upcoming') => {
+  const { splits, isLoading } = useV4V5CurrentUpcomingPayoutSplits(type)
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
   const { contractAddress } = useJBContractContext()
   const terminalAddress = contractAddress(JBCoreContracts.JBMultiTerminal)
@@ -51,7 +51,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { distributableAmount } = useV4V5DistributableAmount({ chainId, projectId })
 
   const { payoutLimit, payoutLimitCurrency } =
-    useV4CurrentUpcomingPayoutLimit(type)
+    useV4V5CurrentUpcomingPayoutLimit(type)
 
   const payoutLimitCurrencyName = V4V5CurrencyName(
     payoutLimitCurrency as V4V5CurrencyOption,

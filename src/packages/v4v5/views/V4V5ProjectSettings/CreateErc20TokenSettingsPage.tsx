@@ -17,7 +17,7 @@ import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { emitErrorNotification } from 'utils/notifications'
 import { useDeployOmnichainErc20 } from 'packages/v4v5/hooks/useDeployOmnichainErc20'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
-import { useV4IssueErc20TokenTx } from 'packages/v4v5/hooks/useV4V5IssueErc20TokenTx'
+import { useV4V5IssueErc20TokenTx } from 'packages/v4v5/hooks/useV4V5IssueErc20TokenTx'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 
 export function CreateErc20TokenSettingsPage() {
@@ -25,7 +25,7 @@ export function CreateErc20TokenSettingsPage() {
   const [confirmLoading, setConfirmLoading] = useState<boolean>()
   const [transactionModalOpen, setTransactionModalOpen] =
     useState<boolean>(false)
-  const issueErc20TokenTx = useV4IssueErc20TokenTx()
+  const issueErc20TokenTx = useV4V5IssueErc20TokenTx()
   const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4V5WalletHasPermission(
     V4V5OperatorPermission.DEPLOY_ERC20,

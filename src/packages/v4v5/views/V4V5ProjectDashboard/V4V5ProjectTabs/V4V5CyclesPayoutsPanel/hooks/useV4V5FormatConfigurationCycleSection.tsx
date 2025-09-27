@@ -12,7 +12,7 @@ import { useMemo } from 'react'
 import { formatTime } from 'utils/format/formatTime'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
 
-export const useV4FormatConfigurationCycleSection = ({
+export const useV4V5FormatConfigurationCycleSection = ({
   ruleset,
   payoutLimitAmountCurrency,
   upcomingRuleset,

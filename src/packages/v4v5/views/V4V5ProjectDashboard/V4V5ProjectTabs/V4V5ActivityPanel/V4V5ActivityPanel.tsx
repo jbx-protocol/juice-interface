@@ -3,12 +3,12 @@ import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import Loading from 'components/Loading'
 import VolumeChart from 'components/VolumeChart'
 import { PV_V4 } from 'constants/pv'
-import { useProjectQuery } from 'generated/v4/graphql'
+import { useProjectQuery } from 'generated/v4v5/graphql'
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { Suspense } from 'react'
-import { V4ActivityList } from './V4ActivityList'
+import { V4V5ActivityList } from './V4V5ActivityList'
 
 export function V4V5ActivityPanel() {
   const { projectId } = useJBContractContext()

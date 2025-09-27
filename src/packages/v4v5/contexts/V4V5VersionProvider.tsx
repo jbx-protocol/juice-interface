@@ -1,8 +1,7 @@
 import React, { createContext, useContext, PropsWithChildren, useMemo } from 'react'
 import { useJBContractContext, useJBProjectMetadataContext } from 'juice-sdk-react'
-import { useProjectQuery } from 'generated/v4/graphql'
+import { useProjectQuery } from 'generated/v4v5/graphql'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
-import { PV_V4 } from 'constants/pv'
 
 interface V4V5VersionContextType {
   version: 4 | 5
@@ -37,16 +36,18 @@ export const V4V5VersionProvider: React.FC<V4V5VersionProviderProps> = ({
     variables: {
       projectId: Number(projectId),
       chainId: chainId || 0,
-      version: parseInt(PV_V4) // Initial query, will get actual version from response
+      version: defaultVersion // Use defaultVersion for initial query
     },
     skip: !projectId || !chainId,
   })
 
   const version = useMemo(() => {
-    // TODO: Get actual version from bendystraw when available
-    // For now, we determine version based on the URL path (v4 or v5)
+    // Use the version from bendystraw if available, otherwise fall back to defaultVersion
+    if (data?.project?.version) {
+      return data.project.version as 4 | 5
+    }
     return defaultVersion
-  }, [defaultVersion])
+  }, [data?.project?.version, defaultVersion])
 
   const value = useMemo(() => ({
     version,

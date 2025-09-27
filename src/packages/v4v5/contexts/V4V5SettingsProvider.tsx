@@ -10,8 +10,13 @@ import { EditCycleFormProvider } from '../views/V4V5ProjectSettings/EditCyclePag
 import { V4V5NftRewardsProvider } from './V4V5NftRewards/V4V5NftRewardsProvider'
 import V4V5ProjectMetadataProvider from './V4V5ProjectMetadataProvider'
 
-export const V4V5SettingsProvider: React.FC<React.PropsWithChildren> = ({
+interface V4V5SettingsProviderProps extends React.PropsWithChildren {
+  version?: 4 | 5
+}
+
+export const V4V5SettingsProvider: React.FC<V4V5SettingsProviderProps> = ({
   children,
+  version = 4, // Default to v4 for backwards compatibility
 }) => {
   const router = useRouter()
   const { projectId, chainId } = jbUrn(router.query.jbUrn as string) ?? {}
@@ -23,7 +28,7 @@ export const V4V5SettingsProvider: React.FC<React.PropsWithChildren> = ({
       <JBProjectProvider
         chainId={chainId}
         projectId={projectId}
-        version={4}
+        version={version}
         bendystraw={{
           apiKey: '',
         }}

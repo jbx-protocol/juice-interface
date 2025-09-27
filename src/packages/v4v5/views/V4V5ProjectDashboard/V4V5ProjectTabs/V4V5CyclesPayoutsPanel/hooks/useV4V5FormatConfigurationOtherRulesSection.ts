@@ -7,7 +7,7 @@ import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairTo
 import { JBRulesetMetadata } from 'juice-sdk-core'
 import { useMemo } from 'react'
 
-export const useV4FormatConfigurationOtherRulesSection = ({
+export const useV4V5FormatConfigurationOtherRulesSection = ({
   rulesetMetadata,
   upcomingRulesetMetadata,
 }: {

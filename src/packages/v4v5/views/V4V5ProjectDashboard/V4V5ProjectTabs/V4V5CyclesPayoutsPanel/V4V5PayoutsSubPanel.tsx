@@ -10,11 +10,11 @@ import { JBChainId } from 'juice-sdk-core'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useV4PayoutsSubPanel } from './hooks/useV4V5PayoutsSubPanel'
-import { useV4TreasuryStats } from './hooks/useV4V5TreasuryStats'
-import { V4ExportPayoutsCsvItem } from './V4ExportPayoutsCsvItem'
-import { V4ProjectAllocationRow } from './V4ProjectAllocationRow'
-import { V4SendPayoutsButton } from './V4SendPayoutsButton'
+import { useV4V5PayoutsSubPanel } from './hooks/useV4V5PayoutsSubPanel'
+import { useV4V5TreasuryStats } from './hooks/useV4V5TreasuryStats'
+import { V4V5ExportPayoutsCsvItem } from './V4V5ExportPayoutsCsvItem'
+import { V4V5ProjectAllocationRow } from './V4V5ProjectAllocationRow'
+import { V4V5SendPayoutsButton } from './V4V5SendPayoutsButton'
 
 export const V4V5PayoutsSubPanel = ({
   className,
@@ -24,14 +24,14 @@ export const V4V5PayoutsSubPanel = ({
   type: 'current' | 'upcoming'
 }) => {
   const { payouts, isLoading, totalPayoutAmount, payoutLimit } =
-    useV4PayoutsSubPanel(type)
+    useV4V5PayoutsSubPanel(type)
   const {
     totalTreasuryBalance,
     suckersBalance,
     surplusElement,
     availableToPayout,
     cashOutTaxRate,
-  } = useV4TreasuryStats()
+  } = useV4V5TreasuryStats()
 
   const surplusTooltip = React.useMemo(
     () =>

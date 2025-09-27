@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
+import { useParticipantsQuery, useProjectQuery } from 'generated/v4v5/graphql'
 import {
   useJBChainId,
   useJBContractContext,
@@ -11,7 +11,7 @@ import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
-import { useV4TotalTokenSupply } from '../../../hooks/useV4V5TotalTokenSupply'
+import { useV4V5TotalTokenSupply } from '../../../hooks/useV4V5TotalTokenSupply'
 import HoldersList from './HoldersList'
 import TokenDistributionChart from './TokenDistributionChart'
 
@@ -30,7 +30,7 @@ export const V4V5TokenHoldersModal = ({
   const tokenAddress = token?.data?.address
   const tokenSymbol = token?.data?.symbol
 
-  const { data: totalTokenSupply } = useV4TotalTokenSupply()
+  const { data: totalTokenSupply } = useV4V5TotalTokenSupply()
 
   const { data: project } = useProjectQuery({
     client: bendystrawClient,

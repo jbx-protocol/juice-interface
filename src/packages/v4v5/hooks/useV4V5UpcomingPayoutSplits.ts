@@ -7,7 +7,7 @@ import { useReadContract } from 'wagmi'
 
 import { useJBUpcomingRuleset } from './useJBUpcomingRuleset'
 
-export const useV4UpcomingPayoutSplits = (chainId?: JBChainId) => {
+export const useV4V5UpcomingPayoutSplits = (chainId?: JBChainId) => {
   const { projectId } = useJBProjectId(chainId)
 
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } =

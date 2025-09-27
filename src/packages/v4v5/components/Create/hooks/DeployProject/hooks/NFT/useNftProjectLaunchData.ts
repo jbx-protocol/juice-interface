@@ -4,7 +4,6 @@ import {
   JBCoreContracts,
   NATIVE_TOKEN_DECIMALS,
 } from 'juice-sdk-core'
-import { getContractVersionString } from '../../../../../utils/contractVersion'
 import { JBChainId } from 'juice-sdk-react'
 import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
 import {
@@ -31,7 +30,6 @@ export function useNftProjectLaunchData(version: 4 | 5 = 5) {
   )
   const getStandardProjectLaunchData = useStandardProjectLaunchData(version)
   const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
-  const versionString = getContractVersionString(version)
 
   const collectionName = nftRewards.collectionMetadata.name
     ? nftRewards.collectionMetadata.name
@@ -57,10 +55,11 @@ export function useNftProjectLaunchData(version: 4 | 5 = 5) {
     chainId: JBChainId
     withStartBuffer?: boolean
   }) => {
+    // Use JBController4_1 for v4, JBController for v5
     const defaultJBController = chainId
-      ? (jbContractAddress[versionString][JBCoreContracts.JBController4_1][
-          chainId as JBChainId
-        ] as Address)
+      ? (version === 4
+          ? jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId as JBChainId]
+          : jbContractAddress['5'][JBCoreContracts.JBController][chainId as JBChainId]) as Address
       : undefined
     if (
       !defaultJBController ||

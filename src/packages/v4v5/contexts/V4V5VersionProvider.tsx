@@ -43,13 +43,10 @@ export const V4V5VersionProvider: React.FC<V4V5VersionProviderProps> = ({
   })
 
   const version = useMemo(() => {
-    // If we have data from bendystraw, use the version from there
-    if (data?.project?.version) {
-      return data.project.version as 4 | 5
-    }
-    // Otherwise use the default version
+    // TODO: Get actual version from bendystraw when available
+    // For now, we determine version based on the URL path (v4 or v5)
     return defaultVersion
-  }, [data?.project?.version, defaultVersion])
+  }, [defaultVersion])
 
   const value = useMemo(() => ({
     version,

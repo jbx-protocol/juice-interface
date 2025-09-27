@@ -6,7 +6,7 @@ import { JBProjectProvider } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
-import { EditCycleFormProvider } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormContext'
+import { EditCycleFormProvider } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormContext'
 import { V4NftRewardsProvider } from './V4NftRewards/V4NftRewardsProvider'
 import V4ProjectMetadataProvider from './V4ProjectMetadataProvider'
 

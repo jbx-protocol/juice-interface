@@ -3,7 +3,7 @@ import { JBChainId } from 'juice-sdk-core'
 import { useCallback } from 'react'
 import { useProposeSafeEditRulesetTx } from '../../hooks/useProposeSafeEditRulesetTx'
 import { SafeProposeTransactionResponse } from '../../hooks/useProposeSafeTransaction'
-import { EditCycleFormFields } from '../../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { EditCycleFormFields } from '../../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
 import QueueSafeTxsModal from '../QueueSafeTxsModal'
 
 export interface QueueSafeEditRulesetTxsModalProps {

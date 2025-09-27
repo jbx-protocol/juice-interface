@@ -7,7 +7,7 @@ import {
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
 import { useCallback, useContext } from 'react'
 
-import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { EditCycleFormFields } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
 import { encodeFunctionData } from 'viem'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
 

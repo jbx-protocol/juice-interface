@@ -14,7 +14,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 import { getContractVersionString } from '../utils/contractVersion'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
-import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { EditCycleFormFields } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
 
 export interface EditMetadataTxOpts {
   onTransactionPending: (hash: `0x${string}`) => void
@@ -36,7 +36,8 @@ export function useEditRulesetTx() {
   const versionString = getContractVersionString(version)
   const projectControllerAddress = contracts.controller.data
 
-  const isV4_1 = projectControllerAddress && projectControllerAddress === jbContractAddress[versionString][JBCoreContracts.JBController4_1][chainId]
+  // For v4, check if it's the 4.1 controller version
+  const isV4_1 = version === 4 && projectControllerAddress && chainId && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
   const { addTransaction } = useContext(TxHistoryContext)
   const { rulesetMetadata } = useContext(JBRulesetContext)
 

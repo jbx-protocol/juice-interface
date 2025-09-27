@@ -1,4 +1,4 @@
-import { SettingsPageKey } from '../views/V4ProjectSettings/ProjectSettingsDashboard'
+import { SettingsPageKey } from '../views/V4V5ProjectSettings/ProjectSettingsDashboard'
 import { getChainSlug } from './networks'
 
 export const v4ProjectRoute = ({

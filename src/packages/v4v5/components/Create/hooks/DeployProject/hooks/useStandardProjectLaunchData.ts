@@ -5,7 +5,6 @@ import {
   jbContractAddress,
   JBCoreContracts,
 } from 'juice-sdk-core'
-import { getContractVersionString } from '../../../../utils/contractVersion'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
@@ -37,7 +36,6 @@ export function useStandardProjectLaunchData(version: 4 | 5 = 5) {
   const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
   const { userAddress } = useWallet()
-  const versionString = getContractVersionString(version)
 
   return ({
     projectMetadataCID,
@@ -52,9 +50,9 @@ export function useStandardProjectLaunchData(version: 4 | 5 = 5) {
     withStartBuffer?: boolean
   }) => {
     const terminalAddress = chainId
-      ? (jbContractAddress[versionString][JBCoreContracts.JBMultiTerminal][
-          chainId as JBChainId
-        ] as Address)
+      ? (version === 4
+          ? jbContractAddress['4'][JBCoreContracts.JBMultiTerminal][chainId as JBChainId]
+          : jbContractAddress['5'][JBCoreContracts.JBMultiTerminal][chainId as JBChainId]) as Address
       : undefined
 
     if (!terminalAddress) {
@@ -62,9 +60,9 @@ export function useStandardProjectLaunchData(version: 4 | 5 = 5) {
     }
 
     const controllerAddress = chainId
-      ? (jbContractAddress[versionString][JBCoreContracts.JBController][
-          chainId as JBChainId
-        ] as Address)
+      ? (version === 4
+          ? jbContractAddress['4'][JBCoreContracts.JBController][chainId as JBChainId]
+          : jbContractAddress['5'][JBCoreContracts.JBController][chainId as JBChainId]) as Address
       : undefined
 
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]

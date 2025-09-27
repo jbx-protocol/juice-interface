@@ -16,7 +16,7 @@ import { useV4BalanceOfNativeTerminal } from 'packages/v4v5/hooks/useV4BalanceOf
 import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
 import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4v5/models/v4Permissions'
-import { useV4DistributableAmount } from '../V4ProjectDashboard/V4ProjectTabs/V4CyclesPayoutsPanel/hooks/useV4DistributableAmount'
+import { useV4DistributableAmount } from '../V4V5ProjectDashboard/V4ProjectTabs/V4CyclesPayoutsPanel/hooks/useV4DistributableAmount'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 
@@ -246,3 +246,5 @@ export function ProjectSettingsDashboard() {
     </ProjectSettingsLayout>
   )
 }
+
+export default ProjectSettingsDashboard

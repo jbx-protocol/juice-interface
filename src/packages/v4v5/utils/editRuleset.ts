@@ -1,6 +1,6 @@
 import { ETH_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
 
-import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { EditCycleFormFields } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
 import { isZeroAddress } from 'utils/address'
 import { issuanceRateFrom } from 'packages/v2v3/utils/math'
 import { otherUnitToSeconds } from 'utils/format/formatTime'

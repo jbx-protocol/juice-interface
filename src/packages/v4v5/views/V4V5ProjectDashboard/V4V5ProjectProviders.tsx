@@ -53,10 +53,10 @@ const V4V5ProjectProvidersInner: React.FC<
 }
 
 const V4V5ProjectProviders: React.FC<
-  PropsWithChildren & { chainId: JBChainId; projectId: bigint }
-> = ({ chainId, projectId, children }) => {
+  PropsWithChildren & { chainId: JBChainId; projectId: bigint; defaultVersion?: 4 | 5 }
+> = ({ chainId, projectId, defaultVersion = 4, children }) => {
   return (
-    <V4V5VersionProvider chainId={chainId} projectId={Number(projectId)}>
+    <V4V5VersionProvider chainId={chainId} projectId={Number(projectId)} defaultVersion={defaultVersion}>
       <V4V5ProjectProvidersInner chainId={chainId} projectId={projectId}>
         {children}
       </V4V5ProjectProvidersInner>

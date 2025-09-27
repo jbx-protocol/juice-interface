@@ -108,7 +108,7 @@ export default function V5ProjectPage({
         projectId={projectId}
       />
       <_Wrapper>
-        <V4V5ProjectProviders chainId={chainId} projectId={BigInt(projectId)}>
+        <V4V5ProjectProviders chainId={chainId} projectId={BigInt(projectId)} defaultVersion={5}>
           <V4ProjectDashboard />
         </V4V5ProjectProviders>
       </_Wrapper>

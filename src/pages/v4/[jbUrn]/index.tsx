@@ -12,12 +12,12 @@ import {
   ProjectPageProps,
 } from 'utils/server/pages/props'
 
-const V4ProjectProviders = dynamic(
-  () => import('packages/v4/views/V4ProjectDashboard/V4ProjectProviders'),
+const V4V5ProjectProviders = dynamic(
+  () => import('packages/v4v5/views/V4ProjectDashboard/V4V5ProjectProviders'),
   { ssr: false },
 )
 const V4ProjectDashboard = dynamic(
-  () => import('packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'),
+  () => import('packages/v4v5/views/V4ProjectDashboard/V4ProjectDashboard'),
   { ssr: false },
 )
 
@@ -107,9 +107,9 @@ export default function V4ProjectPage({
         projectId={projectId}
       />
       <_Wrapper>
-        <V4ProjectProviders chainId={chainId} projectId={BigInt(projectId)}>
+        <V4V5ProjectProviders chainId={chainId} projectId={BigInt(projectId)}>
           <V4ProjectDashboard />
-        </V4ProjectProviders>
+        </V4V5ProjectProviders>
       </_Wrapper>
     </>
   )

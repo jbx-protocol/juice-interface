@@ -1,6 +1,7 @@
-import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
-import { useJBChainId, useJBContractContext, useJBProjectId, useSuckers, useWriteJbMultiTerminalAddToBalanceOf } from 'juice-sdk-react'
+import { JBChainId, NATIVE_TOKEN, jbMultiTerminalAbi } from 'juice-sdk-core'
+import { useJBChainId, useJBContractContext, useJBProjectId, useSuckers } from 'juice-sdk-react'
 import { useContext, useState } from 'react'
+import { useWriteContract } from 'wagmi'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 
 import { Trans } from '@lingui/macro'
@@ -32,8 +33,7 @@ export function AddToProjectBalanceForm() {
 
   const [addToBalanceForm] = Form.useForm<{ amount: string }>()
 
-  const { writeContractAsync: writeAddToBalance } =
-  useWriteJbMultiTerminalAddToBalanceOf()
+  const { writeContractAsync: writeAddToBalance } = useWriteContract()
   
   const handleChainChange = (chainId: JBChainId) => {
     setSelectedChainId(chainId)
@@ -67,6 +67,8 @@ export function AddToProjectBalanceForm() {
     try {
       const hash = await writeAddToBalance({
         address: contracts.primaryNativeTerminal.data,
+        abi: jbMultiTerminalAbi,
+        functionName: 'addToBalanceOf',
         args,
         chainId: selectedChainId,
       })

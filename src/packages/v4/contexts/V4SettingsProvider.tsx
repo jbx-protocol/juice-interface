@@ -23,6 +23,10 @@ export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
       <JBProjectProvider
         chainId={chainId}
         projectId={projectId}
+        version={4}
+        bendystraw={{
+          apiKey: '',
+        }}
         ctxProps={{
           metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
         }}

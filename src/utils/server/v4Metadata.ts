@@ -2,9 +2,12 @@
 import { getPublicClient } from '@wagmi/core'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import {
-  readJbDirectoryControllerOf,
   getProjectMetadata as sdkGetProjectMetadata,
+  jbDirectoryAbi,
+  jbContractAddress,
+  JBCoreContracts,
 } from 'juice-sdk-core'
+import { readContract } from 'wagmi/actions'
 import { JBChainId } from 'juice-sdk-react'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { PublicClient } from 'viem'
@@ -28,9 +31,13 @@ const V4GetMetadataCidFromContract = async (
   chainId: JBChainId,
 ) => {
   if (!chainId) throw new Error('Chain id not found for chain')
-  const jbControllerAddress = await readJbDirectoryControllerOf(wagmiConfig, {
-    chainId,
+  const directoryAddress = jbContractAddress['4'][JBCoreContracts.JBDirectory][chainId]
+  const jbControllerAddress = await readContract(wagmiConfig, {
+    abi: jbDirectoryAbi,
+    address: directoryAddress,
+    functionName: 'controllerOf',
     args: [BigInt(projectId)],
+    chainId,
   })
   const client = getPublicClient(wagmiConfig, {
     chainId,

@@ -5,13 +5,14 @@ import {
   ReservedPercent,
   RulesetWeight,
   WeightCutPercent,
+  jbControllerAbi,
 } from 'juice-sdk-core'
 import {
   JBChainId,
   useJBContractContext,
   useJBProjectId,
-  useReadJbControllerUpcomingRulesetOf
 } from 'juice-sdk-react'
+import { useReadContract } from 'wagmi'
 
 
 // @v4todo: add to SDK
@@ -24,8 +25,10 @@ export function useJBUpcomingRuleset(chainId?: JBChainId): {
 
   const { projectId } = useJBProjectId(chainId)
   
-  const { data, isLoading } = useReadJbControllerUpcomingRulesetOf({
+  const { data, isLoading } = useReadContract({
+    abi: jbControllerAbi,
     address: contracts.controller?.data ?? undefined,
+    functionName: 'upcomingRulesetOf',
     args: [BigInt(projectId ?? defaultProjectId)],
     chainId
   })

@@ -3,10 +3,10 @@ import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import {
   JBChainId,
   useJBProjectId,
-  useReadJbDirectoryPrimaryTerminalOf,
   useSuckers,
-  useWriteJbMultiTerminalSendPayoutsOf
 } from 'juice-sdk-react'
+import { jbDirectoryAbi, jbMultiTerminalAbi, JBCoreContracts, jbContractAddress } from 'juice-sdk-core'
+import { useReadContract, useWriteContract } from 'wagmi'
 import { useContext, useState } from 'react'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
@@ -66,12 +66,14 @@ export default function V4DistributePayoutsModal({
   >(distributable.format())
 
   const { projectId } = useJBProjectId(selectedChainId)
-  const { writeContractAsync: writeSendPayouts } =
-    useWriteJbMultiTerminalSendPayoutsOf()
+  const { writeContractAsync: writeSendPayouts } = useWriteContract()
 
-  const { data: terminalAddress } = useReadJbDirectoryPrimaryTerminalOf({
-    chainId: selectedChainId,
+  const { data: terminalAddress } = useReadContract({
+    abi: jbDirectoryAbi,
+    address: jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId ?? 1],
+    functionName: 'primaryTerminalOf',
     args: [BigInt(projectId ?? 0), NATIVE_TOKEN],
+    chainId: selectedChainId,
   })
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()
@@ -118,6 +120,8 @@ export default function V4DistributePayoutsModal({
     try {
       const hash = await writeSendPayouts({
         address: terminalAddress,
+        abi: jbMultiTerminalAbi,
+        functionName: 'sendPayoutsOf',
         chainId: selectedChainId,
         args,
       })

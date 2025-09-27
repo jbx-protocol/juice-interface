@@ -1,8 +1,6 @@
-import { JBChainId, NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
+import { JBChainId, NATIVE_TOKEN, jbContractAddress, JBCoreContracts, jbController4_1Abi, jbControllerAbi } from 'juice-sdk-core'
 import {
   JBRulesetContext,
-  jbController4_1Abi,
-  jbControllerAbi,
   useJBContractContext,
   useSuckers
 } from 'juice-sdk-react'
@@ -57,7 +55,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
       const projectControllerAddress = contracts.controller.data
       let data: `0x${string}`
 
-      if (projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]) {
+      if (projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][1]) {
         // Use v4.1 controller ABI
         data = encodeFunctionData({
           abi: jbController4_1Abi,

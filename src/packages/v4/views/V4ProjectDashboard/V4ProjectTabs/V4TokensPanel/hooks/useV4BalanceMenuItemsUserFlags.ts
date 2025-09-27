@@ -1,5 +1,7 @@
 import { useWallet } from 'hooks/Wallet'
-import { useJBContractContext, useJBRulesetMetadata, useNativeTokenSurplus, useReadJbTokensCreditBalanceOf, useReadJbTokensTokenOf } from 'juice-sdk-react'
+import { useJBContractContext, useJBRulesetMetadata, useNativeTokenSurplus } from 'juice-sdk-react'
+import { jbTokensAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract, useChainId } from 'wagmi'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { useMemo } from 'react'
@@ -8,11 +10,20 @@ import { zeroAddress } from 'viem'
 
 export const useV4BalanceMenuItemsUserFlags = () => {
   const { data: rulesetMetadata } = useJBRulesetMetadata()
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
+  const chainId = useChainId()
+  const tokensAddress = jbContractAddress['4'][JBCoreContracts.JBTokens][chainId as unknown as keyof typeof jbContractAddress['4'][JBCoreContracts.JBTokens]]
+
+  const { projectId } = useJBContractContext()
+  const { data: tokenAddress } = useReadContract({
+    abi: jbTokensAbi,
+    address: tokensAddress,
+    functionName: 'tokenOf',
+    args: [projectId],
+    chainId,
+  })
+
   const { data: surplusInNativeToken } = useNativeTokenSurplus()
   const { userAddress } = useWallet()
-  
-  const { projectId } = useJBContractContext()
   const isDev = useMemo(() => process.env.NODE_ENV === 'development', [])
 
   const userHasMintPermission = useV4WalletHasPermission(
@@ -35,11 +46,15 @@ export const useV4BalanceMenuItemsUserFlags = () => {
     () => !!rulesetMetadata?.allowOwnerMinting,
     [rulesetMetadata],
   )
-  const { data: creditBalance } = useReadJbTokensCreditBalanceOf({ // previously `unclaimedTokenBalance`
+  const { data: creditBalance } = useReadContract({ // previously `unclaimedTokenBalance`
+    abi: jbTokensAbi,
+    address: tokensAddress,
+    functionName: 'creditBalanceOf',
     args: [
       userAddress ?? zeroAddress,
       projectId
-    ]
+    ],
+    chainId,
   })
 
   const canBurnTokens = useMemo(

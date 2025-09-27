@@ -1,4 +1,6 @@
-import { useJBContractContext, useJBProjectMetadataContext, useWriteJbProjectsSafeTransferFrom } from 'juice-sdk-react'
+import { useJBContractContext, useJBProjectMetadataContext, JBChainId } from 'juice-sdk-react'
+import { jbProjectsAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useWriteContract, useChainId } from 'wagmi'
 import { useCallback, useContext } from 'react'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
@@ -18,7 +20,8 @@ export function useTransferProjectOwnershipTx() {
   const { metadata } = useJBProjectMetadataContext()
   const projectTitle = metadata?.data?.name ?? projectMetadata?.name ?? 'project'
 
-  const { writeContractAsync: safeTransferFromTx } = useWriteJbProjectsSafeTransferFrom()
+  const { writeContractAsync: safeTransferFromTx } = useWriteContract()
+  const chainId = useChainId()
 
   return useCallback(
     async (
@@ -49,7 +52,11 @@ export function useTransferProjectOwnershipTx() {
 
       try {
         const hash = await safeTransferFromTx({
+          address: jbContractAddress['4'][JBCoreContracts.JBProjects][chainId as JBChainId] as Address,
+          abi: jbProjectsAbi,
+          functionName: 'safeTransferFrom',
           args,
+          chainId,
         })
 
         onTransactionPending?.(hash)
@@ -74,6 +81,7 @@ export function useTransferProjectOwnershipTx() {
       projectOwnerAddress,
       projectTitle,
       addTransaction,
+      chainId,
     ]
   )
 }

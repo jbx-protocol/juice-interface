@@ -1,8 +1,10 @@
 import {
   useJBProjectId,
   useJBRuleset,
-  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
+  useJBContractContext,
 } from 'juice-sdk-react'
+import { jbRulesetsAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 
 import { V4ApprovalStatus } from 'models/approvalHooks'
 import { t } from '@lingui/macro'
@@ -29,8 +31,16 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     return ruleset?.start
   }, [type, latestUpcomingRuleset?.start, ruleset?.start])
 
-  const { data: approvalStatus } =
-    useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf()
+  const { contractAddress } = useJBContractContext()
+  const rulesetsAddress = selectedChainId ? contractAddress(JBCoreContracts.JBRulesets) : undefined
+
+  const { data: approvalStatus } = useReadContract({
+    abi: jbRulesetsAbi,
+    address: rulesetsAddress,
+    functionName: 'currentApprovalStatusForLatestRulesetOf',
+    args: [BigInt(projectId ?? 0)],
+    chainId: selectedChainId,
+  })
   const rulesetNumber = useMemo(() => {
     if (type === 'current') {
       return Number(ruleset?.cycleNumber)

@@ -3,13 +3,16 @@ import {
   SPLITS_TOTAL_PERCENT,
   SplitPortion,
   formatEther,
+  jbDirectoryAbi,
+  jbControllerAbi,
+  jbContractAddress,
+  JBCoreContracts,
 } from 'juice-sdk-core'
 import {
   useJBProjectId,
   useJBUpcomingRuleset,
-  useReadJbControllerPendingReservedTokenBalanceOf,
-  useReadJbDirectoryControllerOf,
 } from 'juice-sdk-react'
+import { useReadContract } from 'wagmi'
 
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { NETWORKS } from 'constants/networks'
@@ -45,17 +48,23 @@ export const useV4ReservedTokensSubPanel = () => {
   ) : undefined
   const projectIdBigInt = BigInt(projectId ?? 0)
 
-  const { data: controllerAddress } = useReadJbDirectoryControllerOf({
-    chainId: selectedChainId,
+  const directoryAddress = selectedChainId ? jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId] : undefined
+
+  const { data: controllerAddress } = useReadContract({
+    abi: jbDirectoryAbi,
+    address: directoryAddress,
+    functionName: 'controllerOf',
     args: [projectIdBigInt],
+    chainId: selectedChainId,
   })
 
-  const { data: pendingReservedTokens } =
-    useReadJbControllerPendingReservedTokenBalanceOf({
-      address: controllerAddress,
-      args: [projectIdBigInt],
-      chainId: selectedChainId,
-    })
+  const { data: pendingReservedTokens } = useReadContract({
+    abi: jbControllerAbi,
+    address: controllerAddress,
+    functionName: 'pendingReservedTokenBalanceOf',
+    args: [projectIdBigInt],
+    chainId: selectedChainId,
+  })
 
   const pendingReservedTokensFormatted = useMemo(() => {
     if (pendingReservedTokens === undefined) return

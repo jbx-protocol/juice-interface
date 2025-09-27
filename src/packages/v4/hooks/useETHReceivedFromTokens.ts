@@ -2,9 +2,9 @@ import {
   JBChainId,
   useJBContractContext,
   useNativeTokenSurplus,
-  useReadJbControllerPendingReservedTokenBalanceOf,
-  useReadJbTokensTotalSupplyOf,
 } from 'juice-sdk-react'
+import { jbControllerAbi, jbTokensAbi, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 
 import { getTokenCashOutQuoteEth } from 'juice-sdk-core'
 import { useJBRulesetByChain } from './useJBRulesetByChain'
@@ -13,18 +13,22 @@ export function useETHReceivedFromTokens(
   tokenAmountWei: bigint | undefined,
   chainId: JBChainId | undefined,
 ): bigint | undefined {
-  const { projectId, contracts } = useJBContractContext()
-  const { data: totalSupply } = useReadJbTokensTotalSupplyOf({
+  const { projectId, contracts, contractAddress } = useJBContractContext()
+  const { data: totalSupply } = useReadContract({
+    abi: jbTokensAbi,
+    address: contractAddress(JBCoreContracts.JBTokens),
+    functionName: 'totalSupplyOf',
     args: [projectId],
   })
   const { data: nativeTokenSurplus } = useNativeTokenSurplus()
   const { rulesetMetadata } = useJBRulesetByChain(chainId)
-  const { data: tokensReserved } =
-    useReadJbControllerPendingReservedTokenBalanceOf({
-      chainId,
-      address: contracts.controller.data ?? undefined,
-      args: [projectId],
-    })
+  const { data: tokensReserved } = useReadContract({
+    abi: jbControllerAbi,
+    address: contracts.controller.data ?? undefined,
+    functionName: 'pendingReservedTokenBalanceOf',
+    args: [projectId],
+    chainId,
+  })
   const cashOutTaxRate = rulesetMetadata?.cashOutTaxRate?.value
 
   if (

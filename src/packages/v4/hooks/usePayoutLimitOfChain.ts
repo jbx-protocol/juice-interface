@@ -4,11 +4,10 @@ import {
   JBChainId,
   useJBContractContext,
   useJBRuleset,
-  useReadJbDirectoryPrimaryTerminalOf,
-  useReadJbFundAccessLimitsPayoutLimitsOf,
 } from 'juice-sdk-react'
 
-import { NATIVE_TOKEN } from 'juice-sdk-core'
+import { NATIVE_TOKEN, jbDirectoryAbi, jbFundAccessLimitsAbi, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 import { V4CurrencyOption } from '../models/v4CurrencyOption'
 import { V4_CURRENCY_ETH } from '../utils/currency'
 
@@ -31,21 +30,28 @@ export function usePayoutLimitOfChain({
     chainId,
   })
 
-  const { data: terminalAddress } = useReadJbDirectoryPrimaryTerminalOf({
-    chainId,
+  const { contractAddress } = useJBContractContext()
+
+  const { data: terminalAddress } = useReadContract({
+    abi: jbDirectoryAbi,
+    address: contractAddress(JBCoreContracts.JBDirectory),
+    functionName: 'primaryTerminalOf',
     args: [projectId ?? 0n, NATIVE_TOKEN],
+    chainId,
   })
-  const { data: payoutLimits, isLoading } =
-    useReadJbFundAccessLimitsPayoutLimitsOf({
-      address: fundAccessLimits.data ?? undefined,
-      chainId,
-      args: [
-        projectId ?? 0n,
-        BigInt(ruleset?.id ?? 0),
-        terminalAddress ?? constants.AddressZero,
-        NATIVE_TOKEN,
-      ],
-    })
+
+  const { data: payoutLimits, isLoading } = useReadContract({
+    abi: jbFundAccessLimitsAbi,
+    address: fundAccessLimits.data ?? undefined,
+    functionName: 'payoutLimitsOf',
+    args: [
+      projectId ?? 0n,
+      BigInt(ruleset?.id ?? 0),
+      terminalAddress ?? constants.AddressZero,
+      NATIVE_TOKEN,
+    ],
+    chainId,
+  })
 
   const payoutLimit = payoutLimits?.[0]
 

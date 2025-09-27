@@ -1,7 +1,10 @@
 import {
   DEFAULT_METADATA,
   NATIVE_TOKEN,
-  readJbDirectoryPrimaryTerminalOf,
+  jbDirectoryAbi,
+  jbMultiTerminalAbi,
+  jbContractAddress,
+  JBCoreContracts,
 } from 'juice-sdk-core'
 import {
   JBChainId,
@@ -9,10 +12,11 @@ import {
   useJBRulesetContext,
   usePreparePayMetadata,
   useSuckers,
-  useWriteJbMultiTerminalPay,
 } from 'juice-sdk-react'
 import { useCallback, useContext, useMemo } from 'react'
 import { Address, Hash, parseEther, zeroAddress } from 'viem'
+import { useWriteContract } from 'wagmi'
+import { readContract } from 'wagmi/actions'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { wagmiConfig } from 'contexts/Para/Providers'
@@ -116,7 +120,7 @@ export const usePayProjectTx = ({
       : undefined,
   )
 
-  const { writeContractAsync: writePay } = useWriteJbMultiTerminalPay()
+  const { writeContractAsync: writePay } = useWriteContract()
   const { addTransaction } = useContext(TxHistoryContext)
 
   return useCallback(
@@ -134,13 +138,13 @@ export const usePayProjectTx = ({
 
       // fetch the terminal address for the project on the chain. We don't necessarily know this ahead of time
       // (if the chain is different from the current route.)
-      const terminalAddress = await readJbDirectoryPrimaryTerminalOf(
-        wagmiConfig,
-        {
-          chainId,
-          args: [_projectId ?? 0n, NATIVE_TOKEN],
-        },
-      )
+      const terminalAddress = await readContract(wagmiConfig, {
+        address: jbContractAddress['4'][JBCoreContracts.JBDirectory][chainId] as Address,
+        abi: jbDirectoryAbi,
+        functionName: 'primaryTerminalOf',
+        args: [_projectId ?? 0n, NATIVE_TOKEN],
+        chainId,
+      })
 
       console.info('🧃 PAY STATE', {
         terminalAddress,
@@ -203,6 +207,8 @@ export const usePayProjectTx = ({
         const hash = await writePay({
           chainId,
           address: terminalAddress,
+          abi: jbMultiTerminalAbi,
+          functionName: 'pay',
           args,
           value: weiAmount,
         })

@@ -135,7 +135,7 @@ export default function QueueTransferOwnershipTxsModal({
         </Button>,
         allChainsCompleted && (
           <Button key="done" type="primary" onClick={() => {
-            router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId  }))
+            router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId ?? 1  }))
           }}>
             <Trans>Go to project</Trans>
           </Button>

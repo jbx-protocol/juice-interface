@@ -1,8 +1,6 @@
-import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { JBRulesetData, JBRulesetMetadata, jb721TiersHookStoreAbi } from 'juice-sdk-core'
 import { JB721GovernanceType, NftCollectionMetadata, NftRewardTier } from 'models/nftRewards'
 import { Address, ContractFunctionReturnType } from 'viem'
-
-import { jb721TiersHookStoreAbi } from 'juice-sdk-react'
 import { NftPricingContext } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { LaunchV4ProjectGroupedSplit } from '../utils/launchProjectTransformers'
@@ -23,17 +21,21 @@ export type V4NftRewardsData = {
 /**
  * @see https://github.com/Bananapus/nana-721-hook/blob/main/src/structs/JB721TierConfig.sol
  */
-export type JB721TierConfig = Omit<
-  ContractFunctionReturnType<
-    typeof jb721TiersHookStoreAbi,
-    'view',
-    'tiersOf'
-  >[0],
-  'id' | 'votingUnits'
-> & {
-  useReserveBeneficiaryAsDefault: boolean
-  useVotingUnits: boolean
+export type JB721TierConfig = {
+  price: bigint
+  initialSupply: number
   votingUnits: number
+  reserveFrequency: number
+  reserveBeneficiary: Address
+  encodedIPFSUri: `0x${string}`
+  category: number
+  discountPercent: number
+  allowOwnerMint: boolean
+  useReserveBeneficiaryAsDefault: boolean
+  transfersPausable: boolean
+  useVotingUnits: boolean
+  cannotBeRemoved: boolean
+  cannotIncreaseDiscountPercent: boolean
 }
 
 type JB721InitTiersConfig = {

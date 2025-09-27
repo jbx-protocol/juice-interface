@@ -3,9 +3,11 @@ import {
   useJBChainId,
   useJBProjectId,
   useJBRulesetContext,
-  useReadJbTokensTotalBalanceOf,
+  useJBContractContext,
   useSuckers,
 } from 'juice-sdk-react'
+import { jbTokensAbi, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 import React, { ReactNode } from 'react'
 import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
 
@@ -47,11 +49,15 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
     useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
 
   const { projectId } = useJBProjectId(selectedChainId)
+  const { contractAddress } = useJBContractContext()
 
   // TODO: We should probably break out tokens panel hook into reusable module
-  const { data: _userTokenBalance } = useReadJbTokensTotalBalanceOf({
-    chainId: selectedChainId,
+  const { data: _userTokenBalance } = useReadContract({
+    abi: jbTokensAbi,
+    address: contractAddress(JBCoreContracts.JBTokens),
+    functionName: 'totalBalanceOf',
     args: userAddress && projectId ? [userAddress, projectId] : undefined,
+    chainId: selectedChainId,
   })
 
   const userTokenBalance = parseFloat(

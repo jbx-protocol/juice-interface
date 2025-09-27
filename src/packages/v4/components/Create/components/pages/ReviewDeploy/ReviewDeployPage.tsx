@@ -2,7 +2,7 @@ import { Checkbox, Form } from 'antd'
 import {
   jb721TiersHookProjectDeployerAbi,
   jbControllerAbi,
-} from 'juice-sdk-react'
+} from 'juice-sdk-core'
 import React, {
   useCallback,
   useContext,
@@ -94,25 +94,26 @@ export const ReviewDeployPage = () => {
 
   const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
-  const { isConnected, connect, chain, changeNetworks, userAddress } = useWallet()
+  const { isConnected, connect, chain, changeNetworks, userAddress } =
+    useWallet()
   const router = useRouter()
   const omnichainDeployModal = useModal()
   const dispatch = useDispatch()
   const { deployProject, isDeploying, deployTransactionPending } =
     useDeployProject()
-  
+
   // Project data hooks
   const createData = useAppSelector(state => state.creatingV2Project)
   const isNftProject = useIsNftProject()
   const uploadNftRewards = useUploadNftRewards()
   const getStandardProjectLaunchData = useStandardProjectLaunchData()
   const getNftProjectLaunchData = useNftProjectLaunchData()
-  
+
   // Safe detection - check if project owner is a Safe
   const projectOwner = createData.inputProjectOwner || userAddress
   const { data: gnosisSafeData } = useGnosisSafe(projectOwner)
   const isProjectOwnerSafe = Boolean(gnosisSafeData)
-  
+
   // State
   const nftRewards = useAppSelector(
     state => state.creatingV2Project.nftRewards.rewardTiers,
@@ -125,7 +126,7 @@ export const ReviewDeployPage = () => {
   const [activeKey, setActiveKey] = useState<ReviewDeployKey[]>(
     !isMobile ? [ReviewDeployKey.ProjectDetails] : [],
   )
-  
+
   // Safe queue modal state
   const [showSafeQueueModal, setShowSafeQueueModal] = useState(false)
   const [metadataLoading, setMetadataLoading] = useState(false)
@@ -135,10 +136,18 @@ export const ReviewDeployPage = () => {
     nftCollectionMetadataUri: string
   }>()
   const [standardProjectLaunchData, setStandardProjectLaunchData] = useState<{
-    [k in JBChainId]?: ContractFunctionArgs<typeof jbControllerAbi, 'nonpayable', 'launchProjectFor'>
+    [k in JBChainId]?: ContractFunctionArgs<
+      typeof jbControllerAbi,
+      'nonpayable',
+      'launchProjectFor'
+    >
   }>()
   const [nftProjectLaunchData, setNftProjectLaunchData] = useState<{
-    [k in JBChainId]?: ContractFunctionArgs<typeof jb721TiersHookProjectDeployerAbi, 'nonpayable', 'launchProjectFor'>
+    [k in JBChainId]?: ContractFunctionArgs<
+      typeof jb721TiersHookProjectDeployerAbi,
+      'nonpayable',
+      'launchProjectFor'
+    >
   }>()
 
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
@@ -197,7 +206,11 @@ export const ReviewDeployPage = () => {
             return acc
           },
           {} as {
-            [k in JBChainId]?: ContractFunctionArgs<typeof jb721TiersHookProjectDeployerAbi, 'nonpayable', 'launchProjectFor'>
+            [k in JBChainId]?: ContractFunctionArgs<
+              typeof jb721TiersHookProjectDeployerAbi,
+              'nonpayable',
+              'launchProjectFor'
+            >
           },
         )
         setNftProjectLaunchData(nftLaunchData)
@@ -214,7 +227,11 @@ export const ReviewDeployPage = () => {
             return acc
           },
           {} as {
-            [k in JBChainId]?: ContractFunctionArgs<typeof jbControllerAbi, 'nonpayable', 'launchProjectFor'>
+            [k in JBChainId]?: ContractFunctionArgs<
+              typeof jbControllerAbi,
+              'nonpayable',
+              'launchProjectFor'
+            >
           },
         )
         setStandardProjectLaunchData(standardLaunchData)
@@ -245,9 +262,13 @@ export const ReviewDeployPage = () => {
       .filter(([_, selected]) => selected)
       .map(([chainId, _]) => parseInt(chainId))
 
-    await router.push({ query: { safeQueued: 'true', chains: chainIds.join(',') } }, '/create', {
-      shallow: true,
-    })
+    await router.push(
+      { query: { safeQueued: 'true', chains: chainIds.join(',') } },
+      '/create',
+      {
+        shallow: true,
+      },
+    )
 
     dispatch(creatingV2ProjectActions.resetState())
     setShowSafeQueueModal(false)
@@ -256,7 +277,7 @@ export const ReviewDeployPage = () => {
   // Set default selected chains when the component loads
   useEffect(() => {
     const isTestnet = process.env.NEXT_PUBLIC_TESTNET === 'true'
-    
+
     // For testnet, select Sepolia
     if (isTestnet) {
       dispatch(
@@ -265,7 +286,7 @@ export const ReviewDeployPage = () => {
           selected: true,
         }),
       )
-    } 
+    }
     // For mainnet, select Ethereum
     else {
       dispatch(
@@ -287,7 +308,8 @@ export const ReviewDeployPage = () => {
     const hasChainSelected = Object.values(selectedRelayrChains).some(Boolean)
     const isSingleChainSelected =
       Object.values(selectedRelayrChains).filter(Boolean).length === 1
-    const isMultiChainSelected = Object.values(selectedRelayrChains).filter(Boolean).length > 1
+    const isMultiChainSelected =
+      Object.values(selectedRelayrChains).filter(Boolean).length > 1
 
     if (!isConnected || !chain) {
       await connect()
@@ -540,7 +562,7 @@ export const ReviewDeployPage = () => {
             </label>
           </div>
         </Callout.Info>
-        <Callout.Warning className='mt-4'>
+        <Callout.Warning className="mt-4">
           <Trans>
             JUICEBOX V4 IS BRAND NEW. We highly recommend you talk to
             JuiceboxDAO or Juiceworks before launching your project to help make
@@ -588,31 +610,36 @@ export const ReviewDeployPage = () => {
         open={omnichainDeployModal.visible}
         setOpen={omnichainDeployModal.close}
       />
-      
+
       {/* Safe Queue Modal for multi-chain Safe launches */}
-      {showSafeQueueModal && projectMetadataCid && projectOwner && gnosisSafeData && (
-        <QueueSafeLaunchProjectTxsModal
-          open={showSafeQueueModal}
-          onCancel={() => setShowSafeQueueModal(false)}
-          onComplete={handleSafeQueueSuccess}
-          launchData={{
-            projectMetadataCID: projectMetadataCid,
-            isNftProject: !!isNftProject,
-            nftData: uploadedNftData ? {
-              rewardTierCids: uploadedNftData.rewardTierCids,
-              nftCollectionMetadataUri: uploadedNftData.nftCollectionMetadataUri,
-            } : undefined,
-            standardProjectData: standardProjectLaunchData,
-            nftProjectData: nftProjectLaunchData,
-          }}
-          chains={Object.entries(selectedRelayrChains)
-            .filter(([_, selected]) => selected)
-            .map(([chainId, _]) => parseInt(chainId) as JBChainId)
-          }
-          safeAddress={projectOwner}
-        />
-      )}
-      
+      {showSafeQueueModal &&
+        projectMetadataCid &&
+        projectOwner &&
+        gnosisSafeData && (
+          <QueueSafeLaunchProjectTxsModal
+            open={showSafeQueueModal}
+            onCancel={() => setShowSafeQueueModal(false)}
+            onComplete={handleSafeQueueSuccess}
+            launchData={{
+              projectMetadataCID: projectMetadataCid,
+              isNftProject: !!isNftProject,
+              nftData: uploadedNftData
+                ? {
+                    rewardTierCids: uploadedNftData.rewardTierCids,
+                    nftCollectionMetadataUri:
+                      uploadedNftData.nftCollectionMetadataUri,
+                  }
+                : undefined,
+              standardProjectData: standardProjectLaunchData,
+              nftProjectData: nftProjectLaunchData,
+            }}
+            chains={Object.entries(selectedRelayrChains)
+              .filter(([_, selected]) => selected)
+              .map(([chainId, _]) => parseInt(chainId) as JBChainId)}
+            safeAddress={projectOwner}
+          />
+        )}
+
       <TransactionModal
         open={deployTransactionPending}
         transactionPending={deployTransactionPending}

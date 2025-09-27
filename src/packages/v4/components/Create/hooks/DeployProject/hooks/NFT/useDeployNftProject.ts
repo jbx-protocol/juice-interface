@@ -43,9 +43,7 @@ function nftRewardTierToJB721TierConfig(
     cannotBeRemoved: false,
     cannotIncreaseDiscountPercent: false,
     discountPercent: 0,
-    remainingSupply: initialSupply,
     category: DEFAULT_JB_721_TIER_CATEGORY,
-    resolvedUri: '',
   }
 }
 

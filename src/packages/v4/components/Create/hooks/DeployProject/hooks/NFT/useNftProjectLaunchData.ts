@@ -1,27 +1,28 @@
-import { Address, parseEther, zeroAddress } from 'viem'
+import {
+  createSalt,
+  jbContractAddress,
+  JBCoreContracts,
+  NATIVE_TOKEN_DECIMALS,
+} from 'juice-sdk-core'
+import { JBChainId } from 'juice-sdk-react'
+import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
 import {
   JB721TierConfig,
   JB721TiersHookFlags,
   JBDeploy721TiersHookConfig,
 } from 'packages/v4/models/nfts'
-import { JBChainId, jbPricesAddress } from 'juice-sdk-react'
-import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
-import {
-  NATIVE_TOKEN_DECIMALS,
-  createSalt,
-  jbProjectDeploymentAddresses,
-} from 'juice-sdk-core'
 import { encodeIpfsUri, ipfsUri } from 'utils/ipfs'
+import { Address, parseEther, zeroAddress } from 'viem'
 
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'
-import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
 import { isValidMustStartAtOrAfter } from 'packages/v4/utils/fundingCycle'
-import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingV2V3FundingCycleDataSelector } from 'redux/hooks/v2v3/create'
+import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'
+import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { useStandardProjectLaunchData } from '../useStandardProjectLaunchData'
+import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 
 export function useNftProjectLaunchData() {
   const { projectMetadata, nftRewards, mustStartAtOrAfter } = useAppSelector(
@@ -46,7 +47,7 @@ export function useNftProjectLaunchData() {
     /**
      * Add a x minute buffer to the start time of the project.
      */
-    withStartBuffer
+    withStartBuffer,
   }: {
     projectMetadataCID: string
     nftCollectionMetadataUri: string
@@ -55,7 +56,7 @@ export function useNftProjectLaunchData() {
     withStartBuffer?: boolean
   }) => {
     const defaultJBController = chainId
-      ? (jbProjectDeploymentAddresses.JBController4_1[
+      ? (jbContractAddress['4'][JBCoreContracts.JBController4_1][
           chainId as JBChainId
         ] as Address)
       : undefined
@@ -88,7 +89,9 @@ export function useNftProjectLaunchData() {
       tiersConfig: {
         currency,
         decimals: NATIVE_TOKEN_DECIMALS,
-        prices: jbPricesAddress[chainId as JBChainId],
+        prices: jbContractAddress['4'][JBCoreContracts.JBPrices][
+          chainId as JBChainId
+        ] as Address,
         tiers,
       },
       reserveBeneficiary: zeroAddress,
@@ -151,7 +154,7 @@ function nftRewardTierToJB721TierConfig(
 ): JB721TierConfig {
   const price = parseEther(rewardTier.contributionFloor.toString())
   const initialSupply = rewardTier.maxSupply ?? DEFAULT_NFT_MAX_SUPPLY
-  const encodedIPFSUri = encodeIpfsUri(cid)
+  const encodedIPFSUri = encodeIpfsUri(cid) as `0x${string}`
 
   const reserveFrequency = rewardTier.reservedRate
     ? rewardTier.reservedRate - 1
@@ -175,8 +178,6 @@ function nftRewardTierToJB721TierConfig(
     cannotBeRemoved: false,
     cannotIncreaseDiscountPercent: false,
     discountPercent: 0,
-    remainingSupply: initialSupply,
     category: DEFAULT_JB_721_TIER_CATEGORY,
-    resolvedUri: '',
   }
 }

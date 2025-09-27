@@ -2,7 +2,9 @@ import { useCallback, useContext } from 'react'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useJBContractContext, useWriteJbControllerDeployErc20For } from 'juice-sdk-react'
+import { useJBContractContext } from 'juice-sdk-react'
+import { jbControllerAbi } from 'juice-sdk-core'
+import { useWriteContract } from 'wagmi'
 import { Address, zeroAddress } from 'viem'
 import { BaseTxOpts } from '../models/transactions'
 import { wagmiConfig } from '../wagmiConfig'
@@ -11,7 +13,7 @@ export function useV4IssueErc20TokenTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { projectId, contracts } = useJBContractContext()
 
-  const { writeContractAsync: deployErc20Tx } = useWriteJbControllerDeployErc20For()
+  const { writeContractAsync: deployErc20Tx } = useWriteContract()
 
   return useCallback  (
     async ({ name, symbol }: {
@@ -43,6 +45,8 @@ export function useV4IssueErc20TokenTx() {
         // console.log('encodedData', encodedData)
 
         const hash = await deployErc20Tx({
+          abi: jbControllerAbi,
+          functionName: 'deployERC20For',
           args,
           address: contracts.controller.data as Address
         })

@@ -1,5 +1,6 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
-import { formatEther, readJb721TiersHookStoreTiersOf } from 'juice-sdk-core'
+import { formatEther, jb721TiersHookStoreAbi } from 'juice-sdk-core'
+import { readContract } from 'wagmi/actions'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
 import {
   cidFromUrl,
@@ -171,8 +172,10 @@ export const useNftRewards = (
       const allChainTiersData = await Promise.all(
         projectChains.map(async currentChainId => {
           try {
-            const chainTiers = await readJb721TiersHookStoreTiersOf(config, {
+            const chainTiers = await readContract(config, {
+              abi: jb721TiersHookStoreAbi,
               address: dataSourceAddress as `0x${string}`,
+              functionName: 'tiersOf',
               args: [
                 dataHookAddress ?? zeroAddress as `0x${string}`,
                 [], // _categories

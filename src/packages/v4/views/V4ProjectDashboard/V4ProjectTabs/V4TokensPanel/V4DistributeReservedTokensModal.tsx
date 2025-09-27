@@ -1,7 +1,9 @@
 import { JBChainId, formatEther } from 'juice-sdk-core'
 import { Trans, t } from '@lingui/macro'
 import { useContext, useEffect, useState } from 'react'
-import { useJBProjectId, useJBTokenContext, useReadJbControllerPendingReservedTokenBalanceOf, useReadJbDirectoryControllerOf, useSuckers, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
+import { useJBProjectId, useJBTokenContext, useSuckers } from 'juice-sdk-react'
+import { jbControllerAbi, jbDirectoryAbi, JBCoreContracts, jbContractAddress } from 'juice-sdk-core'
+import { useReadContract, useWriteContract } from 'wagmi'
 
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
@@ -51,22 +53,25 @@ export default function V4DistributeReservedTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  const { writeContractAsync: writeSendReservedTokens } =
-    useWriteJbControllerSendReservedTokensToSplitsOf()
+  const { writeContractAsync: writeSendReservedTokens } = useWriteContract()
 
   // Get controller and pending tokens for selected chain
   const projectIdBigInt = BigInt(projectId ?? 0)
-  const { data: controllerAddress } = useReadJbDirectoryControllerOf({
-    chainId: selectedChainId,
+  const { data: controllerAddress } = useReadContract({
+    abi: jbDirectoryAbi,
+    address: jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId],
+    functionName: 'controllerOf',
     args: [projectIdBigInt],
+    chainId: selectedChainId,
   })
 
-  const { data: pendingReservedTokens } =
-    useReadJbControllerPendingReservedTokenBalanceOf({
-      address: controllerAddress,
-      args: [projectIdBigInt],
-      chainId: selectedChainId,
-    })
+  const { data: pendingReservedTokens } = useReadContract({
+    abi: jbControllerAbi,
+    address: controllerAddress,
+    functionName: 'pendingReservedTokenBalanceOf',
+    args: [projectIdBigInt],
+    chainId: selectedChainId,
+  })
 
   const pendingReservedTokensFormatted = useMemo(() => {
     if (pendingReservedTokens === undefined) return
@@ -108,6 +113,8 @@ export default function V4DistributeReservedTokensModal({
     try {
       const hash = await writeSendReservedTokens({
         address: controllerAddress,
+        abi: jbControllerAbi,
+        functionName: 'sendReservedTokensToSplitsOf',
         args,
         chainId: selectedChainId
       })

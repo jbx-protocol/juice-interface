@@ -21,6 +21,10 @@ const V4ProjectProviders: React.FC<
       <JBProjectProvider
         chainId={chainId}
         projectId={projectId}
+        version={4}
+        bendystraw={{
+          apiKey: '',
+        }}
         ctxProps={{
           metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
         }}

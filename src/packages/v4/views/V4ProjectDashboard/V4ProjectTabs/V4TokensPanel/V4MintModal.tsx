@@ -3,11 +3,11 @@ import {
   JBChainId,
   useJBChainId,
   useJBProjectId,
-  useReadJbDirectoryControllerOf,
-  useReadJbTokensTokenOf,
+  useJBContractContext,
   useSuckers,
-  useWriteJbControllerMintTokensOf
 } from 'juice-sdk-react'
+import { jbDirectoryAbi, jbTokensAbi, jbControllerAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract, useWriteContract } from 'wagmi'
 import { useContext, useState } from 'react'
 
 import { isAddress } from '@ethersproject/address'
@@ -43,8 +43,7 @@ export function V4MintModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { writeContractAsync: writeMintTokens } =
-    useWriteJbControllerMintTokensOf()
+  const { writeContractAsync: writeMintTokens } = useWriteContract()
   const [form] = useForm<MintForm>()
 
   const [loading, setLoading] = useState<boolean>()
@@ -59,12 +58,21 @@ export function V4MintModal({
   const { projectId } = useJBProjectId(selectedChainId)
   const { data: suckers } = useSuckers()
 
-  const { data: controllerAddress } = useReadJbDirectoryControllerOf({
-    chainId: selectedChainId,
+  const { data: controllerAddress } = useReadContract({
+    abi: jbDirectoryAbi,
+    address: jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId ?? 1],
+    functionName: 'controllerOf',
     args: [BigInt(projectId ?? 0)],
+    chainId: selectedChainId,
   })
 
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
+  const { contractAddress } = useJBContractContext()
+  const { data: tokenAddress } = useReadContract({
+    abi: jbTokensAbi,
+    address: contractAddress(JBCoreContracts.JBTokens),
+    functionName: 'tokenOf',
+    args: [projectId ?? 0n],
+  })
   const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()
@@ -110,6 +118,8 @@ export function V4MintModal({
     try {
       const hash = await writeMintTokens({
         address: controllerAddress,
+        abi: jbControllerAbi,
+        functionName: 'mintTokensOf',
         chainId: selectedChainId,
         args,
       })

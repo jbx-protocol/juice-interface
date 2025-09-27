@@ -8,9 +8,11 @@ import {
 } from '@heroicons/react/24/solid'
 import { Trans, t } from '@lingui/macro'
 import {
-  RelayrPostBundleResponse,
   jb721TiersHookProjectDeployerAbi,
   jbControllerAbi,
+} from 'juice-sdk-core'
+import {
+  RelayrPostBundleResponse,
   useGetRelayrTxBundle,
   useSendRelayrTx,
 } from 'juice-sdk-react'
@@ -25,7 +27,6 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { NETWORKS } from 'constants/networks'
-import { useWallet } from 'hooks/Wallet'
 import { JBChainId } from 'juice-sdk-core'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { useRouter } from 'next/router'
@@ -60,8 +61,7 @@ export const LaunchProjectModal: React.FC<{
     useDeployOmnichainProject()
   const router = useRouter()
   const relayrBundle = useGetRelayrTxBundle()
-  const { sendRelayrTx, isPending, data: txData } = useSendRelayrTx()
-  const { userAddress } = useWallet()
+  const { sendRelayrTx, data: txData } = useSendRelayrTx()
 
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(
     process.env.NEXT_PUBLIC_TESTNET == 'true' ? sepolia.id : mainnet.id,
@@ -69,7 +69,7 @@ export const LaunchProjectModal: React.FC<{
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
   const [txSigning, setTxSigning] = useState(false)
-  
+
   const isNftProject = useIsNftProject()
   const uploadNftRewards = useUploadNftRewards()
   const dispatch = useDispatch()
@@ -94,8 +94,6 @@ export const LaunchProjectModal: React.FC<{
   // bongs. re-capture nft state so that the 'succes' page doesnt bong out upon reseting the form state
   const [nftProject, setNftProject] = useState(false)
 
-
-
   /**
    * Fetches a quote for the omnichain transaction.
    *
@@ -114,10 +112,12 @@ export const LaunchProjectModal: React.FC<{
         })
       ).Hash
 
-      let uploadedNftData: {
-        rewardTierCids: string[]
-        nftCollectionMetadataUri: string
-      } | undefined
+      let uploadedNftData:
+        | {
+            rewardTierCids: string[]
+            nftCollectionMetadataUri: string
+          }
+        | undefined
 
       if (isNftProject) {
         setNftProject(true)
@@ -148,7 +148,8 @@ export const LaunchProjectModal: React.FC<{
               projectMetadataCID: cid,
               chainId,
               rewardTierCids: uploadedNftData.rewardTierCids,
-              nftCollectionMetadataUri: uploadedNftData.nftCollectionMetadataUri,
+              nftCollectionMetadataUri:
+                uploadedNftData.nftCollectionMetadataUri,
               withStartBuffer: true,
             })
 
@@ -202,8 +203,6 @@ export const LaunchProjectModal: React.FC<{
     deployOmnichainProject,
     uploadNftRewards,
   ])
-
-
 
   async function onClickLaunch() {
     if (!txQuote) {
@@ -286,95 +285,96 @@ export const LaunchProjectModal: React.FC<{
         okLoading={txSigning || txLoading || txQuoteLoading}
         {...props}
       >
-      {txLoading ? (
-        <OmnichainTxLoadingContent
-          relayrResponse={relayrBundle.response}
-          chainIds={chainIds}
-        />
-      ) : (
-        <div className="flex flex-col divide-y divide-grey-200 dark:divide-grey-800">
-          <div className="py-6">
-            <span className="flex items-center gap-3">Chains to deploy</span>
-            <div className="mt-6 flex flex-col gap-6">
-              {selectedChains.map(chain => (
-                <ChainIdentifier
-                  key={chain.chainId}
-                  chainId={chain.chainId}
-                  label={chain.label}
-                  state="ready"
-                />
-              ))}
-            </div>
-          </div>
-          {!txQuote ? (
-            <div className="rounded-lg py-4 text-sm">
-              <Callout.Info>
-                <Trans>
-                You'll be prompted a wallet signature for each of this project's chains before submitting the final transaction.
-                </Trans>
-              </Callout.Info>
-            </div>
-          ): null}
-          {txQuoteLoading || txQuoteCost ? (
+        {txLoading ? (
+          <OmnichainTxLoadingContent
+            relayrResponse={relayrBundle.response}
+            chainIds={chainIds}
+          />
+        ) : (
+          <div className="flex flex-col divide-y divide-grey-200 dark:divide-grey-800">
             <div className="py-6">
-              <div className="flex items-start gap-4 pb-3">
-                <div className="flex-1">
-                  <Trans>Gas quote</Trans>
+              <span className="flex items-center gap-3">Chains to deploy</span>
+              <div className="mt-6 flex flex-col gap-6">
+                {selectedChains.map(chain => (
+                  <ChainIdentifier
+                    key={chain.chainId}
+                    chainId={chain.chainId}
+                    label={chain.label}
+                    state="ready"
+                  />
+                ))}
+              </div>
+            </div>
+            {!txQuote ? (
+              <div className="rounded-lg py-4 text-sm">
+                <Callout.Info>
+                  <Trans>
+                    You'll be prompted a wallet signature for each of this
+                    project's chains before submitting the final transaction.
+                  </Trans>
+                </Callout.Info>
+              </div>
+            ) : null}
+            {txQuoteLoading || txQuoteCost ? (
+              <div className="py-6">
+                <div className="flex items-start gap-4 pb-3">
+                  <div className="flex-1">
+                    <Trans>Gas quote</Trans>
 
-                  <div className="mt-1 flex h-12 w-full items-center justify-between rounded-lg border border-grey-100 bg-grey-50 px-3 text-grey-600 dark:border-slate-300 dark:bg-slate-600 dark:text-slate-100">
-                    <div className="flex items-center gap-2.5">
-                      <GasIcon className="h-5 w-5" />
-                      <div className="text-base font-medium leading-none">
-                        {txQuoteLoading || !txQuoteCost ? (
-                          <span>--</span>
-                        ) : (
-                          <ETHAmount
-                            amount={BigNumber.from(txQuoteCost?.toString())}
-                          />
-                        )}
+                    <div className="mt-1 flex h-12 w-full items-center justify-between rounded-lg border border-grey-100 bg-grey-50 px-3 text-grey-600 dark:border-slate-300 dark:bg-slate-600 dark:text-slate-100">
+                      <div className="flex items-center gap-2.5">
+                        <GasIcon className="h-5 w-5" />
+                        <div className="text-base font-medium leading-none">
+                          {txQuoteLoading || !txQuoteCost ? (
+                            <span>--</span>
+                          ) : (
+                            <ETHAmount
+                              amount={BigNumber.from(txQuoteCost?.toString())}
+                            />
+                          )}
+                        </div>
                       </div>
+                      <Button type="text" className="p-0" onClick={getTxQuote}>
+                        {txQuoteLoading ? (
+                          <Loading size="default" />
+                        ) : (
+                          <ArrowPathIcon className="h-6 w-6 " />
+                        )}
+                      </Button>
                     </div>
-                    <Button type="text" className="p-0" onClick={getTxQuote}>
-                      {txQuoteLoading ? (
-                        <Loading size="default" />
-                      ) : (
-                        <ArrowPathIcon className="h-6 w-6 " />
-                      )}
-                    </Button>
+                  </div>
+
+                  <div className="flex-1">
+                    <Trans>Pay gas on</Trans>
+                    <ChainSelect
+                      className="mt-1 h-12"
+                      showTitle
+                      value={selectedGasChain}
+                      onChange={c => {
+                        setSelectedGasChain(c)
+                      }}
+                      chainIds={chainIds}
+                    />
                   </div>
                 </div>
-
-                <div className="flex-1">
-                  <Trans>Pay gas on</Trans>
-                  <ChainSelect
-                    className="mt-1 h-12"
-                    showTitle
-                    value={selectedGasChain}
-                    onChange={c => {
-                      setSelectedGasChain(c)
-                    }}
-                    chainIds={chainIds}
-                  />
-                </div>
+                {txQuoteLoading && (
+                  <div className="text-xs text-grey-500">
+                    <Trans>This sometimes takes up to a minute</Trans>
+                  </div>
+                )}
+                <span
+                  role="button"
+                  className="mb-4 text-xs underline hover:opacity-75"
+                  onClick={getTxQuote}
+                >
+                  Retry launch quote
+                </span>
               </div>
-              {txQuoteLoading && (
-                <div className="text-xs text-grey-500">
-                  <Trans>This sometimes takes up to a minute</Trans>
-                </div>
-              )}
-              <span
-                role="button"
-                className="mb-4 text-xs underline hover:opacity-75"
-                onClick={getTxQuote}
-              >
-                Retry launch quote
-              </span>
-            </div>
-          ) : null}
-          <div className="h-2"></div> {/* Spacer */}
-        </div>
-      )}
-    </JuiceModal>
+            ) : null}
+            <div className="h-2"></div> {/* Spacer */}
+          </div>
+        )}
+      </JuiceModal>
     </>
   )
 }

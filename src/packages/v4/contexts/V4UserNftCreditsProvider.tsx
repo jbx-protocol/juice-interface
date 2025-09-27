@@ -1,8 +1,7 @@
 import { useWallet } from 'hooks/Wallet'
-import {
-  useJBRulesetContext,
-  useReadJb721TiersHookPayCreditsOf,
-} from 'juice-sdk-react'
+import { useJBRulesetContext } from 'juice-sdk-react'
+import { jb721TiersHookAbi } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 import React, { PropsWithChildren } from 'react'
 
 const V4UserNftCreditsContext = React.createContext<{
@@ -20,8 +19,10 @@ export const V4UserNftCreditsProvider: React.FC<PropsWithChildren> = ({
   const {
     rulesetMetadata: { data: rulesetMetadata },
   } = useJBRulesetContext()
-  const creds = useReadJb721TiersHookPayCreditsOf({
+  const creds = useReadContract({
+    abi: jb721TiersHookAbi,
     address: rulesetMetadata?.dataHook,
+    functionName: 'payCreditsOf',
     args: userAddress ? [userAddress] : undefined,
   })
 

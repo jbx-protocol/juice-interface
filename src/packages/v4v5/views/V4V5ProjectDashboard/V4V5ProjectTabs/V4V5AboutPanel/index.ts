@@ -1,3 +1,3 @@
-import { V4AboutPanel } from "./V4AboutPanel";
+import { V4AboutPanel } from "./V4V5AboutPanel";
 
-export default V4AboutPanel;
+export default V4V5AboutPanel;

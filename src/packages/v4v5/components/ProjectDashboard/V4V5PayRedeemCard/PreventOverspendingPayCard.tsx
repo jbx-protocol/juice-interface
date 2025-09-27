@@ -1,6 +1,6 @@
 import { Trans, t } from "@lingui/macro";
 
-import { useV4NftRewards } from "packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider";
+import { useV4NftRewards } from "packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider";
 import { useProjectSelector } from "../redux/hooks";
 import { PayRedeemCardNftReward } from "./PayRedeemInput";
 

@@ -1,4 +1,4 @@
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH, V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 
 import React from 'react'
@@ -6,7 +6,7 @@ import { formatCurrencyAmount } from 'packages/v4v5/utils/formatCurrencyAmount'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayProjectModal } from './usePayProjectModal/usePayProjectModal'
 import { useProjectSelector } from '../../../redux/hooks'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 
 export const usePayAmounts = () => {
   const converter = useCurrencyConverter()
@@ -21,12 +21,12 @@ export const usePayAmounts = () => {
     }
 
     switch (payAmount.currency) {
-      case V4_CURRENCY_ETH:
+      case V4V5_CURRENCY_ETH:
         return {
           eth: parseWad(payAmount.amount),
           usd: converter.weiToUsd(parseWad(payAmount.amount))!,
         }
-      case V4_CURRENCY_USD:
+      case V4V5_CURRENCY_USD:
         return {
           eth: converter.usdToWei(payAmount.amount),
           usd: parseWad(payAmount.amount),
@@ -73,26 +73,26 @@ export const usePayAmounts = () => {
     if (!appliedNFTCreditsRaw) return
 
     switch (payAmount?.currency) {
-      case V4_CURRENCY_USD:
+      case V4V5_CURRENCY_USD:
         return {
           primaryAmount: formatCurrencyAmount({
             amount: fromWad(appliedNFTCreditsRaw.usd),
-            currency: V4_CURRENCY_USD,
+            currency: V4V5_CURRENCY_USD,
           }),
           secondaryAmount: formatCurrencyAmount({
             amount: fromWad(appliedNFTCreditsRaw.eth),
-            currency: V4_CURRENCY_ETH,
+            currency: V4V5_CURRENCY_ETH,
           }),
         }
       default:
         return {
           primaryAmount: formatCurrencyAmount({
             amount: fromWad(appliedNFTCreditsRaw.eth),
-            currency: V4_CURRENCY_ETH,
+            currency: V4V5_CURRENCY_ETH,
           }),
           secondaryAmount: formatCurrencyAmount({
             amount: fromWad(appliedNFTCreditsRaw.usd),
-            currency: V4_CURRENCY_USD,
+            currency: V4V5_CURRENCY_USD,
           }),
         }
     }
@@ -113,20 +113,20 @@ export const usePayAmounts = () => {
 
     const formattedEth = formatCurrencyAmount({
       amount: fromWad(totalEth),
-      currency: V4_CURRENCY_ETH,
+      currency: V4V5_CURRENCY_ETH,
     })
     const formattedUsd = formatCurrencyAmount({
       amount: fromWad(totalUsd),
-      currency: V4_CURRENCY_USD,
+      currency: V4V5_CURRENCY_USD,
     })
 
     switch (payAmount?.currency) {
-      case V4_CURRENCY_ETH:
+      case V4V5_CURRENCY_ETH:
         return {
           primaryAmount: formattedEth,
           secondaryAmount: formattedUsd,
         }
-      case V4_CURRENCY_USD:
+      case V4V5_CURRENCY_USD:
         return {
           primaryAmount: formattedUsd,
           secondaryAmount: formattedEth,

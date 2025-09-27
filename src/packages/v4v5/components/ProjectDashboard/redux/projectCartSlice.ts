@@ -6,8 +6,8 @@ import {
 } from '../ReduxProjectCartProvider'
 
 import { NftRewardTier } from 'models/nftRewards'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
-import { V4_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4V5_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
 
 export type ProjectCartState = {
   payAmount: ProjectCartCurrencyAmount | undefined
@@ -48,7 +48,7 @@ const projectCartSlice = createSlice({
   reducers: {
     addPayment: (
       state,
-      action: PayloadAction<{ amount: number; currency: V4CurrencyOption }>,
+      action: PayloadAction<{ amount: number; currency: V4V5CurrencyOption }>,
     ) => {
       const nftRewards = calculateEligibleNftRewards({
         rewardTiers: state.allNftRewards,
@@ -87,7 +87,7 @@ const projectCartSlice = createSlice({
       if (existingIndex === -1) {
         state.payAmount = {
           amount: Number(formatEther(payAmount)),
-          currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
+          currency: state.payAmount?.currency ?? V4V5_CURRENCY_ETH,
         }
         state.chosenNftRewards = [...state.chosenNftRewards, nftReward]
       }
@@ -95,7 +95,7 @@ const projectCartSlice = createSlice({
       newNftRewards[existingIndex] = nftReward
       state.payAmount = {
         amount: Number(formatEther(payAmount)),
-        currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
+        currency: state.payAmount?.currency ?? V4V5_CURRENCY_ETH,
       }
       state.chosenNftRewards = newNftRewards
     },
@@ -117,7 +117,7 @@ const projectCartSlice = createSlice({
       state.payAmount = payAmount
         ? {
             amount: payAmount,
-            currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
+            currency: state.payAmount?.currency ?? V4V5_CURRENCY_ETH,
           }
         : undefined
       state.chosenNftRewards = state.chosenNftRewards.filter(
@@ -147,7 +147,7 @@ const projectCartSlice = createSlice({
 
       state.payAmount = {
         amount: Number(formatEther(payAmount)),
-        currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
+        currency: state.payAmount?.currency ?? V4V5_CURRENCY_ETH,
       }
       state.chosenNftRewards = newNftRewards
     },
@@ -174,7 +174,7 @@ const projectCartSlice = createSlice({
         state.payAmount = payAmount
           ? {
               amount: payAmount,
-              currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
+              currency: state.payAmount?.currency ?? V4V5_CURRENCY_ETH,
             }
           : undefined
         state.chosenNftRewards = newNftRewards.filter(
@@ -188,7 +188,7 @@ const projectCartSlice = createSlice({
         state.payAmount = payAmount
           ? {
               amount: payAmount,
-              currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
+              currency: state.payAmount?.currency ?? V4V5_CURRENCY_ETH,
             }
           : undefined
         state.chosenNftRewards = newNftRewards

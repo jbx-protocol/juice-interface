@@ -9,13 +9,13 @@ import { FirstCycleCountdownCallout } from './FirstCycleCountdownCallout'
 import { PayRedeemInput } from './PayRedeemInput'
 import { PreventOverspendingPayCard } from './PreventOverspendingPayCard'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
-import { V4_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { useBalance } from 'wagmi'
 import { usePayProjectDisabled } from 'packages/v4v5/hooks/usePayProjectDisabled'
 import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
 import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { useWallet } from 'hooks/Wallet'
 
 type PayConfigurationProps = {
@@ -82,7 +82,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
       dispatch(
         projectCartActions.addPayment({
           amount: !Number.isNaN(parsedValue) ? parsedValue : 0,
-          currency: V4_CURRENCY_ETH,
+          currency: V4V5_CURRENCY_ETH,
         }),
       )
       setPayAmount(value)

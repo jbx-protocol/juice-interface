@@ -6,7 +6,7 @@ import { JB_CHAINS } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
 import Image from 'next/legacy/image'
 import { useRouter } from 'next/router'
-import V4ProjectHandleLink from 'packages/v4v5/components/V4ProjectHandleLink'
+import V4V5ProjectHandleLink from 'packages/v4v5/components/V4V5ProjectHandleLink'
 import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useMemo } from 'react'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
@@ -62,7 +62,7 @@ export const DeploySuccess = ({
           return (
             <div key={index} className="flex items-center">
               <div className="text-base font-normal text-grey-600 dark:text-slate-200">
-                <V4ProjectHandleLink
+                <V4V5ProjectHandleLink
                   projectId={project.projectId}
                   chainId={project.chainId}
                 />

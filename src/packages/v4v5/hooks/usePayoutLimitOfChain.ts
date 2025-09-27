@@ -8,8 +8,8 @@ import {
 
 import { NATIVE_TOKEN, jbDirectoryAbi, jbFundAccessLimitsAbi, JBCoreContracts } from 'juice-sdk-core'
 import { useReadContract } from 'wagmi'
-import { V4CurrencyOption } from '../models/v4CurrencyOption'
-import { V4_CURRENCY_ETH } from '../utils/currency'
+import { V4V5CurrencyOption } from '../models/v4CurrencyOption'
+import { V4V5_CURRENCY_ETH } from '../utils/currency'
 
 /**
  * V4todo: add to SDK
@@ -59,11 +59,11 @@ export function usePayoutLimitOfChain({
     data: payoutLimit
       ? {
           ...payoutLimit,
-          currency: Number(payoutLimit.currency) as V4CurrencyOption,
+          currency: Number(payoutLimit.currency) as V4V5CurrencyOption,
         }
       : {
           amount: 0n,
-          currency: V4_CURRENCY_ETH,
+          currency: V4V5_CURRENCY_ETH,
         },
     isLoading,
   }

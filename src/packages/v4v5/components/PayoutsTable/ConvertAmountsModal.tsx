@@ -1,6 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { Divider, Modal } from 'antd'
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD, convertV2V3CurrencyOptionToV4 } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH, V4V5_CURRENCY_USD, convertV2V3CurrencyOptionToV4 } from 'packages/v4v5/utils/currency'
 import {
   deriveAmountAfterFee,
   derivePayoutAmount,
@@ -18,7 +18,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
 import { JBSplit as Split } from 'juice-sdk-core'
 import { ReduxPayoutLimit } from 'packages/v4v5/models/fundAccessLimits'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import { formatCurrencyAmount } from 'packages/v4v5/utils/formatCurrencyAmount'
 import { isJuiceboxProjectSplit } from 'packages/v4v5/utils/v4Splits'
 import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
@@ -26,7 +26,7 @@ import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/helpPagePath'
 import { useChainId } from 'wagmi'
-import V4ProjectHandleLink from '../V4ProjectHandleLink'
+import V4V5ProjectHandleLink from '../V4V5ProjectHandleLink'
 
 export const ConvertAmountsModal = ({
   open,
@@ -43,8 +43,8 @@ export const ConvertAmountsModal = ({
   const [distributionLimit] = useCreatingDistributionLimit()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>('')
   
-  const initialCurrency = distributionLimit?.currency ? convertV2V3CurrencyOptionToV4(distributionLimit.currency) : V4_CURRENCY_ETH
-  const [currency, setCurrency] = useState<V4CurrencyOption>(initialCurrency)
+  const initialCurrency = distributionLimit?.currency ? convertV2V3CurrencyOptionToV4(distributionLimit.currency) : V4V5_CURRENCY_ETH
+  const [currency, setCurrency] = useState<V4V5CurrencyOption>(initialCurrency)
 
   const totalPayoutsPercent = useMemo(
     () =>
@@ -102,9 +102,9 @@ export const ConvertAmountsModal = ({
           onChange={val => setNewDistributionLimit(val ? val : '')}
           accessory={
             <CurrencySwitch
-              currency={currency === V4_CURRENCY_ETH ? 'ETH' : 'USD'}
+              currency={currency === V4V5_CURRENCY_ETH ? 'ETH' : 'USD'}
               onCurrencyChange={c =>
-                setCurrency(c === 'ETH' ? V4_CURRENCY_ETH : V4_CURRENCY_USD)
+                setCurrency(c === 'ETH' ? V4V5_CURRENCY_ETH : V4V5_CURRENCY_USD)
               }
             />
           }
@@ -140,7 +140,7 @@ export const ConvertAmountsModal = ({
               descriptionLabel={
                 <>
                   {isJuiceboxProjectSplit(split) && allocation.projectId ? (
-                    <V4ProjectHandleLink
+                    <V4V5ProjectHandleLink
                       projectId={Number(allocation.projectId)}
                       chainId={chainId}
                     />

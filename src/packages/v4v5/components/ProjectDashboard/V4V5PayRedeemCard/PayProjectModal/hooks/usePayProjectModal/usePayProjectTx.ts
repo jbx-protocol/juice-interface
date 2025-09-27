@@ -25,10 +25,10 @@ import { FormikHelpers } from 'formik'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useWallet } from 'hooks/Wallet'
 import { useProjectSelector } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
+import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
-import { V4_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
 import { ProjectPayReceipt } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useProjectPageQueries'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { emitErrorNotification } from 'utils/notifications'
@@ -73,7 +73,7 @@ export const usePayProjectTx = ({
       return {
         totalAmount: payAmount ?? {
           amount: 0,
-          currency: V4_CURRENCY_ETH,
+          currency: V4V5_CURRENCY_ETH,
         },
         nfts: chosenNftRewards ?? [],
         timestamp: new Date(),
@@ -90,7 +90,7 @@ export const usePayProjectTx = ({
       return 0n
     }
     let weiAmount =
-      payAmount.currency === V4_CURRENCY_ETH
+      payAmount.currency === V4V5_CURRENCY_ETH
         ? parseEther(payAmount.amount.toString())
         : converter.usdToWei(payAmount.amount).toBigInt()
     if (nftCredits) {

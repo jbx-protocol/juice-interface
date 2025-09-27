@@ -9,11 +9,11 @@ import { useWallet } from 'hooks/Wallet'
 import { isEqualAddress } from 'utils/address'
 import { isSafeSigner } from 'utils/safe'
 import { zeroAddress } from 'viem'
-import { V4OperatorPermission } from '../models/v4Permissions'
-import useV4ProjectOwnerOf from './useV4ProjectOwnerOf'
+import { V4V5OperatorPermission } from '../models/v4Permissions'
+import useV4ProjectOwnerOf from './useV4V5ProjectOwnerOf'
 
 export function useV4WalletHasPermission(
-  permission: V4OperatorPermission | V4OperatorPermission[],
+  permission: V4V5OperatorPermission | V4V5OperatorPermission[],
 ): boolean {
   const { userAddress } = useWallet()
   const chainId = useChainId()

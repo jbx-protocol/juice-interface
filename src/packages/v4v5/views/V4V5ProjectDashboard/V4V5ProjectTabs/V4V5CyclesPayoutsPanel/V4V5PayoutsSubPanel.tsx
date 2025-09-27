@@ -10,13 +10,13 @@ import { JBChainId } from 'juice-sdk-core'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useV4PayoutsSubPanel } from './hooks/useV4PayoutsSubPanel'
-import { useV4TreasuryStats } from './hooks/useV4TreasuryStats'
+import { useV4PayoutsSubPanel } from './hooks/useV4V5PayoutsSubPanel'
+import { useV4TreasuryStats } from './hooks/useV4V5TreasuryStats'
 import { V4ExportPayoutsCsvItem } from './V4ExportPayoutsCsvItem'
 import { V4ProjectAllocationRow } from './V4ProjectAllocationRow'
 import { V4SendPayoutsButton } from './V4SendPayoutsButton'
 
-export const V4PayoutsSubPanel = ({
+export const V4V5PayoutsSubPanel = ({
   className,
   type,
 }: {
@@ -113,7 +113,7 @@ export const V4PayoutsSubPanel = ({
                   items: [
                     {
                       id: 'export',
-                      component: <V4ExportPayoutsCsvItem type={type} />,
+                      component: <V4V5ExportPayoutsCsvItem type={type} />,
                     },
                   ],
                 },
@@ -127,7 +127,7 @@ export const V4PayoutsSubPanel = ({
               ))
             ) : hasPayouts ? (
               payouts?.map((payout, i) => (
-                <V4ProjectAllocationRow
+                <V4V5ProjectAllocationRow
                   key={`${payout.address}${payout.projectId}-${i}`}
                   {...payout}
                 />
@@ -139,7 +139,7 @@ export const V4PayoutsSubPanel = ({
             )}
           </div>
           {hasPayouts && type === 'current' && (
-            <V4SendPayoutsButton
+            <V4V5SendPayoutsButton
               className="z-0 w-full justify-center md:w-auto"
               containerClassName="md:self-end mt-6 inline-flex"
             />

@@ -11,7 +11,7 @@ import { TreasurySelection } from 'models/treasurySelection'
 import { usePayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/hooks/usePayoutsTable'
 import { ConvertAmountsModal } from 'packages/v4v5/components/PayoutsTable/ConvertAmountsModal'
 import { ReduxPayoutLimit } from 'packages/v4v5/models/fundAccessLimits'
-import { convertV4CurrencyOptionToV2V3 } from 'packages/v4v5/utils/currency'
+import { convertV4V5CurrencyOptionToV2V3 } from 'packages/v4v5/utils/currency'
 import { transformV2V3SplitsToV4 } from 'packages/v4v5/utils/launchProjectTransformers'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -63,7 +63,7 @@ export function TreasuryOptionsRadio() {
   const switchToAmountsPayoutSelection = useCallback(
     (newDistributionLimit: ReduxPayoutLimit) => {
       setDistributionLimit(parseInt(fromWad(newDistributionLimit.amount)))
-      setCurrency(convertV4CurrencyOptionToV2V3(newDistributionLimit.currency))
+      setCurrency(convertV4V5CurrencyOptionToV2V3(newDistributionLimit.currency))
       setTreasuryOption('amount')
       switchingToAmountsModal.close()
     },

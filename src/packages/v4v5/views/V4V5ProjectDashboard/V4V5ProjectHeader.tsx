@@ -15,18 +15,18 @@ import { SuckerPair } from 'juice-sdk-core'
 import Link from 'next/link'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { ProjectHeaderPopupMenu } from 'packages/v4v5/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
-import V4ProjectHandleLink from 'packages/v4v5/components/V4ProjectHandleLink'
-import { V4OperatorPermission } from 'packages/v4v5/models/v4Permissions'
+import V4V5ProjectHandleLink from 'packages/v4v5/components/V4V5ProjectHandleLink'
+import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { twMerge } from 'tailwind-merge'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 // import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
-import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4WalletHasPermission'
-import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
+import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { useV4ProjectHeader } from './hooks/useV4V5ProjectHeader'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
-export const V4ProjectHeader = ({ className }: { className?: string }) => {
+export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
   const chainId = useJBChainId()
   const { data: suckers } = useSuckers() as { data: SuckerPair[] }
@@ -43,7 +43,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const isMobile = useMobile()
 
   const canQueueRuleSets = useV4WalletHasPermission(
-    V4OperatorPermission.QUEUE_RULESETS,
+    V4V5OperatorPermission.QUEUE_RULESETS,
   )
 
   const canManageProject = canQueueRuleSets
@@ -143,7 +143,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
             }
             <div className="flex flex-col gap-2 text-grey-500 dark:text-slate-200 sm:flex-row sm:items-center">
               {projectId && chainId ? (
-                <V4ProjectHandleLink
+                <V4V5ProjectHandleLink
                   className="text-grey-500 dark:text-slate-200"
                   projectId={projectId}
                   chainId={chainId}

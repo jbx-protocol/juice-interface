@@ -13,7 +13,7 @@ import { useTransferOwnershipOnChain } from 'packages/v4v5/hooks/useTransferOwne
 import { useTransferProjectOwnershipTx } from 'packages/v4v5/hooks/useTransferProjectOwnershipTx'
 import { Address } from 'viem'
 
-export function V4OmnichainTransferOwnershipForm({
+export function V4V5OmnichainTransferOwnershipForm({
   ownerAddress,
 }: {
   ownerAddress: string | undefined

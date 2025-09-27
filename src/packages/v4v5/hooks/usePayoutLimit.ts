@@ -10,8 +10,8 @@ import { jbFundAccessLimitsAbi } from 'juice-sdk-core'
 import { useReadContract } from 'wagmi'
 
 import { NATIVE_TOKEN } from 'juice-sdk-core'
-import { V4CurrencyOption } from '../models/v4CurrencyOption'
-import { V4_CURRENCY_ETH } from '../utils/currency'
+import { V4V5CurrencyOption } from '../models/v4CurrencyOption'
+import { V4V5_CURRENCY_ETH } from '../utils/currency'
 
 /**
  * @todo add to sdk
@@ -48,7 +48,7 @@ export function usePayoutLimit() {
     return {
       data: {
         amount: 0n,
-        currency: V4_CURRENCY_ETH,
+        currency: V4V5_CURRENCY_ETH,
       },
       isLoading: true,
     }
@@ -58,11 +58,11 @@ export function usePayoutLimit() {
     data: payoutLimit !== undefined
       ? {
           ...payoutLimit,
-          currency: Number(payoutLimit.currency) as V4CurrencyOption,
+          currency: Number(payoutLimit.currency) as V4V5CurrencyOption,
         }
       : {
           amount: 0n,
-          currency: V4_CURRENCY_ETH,
+          currency: V4V5_CURRENCY_ETH,
         },
     isLoading,
   }

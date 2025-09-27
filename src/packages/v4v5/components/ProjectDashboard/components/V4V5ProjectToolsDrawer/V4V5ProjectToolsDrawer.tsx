@@ -5,7 +5,7 @@ import useMobile from 'hooks/useMobile'
 import { useJBProjectMetadataContext } from 'juice-sdk-react'
 import { AddToProjectBalanceForm } from './AddToProjectBalanceForm'
 
-export function V4ProjectToolsDrawer({
+export function V4V5ProjectToolsDrawer({
   open,
   onClose,
 }: {

@@ -10,13 +10,13 @@ import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import Link from 'next/link'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
-import { useV4BalanceOfNativeTerminal } from 'packages/v4v5/hooks/useV4BalanceOfNativeTerminal'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
-import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4WalletHasPermission'
-import { V4OperatorPermission } from 'packages/v4v5/models/v4Permissions'
-import { useV4DistributableAmount } from '../V4V5ProjectDashboard/V4ProjectTabs/V4CyclesPayoutsPanel/hooks/useV4DistributableAmount'
+import { useV4BalanceOfNativeTerminal } from 'packages/v4v5/hooks/useV4V5BalanceOfNativeTerminal'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
+import { useV4DistributableAmount } from '../V4V5ProjectDashboard/V4V5ProjectTabs/V4V5CyclesPayoutsPanel/hooks/useV4V5DistributableAmount'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 
@@ -79,7 +79,7 @@ export function ProjectSettingsDashboard() {
 
   const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4WalletHasPermission(
-    V4OperatorPermission.MINT_TOKENS,
+    V4V5OperatorPermission.MINT_TOKENS,
   )
 
   const projectMetadata = metadata?.data

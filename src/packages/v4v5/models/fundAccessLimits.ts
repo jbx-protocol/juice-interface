@@ -1,4 +1,4 @@
-import { V4CurrencyOption } from "./v4CurrencyOption";
+import { V4V5CurrencyOption } from "./v4CurrencyOption";
 
 export type FundAccessLimitGroup = {
   terminal: `0x${string}`;
@@ -15,5 +15,5 @@ export type FundAccessLimitGroup = {
 
 export interface ReduxPayoutLimit {
   amount: bigint
-  currency: V4CurrencyOption
+  currency: V4V5CurrencyOption
 }

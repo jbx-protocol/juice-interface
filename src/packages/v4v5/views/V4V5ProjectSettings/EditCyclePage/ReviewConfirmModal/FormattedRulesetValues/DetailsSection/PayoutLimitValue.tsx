@@ -17,7 +17,7 @@ export function PayoutLimitValue({
     !payoutLimit || isInfinitePayoutLimit(payoutLimit)
   const distributionLimitIsZero = payoutLimit === 0n
   // const distributionLimitCurrency = currencyName
-  //   ? getV4CurrencyOption(currencyName)
+  //   ? getV4V5CurrencyOption(currencyName)
   //   : undefined
 
   const _tooltip = (

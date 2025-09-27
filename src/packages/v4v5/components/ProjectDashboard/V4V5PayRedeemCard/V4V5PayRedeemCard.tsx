@@ -16,7 +16,7 @@ import { Tooltip } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import { useWallet } from 'hooks/Wallet'
 import { JB_TOKEN_DECIMALS } from 'juice-sdk-core'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
@@ -27,13 +27,13 @@ import { payRedeemActions } from '../redux/payRedeemSlice'
 import { PayConfiguration } from './PayConfiguration'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
 import { RedeemConfiguration } from './RedeemConfiguration'
-import { V4NftCreditsCallouts } from './V4NftCreditsCallouts'
+import { V4V5NftCreditsCallouts } from './V4V5NftCreditsCallouts'
 
 type PayRedeemCardProps = {
   className?: string
 }
 
-export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
+export const V4V5PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   className,
 }) => {
   const { ruleset, rulesetMetadata } = useJBRulesetContext()
@@ -169,7 +169,7 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
         </Callout.Info>
       )}
 
-      <V4NftCreditsCallouts />
+      <V4V5NftCreditsCallouts />
 
       {/* TODO */}
       {/* {projectHasErc20Token && unclaimedTokenBalance?.gt(0) && (

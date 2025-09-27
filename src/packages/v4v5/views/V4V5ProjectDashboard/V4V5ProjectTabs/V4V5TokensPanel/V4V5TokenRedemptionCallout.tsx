@@ -7,7 +7,7 @@ import { t } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
 
-export const V4TokenRedemptionCallout = () => {
+export const V4V5TokenRedemptionCallout = () => {
   const { rulesetMetadata: currentRulesetMetadata, ruleset } = useJBRulesetContext()
   const { projectId, chainId } = useJBProjectId()
   const { 

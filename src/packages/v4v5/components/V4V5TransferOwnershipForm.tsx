@@ -6,7 +6,7 @@ import EthereumAddress from 'components/EthereumAddress'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { useState } from 'react'
 
-export function V4TransferOwnershipForm({
+export function V4V5TransferOwnershipForm({
   useTransferProjectOwnershipTx,
   ownerAddress,
 }: {

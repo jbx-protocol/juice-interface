@@ -4,15 +4,15 @@ import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
-import V4AboutPanel from './V4AboutPanel'
-import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
-import { CyclesPanelSelectedChainProvider } from './V4CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
-import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
-import { V4NftRewardsPanel } from './V4NftRewardsPanel/V4NftRewardsPanel'
-import { V4TokensPanel } from './V4TokensPanel/V4TokensPanel'
+import V4AboutPanel from './V4V5AboutPanel'
+import { V4ActivityPanel } from './V4V5ActivityPanel/V4V5ActivityPanel'
+import { CyclesPanelSelectedChainProvider } from './V4V5CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
+import { V4CyclesPayoutsPanel } from './V4V5CyclesPayoutsPanel/V4V5CyclesPayoutsPanel'
+import { V4NftRewardsPanel } from './V4V5NftRewardsPanel/V4V5NftRewardsPanel'
+import { V4TokensPanel } from './V4V5TokensPanel/V4V5TokensPanel'
 
 type ProjectTabConfig = {
   id: string
@@ -21,7 +21,7 @@ type ProjectTabConfig = {
   hideTab?: boolean
 }
 
-export const V4ProjectTabs = ({ className }: { className?: string }) => {
+export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
   const {
       nftRewards: { rewardTiers },
@@ -58,20 +58,20 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
 
   const tabs: ProjectTabConfig[] = useMemo(
     () => [
-      { id: 'activity', name: t`Activity`, panel: <V4ActivityPanel /> },
-      { id: 'about', name: t`About`, panel: <V4AboutPanel /> },
+      { id: 'activity', name: t`Activity`, panel: <V4V5ActivityPanel /> },
+      { id: 'about', name: t`About`, panel: <V4V5AboutPanel /> },
       {
         id: 'nft_rewards',
         name: t`NFTs`,
-        panel: <V4NftRewardsPanel />,
+        panel: <V4V5NftRewardsPanel />,
         hideTab: !showNftRewards,
       },
       {
         id: 'ruleset_payouts',
         name: t`Rulesets & Funds`,
-        panel: <CyclesPanelSelectedChainProvider><V4CyclesPayoutsPanel /></CyclesPanelSelectedChainProvider>,
+        panel: <CyclesPanelSelectedChainProvider><V4V5CyclesPayoutsPanel /></CyclesPanelSelectedChainProvider>,
       },
-      { id: 'tokens', name: t`Tokens`, panel: <V4TokensPanel /> },
+      { id: 'tokens', name: t`Tokens`, panel: <V4V5TokensPanel /> },
     ],
     [showNftRewards],
   )

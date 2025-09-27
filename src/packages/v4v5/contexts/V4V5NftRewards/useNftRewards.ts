@@ -16,7 +16,7 @@ import { JBChainId } from 'juice-sdk-react'
 import { withHttps } from 'utils/externalLink'
 import { zeroAddress } from 'viem'
 import { useConfig } from 'wagmi'
-import { JB721TierV4 } from './V4NftRewardsProvider'
+import { JB721TierV4 } from './V4V5NftRewardsProvider'
 
 const NFT_PAGE_SIZE = 100n
 

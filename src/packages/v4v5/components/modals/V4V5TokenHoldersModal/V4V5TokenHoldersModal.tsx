@@ -11,11 +11,11 @@ import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
-import { useV4TotalTokenSupply } from '../../../hooks/useV4TotalTokenSupply'
+import { useV4TotalTokenSupply } from '../../../hooks/useV4V5TotalTokenSupply'
 import HoldersList from './HoldersList'
 import TokenDistributionChart from './TokenDistributionChart'
 
-export const V4TokenHoldersModal = ({
+export const V4V5TokenHoldersModal = ({
   open,
   onClose,
 }: {

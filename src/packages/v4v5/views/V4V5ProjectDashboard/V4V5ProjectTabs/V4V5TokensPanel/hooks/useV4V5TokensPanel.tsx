@@ -4,12 +4,12 @@ import { Tooltip } from 'antd'
 import { NETWORKS } from 'constants/networks'
 import { useJBTokenContext } from 'juice-sdk-react'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
-import { useV4UserTotalTokensBalance } from 'packages/v4v5/contexts/V4UserTotalTokensBalanceProvider'
+import { useV4UserTotalTokensBalance } from 'packages/v4v5/contexts/V4V5UserTotalTokensBalanceProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { useSuckersTotalSupply } from 'packages/v4v5/hooks/useSuckersTotalSupply'
-import { useV4TotalTokenSupply } from 'packages/v4v5/hooks/useV4TotalTokenSupply'
-import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4WalletHasPermission'
-import { V4OperatorPermission } from 'packages/v4v5/models/v4Permissions'
+import { useV4TotalTokenSupply } from 'packages/v4v5/hooks/useV4V5TotalTokenSupply'
+import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export const useV4TokensPanel = () => {
@@ -25,7 +25,7 @@ export const useV4TokensPanel = () => {
   })
   // const projectHasLegacyTokens = useProjectHasLegacyTokens()
   const hasDeployErc20Permission = useV4WalletHasPermission(
-    V4OperatorPermission.DEPLOY_ERC20,
+    V4V5OperatorPermission.DEPLOY_ERC20,
   )
   const projectHasErc20Token = useProjectHasErc20Token()
 

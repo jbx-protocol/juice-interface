@@ -4,26 +4,26 @@ import {
   PRECISION_USD,
 } from 'constants/currency'
 import { formatAmount, formatAmountWithScale } from '../../../utils/format/formatAmount'
-import { V4CurrencyOption } from '../models/v4CurrencyOption'
-import { V4_CURRENCY_ETH, V4CurrencyName } from './currency'
+import { V4V5CurrencyOption } from '../models/v4CurrencyOption'
+import { V4V5_CURRENCY_ETH, V4V5CurrencyName } from './currency'
 
 /**
  * Format the input amount with the currency.
  *
- * For example, if using `V4_CURRENCY_USD` with an amount of 550.1 the format
+ * For example, if using `V4V5_CURRENCY_USD` with an amount of 550.1 the format
  * will be `"$550.1 USD"`.
  * @returns
  */
 export const formatCurrencyAmount = ({
   amount,
-  currency = V4_CURRENCY_ETH,
+  currency = V4V5_CURRENCY_ETH,
   withScale = false,
 }: {
   amount: number | string | undefined
-  currency: V4CurrencyOption | undefined
+  currency: V4V5CurrencyOption | undefined
   withScale?: boolean
 }) => {
-  const currencyName = V4CurrencyName(currency)
+  const currencyName = V4V5CurrencyName(currency)
   if (!currencyName) return
 
   const currencyMetadata = CURRENCY_METADATA[currencyName]
@@ -35,7 +35,7 @@ export const formatCurrencyAmount = ({
       amount !== undefined
         ? formatAmount(amount, {
             maximumFractionDigits:
-              currency === V4_CURRENCY_ETH ? PRECISION_ETH : PRECISION_USD,
+              currency === V4V5_CURRENCY_ETH ? PRECISION_ETH : PRECISION_USD,
           })
         : '0'
   }

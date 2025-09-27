@@ -5,7 +5,7 @@ import { EmptyScreen } from 'components/Project/ProjectTabs/EmptyScreen'
 import { RedeemNftsSection } from './RedeemNftsSection/RedeemNftsSection'
 import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'
 
-export const V4NftRewardsPanel = () => {
+export const V4V5NftRewardsPanel = () => {
   const {
     rewardTiers,
     handleTierSelect,

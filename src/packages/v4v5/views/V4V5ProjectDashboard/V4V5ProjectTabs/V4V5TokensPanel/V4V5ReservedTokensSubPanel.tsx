@@ -4,14 +4,14 @@ import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { Skeleton } from 'antd'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { V4ExportReservedTokensCsvItem } from './V4ExportReservedTokensCsvItem'
-import { V4ProjectAllocationRow } from '../V4CyclesPayoutsPanel/V4ProjectAllocationRow'
+import { V4ProjectAllocationRow } from '../V4V5CyclesPayoutsPanel/V4ProjectAllocationRow'
 import { V4SendReservedTokensButton } from './V4SendReservedTokensButton'
 import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
 import { twMerge } from 'tailwind-merge'
 import { useSuckers } from 'juice-sdk-react'
-import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
+import { useV4ReservedTokensSubPanel } from './hooks/useV4V5ReservedTokensSubPanel'
 
-export const V4ReservedTokensSubPanel = ({
+export const V4V5ReservedTokensSubPanel = ({
   className,
 }: {
   className?: string
@@ -80,7 +80,7 @@ export const V4ReservedTokensSubPanel = ({
                 )}>
                   {reservedList
                     ? reservedList.map(props => (
-                        <V4ProjectAllocationRow
+                        <V4V5ProjectAllocationRow
                           key={`${props.address}${props.projectId}`}
                           {...props}
                         />
@@ -88,7 +88,7 @@ export const V4ReservedTokensSubPanel = ({
                     : null}
                 </div>
               {aggregatedPendingReservedTokens ? (
-                <V4SendReservedTokensButton
+                <V4V5SendReservedTokensButton
                   className="z-0 w-full justify-center md:w-auto"
                   containerClassName="md:self-end mt-6 inline-flex"
                   chainId={selectedChainId}
@@ -112,6 +112,6 @@ export const V4ReservedTokensSubPanel = ({
 const kebabMenuItems = [
   {
     id: 'export',
-    component: <V4ExportReservedTokensCsvItem />,
+    component: <V4V5ExportReservedTokensCsvItem />,
   },
 ]

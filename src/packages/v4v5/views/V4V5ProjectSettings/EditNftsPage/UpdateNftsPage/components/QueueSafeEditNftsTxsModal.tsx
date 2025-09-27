@@ -5,7 +5,7 @@ import { JBChainId } from 'juice-sdk-core'
 import { NftRewardTier } from 'models/nftRewards'
 import QueueSafeTxsModal from 'packages/v4v5/components/QueueSafeTxsModal'
 import { usePopulateNftUpdateTx } from 'packages/v4v5/hooks/usePopulateNftUpdateTx'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useCallback } from 'react'
 import { emitInfoNotification } from 'utils/notifications'
 

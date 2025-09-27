@@ -5,7 +5,7 @@ import { JBSplit as Split } from 'juice-sdk-core'
 import { SplitProps } from 'packages/v4v5/components/SplitList/SplitItem'
 import round from 'lodash/round'
 import { useMemo } from 'react'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 
 const JB_PERCENT_PRECISION = 2
 

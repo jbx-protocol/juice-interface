@@ -6,9 +6,9 @@ import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchP
 import { LaunchV4ProjectGroupedSplit } from '../utils/launchProjectTransformers'
 import { FundAccessLimitGroup } from './fundAccessLimits'
 import { LaunchProjectJBTerminal } from './terminals'
-import { V4CurrencyOption } from './v4CurrencyOption'
+import { V4V5CurrencyOption } from './v4CurrencyOption'
 
-export type V4NftRewardsData = {
+export type V4V5NftRewardsData = {
   rewardTiers: NftRewardTier[] | undefined
   CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
   collectionMetadata: NftCollectionMetadata
@@ -90,7 +90,7 @@ interface DeployTiered721DelegateData {
   collectionUri: string
   collectionName: string
   collectionSymbol: string
-  currency: V4CurrencyOption
+  currency: V4V5CurrencyOption
   tiers: JB721TierConfig[]
   flags: JB721TiersHookFlags
 }

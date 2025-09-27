@@ -5,7 +5,7 @@ import EthereumAddress from 'components/EthereumAddress'
 import { JBSplit as Split } from 'juice-sdk-core'
 import { formatDate } from 'utils/format/formatDate'
 import { useChainId } from 'wagmi'
-import V4ProjectHandleLink from '../V4ProjectHandleLink'
+import V4V5ProjectHandleLink from '../V4V5ProjectHandleLink'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
 
 export function PayoutTitle({ payoutSplit }: { payoutSplit: Split }) {
@@ -18,7 +18,7 @@ export function PayoutTitle({ payoutSplit }: { payoutSplit: Split }) {
   return (
     <div className="flex items-center gap-2">
       {isProject ? (
-        <V4ProjectHandleLink
+        <V4V5ProjectHandleLink
           chainId={chainId}
           projectId={Number(payoutSplit.projectId)}
           withProjectAvatar={showAvatars}

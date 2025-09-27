@@ -4,7 +4,7 @@ import { jbTokensAbi, JBCoreContracts } from 'juice-sdk-core'
 import { useReadContract } from 'wagmi'
 import React, { PropsWithChildren } from 'react'
 
-const V4UserTotalTokensBalanceContext = React.createContext<{
+const V4V5UserTotalTokensBalanceContext = React.createContext<{
   data: bigint | undefined
   isLoading: boolean
 }>({
@@ -12,7 +12,7 @@ const V4UserTotalTokensBalanceContext = React.createContext<{
   isLoading: false,
 })
 
-export const V4UserTotalTokensBalanceProvider: React.FC<PropsWithChildren> = ({
+export const V4V5UserTotalTokensBalanceProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const { userAddress } = useWallet()
@@ -25,11 +25,11 @@ export const V4UserTotalTokensBalanceProvider: React.FC<PropsWithChildren> = ({
   })
 
   return (
-    <V4UserTotalTokensBalanceContext.Provider value={value}>
+    <V4V5UserTotalTokensBalanceContext.Provider value={value}>
       {children}
-    </V4UserTotalTokensBalanceContext.Provider>
+    </V4V5UserTotalTokensBalanceContext.Provider>
   )
 }
 
 export const useV4UserTotalTokensBalance = () =>
-  React.useContext(V4UserTotalTokensBalanceContext)
+  React.useContext(V4V5UserTotalTokensBalanceContext)

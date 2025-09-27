@@ -12,13 +12,13 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useMemo } from 'react'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
-import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4ReservedSplits'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
 import { useWallet } from 'hooks/Wallet'
 import { wagmiConfig } from 'packages/v4v5/wagmiConfig'
 import { waitForTransactionReceipt } from '@wagmi/core'
 
-export default function V4DistributeReservedTokensModal({
+export default function V4V5DistributeReservedTokensModal({
   open,
   onCancel,
   onConfirmed,

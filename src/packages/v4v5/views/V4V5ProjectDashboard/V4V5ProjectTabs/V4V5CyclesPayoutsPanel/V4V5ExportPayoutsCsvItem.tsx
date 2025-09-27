@@ -3,10 +3,10 @@ import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 import { twMerge } from 'tailwind-merge'
-import { useV4CurrentUpcomingPayoutSplits } from './hooks/useV4CurrentUpcomingPayoutSplits'
-import { useV4ExportSplitsToCsv } from './hooks/useV4ExportSplitsToCsv'
+import { useV4CurrentUpcomingPayoutSplits } from './hooks/useV4V5CurrentUpcomingPayoutSplits'
+import { useV4ExportSplitsToCsv } from './hooks/useV4V5ExportSplitsToCsv'
 
-export const V4ExportPayoutsCsvItem = ({
+export const V4V5ExportPayoutsCsvItem = ({
   type,
 }: {
   type: 'current' | 'upcoming'

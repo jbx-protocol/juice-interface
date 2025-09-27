@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
-import { getV4CurrencyOption } from 'packages/v4v5/utils/currency'
+import { getV4V5CurrencyOption } from 'packages/v4v5/utils/currency'
 import { emptySectionClasses } from './DetailsSectionDiff'
 import { DiffSection } from './DiffSection'
 import DiffedSplitList from './DiffedSplits/DiffedSplitList'
@@ -68,9 +68,9 @@ export function PayoutsSectionDiff() {
               <DiffedSplitList
                 splits={newPayoutSplits}
                 diffSplits={currentPayoutSplits}
-                currency={BigInt(getV4CurrencyOption(newCurrency))}
+                currency={BigInt(getV4V5CurrencyOption(newCurrency))}
                 oldCurrency={BigInt(
-                  getV4CurrencyOption(currentCurrency),
+                  getV4V5CurrencyOption(currentCurrency),
                 )}
                 totalValue={newDistributionLimit}
                 previousTotalValue={currentDistributionLimit}

@@ -1,9 +1,9 @@
 import { t } from "@lingui/macro"
 import { EmptyScreen } from "components/Project/ProjectTabs/EmptyScreen"
 import { RichPreview } from "components/RichPreview/RichPreview"
-import { useV4AboutPanel } from "./hooks/useV4AboutPanel"
+import { useV4AboutPanel } from "./hooks/useV4V5AboutPanel"
 
-export const V4AboutPanel = () => {
+export const V4V5AboutPanel = () => {
   const { description } = useV4AboutPanel()
   return (
     <div className="flex min-h-[384px] w-full flex-col gap-8 md:gap-10">

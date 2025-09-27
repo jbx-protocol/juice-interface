@@ -5,8 +5,8 @@ import { CurrencyName } from 'constants/currency'
 import { SPLITS_TOTAL_PERCENT, jbMultiTerminalAbi, JBCoreContracts } from 'juice-sdk-core'
 import { NativeTokenValue, useJBContractContext } from 'juice-sdk-react'
 import { useReadContract } from 'wagmi'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
-import { V4CurrencyName } from 'packages/v4v5/utils/currency'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
 import { isJuiceboxProjectSplit } from 'packages/v4v5/utils/v4Splits'
 import { formatWad } from 'utils/format/formatNumber'
 import { feeForAmount } from 'utils/math'
@@ -38,8 +38,8 @@ export function SplitAmountValue({
     : 0n
   const valueAfterFees = splitValue ? splitValue - feeAmount : 0
 
-  const currencyName = V4CurrencyName(
-    Number(props.currency) as V4CurrencyOption,
+  const currencyName = V4V5CurrencyName(
+    Number(props.currency) as V4V5CurrencyOption,
   )
 
   const createTooltipTitle = (

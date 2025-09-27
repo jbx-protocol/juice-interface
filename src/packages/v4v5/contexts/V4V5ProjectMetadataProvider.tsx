@@ -4,7 +4,7 @@ import { PV_V4 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { PropsWithChildren } from 'react'
 
-export default function V4ProjectMetadataProvider({
+export default function V4V5ProjectMetadataProvider({
   projectId,
   children,
 }: PropsWithChildren<{

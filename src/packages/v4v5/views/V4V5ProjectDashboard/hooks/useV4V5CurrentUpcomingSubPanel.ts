@@ -9,7 +9,7 @@ import { useReadContract } from 'wagmi'
 import { V4ApprovalStatus } from 'models/approvalHooks'
 import { t } from '@lingui/macro'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
-import { useCyclesPanelSelectedChain } from '../V4ProjectTabs/V4CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
+import { useCyclesPanelSelectedChain } from '../V4V5ProjectTabs/V4V5CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
 import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 

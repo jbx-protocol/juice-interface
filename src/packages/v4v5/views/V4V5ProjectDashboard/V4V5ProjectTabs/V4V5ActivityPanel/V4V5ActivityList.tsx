@@ -34,7 +34,7 @@ const baseEventFilter = IGNORED_EVENTS.reduce(
   {},
 )
 
-export function V4ActivityList() {
+export function V4V5ActivityList() {
   const tokenSymbol = useProjectContext().tokenSymbol
   const { projectId } = useJBContractContext()
   const chainId = useJBChainId()

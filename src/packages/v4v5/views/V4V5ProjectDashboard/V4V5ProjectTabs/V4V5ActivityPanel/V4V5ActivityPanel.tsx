@@ -10,7 +10,7 @@ import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { Suspense } from 'react'
 import { V4ActivityList } from './V4ActivityList'
 
-export function V4ActivityPanel() {
+export function V4V5ActivityPanel() {
   const { projectId } = useJBContractContext()
   const chainId = useJBChainId()
   const { version } = useV4V5Version()
@@ -44,7 +44,7 @@ export function V4ActivityPanel() {
           </Suspense>
         </div>
       )}
-      <V4ActivityList />
+      <V4V5ActivityList />
     </div>
   )
 }

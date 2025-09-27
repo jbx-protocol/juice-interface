@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { useForm } from 'antd/lib/form/Form'
 import { NftRewardTier } from 'models/nftRewards'
-import { V4NftRewardsContext } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
+import { V4V5NftRewardsContext } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { tiersEqual } from 'utils/nftRewards'
 import { MarketplaceFormFields } from '../UpdateNftsPage/formFields'
 
@@ -12,7 +12,7 @@ export function useEditingNfts() {
   // a list of the `tierRanks` (IDs) of tiers that have been edited
   const [editedRewardTierIds, setEditedRewardTierIds] = useState<number[]>([])
 
-  const { nftRewards, loading } = useContext(V4NftRewardsContext)
+  const { nftRewards, loading } = useContext(V4V5NftRewardsContext)
 
   const deriveAndSetEditedIds = (newRewards: NftRewardTier[]) => {
     if (!nftRewards.rewardTiers) return

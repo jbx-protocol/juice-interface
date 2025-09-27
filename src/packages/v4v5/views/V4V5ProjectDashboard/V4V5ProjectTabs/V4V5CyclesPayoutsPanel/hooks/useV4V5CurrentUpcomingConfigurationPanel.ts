@@ -1,7 +1,7 @@
-import { useV4CycleSection } from './useV4CycleSection'
-import { useV4ExtensionSection } from './useV4ExtensionSection'
-import { useV4OtherRulesSection } from './useV4OtherRulesSection'
-import { useV4TokenSection } from './useV4TokenSection'
+import { useV4CycleSection } from './useV4V5CycleSection'
+import { useV4ExtensionSection } from './useV4V5ExtensionSection'
+import { useV4OtherRulesSection } from './useV4V5OtherRulesSection'
+import { useV4TokenSection } from './useV4V5TokenSection'
 
 
 export const useV4CurrentUpcomingConfigurationPanel = (

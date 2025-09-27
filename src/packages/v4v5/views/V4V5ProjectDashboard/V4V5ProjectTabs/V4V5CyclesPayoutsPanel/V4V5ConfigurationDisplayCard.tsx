@@ -5,7 +5,7 @@ import { Fragment, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { V4CurrentUpcomingConfigurationPanel } from './V4CurrentUpcomingConfigurationPanel'
 
-export const V4ConfigurationDisplayCard = ({
+export const V4V5ConfigurationDisplayCard = ({
   type,
 }: {
   type: 'current' | 'upcoming'
@@ -48,7 +48,7 @@ export const V4ConfigurationDisplayCard = ({
             leaveTo="max-h-0 overflow-hidden opacity-0"
           >
             <Disclosure.Panel className="mt-8">
-              <V4CurrentUpcomingConfigurationPanel type={type} />
+              <V4V5CurrentUpcomingConfigurationPanel type={type} />
             </Disclosure.Panel>
           </Transition>
         </div>

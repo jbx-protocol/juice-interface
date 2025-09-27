@@ -1,5 +1,5 @@
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH, V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import {
   payoutsTableMenuItemsIconClass,
@@ -57,7 +57,7 @@ export function CurrencySwitcher() {
                 2,
               )
               setDistributionLimit(formattedUsdAmount)
-              setCurrency(V4_CURRENCY_USD)
+              setCurrency(V4V5_CURRENCY_USD)
             },
           },
         ]
@@ -81,7 +81,7 @@ export function CurrencySwitcher() {
                 4,
               )
               setDistributionLimit(formattedEthAmount)
-              setCurrency(V4_CURRENCY_ETH)
+              setCurrency(V4V5_CURRENCY_ETH)
             },
           },
         ]

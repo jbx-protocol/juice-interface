@@ -1,13 +1,13 @@
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import React from 'react'
 import { useProjectDispatch } from './redux/hooks'
 import { projectCartActions } from './redux/projectCartSlice'
 
 export type ProjectCartCurrencyAmount = {
   amount: number
-  currency: V4CurrencyOption
+  currency: V4V5CurrencyOption
 }
 
 export type ProjectCartNftReward = {

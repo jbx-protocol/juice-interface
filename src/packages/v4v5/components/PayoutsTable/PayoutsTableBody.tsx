@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
-import { getV4CurrencyOption } from 'packages/v4v5/utils/currency'
+import { getV4V5CurrencyOption } from 'packages/v4v5/utils/currency'
 import { twMerge } from 'tailwind-merge'
 import { Allocation } from '../Allocation/Allocation'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
@@ -39,7 +39,7 @@ export function PayoutsTableBody() {
       {topAccessory}
       <div className="rounded-lg border border-smoke-200 dark:border-slate-600">
         <Allocation
-          allocationCurrency={getV4CurrencyOption(currency)}
+          allocationCurrency={getV4V5CurrencyOption(currency)}
           setAllocationCurrency={setCurrency}
         >
           <div className="w-full text-left">

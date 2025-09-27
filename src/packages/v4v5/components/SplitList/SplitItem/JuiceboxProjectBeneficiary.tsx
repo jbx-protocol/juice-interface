@@ -4,7 +4,7 @@ import { AllocatorBadge } from 'components/AllocatorBadge'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { JBSplit } from 'juice-sdk-core'
 import { useChainId } from 'wagmi'
-import V4ProjectHandleLink from '../../V4ProjectHandleLink'
+import V4V5ProjectHandleLink from '../../V4V5ProjectHandleLink'
 export function JuiceboxProjectBeneficiary({
   split,
   value,
@@ -18,7 +18,7 @@ export function JuiceboxProjectBeneficiary({
   return (
     <div>
       <div className="flex gap-2">
-        <V4ProjectHandleLink
+        <V4V5ProjectHandleLink
           projectId={Number(split.projectId)}
           chainId={chainId}
           withProjectAvatar

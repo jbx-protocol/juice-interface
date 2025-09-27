@@ -1,7 +1,7 @@
 import { JBRulesetContext, useJBProjectId, useJBRulesetContext, useJBUpcomingRuleset } from 'juice-sdk-react'
 
 import React from 'react'
-import { useV4NftRewards } from '../contexts/V4NftRewards/V4NftRewardsProvider'
+import { useV4NftRewards } from '../contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { zeroAddress } from 'viem'
 
 type RulesetMetadata = JBRulesetContext['rulesetMetadata']['data']

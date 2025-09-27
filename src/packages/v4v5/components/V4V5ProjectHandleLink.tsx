@@ -11,7 +11,7 @@ import { ChainLogo } from './ChainLogo'
 /**
  * Renders a link to a V4 project
  */
-export default function V4ProjectHandleLink({
+export default function V4V5ProjectHandleLink({
   className,
   containerClassName,
   name,

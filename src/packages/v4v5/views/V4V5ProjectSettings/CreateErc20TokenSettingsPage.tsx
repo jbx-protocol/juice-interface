@@ -13,12 +13,12 @@ import { GasIcon } from 'packages/v4v5/components/Create/components/pages/Review
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { IssueErc20TokenTxArgs } from 'components/buttons/IssueErc20TokenButton'
 import TransactionModal from 'components/modals/TransactionModal'
-import { V4OperatorPermission } from 'packages/v4v5/models/v4Permissions'
+import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { emitErrorNotification } from 'utils/notifications'
 import { useDeployOmnichainErc20 } from 'packages/v4v5/hooks/useDeployOmnichainErc20'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
-import { useV4IssueErc20TokenTx } from 'packages/v4v5/hooks/useV4IssueErc20TokenTx'
-import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4WalletHasPermission'
+import { useV4IssueErc20TokenTx } from 'packages/v4v5/hooks/useV4V5IssueErc20TokenTx'
+import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 
 export function CreateErc20TokenSettingsPage() {
   const [form] = Form.useForm<IssueErc20TokenTxArgs>()
@@ -28,7 +28,7 @@ export function CreateErc20TokenSettingsPage() {
   const issueErc20TokenTx = useV4IssueErc20TokenTx()
   const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4WalletHasPermission(
-    V4OperatorPermission.DEPLOY_ERC20,
+    V4V5OperatorPermission.DEPLOY_ERC20,
   )
 
   const canCreateErc20Token = !projectHasErc20Token && hasIssueTicketsPermission

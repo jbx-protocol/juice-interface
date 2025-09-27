@@ -6,7 +6,7 @@ import { JBChainId } from 'juice-sdk-core'
 import { isProjectSplit } from 'packages/v4v5/utils/v4Splits'
 import { formatDate } from 'utils/format/formatDate'
 import { useChainId } from 'wagmi'
-import V4ProjectHandleLink from '../../V4ProjectHandleLink'
+import V4V5ProjectHandleLink from '../../V4V5ProjectHandleLink'
 import { AllocationSplit } from '../Allocation'
 
 export function AllocationItemTitle({
@@ -18,7 +18,7 @@ export function AllocationItemTitle({
   return (
     <div className="flex items-center gap-2">
       {isProjectSplit(allocation) && allocation.projectId ? (
-        <V4ProjectHandleLink
+        <V4V5ProjectHandleLink
           chainId={chainId}
           projectId={Number(allocation.projectId)}
         />

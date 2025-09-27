@@ -18,7 +18,7 @@ import Loading from 'components/Loading'
 import { PayRedeemInput } from './PayRedeemInput'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { emitErrorNotification } from 'utils/notifications'
 import { useETHReceivedFromTokens } from 'packages/v4v5/hooks/useETHReceivedFromTokens'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
@@ -82,7 +82,7 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
 
   // 0.5% slippage for USD-denominated tokens
   const slippage =
-    payoutLimit?.currency === V4_CURRENCY_USD
+    payoutLimit?.currency === V4V5_CURRENCY_USD
       ? ((ethReceivedFromTokens ?? 0n) * 1000n) / 1005n
       : ethReceivedFromTokens
 

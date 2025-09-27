@@ -9,7 +9,7 @@ import USDAmount from 'components/currency/USDAmount'
 import { twMerge } from 'tailwind-merge'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
-import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
+import { useV4ProjectHeader } from './hooks/useV4V5ProjectHeader'
 
 export function ProjectHeaderStats() {
   const { payments, totalVolume, last7DaysPercent } = useV4ProjectHeader()

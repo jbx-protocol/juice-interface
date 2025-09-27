@@ -20,10 +20,10 @@ import { Tooltip } from 'antd'
 import assert from 'utils/assert'
 import { useJBRulesetByChain } from 'packages/v4v5/hooks/useJBRulesetByChain'
 import { useMemo } from 'react'
-import { useReservedTokensSelectedChain } from '../../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
+import { useReservedTokensSelectedChain } from '../../V4V5CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 import { useSuckersPendingReservedTokens } from 'packages/v4v5/hooks/useSuckersPendingReservedTokens'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
-import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4ReservedSplits'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
 
 export const useV4ReservedTokensSubPanel = () => {
   const { selectedChainId, setSelectedChainId } =

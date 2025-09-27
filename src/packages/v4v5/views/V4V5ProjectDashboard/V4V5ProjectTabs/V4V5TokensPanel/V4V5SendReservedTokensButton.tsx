@@ -7,9 +7,9 @@ import { Trans } from '@lingui/macro'
 import V4DistributeReservedTokensModal from './V4DistributeReservedTokensModal'
 import { reloadWindow } from 'utils/windowUtils'
 import { twMerge } from 'tailwind-merge'
-import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
+import { useV4ReservedTokensSubPanel } from './hooks/useV4V5ReservedTokensSubPanel'
 
-export const V4SendReservedTokensButton = ({
+export const V4V5SendReservedTokensButton = ({
   className,
   containerClassName,
   chainId
@@ -41,7 +41,7 @@ export const V4SendReservedTokensButton = ({
         <Trans>Send reserved tokens</Trans>
         <ArrowUpCircleIcon className="h-5 w-5" />
       </Button>
-      <V4DistributeReservedTokensModal
+      <V4V5DistributeReservedTokensModal
         open={open}
         onCancel={closeModal}
         onConfirmed={reloadWindow}

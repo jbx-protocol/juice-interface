@@ -33,7 +33,7 @@ const SettingsPageComponents: {
   createerc20: CreateErc20TokenSettingsPage,
 }
 
-const V4SettingsPageKeyTitleMap = (
+const V4V5SettingsPageKeyTitleMap = (
   hasExistingNfts: boolean,
 ): {
   [k in SettingsPageKey]: string

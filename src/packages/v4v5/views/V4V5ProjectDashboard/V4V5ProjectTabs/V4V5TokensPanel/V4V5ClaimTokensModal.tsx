@@ -29,7 +29,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { zeroAddress } from 'viem'
 import { useChainId } from 'wagmi'
 
-export function V4ClaimTokensModal({
+export function V4V5ClaimTokensModal({
   open,
   onCancel,
   onConfirmed,

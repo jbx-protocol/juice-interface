@@ -6,10 +6,10 @@ import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import ProjectOFACProvider from 'contexts/ProjectOFACProvider'
 import store from 'packages/v4v5/components/ProjectDashboard/redux/store'
 import { ReduxProjectCartProvider } from 'packages/v4v5/components/ProjectDashboard/ReduxProjectCartProvider'
-import { V4NftRewardsProvider } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
-import V4ProjectMetadataProvider from 'packages/v4v5/contexts/V4ProjectMetadataProvider'
-import { V4UserNftCreditsProvider } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
-import { V4UserTotalTokensBalanceProvider } from 'packages/v4v5/contexts/V4UserTotalTokensBalanceProvider'
+import { V4V5NftRewardsProvider } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import V4V5ProjectMetadataProvider from 'packages/v4v5/contexts/V4V5ProjectMetadataProvider'
+import { V4V5UserNftCreditsProvider } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { V4V5UserTotalTokensBalanceProvider } from 'packages/v4v5/contexts/V4V5UserTotalTokensBalanceProvider'
 import { V4V5VersionProvider, useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { Provider } from 'react-redux'
 
@@ -32,21 +32,21 @@ const V4V5ProjectProvidersInner: React.FC<
           metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
         }}
       >
-        <V4ProjectMetadataProvider projectId={projectId}>
+        <V4V5ProjectMetadataProvider projectId={projectId}>
           <ProjectOFACProvider isV4>
             <Provider store={store}>
-              <V4UserNftCreditsProvider>
-                <V4UserTotalTokensBalanceProvider>
-                  <V4NftRewardsProvider>
+              <V4V5UserNftCreditsProvider>
+                <V4V5UserTotalTokensBalanceProvider>
+                  <V4V5NftRewardsProvider>
                     <ReduxProjectCartProvider>
                       {children}
                     </ReduxProjectCartProvider>
-                  </V4NftRewardsProvider>
-                </V4UserTotalTokensBalanceProvider>
-              </V4UserNftCreditsProvider>
+                  </V4V5NftRewardsProvider>
+                </V4V5UserTotalTokensBalanceProvider>
+              </V4V5UserNftCreditsProvider>
             </Provider>
           </ProjectOFACProvider>
-        </V4ProjectMetadataProvider>
+        </V4V5ProjectMetadataProvider>
       </JBProjectProvider>
     </AppWrapper>
   )

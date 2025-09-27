@@ -2,7 +2,7 @@ import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/Cycl
 import { useJBRulesetByChain } from 'packages/v4v5/hooks/useJBRulesetByChain'
 import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { useCyclesPanelSelectedChain } from '../contexts/CyclesPanelSelectedChainContext'
-import { useV4FormatConfigurationExtensionSection } from './useV4FormatConfigurationExtensionSection'
+import { useV4FormatConfigurationExtensionSection } from './useV4V5FormatConfigurationExtensionSection'
 
 export const useV4ExtensionSection = (
   type: 'current' | 'upcoming',

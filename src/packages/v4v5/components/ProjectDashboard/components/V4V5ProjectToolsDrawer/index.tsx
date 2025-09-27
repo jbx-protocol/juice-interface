@@ -1,2 +1,2 @@
-export { V4ProjectToolsDrawer } from './V4ProjectToolsDrawer';
+export { V4V5ProjectToolsDrawer } from './V4V5ProjectToolsDrawer';
 

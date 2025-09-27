@@ -4,9 +4,9 @@ import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPa
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { BigNumber } from 'ethers'
 import { JBRulesetData } from 'juice-sdk-core'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import { getApprovalStrategyByAddress } from 'packages/v4v5/utils/approvalHooks'
-import { V4CurrencyName } from 'packages/v4v5/utils/currency'
+import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 import { useMemo } from 'react'
 import { formatTime } from 'utils/format/formatTime'
@@ -23,14 +23,14 @@ export const useV4FormatConfigurationCycleSection = ({
   ruleset?: JBRulesetData | null
   payoutLimitAmountCurrency: {
     amount: bigint | undefined
-    currency: V4CurrencyOption | undefined
+    currency: V4V5CurrencyOption | undefined
   }
   upcomingRuleset?: JBRulesetData | null
   upcomingRulesetLoading: boolean
   upcomingPayoutLimitLoading: boolean
   upcomingPayoutLimitAmountCurrency?: {
     amount: bigint | undefined
-    currency: V4CurrencyOption | undefined
+    currency: V4V5CurrencyOption | undefined
   } | null
 }) => {
   const formatDuration = (duration: number | undefined) => {
@@ -69,11 +69,11 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const formatPayoutAmount = (
     amount: bigint | undefined,
-    currency: V4CurrencyOption | undefined,
+    currency: V4V5CurrencyOption | undefined,
   ) => {
     if (amount === undefined || amount === MAX_PAYOUT_LIMIT) return t`Unlimited`
     if (amount === 0n) return t`Zero (no payouts)`
-    return <AmountInCurrency amount={BigNumber.from(amount ?? 0n)} currency={V4CurrencyName(currency)} />
+    return <AmountInCurrency amount={BigNumber.from(amount ?? 0n)} currency={V4V5CurrencyName(currency)} />
   }
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {

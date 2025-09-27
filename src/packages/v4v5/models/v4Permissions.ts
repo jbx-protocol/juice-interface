@@ -1,4 +1,4 @@
-export enum V4OperatorPermission {
+export enum V4V5OperatorPermission {
   'ROOT' = 1, // All permissions across every contract. Very dangerous. BE CAREFUL!
 
   // Used by `nana-core`

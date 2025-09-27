@@ -7,12 +7,12 @@ import {
 } from 'juice-sdk-react'
 
 import { FixedInt } from 'fpnum'
-import { V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { formatUnits } from 'viem'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectSelector } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 
 export const useProjectPaymentTokens = (): {
   receivedTickets: string | null
@@ -62,7 +62,7 @@ export const useProjectPaymentTokens = (): {
     return parseFloat(fromWad(totalAfterCredits))
   })()
 
-  if (payAmount?.currency === V4_CURRENCY_USD) {
+  if (payAmount?.currency === V4V5_CURRENCY_USD) {
     // convert to wei first
     // TODO support usd payments
   }

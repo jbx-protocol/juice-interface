@@ -22,7 +22,7 @@ import { twMerge } from 'tailwind-merge'
 import { usePayAmounts } from './hooks/usePayAmounts'
 import { useProjectIsOFACListed } from 'hooks/useProjectIsOFACListed'
 import { useSuckers } from 'juice-sdk-react'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { useWallet } from 'hooks/Wallet'
 
 export const PayProjectModal: React.FC = () => {

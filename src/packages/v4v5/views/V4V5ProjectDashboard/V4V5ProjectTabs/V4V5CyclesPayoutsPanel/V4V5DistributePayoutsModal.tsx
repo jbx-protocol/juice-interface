@@ -22,15 +22,15 @@ import { useWallet } from 'hooks/Wallet'
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { PayoutsTable } from 'packages/v4v5/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
-import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4CurrentPayoutSplits'
-import { V4CurrencyName } from 'packages/v4v5/utils/currency'
+import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4V5CurrentPayoutSplits'
+import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { emitErrorNotification } from 'utils/notifications'
 import { parseUnits } from 'viem'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
-import { useV4DistributableAmount } from './hooks/useV4DistributableAmount'
+import { useV4DistributableAmount } from './hooks/useV4V5DistributableAmount'
 
-export default function V4DistributePayoutsModal({
+export default function V4V5DistributePayoutsModal({
   open,
   onCancel,
   onConfirmed,
@@ -145,7 +145,7 @@ export default function V4DistributePayoutsModal({
     }
   }
 
-  const currencyName = V4CurrencyName(distributableCurrency)
+  const currencyName = V4V5CurrencyName(distributableCurrency)
 
   return (
     <TransactionModal

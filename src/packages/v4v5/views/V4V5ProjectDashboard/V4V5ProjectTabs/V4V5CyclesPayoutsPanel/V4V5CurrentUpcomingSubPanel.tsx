@@ -11,9 +11,9 @@ import { RulesetCountdownProvider } from 'packages/v4v5/contexts/RulesetCountdow
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
-import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
+import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4V5CurrentUpcomingSubPanel'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
-import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
+import { useV4UpcomingRulesetHasChanges } from './hooks/useV4V5UpcomingRulesetHasChanges'
 import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
 import { V4PayoutsSubPanel } from './V4PayoutsSubPanel'
 
@@ -28,7 +28,7 @@ function CountdownClock({ rulesetUnlocked }: { rulesetUnlocked: boolean }) {
   return <>{remainingTime}</>
 }
 
-export const V4CurrentUpcomingSubPanel = ({
+export const V4V5CurrentUpcomingSubPanel = ({
   id,
 }: {
   id: 'current' | 'upcoming'
@@ -179,10 +179,10 @@ export const V4CurrentUpcomingSubPanel = ({
             )}
           </div>
           {/* Gets data from useV4CurrentUpcomingConfigurationPanel */}
-          <V4ConfigurationDisplayCard type={info.type} />
+          <V4V5ConfigurationDisplayCard type={info.type} />
         </div>
 
-        <V4PayoutsSubPanel className="mt-12" type={id} />
+        <V4V5PayoutsSubPanel className="mt-12" type={id} />
       </div>
       {/* <RulesetCrossChainDiffModal
         open={rulesetCrossChainDiffModalOpen} 

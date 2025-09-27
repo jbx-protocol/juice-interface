@@ -15,20 +15,20 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
-import { V4TokenHoldersModal } from 'packages/v4v5/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
+import { V4TokenHoldersModal } from 'packages/v4v5/components/modals/V4V5TokenHoldersModal/V4V5TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
 import { reloadWindow } from 'utils/windowUtils'
-import { ReservedTokensSelectedChainProvider } from '../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
-import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
-import { useV4TokensPanel } from './hooks/useV4TokensPanel'
-import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
+import { ReservedTokensSelectedChainProvider } from '../V4V5CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
+import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4V5BalanceMenuItemsUserFlags'
+import { useV4TokensPanel } from './hooks/useV4V5TokensPanel'
+import { useV4YourBalanceMenuItems } from './hooks/useV4V5YourBalanceMenuItems'
 import { V4ClaimTokensModal } from './V4ClaimTokensModal'
 import { V4MintModal } from './V4MintModal'
 import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
 import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
 
-export const V4TokensPanel = () => {
+export const V4V5TokensPanel = () => {
   const { userTokenBalanceLoading, projectToken, totalTokenSupplyElement } =
     useV4TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
@@ -111,7 +111,7 @@ export const V4TokensPanel = () => {
           <h2 className="font-heading text-2xl font-medium">Tokens</h2>
         </div>
 
-        <V4TokenRedemptionCallout />
+        <V4V5TokenRedemptionCallout />
 
         <div className="mb-12 flex-grow">
           {!userTokenBalanceLoading && (
@@ -167,20 +167,20 @@ export const V4TokensPanel = () => {
             </a>
           </div>
           <ReservedTokensSelectedChainProvider>
-            <V4ReservedTokensSubPanel className="mt-12" />
+            <V4V5ReservedTokensSubPanel className="mt-12" />
           </ReservedTokensSelectedChainProvider>
         </div>
       </div>
-      <V4TokenHoldersModal
+      <V4V5TokenHoldersModal
         open={tokenHolderModalOpen}
         onClose={closeTokenHolderModal}
       />
-      <V4ClaimTokensModal
+      <V4V5ClaimTokensModal
         open={claimTokensModalVisible}
         onCancel={() => setClaimTokensModalVisible(false)}
         onConfirmed={reloadWindow}
       />
-      <V4MintModal
+      <V4V5MintModal
         open={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
         onConfirmed={reloadWindow}

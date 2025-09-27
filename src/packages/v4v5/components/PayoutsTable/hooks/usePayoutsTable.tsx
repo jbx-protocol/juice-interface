@@ -5,8 +5,8 @@ import { SPLITS_TOTAL_PERCENT, JBSplit as Split, SplitPortion } from 'juice-sdk-
 import isEqual from 'lodash/isEqual'
 import round from 'lodash/round'
 import { AddEditAllocationModalEntity } from 'packages/v4v5/components/Allocation/AddEditAllocationModal'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
-import { V4CurrencyName, V4_CURRENCY_METADATA, getV4CurrencyOption } from 'packages/v4v5/utils/currency'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4V5CurrencyName, V4V5_CURRENCY_METADATA, getV4V5CurrencyOption } from 'packages/v4v5/utils/currency'
 import {
   JB_FEE,
   adjustedSplitPercents,
@@ -93,7 +93,7 @@ export const usePayoutsTable = () => {
 
   const currencyOrPercentSymbol = distributionLimitIsInfinite
     ? '%'
-    : V4_CURRENCY_METADATA[getV4CurrencyOption(currency)].symbol
+    : V4V5_CURRENCY_METADATA[getV4V5CurrencyOption(currency)].symbol
 
   /* Payouts that don't go to Juicebox projects incur 2.5% fee */
   const nonJuiceboxProjectPayoutSplits = [
@@ -118,10 +118,10 @@ export const usePayoutsTable = () => {
 
   /**
    * Sets the currency for the distributionLimit
-   * @param currency - Currency as a V4CurrencyOption (1 | 2)
+   * @param currency - Currency as a V4V5CurrencyOption (1 | 2)
    */
-  function setCurrency(currency: V4CurrencyOption) {
-    setCurrencyName?.(V4CurrencyName(currency) ?? 'ETH')
+  function setCurrency(currency: V4V5CurrencyOption) {
+    setCurrencyName?.(V4V5CurrencyName(currency) ?? 'ETH')
     // setFormHasUpdated(true) TODO: Settings
   }
 

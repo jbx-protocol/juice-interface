@@ -1,5 +1,5 @@
-import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4CurrentPayoutSplits'
-import { useV4UpcomingPayoutSplits } from 'packages/v4v5/hooks/useV4UpcomingPayoutSplits'
+import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4V5CurrentPayoutSplits'
+import { useV4UpcomingPayoutSplits } from 'packages/v4v5/hooks/useV4V5UpcomingPayoutSplits'
 import { useCyclesPanelSelectedChain } from '../contexts/CyclesPanelSelectedChainContext'
 
 export const useV4CurrentUpcomingPayoutSplits = (

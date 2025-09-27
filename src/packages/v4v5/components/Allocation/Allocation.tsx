@@ -1,6 +1,6 @@
 import { JBSplit as Split } from 'juice-sdk-core'
 import { FormItemInput } from 'models/formItemInput'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import { createContext, useContext } from 'react'
 import { AllocationItem } from './AllocationItem'
 import { AllocationList } from './AllocationList'
@@ -16,12 +16,12 @@ const AllocationContext = createContext<{
   allocations: AllocationSplit[]
   totalAllocationAmount?: bigint
   setTotalAllocationAmount?: (total: bigint) => void
-  allocationCurrency?: V4CurrencyOption
+  allocationCurrency?: V4V5CurrencyOption
   addAllocation: (allocation: AllocationSplit) => void
   removeAllocation: (id: string) => void
   upsertAllocation: (allocation: AllocationSplit) => void
   setAllocations: (allocations: AllocationSplit[]) => void
-  setCurrency: (currency: V4CurrencyOption) => void
+  setCurrency: (currency: V4V5CurrencyOption) => void
 }>({
   allocations: [],
   addAllocation: () => {
@@ -50,8 +50,8 @@ const useAllocationInstance = () => {
 interface AllocationProps {
   totalAllocationAmount?: bigint
   setTotalAllocationAmount?: (total: bigint) => void
-  allocationCurrency?: V4CurrencyOption
-  setAllocationCurrency?: (currency: V4CurrencyOption) => void
+  allocationCurrency?: V4V5CurrencyOption
+  setAllocationCurrency?: (currency: V4V5CurrencyOption) => void
 }
 
 export const Allocation: React.FC<

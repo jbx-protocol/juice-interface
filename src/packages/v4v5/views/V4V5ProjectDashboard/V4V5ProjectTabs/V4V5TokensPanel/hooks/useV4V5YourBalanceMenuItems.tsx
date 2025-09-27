@@ -12,7 +12,7 @@ import { PopupMenuItem } from 'components/ui/PopupMenu'
 import { useWallet } from 'hooks/Wallet'
 import { useSuckersUnclaimedBalance } from 'packages/v4v5/hooks/useSuckersUnclaimedBalance'
 import { zeroAddress } from 'viem'
-import { useV4BalanceMenuItemsUserFlags } from './useV4BalanceMenuItemsUserFlags'
+import { useV4BalanceMenuItemsUserFlags } from './useV4V5BalanceMenuItemsUserFlags'
 
 export const useV4YourBalanceMenuItems = () => {
   const { canBurnTokens, canClaimErcTokens, canMintTokens } =

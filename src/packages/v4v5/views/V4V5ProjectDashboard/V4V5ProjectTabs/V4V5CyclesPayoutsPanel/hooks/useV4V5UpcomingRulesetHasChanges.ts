@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { useV4CurrentUpcomingConfigurationPanel } from "./useV4CurrentUpcomingConfigurationPanel"
+import { useV4CurrentUpcomingConfigurationPanel } from "./useV4V5CurrentUpcomingConfigurationPanel"
 
 export const useV4UpcomingRulesetHasChanges = () => {
   const data = useV4CurrentUpcomingConfigurationPanel('upcoming')

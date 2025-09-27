@@ -4,7 +4,7 @@ import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
 import { useUpcomingPayoutLimit } from 'packages/v4v5/hooks/useUpcomingPayoutLimit'
 import { useCyclesPanelSelectedChain } from '../contexts/CyclesPanelSelectedChainContext'
-import { useV4FormatConfigurationCycleSection } from './useV4FormatConfigurationCycleSection'
+import { useV4FormatConfigurationCycleSection } from './useV4V5FormatConfigurationCycleSection'
 
 export const useV4CycleSection = (
   type: 'current' | 'upcoming',

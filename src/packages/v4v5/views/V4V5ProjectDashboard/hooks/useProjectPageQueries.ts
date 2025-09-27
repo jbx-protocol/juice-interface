@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
 import { useRouter } from 'next/router'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 
 type ProjectPageTab =
   | 'activity'
@@ -13,7 +13,7 @@ type ProjectPageTab =
 export type ProjectPayReceipt = {
   totalAmount: {
     amount: number
-    currency: V4CurrencyOption
+    currency: V4V5CurrencyOption
   }
   tokensReceived: string
   timestamp: Date

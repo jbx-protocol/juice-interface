@@ -6,14 +6,14 @@ import { useReadContract } from 'wagmi'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { BigNumber } from 'ethers'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
-import { V4CurrencyName } from 'packages/v4v5/utils/currency'
-import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
+import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import assert from 'utils/assert'
 import { feeForAmount } from 'utils/math'
-import { useV4CurrentUpcomingPayoutLimit } from './useV4CurrentUpcomingPayoutLimit'
-import { useV4CurrentUpcomingPayoutSplits } from './useV4CurrentUpcomingPayoutSplits'
-import { useV4DistributableAmount } from './useV4DistributableAmount'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
+import { useV4CurrentUpcomingPayoutLimit } from './useV4V5CurrentUpcomingPayoutLimit'
+import { useV4CurrentUpcomingPayoutSplits } from './useV4V5CurrentUpcomingPayoutSplits'
+import { useV4DistributableAmount } from './useV4V5DistributableAmount'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4v5/utils/v4Splits'
 
 const splitHasFee = (split: JBSplit) => {
@@ -53,8 +53,8 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { payoutLimit, payoutLimitCurrency } =
     useV4CurrentUpcomingPayoutLimit(type)
 
-  const payoutLimitCurrencyName = V4CurrencyName(
-    payoutLimitCurrency as V4CurrencyOption,
+  const payoutLimitCurrencyName = V4V5CurrencyName(
+    payoutLimitCurrency as V4V5CurrencyOption,
   )
 
   const showAmountOnPayout =

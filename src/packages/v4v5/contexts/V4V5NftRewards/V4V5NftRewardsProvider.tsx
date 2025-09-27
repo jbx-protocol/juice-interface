@@ -16,7 +16,7 @@ import { ContractFunctionReturnType, zeroAddress } from 'viem'
 
 import { JB721GovernanceType } from 'models/nftRewards'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { V4NftRewardsData } from 'packages/v4v5/models/nfts'
+import { V4V5NftRewardsData } from 'packages/v4v5/models/nfts'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { useNftRewards } from './useNftRewards'
 
@@ -31,11 +31,11 @@ export type JB721TierV4 = ContractFunctionReturnType<
 
 type NftRewardsContextType = {
   // nftRewards: is useReadJb721TiersHookStoreTiersOf.data returned
-  nftRewards: V4NftRewardsData
+  nftRewards: V4V5NftRewardsData
   loading: boolean | undefined
 }
 
-export const V4NftRewardsContext = createContext<NftRewardsContextType>({
+export const V4V5NftRewardsContext = createContext<NftRewardsContextType>({
   nftRewards: {
     CIDs: undefined,
     rewardTiers: undefined,
@@ -47,7 +47,7 @@ export const V4NftRewardsContext = createContext<NftRewardsContextType>({
   loading: false,
 })
 
-export const V4NftRewardsProvider: React.FC<
+export const V4V5NftRewardsProvider: React.FC<
   React.PropsWithChildren<unknown>
 > = ({ children }) => {
   const jbRuleSet = useJBRulesetContext()
@@ -155,10 +155,10 @@ export const V4NftRewardsProvider: React.FC<
   }
 
   return (
-    <V4NftRewardsContext.Provider value={ctx}>
+    <V4V5NftRewardsContext.Provider value={ctx}>
       {children}
-    </V4NftRewardsContext.Provider>
+    </V4V5NftRewardsContext.Provider>
   )
 }
 
-export const useV4NftRewards = () => React.useContext(V4NftRewardsContext)
+export const useV4NftRewards = () => React.useContext(V4V5NftRewardsContext)

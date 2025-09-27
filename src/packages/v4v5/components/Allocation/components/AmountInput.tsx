@@ -1,4 +1,4 @@
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH, V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { useCallback, useState } from 'react'
 
 import { Trans } from '@lingui/macro'
@@ -20,7 +20,7 @@ export const AmountInput = ({
   const setAmount = onChange ?? _setAmount
 
   const { allocationCurrency, setCurrency } = Allocation.useAllocationInstance()
-  const currency = allocationCurrency ?? V4_CURRENCY_ETH
+  const currency = allocationCurrency ?? V4V5_CURRENCY_ETH
   const { usdDisabled } = usePayoutsTableContext()
 
   const onAmountInputChange = useCallback(
@@ -44,9 +44,9 @@ export const AmountInput = ({
             <div className="px-2 text-sm font-medium text-grey-500"><Trans>ETH</Trans></div>
           ) : (
             <CurrencySwitch
-              currency={currency === V4_CURRENCY_ETH ? 'ETH' : 'USD'}
+              currency={currency === V4V5_CURRENCY_ETH ? 'ETH' : 'USD'}
               onCurrencyChange={c =>
-                setCurrency(c === 'ETH' ? V4_CURRENCY_ETH : V4_CURRENCY_USD)
+                setCurrency(c === 'ETH' ? V4V5_CURRENCY_ETH : V4V5_CURRENCY_USD)
               }
               className="rounded"
             />

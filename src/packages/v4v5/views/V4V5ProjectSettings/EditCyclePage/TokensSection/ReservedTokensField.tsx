@@ -70,7 +70,7 @@ export function ReservedTokensField() {
             title={<Trans>Reserved token recipients</Trans>}
             hideDivider
           >
-            <V4EditReservedTokens
+            <V4V5EditReservedTokens
               editingReservedTokensSplits={reservedSplits}
               setEditingReservedTokensSplits={(splits: JBSplit[]) => {
                 editCycleForm?.setFieldsValue({

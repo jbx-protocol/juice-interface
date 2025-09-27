@@ -6,7 +6,7 @@ import { Trans } from '@lingui/macro'
 import V4DistributePayoutsModal from './V4DistributePayoutsModal'
 import { twMerge } from 'tailwind-merge'
 
-export const V4SendPayoutsButton = ({
+export const V4V5SendPayoutsButton = ({
   className,
   containerClassName,
 }: {
@@ -38,7 +38,7 @@ export const V4SendPayoutsButton = ({
         <Trans>Send payouts</Trans>
         <ArrowUpCircleIcon className="h-5 w-5" />
       </Button>
-      <V4DistributePayoutsModal
+      <V4V5DistributePayoutsModal
         open={open}
         onCancel={closeModal}
         onConfirmed={closeModal}

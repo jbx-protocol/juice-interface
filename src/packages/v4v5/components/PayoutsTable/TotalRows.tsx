@@ -6,7 +6,7 @@ import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 const Row = PayoutsTableRow

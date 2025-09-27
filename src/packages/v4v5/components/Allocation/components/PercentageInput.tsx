@@ -2,7 +2,7 @@ import { AmountPercentageInput } from 'components/Allocation/types'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
 import NumberSlider from 'components/inputs/NumberSlider'
 import round from 'lodash/round'
-import { V4CurrencyName } from 'packages/v4v5/utils/currency'
+import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
 import { isFinitePayoutLimit } from 'packages/v4v5/utils/fundingCycle'
 import { useCallback, useMemo, useState } from 'react'
 import { formatWad, stripCommas } from 'utils/format/formatNumber'
@@ -44,7 +44,7 @@ export const PercentageInput = ({
   const totalAllocationAmountNum = parseFloat(
     stripCommas(formatWad(totalAllocationAmount) ?? '0'),
   )
-  const currencyName = V4CurrencyName(allocationCurrency)
+  const currencyName = V4V5CurrencyName(allocationCurrency)
   const roundedAmount = round(
     (percentage ? parseFloat(percentage.value) / 100 : 0) *
       totalAllocationAmountNum,

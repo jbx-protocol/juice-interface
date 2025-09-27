@@ -6,8 +6,8 @@ import { Ether } from 'juice-sdk-core'
 import { NativeTokenValue } from 'juice-sdk-react'
 import { formatWad } from 'utils/format/formatNumber'
 import { helpPagePath } from 'utils/helpPagePath'
-import { V4CurrencyOption } from '../models/v4CurrencyOption'
-import { V4_CURRENCY_ETH } from '../utils/currency'
+import { V4V5CurrencyOption } from '../models/v4CurrencyOption'
+import { V4V5_CURRENCY_ETH } from '../utils/currency'
 import { amountSubFee } from '../utils/math'
 
 export const FeeTooltipLabel = ({
@@ -15,7 +15,7 @@ export const FeeTooltipLabel = ({
   amount,
   feePerBillion,
 }: {
-  currency: V4CurrencyOption
+  currency: V4V5CurrencyOption
   amount: bigint | undefined
   feePerBillion: bigint | undefined
 }) => {
@@ -26,7 +26,7 @@ export const FeeTooltipLabel = ({
     <TooltipLabel
       label={
         <Trans>
-          {currency === V4_CURRENCY_ETH ? (
+          {currency === V4V5_CURRENCY_ETH ? (
             <NativeTokenValue wei={amountSubFeeValue} />
           ) : (
             <>

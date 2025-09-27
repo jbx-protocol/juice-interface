@@ -6,7 +6,7 @@ import { allocationToSplit, splitToAllocation } from '../utils/splitToAllocation
 import { AllocationSplit } from './Allocation/Allocation'
 import { ReservedTokensList } from './ReservedTokensList'
 
-export function V4EditReservedTokens({
+export function V4V5EditReservedTokens({
   editingReservedTokensSplits,
   setEditingReservedTokensSplits,
   showInstantChangesCallout,

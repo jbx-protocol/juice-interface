@@ -4,7 +4,7 @@ import {
   useProjectDispatch,
   useProjectSelector,
 } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH, V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
 import { formatEther, parseUnits } from 'viem'
 
@@ -92,7 +92,7 @@ export const usePayProjectModal = () => {
   })
 
   const primaryAmount = !payAmount
-    ? formatCurrencyAmount({ amount: 0, currency: V4_CURRENCY_ETH })
+    ? formatCurrencyAmount({ amount: 0, currency: V4V5_CURRENCY_ETH })
     : formatCurrencyAmount(payAmount)
 
   const secondaryAmount = useMemo(() => {
@@ -100,7 +100,7 @@ export const usePayProjectModal = () => {
       return undefined
     }
 
-    if (payAmount.currency === V4_CURRENCY_ETH) {
+    if (payAmount.currency === V4V5_CURRENCY_ETH) {
       const amount = Number(
         converter.weiToUsd(
           parseUnits(payAmount.amount.toString(), NATIVE_TOKEN_DECIMALS),
@@ -108,13 +108,13 @@ export const usePayProjectModal = () => {
       )
       return formatCurrencyAmount({
         amount,
-        currency: V4_CURRENCY_USD,
+        currency: V4V5_CURRENCY_USD,
       })
     }
 
     return formatCurrencyAmount({
       amount: formatEther(converter.usdToWei(payAmount.amount).toBigInt()),
-      currency: V4_CURRENCY_ETH,
+      currency: V4V5_CURRENCY_ETH,
     })
   }, [converter, payAmount])
 

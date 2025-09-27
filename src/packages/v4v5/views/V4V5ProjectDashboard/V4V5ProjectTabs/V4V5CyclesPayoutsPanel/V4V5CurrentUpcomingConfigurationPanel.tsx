@@ -1,11 +1,11 @@
 import { ConfigurationPanel } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { useV4CurrentUpcomingConfigurationPanel } from './hooks/useV4CurrentUpcomingConfigurationPanel'
+import { useV4CurrentUpcomingConfigurationPanel } from './hooks/useV4V5CurrentUpcomingConfigurationPanel'
 
-type V4CurrentUpcomingConfigurationPanelProps = {
+type V4V5CurrentUpcomingConfigurationPanelProps = {
   type: 'current' | 'upcoming'
 }
 
-export const V4CurrentUpcomingConfigurationPanel: React.FC<
+export const V4V5CurrentUpcomingConfigurationPanel: React.FC<
 V4CurrentUpcomingConfigurationPanelProps
 > = ({ type }) => {
   const props = useV4CurrentUpcomingConfigurationPanel(type)

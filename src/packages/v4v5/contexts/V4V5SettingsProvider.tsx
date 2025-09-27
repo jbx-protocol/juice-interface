@@ -7,10 +7,10 @@ import { useRouter } from 'next/router'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
 import { EditCycleFormProvider } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormContext'
-import { V4NftRewardsProvider } from './V4NftRewards/V4NftRewardsProvider'
-import V4ProjectMetadataProvider from './V4ProjectMetadataProvider'
+import { V4V5NftRewardsProvider } from './V4V5NftRewards/V4V5NftRewardsProvider'
+import V4V5ProjectMetadataProvider from './V4V5ProjectMetadataProvider'
 
-export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
+export const V4V5SettingsProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const router = useRouter()
@@ -31,15 +31,15 @@ export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
           metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
         }}
       >
-        <V4NftRewardsProvider>
-          <V4ProjectMetadataProvider projectId={projectId}>
+        <V4V5NftRewardsProvider>
+          <V4V5ProjectMetadataProvider projectId={projectId}>
             <Provider store={store}>
               <TransactionProvider>
                 <EditCycleFormProvider>{children}</EditCycleFormProvider>
               </TransactionProvider>
             </Provider>
-          </V4ProjectMetadataProvider>
-        </V4NftRewardsProvider>
+          </V4V5ProjectMetadataProvider>
+        </V4V5NftRewardsProvider>
       </JBProjectProvider>
     </AppWrapper>
   )

@@ -9,9 +9,9 @@ import {
 import { Form } from 'antd'
 import { Ether } from 'juice-sdk-core'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
-import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4CurrentPayoutSplits'
-import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4ReservedSplits'
-import { V4CurrencyName } from 'packages/v4v5/utils/currency'
+import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4V5CurrentPayoutSplits'
+import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
+import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 
@@ -113,7 +113,7 @@ export const useLoadEditCycleData = () => {
       pausePay: rulesetMetadata?.pausePay,
       payoutSplits: payoutSplits ?? [],
       payoutLimit: payoutLimitAmount,
-      payoutLimitCurrency: payoutLimit !== null ? V4CurrencyName(payoutLimit.currency) : 'ETH',
+      payoutLimitCurrency: payoutLimit !== null ? V4V5CurrencyName(payoutLimit.currency) : 'ETH',
       holdFees: rulesetMetadata?.holdFees,
       issuanceRate: issuanceRate,
       reservedPercent: reservedPercent,

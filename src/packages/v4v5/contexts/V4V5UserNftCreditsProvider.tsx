@@ -4,7 +4,7 @@ import { jb721TiersHookAbi } from 'juice-sdk-core'
 import { useReadContract } from 'wagmi'
 import React, { PropsWithChildren } from 'react'
 
-const V4UserNftCreditsContext = React.createContext<{
+const V4V5UserNftCreditsContext = React.createContext<{
   data: bigint | undefined
   isLoading: boolean
 }>({
@@ -12,7 +12,7 @@ const V4UserNftCreditsContext = React.createContext<{
   isLoading: false,
 })
 
-export const V4UserNftCreditsProvider: React.FC<PropsWithChildren> = ({
+export const V4V5UserNftCreditsProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const { userAddress } = useWallet()
@@ -27,12 +27,12 @@ export const V4UserNftCreditsProvider: React.FC<PropsWithChildren> = ({
   })
 
   return (
-    <V4UserNftCreditsContext.Provider value={creds}>
+    <V4V5UserNftCreditsContext.Provider value={creds}>
       {children}
-    </V4UserNftCreditsContext.Provider>
+    </V4V5UserNftCreditsContext.Provider>
   )
 }
 
 export const useV4UserNftCredits = () => {
-  return React.useContext(V4UserNftCreditsContext)
+  return React.useContext(V4V5UserNftCreditsContext)
 }

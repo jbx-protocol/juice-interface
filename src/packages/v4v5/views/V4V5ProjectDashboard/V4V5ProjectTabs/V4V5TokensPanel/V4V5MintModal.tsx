@@ -34,7 +34,7 @@ type MintForm = {
   amount: string
 }
 
-export function V4MintModal({
+export function V4V5MintModal({
   open,
   onCancel,
   onConfirmed,

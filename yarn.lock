@@ -11571,6 +11571,13 @@ graphql-request@^6.0.0:
     "@graphql-typed-document-node/core" "^3.2.0"
     cross-fetch "^3.1.5"
 
+graphql-request@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.npmjs.org/graphql-request/-/graphql-request-7.2.0.tgz#af4aa25f27a087dd4fc93a4ff54a0f59c4487269"
+  integrity sha512-0GR7eQHBFYz372u9lxS16cOtEekFlZYB2qOyq8wDvzRmdRSJ0mgUVX1tzNcIzk3G+4NY+mGtSz411wZdeDF/+A==
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.2.0"
+
 graphql-tag@^2.11.0, graphql-tag@^2.12.6:
   version "2.12.6"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
@@ -13694,18 +13701,20 @@ jsx-ast-utils@^3.3.5:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-juice-sdk-core@^1.8.7-beta:
-  version "1.8.7-beta"
-  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-1.8.7-beta.tgz#77769420fd774d38ba500447205aa795164693ac"
-  integrity sha512-Ev4eK+X4wlNQKXn2V/Qs+uXw5J4O9FrW0Rs9ZmbMU5MI4Rbh03We9gqi5/V6q8liCeKM93zr6wLvB0tSdwtI2w==
+juice-sdk-core@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/juice-sdk-core/-/juice-sdk-core-2.1.0.tgz#7f7a3a0b2ec0bc4b773d7c18b8377324c41d2ad2"
+  integrity sha512-FGmDvINWu+/9ru4k9tC0zM+UUtrY1oN55Ml7HRGKAoe5iNSoCpiodwZPzY02UZkJY3Fo13E8GhclQJgZchVMYQ==
   dependencies:
     bs58 "^5.0.0"
     fpnum "^1.0.0"
 
-juice-sdk-react@^1.9.14-beta:
-  version "1.9.14-beta"
-  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-1.9.14-beta.tgz#f1c4dbe8f956b7c047d322e3a38497ca617475ba"
-  integrity sha512-E89tH6n9e83xpZOeakg+LD1nYVHFiXdNb8GnLy2KF3XxR0JtrVyebPdB/lsN2zjg8vDLljnN3joEAs4ubmkCXQ==
+juice-sdk-react@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/juice-sdk-react/-/juice-sdk-react-5.0.1.tgz#66d886c187d87f8b8620963e57551b5be6741f75"
+  integrity sha512-QNZg/tggnydPSpOD9Vlb9nltPpAijEdjZ6MpTs833tQYoyFfcjw0MkaMsoYPGLOVt4XUuOqiC8L1ELtRqGcs1w==
+  dependencies:
+    graphql-request "^7.2.0"
 
 juice@^10.0.0:
   version "10.0.0"

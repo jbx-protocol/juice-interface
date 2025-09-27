@@ -29,7 +29,7 @@ import { useV4NftRewards } from 'packages/v4v5/contexts/V4NftRewards/V4NftReward
 import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { V4_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
-import { ProjectPayReceipt } from 'packages/v4v5/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { ProjectPayReceipt } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useProjectPageQueries'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { emitErrorNotification } from 'utils/notifications'
 import { useProjectPaymentTokens } from '../useProjectPaymentTokens'

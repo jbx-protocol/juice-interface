@@ -13,11 +13,11 @@ import {
 } from 'utils/server/pages/props'
 
 const V4V5ProjectProviders = dynamic(
-  () => import('packages/v4v5/views/V4ProjectDashboard/V4V5ProjectProviders'),
+  () => import('packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectProviders'),
   { ssr: false },
 )
 const V4ProjectDashboard = dynamic(
-  () => import('packages/v4v5/views/V4ProjectDashboard/V4ProjectDashboard'),
+  () => import('packages/v4v5/views/V4V5ProjectDashboard/V4ProjectDashboard'),
   { ssr: false },
 )
 

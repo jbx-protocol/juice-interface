@@ -1,5 +1,5 @@
 import { V4SettingsProvider } from 'packages/v4v5/contexts/V4SettingsProvider'
-import { ProjectSettingsDashboard } from 'packages/v4v5/views/V4ProjectSettings/ProjectSettingsDashboard'
+import { ProjectSettingsDashboard } from 'packages/v4v5/views/V4V5ProjectSettings/ProjectSettingsDashboard'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function V4ProjectSettingsPage() {

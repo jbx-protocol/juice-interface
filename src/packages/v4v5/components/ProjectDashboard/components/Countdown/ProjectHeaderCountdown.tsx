@@ -2,7 +2,7 @@
 import { ReactNode, useMemo } from 'react'
 
 import { twMerge } from 'tailwind-merge'
-import { useRulesetCountdown } from 'packages/v4v5/views/V4ProjectDashboard/hooks/useRulesetCountdown'
+import { useRulesetCountdown } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useRulesetCountdown'
 
 type ProjectHeaderCountdownProps = {
   className?: string

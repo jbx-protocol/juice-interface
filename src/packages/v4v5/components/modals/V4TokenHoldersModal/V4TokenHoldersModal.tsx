@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import { PV_V4 } from 'constants/pv'
 import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
 import {
   useJBChainId,
@@ -11,6 +10,7 @@ import {
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useV4TotalTokenSupply } from '../../../hooks/useV4TotalTokenSupply'
 import HoldersList from './HoldersList'
 import TokenDistributionChart from './TokenDistributionChart'
@@ -24,6 +24,7 @@ export const V4TokenHoldersModal = ({
 }) => {
   const { projectId } = useJBContractContext()
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
 
   const { token } = useJBTokenContext()
   const tokenAddress = token?.data?.address
@@ -36,7 +37,7 @@ export const V4TokenHoldersModal = ({
     variables: {
       projectId: Number(projectId),
       chainId: Number(chainId),
-      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
+      version: version
     },
     skip: !projectId || !open || !chainId,
   })

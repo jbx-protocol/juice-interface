@@ -4,7 +4,6 @@ import { Modal } from 'antd'
 import axios from 'axios'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { PV_V4 } from 'constants/pv'
 import {
   ParticipantSnapshotsQuery,
   useProjectQuery,
@@ -13,6 +12,7 @@ import {
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { bendystrawUri } from 'lib/apollo/bendystrawUri'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useCallback, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { fromWad } from 'utils/format/formatNumber'
@@ -32,6 +32,7 @@ export function DownloadTokenHoldersModal({
 }) {
   const { projectId } = useJBContractContext()
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
 
   const [timestamp, setTimestamp] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
@@ -41,7 +42,7 @@ export function DownloadTokenHoldersModal({
     variables: {
       projectId: Number(projectId),
       chainId: Number(chainId),
-      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
+      version: version
     },
     skip: !projectId || !chainId,
   })

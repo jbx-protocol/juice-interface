@@ -6,13 +6,13 @@ import {
 } from 'juice-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { PV_V4 } from 'constants/pv'
 import { useProjectQuery, useSuckerGroupQuery } from 'generated/v4/graphql'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { GnosisSafe } from 'models/safe'
 import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export interface ProjectHeaderData {
   title: string | undefined
@@ -31,6 +31,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
   const { projectId } = useJBContractContext()
   const { metadata } = useJBProjectMetadataContext()
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
   const projectMetadata = metadata?.data
 
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
@@ -42,7 +43,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
     variables: {
       projectId: projectIdNum,
       chainId: Number(chainId),
-      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
+      version: version
     },
     skip: !projectId || !chainId,
   })

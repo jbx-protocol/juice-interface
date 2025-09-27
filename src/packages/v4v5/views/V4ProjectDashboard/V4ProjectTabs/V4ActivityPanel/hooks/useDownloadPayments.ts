@@ -1,9 +1,9 @@
 import { t } from '@lingui/macro'
-import { PV_V4 } from 'constants/pv'
 import { usePayEventsQuery, useProjectQuery } from 'generated/v4/graphql'
 import { Ether } from 'juice-sdk-core'
 import { useJBChainId } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useCallback, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { emitErrorNotification } from 'utils/notifications'
@@ -11,13 +11,14 @@ import { emitErrorNotification } from 'utils/notifications'
 export const useDownloadPayments = (blockNumber: number, projectId: number) => {
   const [isLoading, setIsLoading] = useState(false)
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
 
   const { data: project } = useProjectQuery({
     client: bendystrawClient,
     variables: {
       chainId: Number(chainId),
       projectId,
-      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
+      version: version
     },
     skip: !chainId,
   })

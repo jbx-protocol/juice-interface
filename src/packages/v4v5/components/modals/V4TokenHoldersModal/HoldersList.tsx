@@ -10,11 +10,11 @@ import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import { TokenAmount } from 'components/TokenAmount'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import { PV_V4 } from 'constants/pv'
 import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
 import { JBChainId } from 'juice-sdk-core'
 import { NativeTokenValue, useJBChainId } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useEffect, useState } from 'react'
 import { formatPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -74,6 +74,7 @@ export default function HoldersList({
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
 
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
 
   const pOptions = participantOptions(
     tokenSymbolText({
@@ -91,7 +92,7 @@ export default function HoldersList({
     variables: {
       projectId: Number(projectId),
       chainId: Number(chainId),
-      version: parseInt(PV_V4) // TODO dynamic pv (4/5)
+      version: version
     },
     skip: !projectId || !chainId,
   })

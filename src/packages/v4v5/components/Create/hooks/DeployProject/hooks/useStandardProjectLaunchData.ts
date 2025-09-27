@@ -5,6 +5,7 @@ import {
   jbContractAddress,
   JBCoreContracts,
 } from 'juice-sdk-core'
+import { getContractVersionString } from '../../../../utils/contractVersion'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
@@ -21,11 +22,11 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useWallet } from 'hooks/Wallet'
 
 /**
- * Hook that returns a function that deploys a v4 project.
+ * Hook that returns a function that deploys a v4/v5 project.
  *
- * Takes  data from the redux store built for v2v3 projects, data is converted to v4 format in useLaunchProjectTx.
+ * Takes data from the redux store built for v2v3 projects, data is converted to v4/v5 format in useLaunchProjectTx.
  */
-export function useStandardProjectLaunchData() {
+export function useStandardProjectLaunchData(version: 4 | 5 = 5) {
   const {
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
@@ -36,6 +37,7 @@ export function useStandardProjectLaunchData() {
   const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
   const { userAddress } = useWallet()
+  const versionString = getContractVersionString(version)
 
   return ({
     projectMetadataCID,
@@ -50,7 +52,7 @@ export function useStandardProjectLaunchData() {
     withStartBuffer?: boolean
   }) => {
     const terminalAddress = chainId
-      ? (jbContractAddress['4'][JBCoreContracts.JBMultiTerminal][
+      ? (jbContractAddress[versionString][JBCoreContracts.JBMultiTerminal][
           chainId as JBChainId
         ] as Address)
       : undefined
@@ -60,7 +62,7 @@ export function useStandardProjectLaunchData() {
     }
 
     const controllerAddress = chainId
-      ? (jbContractAddress['4'][JBCoreContracts.JBController][
+      ? (jbContractAddress[versionString][JBCoreContracts.JBController][
           chainId as JBChainId
         ] as Address)
       : undefined

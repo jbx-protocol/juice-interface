@@ -1,7 +1,8 @@
 import { NATIVE_TOKEN, jbContractAddress, JBCoreContracts, jbControllerAbi, jbController4_1Abi } from 'juice-sdk-core'
 import {
   JBRulesetContext,
-  useJBContractContext
+  useJBContractContext,
+  useJBChainId
 } from 'juice-sdk-react'
 import { useWriteContract } from 'wagmi'
 import { useCallback, useContext } from 'react'
@@ -10,6 +11,8 @@ import { waitForTransactionReceipt } from '@wagmi/core'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
+import { getContractVersionString } from '../utils/contractVersion'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
 
@@ -28,9 +31,12 @@ export function useEditRulesetTx() {
   const { writeContractAsync: writeEditRuleset } = useWriteContract()
 
   const { contracts, projectId } = useJBContractContext()
+  const chainId = useJBChainId()
+  const { version } = useV4V5Version()
+  const versionString = getContractVersionString(version)
   const projectControllerAddress = contracts.controller.data
 
-  const isV4_1 = projectControllerAddress && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][1]
+  const isV4_1 = projectControllerAddress && projectControllerAddress === jbContractAddress[versionString][JBCoreContracts.JBController4_1][chainId]
   const { addTransaction } = useContext(TxHistoryContext)
   const { rulesetMetadata } = useContext(JBRulesetContext)
 

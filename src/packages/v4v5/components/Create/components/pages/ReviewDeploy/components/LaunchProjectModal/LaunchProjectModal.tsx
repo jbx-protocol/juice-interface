@@ -55,10 +55,12 @@ export const LaunchProjectModal: React.FC<{
   setOpen: (open: boolean) => void
 }> = props => {
   const createData = useAppSelector(state => state.creatingV2Project)
-  const getStandardProjectLaunchData = useStandardProjectLaunchData()
-  const getNftProjectLaunchData = useNftProjectLaunchData()
+  // Use v5 contracts for new project creation
+  const getStandardProjectLaunchData = useStandardProjectLaunchData(5)
+  const getNftProjectLaunchData = useNftProjectLaunchData(5)
+  // Use v5 contracts for new project creation
   const { deployOmnichainProject, deployOmnichainNftProject } =
-    useDeployOmnichainProject()
+    useDeployOmnichainProject(5)
   const router = useRouter()
   const relayrBundle = useGetRelayrTxBundle()
   const { sendRelayrTx, data: txData } = useSendRelayrTx()

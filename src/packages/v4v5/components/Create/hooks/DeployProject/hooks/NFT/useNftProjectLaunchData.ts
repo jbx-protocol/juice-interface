@@ -4,6 +4,7 @@ import {
   JBCoreContracts,
   NATIVE_TOKEN_DECIMALS,
 } from 'juice-sdk-core'
+import { getContractVersionString } from '../../../../../utils/contractVersion'
 import { JBChainId } from 'juice-sdk-react'
 import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
 import {
@@ -24,12 +25,13 @@ import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { useStandardProjectLaunchData } from '../useStandardProjectLaunchData'
 import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 
-export function useNftProjectLaunchData() {
+export function useNftProjectLaunchData(version: 4 | 5 = 5) {
   const { projectMetadata, nftRewards, mustStartAtOrAfter } = useAppSelector(
     state => state.creatingV2Project,
   )
-  const getStandardProjectLaunchData = useStandardProjectLaunchData()
+  const getStandardProjectLaunchData = useStandardProjectLaunchData(version)
   const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
+  const versionString = getContractVersionString(version)
 
   const collectionName = nftRewards.collectionMetadata.name
     ? nftRewards.collectionMetadata.name
@@ -56,7 +58,7 @@ export function useNftProjectLaunchData() {
     withStartBuffer?: boolean
   }) => {
     const defaultJBController = chainId
-      ? (jbContractAddress['4'][JBCoreContracts.JBController4_1][
+      ? (jbContractAddress[versionString][JBCoreContracts.JBController4_1][
           chainId as JBChainId
         ] as Address)
       : undefined

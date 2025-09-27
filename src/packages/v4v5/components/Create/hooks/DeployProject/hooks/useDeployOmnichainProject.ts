@@ -18,12 +18,14 @@ import {
 } from 'juice-sdk-react'
 
 import { useWallet } from 'hooks/Wallet'
+import { getContractVersionString } from '../../../utils/contractVersion'
 
-export function useDeployOmnichainProject() {
+export function useDeployOmnichainProject(version: 4 | 5 = 5) {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
   const { sendRelayrTx } = useSendRelayrTx()
   const relayrBundle = useGetRelayrTxBundle()
+  const versionString = getContractVersionString(version)
 
   async function deployOmnichainProject(
     deployData: {
@@ -67,7 +69,7 @@ export function useDeployOmnichainProject() {
       const encodedData = encodeFunctionData({
         abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
         functionName: 'launchProjectFor',
-        args: [...args, jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId] as `0x${string}`],
+        args: [...args, jbContractAddress[versionString][JBCoreContracts.JBController4_1][chainId] as `0x${string}`],
       })
 
       const controllerData = encodeFunctionData({
@@ -84,13 +86,13 @@ export function useDeployOmnichainProject() {
       console.info('🧃launchProjectFor calldata (simulate in Tenderly):', {
         chainId,
         calldata: controllerData,
-        address: jbContractAddress['4'][JBCoreContracts.JBController][chainId],
+        address: jbContractAddress[versionString][JBCoreContracts.JBController][chainId],
       })
 
       return {
         data: {
           from: userAddress,
-          to: jbContractAddress['4'][JBOmnichainDeployerContracts.JBOmnichainDeployer4_1][chainId] as `0x${string}`,
+          to: jbContractAddress[versionString][JBOmnichainDeployerContracts.JBOmnichainDeployer4_1][chainId] as `0x${string}`,
           value: 0n,
           gas: 1_000_000n * BigInt(chainIds.length),
           data: encodedData,
@@ -139,7 +141,7 @@ export function useDeployOmnichainProject() {
             suckerDeploymentConfiguration.deployerConfigurations,
           salt,
         },
-        jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId] as `0x${string}` // all chains use the same controller
+        jbContractAddress[versionString][JBCoreContracts.JBController4_1][chainId] as `0x${string}` // all chains use the same controller
       ] as const
 
       const encodedData = encodeFunctionData({
@@ -157,19 +159,19 @@ export function useDeployOmnichainProject() {
         jb721TiersHookProjectDeployer: {
           chainId,
           calldata: controllerData,
-          address: jbContractAddress['4'][JB721HookContracts.JB721TiersHookProjectDeployer][chainId],
+          address: jbContractAddress[versionString][JB721HookContracts.JB721TiersHookProjectDeployer][chainId],
         },
         jbOmnichainDeployer: {
           chainId,
           calldata: encodedData,
-          address: jbContractAddress['4'][JBOmnichainDeployerContracts.JBOmnichainDeployer4_1][chainId],
+          address: jbContractAddress[versionString][JBOmnichainDeployerContracts.JBOmnichainDeployer4_1][chainId],
         },
       })
 
       return {
         data: {
           from: userAddress,
-          to: jbContractAddress['4'][JBOmnichainDeployerContracts.JBOmnichainDeployer4_1][chainId] as `0x${string}`,
+          to: jbContractAddress[versionString][JBOmnichainDeployerContracts.JBOmnichainDeployer4_1][chainId] as `0x${string}`,
           value: 0n,
           gas: 3_000_000n * BigInt(chainIds.length), // Bigger mutliple for NFTS. TODO ba5sed might have a better suggestion here.
           data: encodedData,

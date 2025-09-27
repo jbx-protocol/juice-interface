@@ -16,7 +16,7 @@ import { ContractFunctionReturnType, zeroAddress } from 'viem'
 
 import { JB721GovernanceType } from 'models/nftRewards'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { V4NftRewardsData } from 'packages/v4/models/nfts'
+import { V4NftRewardsData } from 'packages/v4v5/models/nfts'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { useNftRewards } from './useNftRewards'
 

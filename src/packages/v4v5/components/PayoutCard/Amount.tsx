@@ -1,6 +1,6 @@
 import { Parenthesis } from 'components/Parenthesis'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { formatCurrencyAmount } from 'packages/v4v5/utils/formatCurrencyAmount'
 import { useMemo } from 'react'
 import { formatPercent } from 'utils/format/formatPercent'
 import { Allocation } from '../Allocation/Allocation'

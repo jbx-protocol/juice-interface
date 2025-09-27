@@ -10,7 +10,7 @@ import { V4ApprovalStatus } from 'models/approvalHooks'
 import { t } from '@lingui/macro'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
 import { useCyclesPanelSelectedChain } from '../V4ProjectTabs/V4CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
-import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
+import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {

@@ -20,7 +20,7 @@ import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/To
 import useMobile from 'hooks/useMobile'
 import { formatFundingCycleDuration } from 'packages/v2v3/components/Create/utils/formatFundingCycleDuration'
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 import { useCallback } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'

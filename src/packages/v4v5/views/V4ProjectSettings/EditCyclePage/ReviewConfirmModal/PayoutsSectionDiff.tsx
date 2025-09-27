@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
-import { getV4CurrencyOption } from 'packages/v4/utils/currency'
+import { getV4CurrencyOption } from 'packages/v4v5/utils/currency'
 import { emptySectionClasses } from './DetailsSectionDiff'
 import { DiffSection } from './DiffSection'
 import DiffedSplitList from './DiffedSplits/DiffedSplitList'

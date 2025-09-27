@@ -28,7 +28,7 @@ import { pinJson } from 'lib/api/ipfs'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { JB721TierV4 } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { JB721TierV4 } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
 
 export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],

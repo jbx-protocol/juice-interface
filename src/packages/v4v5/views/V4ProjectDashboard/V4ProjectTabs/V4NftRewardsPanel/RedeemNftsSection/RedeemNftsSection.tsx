@@ -1,4 +1,4 @@
-import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
 import { NftCreditsSection } from './NftCreditsSection'
 
 export function RedeemNftsSection() {

@@ -1,7 +1,7 @@
-import { useProjectDispatch } from 'packages/v4/components/ProjectDashboard/redux/hooks'
-import { payRedeemActions } from 'packages/v4/components/ProjectDashboard/redux/payRedeemSlice'
-import { projectCartActions } from 'packages/v4/components/ProjectDashboard/redux/projectCartSlice'
-import { V4NftRewardsContext } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useProjectDispatch } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
+import { payRedeemActions } from 'packages/v4v5/components/ProjectDashboard/redux/payRedeemSlice'
+import { projectCartActions } from 'packages/v4v5/components/ProjectDashboard/redux/projectCartSlice'
+import { V4NftRewardsContext } from 'packages/v4v5/contexts/V4NftRewards/V4NftRewardsProvider'
 import { useCallback, useContext } from 'react'
 
 export const useNftRewardsPanel = () => {

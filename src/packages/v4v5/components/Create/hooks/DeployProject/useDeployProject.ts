@@ -3,7 +3,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 
 import { JBChainId } from 'juice-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
+import { LaunchTxOpts } from 'packages/v4v5/hooks/useLaunchProjectTx'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import {
   useCreatingV2V3FundAccessConstraintsSelector,

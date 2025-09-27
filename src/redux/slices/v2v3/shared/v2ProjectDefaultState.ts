@@ -24,7 +24,7 @@ import { CreateState, ProjectState } from './v2ProjectTypes'
 
 import { ONE_MILLION } from 'constants/numbers'
 import { JBChainId } from 'juice-sdk-react'
-import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
+import { JB721TiersHookFlags } from 'packages/v4v5/models/nfts'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
 
 const DEFAULT_DOMAIN = 'juicebox'

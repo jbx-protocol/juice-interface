@@ -2,7 +2,7 @@ import { JBChainId } from 'juice-sdk-react'
 import {
   LaunchTxOpts,
   useLaunchProjectTx,
-} from 'packages/v4/hooks/useLaunchProjectTx'
+} from 'packages/v4v5/hooks/useLaunchProjectTx'
 import { useCallback } from 'react'
 import { useStandardProjectLaunchData } from './useStandardProjectLaunchData'
 /**

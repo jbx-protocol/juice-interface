@@ -9,7 +9,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { NETWORKS } from 'constants/networks'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { useMemo } from 'react'
 
 export const useV4TreasuryStats = () => {

@@ -6,7 +6,7 @@ import { useWatch } from 'antd/lib/form/Form'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import { CurrencyName } from 'constants/currency'
-import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
+import { PayoutsTable } from 'packages/v4v5/components/PayoutsTable/PayoutsTable'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 
 export function PayoutsSection() {

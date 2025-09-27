@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
 import { useRouter } from 'next/router'
-import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
+import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 
 type ProjectPageTab =
   | 'activity'

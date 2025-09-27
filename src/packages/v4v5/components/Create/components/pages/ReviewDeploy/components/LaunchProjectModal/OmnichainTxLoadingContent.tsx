@@ -1,7 +1,7 @@
 import { NETWORKS, sortChainIds } from 'constants/networks'
 import { Trans, t } from '@lingui/macro'
 
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import EtherscanLink from 'components/EtherscanLink'
 import { Hash } from 'viem'
 import Image from 'next/image'

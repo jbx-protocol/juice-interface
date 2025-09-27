@@ -12,7 +12,7 @@ import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { GnosisSafe } from 'models/safe'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
 
 export interface ProjectHeaderData {
   title: string | undefined

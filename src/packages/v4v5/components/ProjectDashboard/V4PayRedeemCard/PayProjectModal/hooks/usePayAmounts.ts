@@ -1,12 +1,12 @@
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 
 import React from 'react'
-import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { formatCurrencyAmount } from 'packages/v4v5/utils/formatCurrencyAmount'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayProjectModal } from './usePayProjectModal/usePayProjectModal'
 import { useProjectSelector } from '../../../redux/hooks'
-import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
 
 export const usePayAmounts = () => {
   const converter = useCurrencyConverter()

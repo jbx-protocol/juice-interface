@@ -1,10 +1,10 @@
 import { DiffedItem } from 'components/DiffedItem'
 import { JBSplit } from 'juice-sdk-core'
 
-import { SplitProps } from 'packages/v4/components/SplitList/SplitItem'
-import { SplitAmountValue } from 'packages/v4/components/SplitList/SplitItem/SplitAmountValue'
-import { isFinitePayoutLimit, isInfinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
-import { splitAmountsAreEqual } from 'packages/v4/utils/v4Splits'
+import { SplitProps } from 'packages/v4v5/components/SplitList/SplitItem'
+import { SplitAmountValue } from 'packages/v4v5/components/SplitList/SplitItem/SplitAmountValue'
+import { isFinitePayoutLimit, isInfinitePayoutLimit } from 'packages/v4v5/utils/fundingCycle'
+import { splitAmountsAreEqual } from 'packages/v4v5/utils/v4Splits'
 
 export function DiffedSplitValue({
   splitProps,

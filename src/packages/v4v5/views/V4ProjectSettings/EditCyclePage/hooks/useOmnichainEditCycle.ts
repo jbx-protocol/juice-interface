@@ -2,7 +2,7 @@ import { JBChainId, createSalt, jbContractAddress, JBOmnichainDeployerContracts,
 import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
 
 import { useWallet } from 'hooks/Wallet'
-import { EditCycleTxArgs } from 'packages/v4/utils/editRuleset'
+import { EditCycleTxArgs } from 'packages/v4v5/utils/editRuleset'
 import { encodeFunctionData } from 'viem'
 
 export function useOmnichainEditCycle() {

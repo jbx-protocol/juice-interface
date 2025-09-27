@@ -1,9 +1,9 @@
 import { CurrencyName } from 'constants/currency'
 import { JBSplit } from 'juice-sdk-core'
-import { distributionLimitsEqual } from 'packages/v4/utils/distributions'
-import { isInfinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
+import { distributionLimitsEqual } from 'packages/v4v5/utils/distributions'
+import { isInfinitePayoutLimit } from 'packages/v4v5/utils/fundingCycle'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
+import { splitsListsHaveDiff } from 'packages/v4v5/utils/v4Splits'
 import { parseWad } from 'utils/format/formatNumber'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 

@@ -6,7 +6,7 @@ import DiffedSplitList from './DiffedSplits/DiffedSplitList'
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import { IssuanceRateValue } from './FormattedRulesetValues/Tokens/IssuanceRateValue'
 import { emptySectionClasses } from './DetailsSectionDiff'
-import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
+import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
 
 export function TokensSectionDiff() {

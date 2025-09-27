@@ -1,6 +1,6 @@
 import { JBSplit as Split } from 'juice-sdk-core'
 import { FormItemInput } from 'models/formItemInput'
-import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
+import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import { createContext, useContext } from 'react'
 import { AllocationItem } from './AllocationItem'
 import { AllocationList } from './AllocationList'

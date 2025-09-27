@@ -1,4 +1,4 @@
-import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
+import { getApprovalStrategyByAddress } from 'packages/v4v5/utils/approvalHooks'
 import { otherUnitToSeconds } from 'utils/format/formatTime'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 

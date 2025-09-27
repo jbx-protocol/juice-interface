@@ -2,7 +2,7 @@ import { JBSplit } from 'juice-sdk-core'
 import {
   sortSplits,
   v4GetProjectOwnerRemainderSplit,
-} from 'packages/v4/utils/v4Splits'
+} from 'packages/v4v5/utils/v4Splits'
 import { useMemo } from 'react'
 import { Hash } from 'viem'
 import { SplitItem, SplitProps } from './SplitItem'

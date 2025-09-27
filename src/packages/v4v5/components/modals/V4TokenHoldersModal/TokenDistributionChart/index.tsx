@@ -1,6 +1,6 @@
 import { ChartBarSquareIcon, ChartPieIcon } from '@heroicons/react/24/outline'
 import Loading from 'components/Loading'
-import { ParticipantsQuery } from 'packages/v4/graphql/client/graphql'
+import { ParticipantsQuery } from 'packages/v4v5/graphql/client/graphql'
 import { useState } from 'react'
 import TokenAreaChart from './TokenAreaChart'
 import TokenPieChart from './TokenPieChart'

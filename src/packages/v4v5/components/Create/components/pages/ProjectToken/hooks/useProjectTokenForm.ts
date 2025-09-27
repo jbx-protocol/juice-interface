@@ -20,7 +20,7 @@ import { useDebugValue, useEffect, useMemo } from 'react'
 
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import { Form } from 'antd'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'

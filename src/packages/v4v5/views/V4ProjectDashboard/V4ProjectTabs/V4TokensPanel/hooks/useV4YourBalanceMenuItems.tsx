@@ -10,7 +10,7 @@ import { ReactNode, useMemo, useState } from 'react'
 import { t } from '@lingui/macro'
 import { PopupMenuItem } from 'components/ui/PopupMenu'
 import { useWallet } from 'hooks/Wallet'
-import { useSuckersUnclaimedBalance } from 'packages/v4/hooks/useSuckersUnclaimedBalance'
+import { useSuckersUnclaimedBalance } from 'packages/v4v5/hooks/useSuckersUnclaimedBalance'
 import { zeroAddress } from 'viem'
 import { useV4BalanceMenuItemsUserFlags } from './useV4BalanceMenuItemsUserFlags'
 

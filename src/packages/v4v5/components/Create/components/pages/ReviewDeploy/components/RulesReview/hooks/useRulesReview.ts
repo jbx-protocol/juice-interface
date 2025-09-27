@@ -4,7 +4,7 @@ import {
   formatPaused,
 } from 'utils/format/formatBoolean'
 
-import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
+import { getAvailableApprovalStrategies } from 'packages/v4v5/utils/approvalHooks'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 

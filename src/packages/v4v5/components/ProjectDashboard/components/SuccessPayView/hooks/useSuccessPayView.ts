@@ -1,5 +1,5 @@
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { useProjectPageQueries } from 'packages/v4v5/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { useEffect, useState } from 'react'
 
 export const useSuccessPayView = () => {

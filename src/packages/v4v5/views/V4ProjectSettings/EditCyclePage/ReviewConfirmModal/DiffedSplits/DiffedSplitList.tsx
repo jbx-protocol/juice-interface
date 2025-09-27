@@ -1,11 +1,11 @@
-import { processUniqueSplits, v4GetProjectOwnerRemainderSplit } from 'packages/v4/utils/v4Splits'
+import { processUniqueSplits, v4GetProjectOwnerRemainderSplit } from 'packages/v4v5/utils/v4Splits'
 
 import { DiffedSplitItem } from './DiffedSplitItem'
 import { JBSplit as Split } from 'juice-sdk-core'
-import { SplitProps } from 'packages/v4/components/SplitList/SplitItem'
+import { SplitProps } from 'packages/v4v5/components/SplitList/SplitItem'
 import round from 'lodash/round'
 import { useMemo } from 'react'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
 
 const JB_PERCENT_PRECISION = 2
 

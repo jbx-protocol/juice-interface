@@ -1,6 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { Skeleton } from 'antd'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { V4ExportReservedTokensCsvItem } from './V4ExportReservedTokensCsvItem'

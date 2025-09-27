@@ -3,8 +3,8 @@ import * as Yup from 'yup'
 import {
   useProjectDispatch,
   useProjectSelector,
-} from 'packages/v4/components/ProjectDashboard/redux/hooks'
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+} from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
 import { formatEther, parseUnits } from 'viem'
 
@@ -14,9 +14,9 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useWallet } from 'hooks/Wallet'
 import { NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import { TxStatus } from 'models/transaction'
-import { projectCartActions } from 'packages/v4/components/ProjectDashboard/redux/projectCartSlice'
-import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
-import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { projectCartActions } from 'packages/v4v5/components/ProjectDashboard/redux/projectCartSlice'
+import { formatCurrencyAmount } from 'packages/v4v5/utils/formatCurrencyAmount'
+import { useProjectPageQueries } from 'packages/v4v5/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { emitErrorNotification } from 'utils/notifications'
 import { payProjectModalReducer } from './payProjectModalReducer'
 import { usePayProjectTx } from './usePayProjectTx'

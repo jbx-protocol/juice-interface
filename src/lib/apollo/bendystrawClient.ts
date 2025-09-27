@@ -7,7 +7,7 @@ import {
 import { FunctionsMap, withScalars } from 'apollo-link-scalars';
 import { IntrospectionQuery, buildClientSchema } from 'graphql';
 import { bendystrawUri } from 'lib/apollo/bendystrawUri';
-import introspectionResult from '../../packages/v4/graphql/graphql.schema.json';
+import introspectionResult from '../../packages/v4v5/graphql/graphql.schema.json';
 (BigInt.prototype as unknown as { toJSON: unknown }).toJSON = function () {
   return this.toString()
 }

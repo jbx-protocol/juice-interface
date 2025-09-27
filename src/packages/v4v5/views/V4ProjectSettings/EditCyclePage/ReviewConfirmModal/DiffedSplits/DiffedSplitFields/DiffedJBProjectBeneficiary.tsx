@@ -1,7 +1,7 @@
 import { DiffedItem } from 'components/DiffedItem'
 import EthereumAddress from 'components/EthereumAddress'
 import { JBSplit } from 'juice-sdk-core'
-import { JuiceboxProjectBeneficiary } from 'packages/v4/components/SplitList/SplitItem/JuiceboxProjectBeneficiary'
+import { JuiceboxProjectBeneficiary } from 'packages/v4v5/components/SplitList/SplitItem/JuiceboxProjectBeneficiary'
 
 export function DiffedJBProjectBeneficiary({
   split,

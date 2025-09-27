@@ -1,9 +1,9 @@
-import { SafeLaunchProjectData, useProposeSafeLaunchProjectTx } from 'packages/v4/hooks/useProposeSafeLaunchProjectTx'
+import { SafeLaunchProjectData, useProposeSafeLaunchProjectTx } from 'packages/v4v5/hooks/useProposeSafeLaunchProjectTx'
 import { useCallback, useMemo } from 'react'
 
 import { Trans } from '@lingui/macro'
 import { JBChainId } from 'juice-sdk-react'
-import { SafeProposeTransactionResponse } from 'packages/v4/hooks/useProposeSafeTransaction'
+import { SafeProposeTransactionResponse } from 'packages/v4v5/hooks/useProposeSafeTransaction'
 import QueueSafeTxsModal from './QueueSafeTxsModal'
 
 export interface QueueSafeLaunchProjectTxsModalProps {

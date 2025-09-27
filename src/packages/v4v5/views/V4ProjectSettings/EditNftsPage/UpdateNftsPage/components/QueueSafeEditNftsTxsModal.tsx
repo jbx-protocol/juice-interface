@@ -1,11 +1,11 @@
-import { SafeProposeTransactionResponse, useProposeSafeTransaction } from 'packages/v4/hooks/useProposeSafeTransaction'
+import { SafeProposeTransactionResponse, useProposeSafeTransaction } from 'packages/v4v5/hooks/useProposeSafeTransaction'
 
 import { Trans } from '@lingui/macro'
 import { JBChainId } from 'juice-sdk-core'
 import { NftRewardTier } from 'models/nftRewards'
-import QueueSafeTxsModal from 'packages/v4/components/QueueSafeTxsModal'
-import { usePopulateNftUpdateTx } from 'packages/v4/hooks/usePopulateNftUpdateTx'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import QueueSafeTxsModal from 'packages/v4v5/components/QueueSafeTxsModal'
+import { usePopulateNftUpdateTx } from 'packages/v4v5/hooks/usePopulateNftUpdateTx'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
 import { useCallback } from 'react'
 import { emitInfoNotification } from 'utils/notifications'
 

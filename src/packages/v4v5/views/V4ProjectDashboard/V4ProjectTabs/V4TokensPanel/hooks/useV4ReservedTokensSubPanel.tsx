@@ -14,16 +14,16 @@ import {
 } from 'juice-sdk-react'
 import { useReadContract } from 'wagmi'
 
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { NETWORKS } from 'constants/networks'
 import { Tooltip } from 'antd'
 import assert from 'utils/assert'
-import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
+import { useJBRulesetByChain } from 'packages/v4v5/hooks/useJBRulesetByChain'
 import { useMemo } from 'react'
 import { useReservedTokensSelectedChain } from '../../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
-import { useSuckersPendingReservedTokens } from 'packages/v4/hooks/useSuckersPendingReservedTokens'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
-import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
+import { useSuckersPendingReservedTokens } from 'packages/v4v5/hooks/useSuckersPendingReservedTokens'
+import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4ProjectOwnerOf'
+import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4ReservedSplits'
 
 export const useV4ReservedTokensSubPanel = () => {
   const { selectedChainId, setSelectedChainId } =

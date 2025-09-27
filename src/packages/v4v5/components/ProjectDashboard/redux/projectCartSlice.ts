@@ -6,8 +6,8 @@ import {
 } from '../ReduxProjectCartProvider'
 
 import { NftRewardTier } from 'models/nftRewards'
-import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
 
 export type ProjectCartState = {
   payAmount: ProjectCartCurrencyAmount | undefined

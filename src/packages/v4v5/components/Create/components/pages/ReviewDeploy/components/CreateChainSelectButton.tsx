@@ -1,6 +1,6 @@
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import React, { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 

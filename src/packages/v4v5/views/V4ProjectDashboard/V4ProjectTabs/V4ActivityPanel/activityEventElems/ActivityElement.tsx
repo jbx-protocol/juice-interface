@@ -4,7 +4,7 @@ import EtherscanLink from 'components/EtherscanLink'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import { JBChainId } from 'juice-sdk-react'
 import { PV } from 'models/pv'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
 export interface ActivityElementEvent {

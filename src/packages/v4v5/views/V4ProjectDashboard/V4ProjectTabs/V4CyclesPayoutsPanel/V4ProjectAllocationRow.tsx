@@ -1,5 +1,5 @@
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
-import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
+import V4ProjectHandleLink from 'packages/v4v5/components/V4ProjectHandleLink'
 import { ReactNode } from 'react'
 import { useChainId } from 'wagmi'
 

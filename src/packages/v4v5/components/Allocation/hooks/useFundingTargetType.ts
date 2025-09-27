@@ -1,5 +1,5 @@
 import { FundingTargetType } from 'models/fundingTargetType'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 import { useMemo } from 'react'
 
 export const useFundingTargetType = (

@@ -3,7 +3,7 @@ import { Button, Statistic } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import { useJBProjectMetadataContext } from 'juice-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { useEditProjectDetailsTx } from 'packages/v4/hooks/useEditProjectDetailsTx'
+import { useEditProjectDetailsTx } from 'packages/v4v5/hooks/useEditProjectDetailsTx'
 import { useCallback, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 

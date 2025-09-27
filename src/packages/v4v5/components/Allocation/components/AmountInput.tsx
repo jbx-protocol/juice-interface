@@ -1,4 +1,4 @@
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { useCallback, useState } from 'react'
 
 import { Trans } from '@lingui/macro'

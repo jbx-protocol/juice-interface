@@ -7,7 +7,7 @@ import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
 import { NftRewardTier } from 'models/nftRewards'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
-import { RemainingSupplyWithTooltip } from 'packages/v4/views/V4ProjectDashboard/V4ProjectTabs/V4NftRewardsPanel/NftReward/RemainingSupplyWithTooltip'
+import { RemainingSupplyWithTooltip } from 'packages/v4v5/views/V4ProjectDashboard/V4ProjectTabs/V4NftRewardsPanel/NftReward/RemainingSupplyWithTooltip'
 import { useContext } from 'react'
 
 export function NftPreview({

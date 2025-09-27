@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import { CurrencyName } from 'constants/currency'
 import { NativeTokenValue } from 'juice-sdk-react'
-import { isInfinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
+import { isInfinitePayoutLimit } from 'packages/v4v5/utils/fundingCycle'
 
 export function PayoutLimitValue({
   payoutLimit,

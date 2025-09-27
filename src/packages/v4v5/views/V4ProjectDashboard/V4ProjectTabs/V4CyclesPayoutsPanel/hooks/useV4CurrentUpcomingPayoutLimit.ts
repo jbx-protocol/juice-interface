@@ -1,5 +1,5 @@
-import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { useUpcomingPayoutLimit } from 'packages/v4/hooks/useUpcomingPayoutLimit'
+import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
+import { useUpcomingPayoutLimit } from 'packages/v4v5/hooks/useUpcomingPayoutLimit'
 
 export const useV4CurrentUpcomingPayoutLimit = (
   type: 'current' | 'upcoming',

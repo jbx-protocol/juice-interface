@@ -8,9 +8,9 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { JBChainId } from 'juice-sdk-core'
 import { useSuckers } from 'juice-sdk-react'
-import QueueTransferOwnershipTxsModal from 'packages/v4/components/QueueTransferOwnershipTxsModal'
-import { useTransferOwnershipOnChain } from 'packages/v4/hooks/useTransferOwnershipOnChain'
-import { useTransferProjectOwnershipTx } from 'packages/v4/hooks/useTransferProjectOwnershipTx'
+import QueueTransferOwnershipTxsModal from 'packages/v4v5/components/QueueTransferOwnershipTxsModal'
+import { useTransferOwnershipOnChain } from 'packages/v4v5/hooks/useTransferOwnershipOnChain'
+import { useTransferProjectOwnershipTx } from 'packages/v4v5/hooks/useTransferProjectOwnershipTx'
 import { Address } from 'viem'
 
 export function V4OmnichainTransferOwnershipForm({

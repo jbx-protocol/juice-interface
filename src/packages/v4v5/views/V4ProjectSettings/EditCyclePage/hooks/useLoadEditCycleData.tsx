@@ -8,11 +8,11 @@ import {
 
 import { Form } from 'antd'
 import { Ether } from 'juice-sdk-core'
-import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
-import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
-import { V4CurrencyName } from 'packages/v4/utils/currency'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
+import { useV4CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4CurrentPayoutSplits'
+import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4ReservedSplits'
+import { V4CurrencyName } from 'packages/v4v5/utils/currency'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 
 /** Loads project FC data directly into an AntD form instance */

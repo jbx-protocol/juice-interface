@@ -6,10 +6,10 @@ import {
 
 import { EditCycleFormFields } from '../../EditCycleFormFields'
 import round from 'lodash/round'
-import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
+import { splitsListsHaveDiff } from 'packages/v4v5/utils/v4Splits'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
-import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
+import { useJBUpcomingRuleset } from 'packages/v4v5/hooks/useJBUpcomingRuleset'
 
 export const useTokensSectionValues = () => {
   const { editCycleForm, initialFormData } = useEditCycleFormContext()

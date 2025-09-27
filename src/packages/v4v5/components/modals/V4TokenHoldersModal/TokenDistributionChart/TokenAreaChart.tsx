@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import tailwind from 'lib/tailwind'
-import { ParticipantsQuery } from 'packages/v4/graphql/client/graphql'
+import { ParticipantsQuery } from 'packages/v4v5/graphql/client/graphql'
 import { useContext, useMemo } from 'react'
 import {
   Area,

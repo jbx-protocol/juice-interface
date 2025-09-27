@@ -4,7 +4,7 @@ import { Tooltip } from 'antd'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-react'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 
 interface RemainingSupplyWithTooltipProps {
   remainingSupply: number | undefined

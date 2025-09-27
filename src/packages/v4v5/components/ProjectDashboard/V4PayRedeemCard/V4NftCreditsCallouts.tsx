@@ -2,8 +2,8 @@ import { CubeIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { formatEther } from 'juice-sdk-core'
-import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
+import { useProjectPageQueries } from 'packages/v4v5/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 
 export function V4NftCreditsCallouts() {
   const { setProjectPageTab } = useProjectPageQueries()

@@ -1,6 +1,6 @@
 import { Button, Modal } from 'antd'
 import { useJBChainId, useJBProjectId } from 'juice-sdk-react'
-import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
+import { settingsPagePath, v4ProjectRoute } from 'packages/v4v5/utils/routes'
 
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'

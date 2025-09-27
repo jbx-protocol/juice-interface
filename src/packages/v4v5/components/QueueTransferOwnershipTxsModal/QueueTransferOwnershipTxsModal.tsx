@@ -8,7 +8,7 @@ import { Trans } from '@lingui/macro'
 import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { v4ProjectRoute } from 'packages/v4/utils/routes'
+import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
 import { twMerge } from 'tailwind-merge'
 import { Address } from 'viem'
 

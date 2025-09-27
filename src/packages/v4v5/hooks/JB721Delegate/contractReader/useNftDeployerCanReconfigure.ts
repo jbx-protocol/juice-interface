@@ -1,4 +1,4 @@
-import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
+import { V4OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { useV4WalletHasPermission } from '../../useV4WalletHasPermission'
 
 /**

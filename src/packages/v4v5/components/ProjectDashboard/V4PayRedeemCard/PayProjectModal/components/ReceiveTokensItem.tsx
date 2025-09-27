@@ -3,7 +3,7 @@ import { CartItemBadge } from 'components/CartItemBadge'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { twMerge } from 'tailwind-merge'
 // import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'packages/v2v3/constants/buybackDelegateEnabledProjectIds'
-import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
+import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {

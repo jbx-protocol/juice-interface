@@ -2,10 +2,10 @@ import React, { useMemo } from 'react'
 import { useJBProjectId, useJBRulesetContext, useJBUpcomingRuleset } from 'juice-sdk-react'
 
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 import { t } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
-import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
+import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
 
 export const V4TokenRedemptionCallout = () => {
   const { rulesetMetadata: currentRulesetMetadata, ruleset } = useJBRulesetContext()

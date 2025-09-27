@@ -4,7 +4,7 @@ import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { Trans } from '@lingui/macro'
 import { JB_CHAINS } from 'juice-sdk-core'
 import Link from 'next/link'
-import { v4ProjectRoute } from 'packages/v4/utils/routes'
+import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
 
 export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
   children,

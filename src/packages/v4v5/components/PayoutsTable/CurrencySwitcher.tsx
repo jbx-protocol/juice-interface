@@ -1,5 +1,5 @@
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import {
   payoutsTableMenuItemsIconClass,

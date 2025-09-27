@@ -2,8 +2,8 @@ import { Trans, t } from '@lingui/macro'
 
 import { CartItemBadge } from 'components/CartItemBadge'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
-import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
-import { useV4TokensPanel } from 'packages/v4/views/V4ProjectDashboard/V4ProjectTabs/V4TokensPanel/hooks/useV4TokensPanel'
+import { useProjectPageQueries } from 'packages/v4v5/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { useV4TokensPanel } from 'packages/v4v5/views/V4ProjectDashboard/V4ProjectTabs/V4TokensPanel/hooks/useV4TokensPanel'
 
 export const SuccessTokensItem = () => {
   const { projectPayReceipt } = useProjectPageQueries()

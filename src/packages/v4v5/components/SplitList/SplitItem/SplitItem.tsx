@@ -1,5 +1,5 @@
 import { JBSplit } from 'juice-sdk-core'
-import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
+import { isJuiceboxProjectSplit } from 'packages/v4v5/utils/v4Splits'
 import { ETHAddressBeneficiary } from './EthAddressBeneficiary'
 import { JuiceboxProjectBeneficiary } from './JuiceboxProjectBeneficiary'
 import { LockedUntilValue } from './LockedUntilValue'

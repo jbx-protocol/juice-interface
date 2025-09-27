@@ -10,13 +10,13 @@ import {
   JB721TierConfig,
   JB721TiersHookFlags,
   JBDeploy721TiersHookConfig,
-} from 'packages/v4/models/nfts'
+} from 'packages/v4v5/models/nfts'
 import { encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { Address, parseEther, zeroAddress } from 'viem'
 
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
-import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
-import { isValidMustStartAtOrAfter } from 'packages/v4/utils/fundingCycle'
+import { convertV2V3CurrencyOptionToV4 } from 'packages/v4v5/utils/currency'
+import { isValidMustStartAtOrAfter } from 'packages/v4v5/utils/fundingCycle'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingV2V3FundingCycleDataSelector } from 'redux/hooks/v2v3/create'
 import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'

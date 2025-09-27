@@ -1,7 +1,7 @@
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 
 import { SettingsPageKey } from '../ProjectSettingsDashboard'
-import { settingsPagePath } from 'packages/v4/utils/routes'
+import { settingsPagePath } from 'packages/v4v5/utils/routes'
 
 export function useSettingsPagePath(key?: SettingsPageKey) {
   const { projectId } = useJBContractContext()

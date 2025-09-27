@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { WEIGHT_UNCHANGED } from 'packages/v4/utils/fundingCycle'
+import { WEIGHT_UNCHANGED } from 'packages/v4v5/utils/fundingCycle'
 
 export function IssuanceRateValue({
   value,

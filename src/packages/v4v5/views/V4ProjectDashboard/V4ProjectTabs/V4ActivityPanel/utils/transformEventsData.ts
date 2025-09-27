@@ -1,6 +1,6 @@
 import { Ether, JBProjectToken } from 'juice-sdk-core'
 
-import { ActivityEventsQuery } from 'packages/v4/graphql/client/graphql'
+import { ActivityEventsQuery } from 'packages/v4v5/graphql/client/graphql'
 
 // TODO Event types can be updated to bendystraw schema, currently there are mismatched event names + properties
 export type EventType =

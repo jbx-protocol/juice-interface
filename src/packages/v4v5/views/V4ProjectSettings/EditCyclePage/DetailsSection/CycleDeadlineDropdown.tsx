@@ -2,7 +2,7 @@ import { Form, Select } from 'antd'
 
 import { Trans } from '@lingui/macro'
 import { BallotStrategy } from 'models/ballot'
-import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
+import { getAvailableApprovalStrategies } from 'packages/v4v5/utils/approvalHooks'
 
 export default function CycleDeadlineDropdown({
   className,

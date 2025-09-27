@@ -7,7 +7,7 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 import { TruncatedText } from 'components/TruncatedText'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-core'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useV4PayoutsSubPanel } from './hooks/useV4PayoutsSubPanel'

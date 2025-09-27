@@ -7,12 +7,12 @@ import {
 } from 'juice-sdk-react'
 
 import { FixedInt } from 'fpnum'
-import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { V4_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { formatUnits } from 'viem'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
-import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
+import { useProjectSelector } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
+import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4UserNftCreditsProvider'
 
 export const useProjectPaymentTokens = (): {
   receivedTickets: string | null

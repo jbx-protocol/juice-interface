@@ -1,5 +1,5 @@
 import { DiffedItem } from 'components/DiffedItem'
-import { LockedUntilValue } from 'packages/v4/components/SplitList/SplitItem/LockedUntilValue'
+import { LockedUntilValue } from 'packages/v4v5/components/SplitList/SplitItem/LockedUntilValue'
 import { formatDate } from 'utils/format/formatDate'
 
 export function DiffedLockedUntil({

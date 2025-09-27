@@ -4,9 +4,9 @@ import { ONE_BILLION, WAD_DECIMALS } from 'constants/numbers'
 import { SPLITS_TOTAL_PERCENT, JBSplit as Split, SplitPortion } from 'juice-sdk-core'
 import isEqual from 'lodash/isEqual'
 import round from 'lodash/round'
-import { AddEditAllocationModalEntity } from 'packages/v4/components/Allocation/AddEditAllocationModal'
-import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import { V4CurrencyName, V4_CURRENCY_METADATA, getV4CurrencyOption } from 'packages/v4/utils/currency'
+import { AddEditAllocationModalEntity } from 'packages/v4v5/components/Allocation/AddEditAllocationModal'
+import { V4CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
+import { V4CurrencyName, V4_CURRENCY_METADATA, getV4CurrencyOption } from 'packages/v4v5/utils/currency'
 import {
   JB_FEE,
   adjustedSplitPercents,
@@ -15,16 +15,16 @@ import {
   derivePayoutAmount,
   ensureSplitsSumTo100Percent,
   getNewDistributionLimit,
-} from 'packages/v4/utils/distributions'
+} from 'packages/v4v5/utils/distributions'
 import {
   MAX_PAYOUT_LIMIT,
-} from 'packages/v4/utils/math'
+} from 'packages/v4v5/utils/math'
 import {
   hasEqualRecipient,
   isJuiceboxProjectSplit,
   isProjectSplit,
   totalSplitsPercent, v4GetProjectOwnerRemainderSplit,
-} from 'packages/v4/utils/v4Splits'
+} from 'packages/v4v5/utils/v4Splits'
 import { useMemo } from 'react'
 import { usePayoutsTableContext } from '../context/PayoutsTableContext'
 

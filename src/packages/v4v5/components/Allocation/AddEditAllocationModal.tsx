@@ -8,7 +8,7 @@ import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
 import { JBCoreContracts, jbMultiTerminalAbi } from 'juice-sdk-core'
 import { useJBContractContext } from 'juice-sdk-react'
 import moment, * as Moment from 'moment'
-import { isInfinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
+import { isInfinitePayoutLimit } from 'packages/v4v5/utils/fundingCycle'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   allocationInputAlreadyExistsRule,

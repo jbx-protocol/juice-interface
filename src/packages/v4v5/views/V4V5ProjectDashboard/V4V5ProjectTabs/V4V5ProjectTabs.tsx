@@ -4,7 +4,7 @@ import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4AboutPanel from './V4V5AboutPanel'
@@ -25,7 +25,7 @@ export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
   const {
       nftRewards: { rewardTiers },
-    } = useV4NftRewards()
+    } = useV4V5NftRewards()
   const hasNftRewards = useMemo(
       () => (rewardTiers ?? []).length !== 0,
       [rewardTiers],

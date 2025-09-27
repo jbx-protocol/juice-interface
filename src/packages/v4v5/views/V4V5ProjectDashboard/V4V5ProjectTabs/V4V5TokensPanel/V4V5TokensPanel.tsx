@@ -21,7 +21,7 @@ import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
 import { reloadWindow } from 'utils/windowUtils'
 import { ReservedTokensSelectedChainProvider } from '../V4V5CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4V5BalanceMenuItemsUserFlags'
-import { useV4TokensPanel } from './hooks/useV4V5TokensPanel'
+import { useV4V5TokensPanel } from './hooks/useV4V5TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4V5YourBalanceMenuItems'
 import { V4ClaimTokensModal } from './V4ClaimTokensModal'
 import { V4MintModal } from './V4MintModal'
@@ -30,7 +30,7 @@ import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
 
 export const V4V5TokensPanel = () => {
   const { userTokenBalanceLoading, projectToken, totalTokenSupplyElement } =
-    useV4TokensPanel()
+    useV4V5TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
   const { data: suckersBalance } = useSuckersUserTokenBalance()
 
@@ -204,7 +204,7 @@ const ProjectTokenCard = () => {
     projectTokenAddress,
     projectHasErc20Token,
     canCreateErc20Token,
-  } = useV4TokensPanel()
+  } = useV4V5TokensPanel()
   return (
     <TitleDescriptionDisplayCard
       className="w-full"
@@ -257,7 +257,7 @@ const ProjectTokenCard = () => {
 }
 
 const ProjectTokenBadge = () => {
-  const { projectHasErc20Token } = useV4TokensPanel()
+  const { projectHasErc20Token } = useV4V5TokensPanel()
   return (
     <span className="whitespace-nowrap rounded-2xl bg-smoke-100 py-1 px-2 text-xs font-normal text-smoke-700 dark:bg-slate-500 dark:text-slate-100">
       {projectHasErc20Token ? 'ERC-20' : t`Juicebox native`}

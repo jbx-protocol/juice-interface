@@ -6,13 +6,13 @@ import { formatCurrencyAmount } from 'packages/v4v5/utils/formatCurrencyAmount'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayProjectModal } from './usePayProjectModal/usePayProjectModal'
 import { useProjectSelector } from '../../../redux/hooks'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 
 export const usePayAmounts = () => {
   const converter = useCurrencyConverter()
   const { payAmount, chosenNftRewards, allNftRewards } = useProjectSelector(state => state.projectCart)
   const { primaryAmount, secondaryAmount } = usePayProjectModal()
-  const { data: nftCreditsData } = useV4UserNftCredits()
+  const { data: nftCreditsData } = useV4V5UserNftCredits()
 
   const payAmountRaw = React.useMemo(() => {
     if (!payAmount) return {

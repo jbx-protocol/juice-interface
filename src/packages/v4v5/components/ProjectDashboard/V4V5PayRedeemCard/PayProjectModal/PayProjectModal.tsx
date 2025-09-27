@@ -22,7 +22,7 @@ import { twMerge } from 'tailwind-merge'
 import { usePayAmounts } from './hooks/usePayAmounts'
 import { useProjectIsOFACListed } from 'hooks/useProjectIsOFACListed'
 import { useSuckers } from 'juice-sdk-react'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { useWallet } from 'hooks/Wallet'
 
 export const PayProjectModal: React.FC = () => {
@@ -250,7 +250,7 @@ export const PayProjectModal: React.FC = () => {
 }
 
 const AmountSection = () => {
-  const { data: nftCredits } = useV4UserNftCredits()
+  const { data: nftCredits } = useV4V5UserNftCredits()
   const { formattedAmount, formattedNftCredits, formattedTotalAmount } =
     usePayAmounts()
 

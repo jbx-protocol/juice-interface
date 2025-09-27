@@ -1,5 +1,5 @@
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import React from 'react'
 import { useProjectDispatch } from './redux/hooks'
@@ -23,8 +23,8 @@ export const ReduxProjectCartProvider = ({
 }) => {
   const {
     nftRewards: { rewardTiers },
-  } = useV4NftRewards()
-  const nftCredits = useV4UserNftCredits()
+  } = useV4V5NftRewards()
+  const nftCredits = useV4V5UserNftCredits()
   const dispatch = useProjectDispatch()
 
   // Set the nfts on load

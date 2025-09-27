@@ -28,7 +28,7 @@ import { wagmiConfig } from 'contexts/Para/Providers'
 import { emitErrorNotification } from 'utils/notifications'
 import { parseUnits } from 'viem'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
-import { useV4DistributableAmount } from './hooks/useV4V5DistributableAmount'
+import { useV4V5DistributableAmount } from './hooks/useV4V5DistributableAmount'
 
 export default function V4V5DistributePayoutsModal({
   open,
@@ -52,7 +52,7 @@ export default function V4V5DistributePayoutsModal({
     sucker => sucker.peerChainId === selectedChainId,
   )?.projectId
 
-  const { distributableAmount: distributable, currency: distributableCurrency } = useV4DistributableAmount({
+  const { distributableAmount: distributable, currency: distributableCurrency } = useV4V5DistributableAmount({
     chainId: selectedChainId,
     projectId: selectedChainProjectId,
   })

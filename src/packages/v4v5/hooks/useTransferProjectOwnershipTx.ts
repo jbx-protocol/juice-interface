@@ -8,12 +8,12 @@ import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { Address } from 'viem'
 import { wagmiConfig } from '../wagmiConfig'
-import useV4ProjectOwnerOf from './useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from './useV4V5ProjectOwnerOf'
 
 export function useTransferProjectOwnershipTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { projectId } = useJBContractContext()
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
   
   // Get project title inline
   const { projectMetadata } = useContext(ProjectMetadataContext)

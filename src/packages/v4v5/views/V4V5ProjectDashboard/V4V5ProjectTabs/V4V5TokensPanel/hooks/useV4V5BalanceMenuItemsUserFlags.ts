@@ -2,7 +2,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useJBContractContext, useJBRulesetMetadata, useNativeTokenSurplus } from 'juice-sdk-react'
 import { jbTokensAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
 import { useReadContract, useChainId } from 'wagmi'
-import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
@@ -26,7 +26,7 @@ export const useV4BalanceMenuItemsUserFlags = () => {
   const { userAddress } = useWallet()
   const isDev = useMemo(() => process.env.NODE_ENV === 'development', [])
 
-  const userHasMintPermission = useV4WalletHasPermission(
+  const userHasMintPermission = useV4V5WalletHasPermission(
     V4V5OperatorPermission.MINT_TOKENS,
   )
   const hasOverflow = useMemo(

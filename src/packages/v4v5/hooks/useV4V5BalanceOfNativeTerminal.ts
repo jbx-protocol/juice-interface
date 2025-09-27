@@ -7,7 +7,7 @@ import { NATIVE_TOKEN, jbDirectoryAbi, jbTerminalStoreAbi, jbContractAddress, JB
 import { useReadContract } from 'wagmi';
 import { zeroAddress } from 'viem';
 
-export const useV4BalanceOfNativeTerminal = ({ chainId, projectId }: { chainId: JBChainId | undefined, projectId: bigint | undefined }) => {
+export const useV4V5BalanceOfNativeTerminal = ({ chainId, projectId }: { chainId: JBChainId | undefined, projectId: bigint | undefined }) => {
   const { store } = useJBTerminalContext();
 
   const directoryAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBDirectory][chainId] : undefined;

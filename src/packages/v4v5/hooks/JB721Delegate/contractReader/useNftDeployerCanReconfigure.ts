@@ -1,5 +1,5 @@
 import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
-import { useV4WalletHasPermission } from '../../useV4V5WalletHasPermission'
+import { useV4V5WalletHasPermission } from '../../useV4V5WalletHasPermission'
 
 /**
  * Checks whether the given [projectOwnerAddress] has given the JBTiered721DelegateProjectDeployer
@@ -10,7 +10,7 @@ import { useV4WalletHasPermission } from '../../useV4V5WalletHasPermission'
  * - A project is launching their V3 FC with NFTs
  */
 export function useNftDeployerCanReconfigure() {
-  const JBTiered721DelegateProjectDeployerCanReconfigure = useV4WalletHasPermission(V4V5OperatorPermission.QUEUE_RULESETS)
+  const JBTiered721DelegateProjectDeployerCanReconfigure = useV4V5WalletHasPermission(V4V5OperatorPermission.QUEUE_RULESETS)
 
   return JBTiered721DelegateProjectDeployerCanReconfigure
 }

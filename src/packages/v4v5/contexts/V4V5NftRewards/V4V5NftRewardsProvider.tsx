@@ -161,4 +161,4 @@ export const V4V5NftRewardsProvider: React.FC<
   )
 }
 
-export const useV4NftRewards = () => React.useContext(V4V5NftRewardsContext)
+export const useV4V5NftRewards = () => React.useContext(V4V5NftRewardsContext)

@@ -5,7 +5,7 @@ import { JBSplit as Split } from 'juice-sdk-core'
 import { SplitProps } from 'packages/v4v5/components/SplitList/SplitItem'
 import round from 'lodash/round'
 import { useMemo } from 'react'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 
 const JB_PERCENT_PRECISION = 2
 
@@ -37,7 +37,7 @@ export default function DiffedSplitList({
   reservedPercent,
   showDiffs,
 }: DiffedSplitListProps) {
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
   const ownerSplit = useMemo(() => {
     if (!projectOwnerAddress) return
     return v4GetProjectOwnerRemainderSplit(projectOwnerAddress as `0x${string}`, splits)

@@ -20,8 +20,8 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useNftCartItem } from 'packages/v4v5/hooks/useNftCartItem'
 import { usePayAmounts } from './PayProjectModal/hooks/usePayAmounts'
 import { useProjectPageQueries } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useProjectPageQueries'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { useWallet } from 'hooks/Wallet'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
@@ -59,7 +59,7 @@ export const PayRedeemInput = ({
   token.type = token.type || 'native'
   const {
     nftRewards: { rewardTiers: nfts },
-  } = useV4NftRewards()
+  } = useV4V5NftRewards()
   const { openModal } = useModal()
   const { userAddress } = useWallet()
 
@@ -370,7 +370,7 @@ const QuantityControl: React.FC<{
 }
 
 const NftCreditsDisplay = () => {
-  const { data: nftCredits } = useV4UserNftCredits()
+  const { data: nftCredits } = useV4V5UserNftCredits()
   const { formattedNftCredits } = usePayAmounts()
 
   if (!nftCredits || nftCredits <= 0n || !formattedNftCredits?.primaryAmount)

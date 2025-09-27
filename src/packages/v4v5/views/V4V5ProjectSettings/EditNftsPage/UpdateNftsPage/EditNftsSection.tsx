@@ -14,7 +14,7 @@ import type { RelayrPostBundleResponse } from 'juice-sdk-react'
 import { useSuckers } from 'juice-sdk-react'
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { useHasNftRewards } from 'packages/v4v5/hooks/useHasNftRewards'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { emitErrorNotification } from 'utils/notifications'
 import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
@@ -54,7 +54,7 @@ export function EditNftsSection() {
   }, [chainIds, selectedGasChain])
 
   // Project owner and Gnosis Safe detection
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
   const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress)
   const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
   const isOmnichainProject = chainIds.length > 1

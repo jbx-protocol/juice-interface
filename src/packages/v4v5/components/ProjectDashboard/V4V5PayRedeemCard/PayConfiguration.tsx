@@ -15,7 +15,7 @@ import { useBalance } from 'wagmi'
 import { usePayProjectDisabled } from 'packages/v4v5/hooks/usePayProjectDisabled'
 import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
 import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { useWallet } from 'hooks/Wallet'
 
 type PayConfigurationProps = {
@@ -51,7 +51,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
       rewardTiers,
       flags: { preventOverspending },
     },
-  } = useV4NftRewards()
+  } = useV4V5NftRewards()
 
   const { projectId, chainId} = useJBProjectId()
 

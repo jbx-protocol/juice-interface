@@ -16,7 +16,7 @@ import { Tooltip } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import { useWallet } from 'hooks/Wallet'
 import { JB_TOKEN_DECIMALS } from 'juice-sdk-core'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
@@ -39,7 +39,7 @@ export const V4V5PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   const { ruleset, rulesetMetadata } = useJBRulesetContext()
   const state = useProjectSelector(state => state.payRedeem.cardState)
   const chainId = useProjectSelector(state => state.payRedeem.chainId)
-  const nftRewards = useV4NftRewards()
+  const nftRewards = useV4V5NftRewards()
   const { data: payoutLimit } = usePayoutLimit()
   const dispatch = useProjectDispatch()
   const { userAddress } = useWallet()

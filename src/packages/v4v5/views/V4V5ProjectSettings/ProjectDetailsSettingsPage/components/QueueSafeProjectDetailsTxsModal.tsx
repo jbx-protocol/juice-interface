@@ -8,7 +8,7 @@ import { ProjectDetailsFormFields } from 'components/Project/ProjectSettings/Pro
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import QueueSafeTxsModal from 'packages/v4v5/components/QueueSafeTxsModal'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { getChainName } from 'packages/v4v5/utils/networks'
 import { useCallback } from 'react'
 import { emitInfoNotification } from 'utils/notifications'
@@ -26,7 +26,7 @@ export default function QueueSafeProjectDetailsTxsModal({
   form,
   projectMetadata,
 }: QueueSafeProjectDetailsTxsModalProps) {
-  const {data: safeAddress} = useV4ProjectOwnerOf()
+  const {data: safeAddress} = useV4V5ProjectOwnerOf()
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress: safeAddress || '' })
   const { data: suckers } = useSuckers()
   const { contracts } = useJBContractContext()

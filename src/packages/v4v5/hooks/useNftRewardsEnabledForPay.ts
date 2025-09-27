@@ -1,7 +1,7 @@
 import { JBRulesetContext, useJBProjectId, useJBRulesetContext, useJBUpcomingRuleset } from 'juice-sdk-react'
 
 import React from 'react'
-import { useV4NftRewards } from '../contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5NftRewards } from '../contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { zeroAddress } from 'viem'
 
 type RulesetMetadata = JBRulesetContext['rulesetMetadata']['data']
@@ -12,7 +12,7 @@ export function useNftRewardsEnabledForPay() {
   const { rulesetMetadata: upcomingRulesetMetadata } = useJBUpcomingRuleset({
     projectId, chainId
   })
-  const { nftRewards } = useV4NftRewards()
+  const { nftRewards } = useV4V5NftRewards()
 
   const hasNftRewards = React.useMemo(
     () => nftRewards.rewardTiers?.length !== 0,

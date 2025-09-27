@@ -8,12 +8,12 @@ import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocial
 import { PopupMenu } from 'components/ui/PopupMenu'
 import useMobile from 'hooks/useMobile'
 import { useJBChainId } from 'juice-sdk-react'
-import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { settingsPagePath } from 'packages/v4v5/utils/routes'
 import { useMemo, useState } from 'react'
 import { twJoin } from 'tailwind-merge'
-import { V4ProjectToolsDrawer } from './V4V5ProjectToolsDrawer'
+import { V4V5ProjectToolsDrawer } from './V4V5ProjectToolsDrawer'
 
 type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -26,7 +26,7 @@ export function ProjectHeaderPopupMenu({
 }) {
   const socialLinks = useSocialLinks()
   const isMobile = useMobile()
-  const canQueueRuleSets = useV4WalletHasPermission(
+  const canQueueRuleSets = useV4V5WalletHasPermission(
     V4V5OperatorPermission.QUEUE_RULESETS,
   )
   const chainId = useJBChainId()

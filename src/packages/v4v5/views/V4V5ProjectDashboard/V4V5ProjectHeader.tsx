@@ -21,8 +21,8 @@ import { twMerge } from 'tailwind-merge'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 // import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
-import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
-import { useV4ProjectHeader } from './hooks/useV4V5ProjectHeader'
+import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { useV4V5ProjectHeader } from './hooks/useV4V5ProjectHeader'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -39,10 +39,10 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
     gnosisSafe,
     archived,
     createdAtSeconds,
-  } = useV4ProjectHeader()
+  } = useV4V5ProjectHeader()
   const isMobile = useMobile()
 
-  const canQueueRuleSets = useV4WalletHasPermission(
+  const canQueueRuleSets = useV4V5WalletHasPermission(
     V4V5OperatorPermission.QUEUE_RULESETS,
   )
 

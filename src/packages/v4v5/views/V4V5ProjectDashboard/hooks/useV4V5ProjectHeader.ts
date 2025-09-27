@@ -11,7 +11,7 @@ import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { GnosisSafe } from 'models/safe'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export interface ProjectHeaderData {
@@ -27,14 +27,14 @@ export interface ProjectHeaderData {
   createdAtSeconds: number | undefined
 }
 
-export const useV4ProjectHeader = (): ProjectHeaderData => {
+export const useV4V5ProjectHeader = (): ProjectHeaderData => {
   const { projectId } = useJBContractContext()
   const { metadata } = useJBProjectMetadataContext()
   const chainId = useJBChainId()
   const { version } = useV4V5Version()
   const projectMetadata = metadata?.data
 
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
 
   const projectIdNum = parseInt(projectId.toString())
 

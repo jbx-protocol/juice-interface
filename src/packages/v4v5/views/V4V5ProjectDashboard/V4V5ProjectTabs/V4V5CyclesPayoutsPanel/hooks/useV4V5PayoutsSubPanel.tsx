@@ -12,8 +12,8 @@ import assert from 'utils/assert'
 import { feeForAmount } from 'utils/math'
 import { useV4CurrentUpcomingPayoutLimit } from './useV4V5CurrentUpcomingPayoutLimit'
 import { useV4CurrentUpcomingPayoutSplits } from './useV4V5CurrentUpcomingPayoutSplits'
-import { useV4DistributableAmount } from './useV4V5DistributableAmount'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import { useV4V5DistributableAmount } from './useV4V5DistributableAmount'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4v5/utils/v4Splits'
 
 const splitHasFee = (split: JBSplit) => {
@@ -36,7 +36,7 @@ const calculateSplitAmountWad = (
 
 export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
   const { contractAddress } = useJBContractContext()
   const terminalAddress = contractAddress(JBCoreContracts.JBMultiTerminal)
 
@@ -48,7 +48,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
 
   const { projectId } = useJBContractContext()  
   const chainId = useJBChainId()
-  const { distributableAmount } = useV4DistributableAmount({ chainId, projectId })
+  const { distributableAmount } = useV4V5DistributableAmount({ chainId, projectId })
 
   const { payoutLimit, payoutLimitCurrency } =
     useV4CurrentUpcomingPayoutLimit(type)

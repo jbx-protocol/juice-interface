@@ -5,7 +5,7 @@ import { JBChainId } from 'juice-sdk-core'
 import { NftRewardTier } from 'models/nftRewards'
 import QueueSafeTxsModal from 'packages/v4v5/components/QueueSafeTxsModal'
 import { usePopulateNftUpdateTx } from 'packages/v4v5/hooks/usePopulateNftUpdateTx'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useCallback } from 'react'
 import { emitInfoNotification } from 'utils/notifications'
 
@@ -24,7 +24,7 @@ export default function QueueSafeEditNftsTxsModal({
   editedRewardTierIds,
   onSuccess,
 }: QueueSafeEditNftsTxsModalProps) {
-  const { data: safeAddress } = useV4ProjectOwnerOf()
+  const { data: safeAddress } = useV4V5ProjectOwnerOf()
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress: safeAddress || '' })
   const { populateTransaction } = usePopulateNftUpdateTx()
 

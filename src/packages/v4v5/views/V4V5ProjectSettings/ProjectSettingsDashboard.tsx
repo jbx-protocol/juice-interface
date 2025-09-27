@@ -10,13 +10,13 @@ import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import Link from 'next/link'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
-import { useV4BalanceOfNativeTerminal } from 'packages/v4v5/hooks/useV4V5BalanceOfNativeTerminal'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
-import { useV4WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { useV4V5BalanceOfNativeTerminal } from 'packages/v4v5/hooks/useV4V5BalanceOfNativeTerminal'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
-import { useV4DistributableAmount } from '../V4V5ProjectDashboard/V4V5ProjectTabs/V4V5CyclesPayoutsPanel/hooks/useV4V5DistributableAmount'
+import { useV4V5DistributableAmount } from '../V4V5ProjectDashboard/V4V5ProjectTabs/V4V5CyclesPayoutsPanel/hooks/useV4V5DistributableAmount'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 
@@ -59,26 +59,26 @@ function SettingsGroupCard({
 }
 
 export function ProjectSettingsDashboard() {
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
 
-  const { nftRewards } = useV4NftRewards()
+  const { nftRewards } = useV4V5NftRewards()
 
   const { projectId } = useJBContractContext()
   const { metadata } = useJBProjectMetadataContext()
 
   const chainId = useJBChainId()
 
-  const { data: balance, isLoading: loading } = useV4BalanceOfNativeTerminal({
+  const { data: balance, isLoading: loading } = useV4V5BalanceOfNativeTerminal({
     chainId,
     projectId,
   })
-  const { distributableAmount } = useV4DistributableAmount({
+  const { distributableAmount } = useV4V5DistributableAmount({
     chainId,
     projectId,
   })
 
   const projectHasErc20Token = useProjectHasErc20Token()
-  const hasIssueTicketsPermission = useV4WalletHasPermission(
+  const hasIssueTicketsPermission = useV4V5WalletHasPermission(
     V4V5OperatorPermission.MINT_TOKENS,
   )
 

@@ -1,7 +1,7 @@
 import { useJBChainId, useJBProjectId } from "juice-sdk-react";
 import { JBChainId, jbProjectsAbi, JBCoreContracts, jbContractAddress } from "juice-sdk-core";
 import { useReadContract } from "wagmi";
-const useV4ProjectOwnerOf = (_chainId?: JBChainId) => {
+const useV4V5ProjectOwnerOf = (_chainId?: JBChainId) => {
   const defaultChainId = useJBChainId();
   const chainId = _chainId ?? defaultChainId;
   const { projectId } = useJBProjectId(chainId)
@@ -19,4 +19,4 @@ const useV4ProjectOwnerOf = (_chainId?: JBChainId) => {
   };
 };
 
-export default useV4ProjectOwnerOf;
+export default useV4V5ProjectOwnerOf;

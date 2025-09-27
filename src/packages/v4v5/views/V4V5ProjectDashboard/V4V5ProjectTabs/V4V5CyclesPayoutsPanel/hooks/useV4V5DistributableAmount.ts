@@ -3,11 +3,11 @@ import { JBProjectToken } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
 import { usePayoutLimitOfChain } from 'packages/v4v5/hooks/usePayoutLimitOfChain'
 import { useUsedPayoutLimitOf } from 'packages/v4v5/hooks/useUsedPayoutLimitOf'
-import { useV4BalanceOfNativeTerminal } from 'packages/v4v5/hooks/useV4V5BalanceOfNativeTerminal'
+import { useV4V5BalanceOfNativeTerminal } from 'packages/v4v5/hooks/useV4V5BalanceOfNativeTerminal'
 import { V4V5_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'
 
-export const useV4DistributableAmount = ({
+export const useV4V5DistributableAmount = ({
   chainId,
   projectId
 }: {
@@ -15,7 +15,7 @@ export const useV4DistributableAmount = ({
   projectId: bigint | undefined
 }) => {
   const { data: usedPayoutLimit } = useUsedPayoutLimitOf({ chainId, projectId })
-  const { data: _treasuryBalance } = useV4BalanceOfNativeTerminal( { chainId, projectId })
+  const { data: _treasuryBalance } = useV4V5BalanceOfNativeTerminal( { chainId, projectId })
   const { data: payoutLimit } = usePayoutLimitOfChain({ chainId, projectId })
   const converter = useCurrencyConverter()
 

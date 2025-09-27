@@ -33,6 +33,6 @@ export const V4V5UserNftCreditsProvider: React.FC<PropsWithChildren> = ({
   )
 }
 
-export const useV4UserNftCredits = () => {
+export const useV4V5UserNftCredits = () => {
   return React.useContext(V4V5UserNftCreditsContext)
 }

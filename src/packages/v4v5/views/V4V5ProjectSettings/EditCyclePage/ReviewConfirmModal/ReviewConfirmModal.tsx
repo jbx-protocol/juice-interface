@@ -19,7 +19,7 @@ import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { CreateCollapse } from 'packages/v4v5/components/Create/components/CreateCollapse/CreateCollapse'
 import QueueSafeEditRulesetTxsModal from 'packages/v4v5/components/QueueSafeEditRulesetTxsModal'
 import { useEditRulesetTx } from 'packages/v4v5/hooks/useEditRulesetTx'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { emitErrorNotification } from 'utils/notifications'
 import { useChainId } from 'wagmi'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
@@ -60,7 +60,7 @@ export function ReviewConfirmModal({
   const walletConnectedToWrongChain = chainId !== walletChainId
 
   // Project owner and Gnosis Safe detection
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
   const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress)
   const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
 

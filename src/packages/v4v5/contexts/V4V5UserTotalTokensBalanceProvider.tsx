@@ -31,5 +31,5 @@ export const V4V5UserTotalTokensBalanceProvider: React.FC<PropsWithChildren> = (
   )
 }
 
-export const useV4UserTotalTokensBalance = () =>
+export const useV4V5UserTotalTokensBalance = () =>
   React.useContext(V4V5UserTotalTokensBalanceContext)

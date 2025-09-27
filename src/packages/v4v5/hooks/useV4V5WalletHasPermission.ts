@@ -10,16 +10,16 @@ import { isEqualAddress } from 'utils/address'
 import { isSafeSigner } from 'utils/safe'
 import { zeroAddress } from 'viem'
 import { V4V5OperatorPermission } from '../models/v4Permissions'
-import useV4ProjectOwnerOf from './useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from './useV4V5ProjectOwnerOf'
 
-export function useV4WalletHasPermission(
+export function useV4V5WalletHasPermission(
   permission: V4V5OperatorPermission | V4V5OperatorPermission[],
 ): boolean {
   const { userAddress } = useWallet()
   const chainId = useChainId()
 
   const { projectId } = useJBContractContext()
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
 
   // If project owner is a Safe, fetch Safe details to determine signer membership
   const { data: safeData } = useGnosisSafe(projectOwnerAddress)

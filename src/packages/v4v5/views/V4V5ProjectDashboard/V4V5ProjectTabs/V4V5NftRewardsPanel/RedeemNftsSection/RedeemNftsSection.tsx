@@ -1,10 +1,10 @@
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { NftCreditsSection } from './NftCreditsSection'
 
 export function RedeemNftsSection() {
   // const [redeemNftsModalVisible, setRedeemNftsModalVisible] = useState(false)
 
-  const nftCredits = useV4UserNftCredits()
+  const nftCredits = useV4V5UserNftCredits()
 
   // TODO: This needs to be implemented
   // const { fundingCycleMetadata, primaryTerminalCurrentOverflow } =

@@ -25,8 +25,8 @@ import { FormikHelpers } from 'formik'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useWallet } from 'hooks/Wallet'
 import { useProjectSelector } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
-import { useV4NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { V4V5_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
 import { ProjectPayReceipt } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useProjectPageQueries'
@@ -53,13 +53,13 @@ export const usePayProjectTx = ({
   ) => void
 }) => {
   const { userAddress } = useWallet()
-  const { data: nftCredits } = useV4UserNftCredits()
+  const { data: nftCredits } = useV4V5UserNftCredits()
   const { payAmount, chosenNftRewards } = useProjectSelector(
     state => state.projectCart,
   )
   const {
     nftRewards: { rewardTiers },
-  } = useV4NftRewards()
+  } = useV4V5NftRewards()
   const converter = useCurrencyConverter()
   const { data: suckers } = useSuckers()
   const { projectId } = useJBProjectId()

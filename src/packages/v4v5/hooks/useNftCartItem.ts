@@ -2,12 +2,12 @@ import { useProjectDispatch } from 'packages/v2v3/components/V2V3Project/Project
 import React from 'react'
 import { projectCartActions } from '../components/ProjectDashboard/redux/projectCartSlice'
 import { ProjectCartNftReward } from '../components/ProjectDashboard/ReduxProjectCartProvider'
-import { useV4NftRewards } from '../contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5NftRewards } from '../contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { V4V5_CURRENCY_ETH } from '../utils/currency'
 
 export const useNftCartItem = ({ id, quantity }: ProjectCartNftReward) => {
   const dispatch = useProjectDispatch()
-  const { nftRewards } = useV4NftRewards()
+  const { nftRewards } = useV4V5NftRewards()
   const rewardTiers = React.useMemo(
     () => nftRewards.rewardTiers ?? [],
     [nftRewards.rewardTiers],

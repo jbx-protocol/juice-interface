@@ -22,7 +22,7 @@ import { useJBRulesetByChain } from 'packages/v4v5/hooks/useJBRulesetByChain'
 import { useMemo } from 'react'
 import { useReservedTokensSelectedChain } from '../../V4V5CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 import { useSuckersPendingReservedTokens } from 'packages/v4v5/hooks/useSuckersPendingReservedTokens'
-import useV4ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
 
 export const useV4ReservedTokensSubPanel = () => {
@@ -31,7 +31,7 @@ export const useV4ReservedTokensSubPanel = () => {
 
   const { projectId } = useJBProjectId(selectedChainId)
 
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf(selectedChainId)
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf(selectedChainId)
   const { splits: reservedTokensSplits } = useV4ReservedSplits(selectedChainId)
 
   const { rulesetMetadata, ruleset } = useJBRulesetByChain(selectedChainId)

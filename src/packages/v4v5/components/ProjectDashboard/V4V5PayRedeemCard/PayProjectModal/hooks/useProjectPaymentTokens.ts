@@ -12,7 +12,7 @@ import { formatUnits } from 'viem'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectSelector } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
-import { useV4UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
+import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 
 export const useProjectPaymentTokens = (): {
   receivedTickets: string | null
@@ -23,7 +23,7 @@ export const useProjectPaymentTokens = (): {
   const nativeTokenSymbol = useNativeTokenSymbol()
   const tokenA = { symbol: nativeTokenSymbol, decimals: 18 }
   const { token } = useJBTokenContext()
-  const { data: nftCreditsData } = useV4UserNftCredits()
+  const { data: nftCreditsData } = useV4V5UserNftCredits()
   const converter = useCurrencyConverter()
   
   // Calculate effective payment amount after NFT credits (same logic as usePayAmounts)

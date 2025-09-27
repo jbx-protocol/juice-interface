@@ -1,6 +1,6 @@
 import { Trans, t } from "@lingui/macro";
 
-import { useV4NftRewards } from "packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider";
+import { useV4V5NftRewards } from "packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider";
 import { useProjectSelector } from "../redux/hooks";
 import { PayRedeemCardNftReward } from "./PayRedeemInput";
 
@@ -8,7 +8,7 @@ import { PayRedeemCardNftReward } from "./PayRedeemInput";
 export function PreventOverspendingPayCard() {
   const {
       nftRewards: { rewardTiers: nfts },
-    } = useV4NftRewards()
+    } = useV4V5NftRewards()
 
   const cartNfts = useProjectSelector(
     state => state.projectCart.chosenNftRewards,

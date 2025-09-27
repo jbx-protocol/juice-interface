@@ -13,7 +13,7 @@ export const V4V5SendPayoutsButton = ({
   className?: string
   containerClassName?: string
 }) => {
-  // const { distributableAmount } = useV4DistributableAmount()
+  // const { distributableAmount } = useV4V5DistributableAmount()
   const [open, setOpen] = useState(false)
   const openModal = useCallback(() => setOpen(true), [])
   const closeModal = useCallback(() => setOpen(false), [])

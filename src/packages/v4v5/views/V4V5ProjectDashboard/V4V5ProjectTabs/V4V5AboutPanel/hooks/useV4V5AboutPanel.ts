@@ -3,7 +3,7 @@ import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
-export const useV4AboutPanel = () => {
+export const useV4V5AboutPanel = () => {
   const { metadata } = useJBProjectMetadataContext()
   const projectMetadata = metadata?.data
 

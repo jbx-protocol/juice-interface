@@ -5,8 +5,9 @@ import {
   useJBContractContext,
   useJBProjectId,
   useJBRuleset,
-  useReadJbFundAccessLimitsPayoutLimitsOf,
 } from 'juice-sdk-react'
+import { jbFundAccessLimitsAbi } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 
 import { NATIVE_TOKEN } from 'juice-sdk-core'
 import { V4CurrencyOption } from '../models/v4CurrencyOption'
@@ -25,23 +26,24 @@ export function usePayoutLimit() {
     projectId,
     chainId,
   })
-  const { data: payoutLimits, isLoading } =
-    useReadJbFundAccessLimitsPayoutLimitsOf({
-      chainId,
-      address: fundAccessLimits.data ?? undefined,
-      args:
-        primaryNativeTerminal.data && fundAccessLimits.data && projectId
-          ? [
-              projectId,
-              BigInt(ruleset?.id ?? 0),
-              primaryNativeTerminal.data ?? constants.AddressZero,
-              NATIVE_TOKEN,
-            ]
-          : undefined,
-      query: {
-        enabled: Boolean(fundAccessLimits.data && primaryNativeTerminal.data),
-      },
-    })
+  const { data: payoutLimits, isLoading } = useReadContract({
+    abi: jbFundAccessLimitsAbi,
+    address: fundAccessLimits.data ?? undefined,
+    functionName: 'payoutLimitsOf',
+    args:
+      primaryNativeTerminal.data && fundAccessLimits.data && projectId
+        ? [
+            projectId,
+            BigInt(ruleset?.id ?? 0),
+            primaryNativeTerminal.data ?? constants.AddressZero,
+            NATIVE_TOKEN,
+          ]
+        : undefined,
+    chainId,
+    query: {
+      enabled: Boolean(fundAccessLimits.data && primaryNativeTerminal.data),
+    },
+  })
   if (payoutLimits === undefined) {
     return {
       data: {

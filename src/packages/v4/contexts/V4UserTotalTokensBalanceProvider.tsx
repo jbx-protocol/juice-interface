@@ -1,8 +1,7 @@
 import { useWallet } from 'hooks/Wallet'
-import {
-  useJBContractContext,
-  useReadJbTokensTotalBalanceOf,
-} from 'juice-sdk-react'
+import { useJBContractContext } from 'juice-sdk-react'
+import { jbTokensAbi, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 import React, { PropsWithChildren } from 'react'
 
 const V4UserTotalTokensBalanceContext = React.createContext<{
@@ -17,8 +16,11 @@ export const V4UserTotalTokensBalanceProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const { userAddress } = useWallet()
-  const { projectId } = useJBContractContext()
-  const value = useReadJbTokensTotalBalanceOf({
+  const { projectId, contractAddress } = useJBContractContext()
+  const value = useReadContract({
+    abi: jbTokensAbi,
+    address: contractAddress(JBCoreContracts.JBTokens),
+    functionName: 'totalBalanceOf',
     args: userAddress ? [userAddress, projectId] : undefined,
   })
 

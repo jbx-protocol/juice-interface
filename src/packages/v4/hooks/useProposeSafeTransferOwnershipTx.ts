@@ -1,6 +1,5 @@
-import { JBChainId, jbProjectsAddress } from 'juice-sdk-core'
+import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from 'juice-sdk-core'
 import {
-  jbProjectsAbi,
   useSuckers
 } from 'juice-sdk-react'
 import { Address, encodeFunctionData } from 'viem'
@@ -36,7 +35,7 @@ export function useProposeSafeTransferOwnershipTx({ safeAddress }: { safeAddress
 
       // Propose the transaction to the Safe
       return await proposeTransaction({
-        to: jbProjectsAddress[1] as Address,
+        to: jbContractAddress['4'][JBCoreContracts.JBProjects][1] as Address,
         value: '0',
         data,
         chainId,

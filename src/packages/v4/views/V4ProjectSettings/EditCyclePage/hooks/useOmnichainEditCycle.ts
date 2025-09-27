@@ -1,5 +1,5 @@
-import { JBChainId, createSalt, jbOmnichainDeployer4_1Address, jbOmnichainDeployerAddress, jbProjectDeploymentAddresses } from 'juice-sdk-core'
-import { jbOmnichainDeployer4_1Abi, useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, createSalt, jbContractAddress, JBOmnichainDeployerContracts, JBCoreContracts, jbOmnichainDeployer4_1Abi } from 'juice-sdk-core'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
 
 import { useWallet } from 'hooks/Wallet'
 import { EditCycleTxArgs } from 'packages/v4/utils/editRuleset'
@@ -30,9 +30,9 @@ export function useOmnichainEditCycle() {
       // ensure same salt in args if needed by transformEditCycleFormFieldsToTxArgs
       console.info('Edit cycle tx args', args)
       const encoded = encodeFunctionData({ abi: jbOmnichainDeployer4_1Abi, functionName: 'queueRulesetsOf', args})
-      let to: `0x${string}` = jbOmnichainDeployer4_1Address[chainId]
-      if (projectControllerAddress === jbProjectDeploymentAddresses.JBController[chainId]) {
-        to = jbOmnichainDeployerAddress[chainId]
+      let to: `0x${string}` = jbContractAddress['4'][JBOmnichainDeployerContracts.JBOmnichainDeployer4_1][chainId] as `0x${string}`
+      if (projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController][chainId]) {
+        to = jbContractAddress['4'][JBOmnichainDeployerContracts.JBOmnichainDeployer][chainId] as `0x${string}`
       }
       return {
         data: { from: userAddress, to, value: 0n, gas: 200_000n * BigInt(chainIds.length), data: encoded },

@@ -5,11 +5,10 @@ import {
   useJBChainId,
   useJBProjectId,
   useJBTokenContext,
-  useReadJbDirectoryControllerOf,
-  useReadJbTokensCreditBalanceOf,
   useSuckers,
-  useWriteJbControllerClaimTokensFor,
 } from 'juice-sdk-react'
+import { jbDirectoryAbi, jbTokensAbi, jbControllerAbi, JBCoreContracts, jbContractAddress } from 'juice-sdk-core'
+import { useReadContract, useWriteContract } from 'wagmi'
 import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 
@@ -60,13 +59,19 @@ export function V4ClaimTokensModal({
   const { projectId } = useJBProjectId(selectedChainId)
 
   // Get controller address for the selected chain
-  const { data: controllerAddress } = useReadJbDirectoryControllerOf({
-    chainId: selectedChainId,
+  const { data: controllerAddress } = useReadContract({
+    abi: jbDirectoryAbi,
+    address: jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId],
+    functionName: 'controllerOf',
     args: [projectId ?? 0n],
+    chainId: selectedChainId,
   })
 
   // Get unclaimed balance for selected chain
-  const { data: unclaimedBalance } = useReadJbTokensCreditBalanceOf({
+  const { data: unclaimedBalance } = useReadContract({
+    abi: jbTokensAbi,
+    address: jbContractAddress['4'][JBCoreContracts.JBTokens][selectedChainId],
+    functionName: 'creditBalanceOf',
     args: [userAddress ?? zeroAddress, projectId ?? 0n],
     chainId: selectedChainId
   })
@@ -78,8 +83,7 @@ export function V4ClaimTokensModal({
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [claimAmount, setClaimAmount] = useState<string>()
 
-  const { writeContractAsync: writeClaimTokens } =
-    useWriteJbControllerClaimTokensFor()
+  const { writeContractAsync: writeClaimTokens } = useWriteContract()
 
   const hasIssuedTokens = useProjectHasErc20Token()
 
@@ -127,6 +131,8 @@ export function V4ClaimTokensModal({
 
       const hash = await writeClaimTokens({
         address: controllerAddress,
+        abi: jbControllerAbi,
+        functionName: 'claimTokensFor',
         args,
         chainId: selectedChainId,
       })

@@ -1,8 +1,11 @@
 import {
   SuckerPair,
-  readJbControllerTotalTokenSupplyWithReservedTokensOf,
-  readJbDirectoryControllerOf
+  jbDirectoryAbi,
+  jbControllerAbi,
+  jbContractAddress,
+  JBCoreContracts
 } from "juice-sdk-core";
+import { readContract } from "wagmi/actions";
 import { useJBChainId, useJBContractContext, useSuckers } from "juice-sdk-react";
 import { useConfig } from "wagmi";
 import { useQuery } from "wagmi/query";
@@ -32,15 +35,22 @@ export function useSuckersTotalSupply() {
         pairs.map(async pair => {
           const { peerChainId, projectId: peerProjectId } = pair;
 
-          const controllerAddress = await readJbDirectoryControllerOf(config, {
-            chainId,
-            args: [BigInt(projectId)],
-          })
+          const directoryAddress = jbContractAddress['4'][JBCoreContracts.JBDirectory][chainId];
 
-          const totalSupply = await readJbControllerTotalTokenSupplyWithReservedTokensOf(config, {
-            chainId: Number(peerChainId),
+          const controllerAddress = await readContract(config, {
+            abi: jbDirectoryAbi,
+            address: directoryAddress,
+            functionName: 'controllerOf',
+            args: [BigInt(projectId)],
+            chainId,
+          });
+
+          const totalSupply = await readContract(config, {
+            abi: jbControllerAbi,
             address: controllerAddress,
+            functionName: 'totalTokenSupplyWithReservedTokensOf',
             args: [peerProjectId],
+            chainId: Number(peerChainId),
           });
 
           return {

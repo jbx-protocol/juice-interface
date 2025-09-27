@@ -1,7 +1,10 @@
 import {
   SuckerPair,
-  readJbTokensCreditBalanceOf,
+  jbTokensAbi,
+  jbContractAddress,
+  JBCoreContracts
 } from "juice-sdk-core";
+import { readContract } from "wagmi/actions";
 import { useJBContractContext, useSuckers } from "juice-sdk-react";
 
 import { useWallet } from "hooks/Wallet";
@@ -31,9 +34,14 @@ export function useSuckersUnclaimedBalance() {
         pairs.map(async pair => {
           const { peerChainId, projectId: peerProjectId } = pair;
 
-          const unclaimedBalance = await readJbTokensCreditBalanceOf(config, {
-            chainId: peerChainId,
+          const tokensAddress = jbContractAddress['4'][JBCoreContracts.JBTokens][peerChainId];
+
+          const unclaimedBalance = await readContract(config, {
+            abi: jbTokensAbi,
+            address: tokensAddress,
+            functionName: 'creditBalanceOf',
             args: [userAddress ?? zeroAddress, peerProjectId],
+            chainId: peerChainId,
           });
 
           return {

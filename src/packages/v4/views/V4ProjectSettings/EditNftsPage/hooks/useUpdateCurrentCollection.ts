@@ -1,8 +1,9 @@
 import {
   useJBChainId,
   useJBRulesetContext,
-  useWriteJb721TiersHookAdjustTiers,
 } from 'juice-sdk-react'
+import { jb721TiersHookAbi } from 'juice-sdk-core'
+import { useWriteContract } from 'wagmi'
 import { JB_721_TIER_PARAMS_V4, NftRewardTier } from 'models/nftRewards'
 import { useCallback, useContext, useState } from 'react'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
@@ -29,8 +30,7 @@ export function useUpdateCurrentCollection({
     rulesetMetadata: { data: rulesetMetadata },
   } = useJBRulesetContext()
 
-  const { writeContractAsync: writeAdjustTiers } =
-    useWriteJb721TiersHookAdjustTiers()
+  const { writeContractAsync: writeAdjustTiers } = useWriteContract()
   const chainId = useJBChainId()
 
   const [txLoading, setTxLoading] = useState<boolean>(false)
@@ -64,6 +64,8 @@ export function useUpdateCurrentCollection({
     }
     try {
       const hash = await writeAdjustTiers({
+        abi: jb721TiersHookAbi,
+        functionName: 'adjustTiers',
         chainId,
         args: [tiersToAdd, editedRewardTierIds.map(id => BigInt(id))],
         address: rulesetMetadata.dataHook,

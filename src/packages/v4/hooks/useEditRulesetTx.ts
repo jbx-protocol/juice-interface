@@ -1,10 +1,9 @@
-import { NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
+import { NATIVE_TOKEN, jbContractAddress, JBCoreContracts, jbControllerAbi, jbController4_1Abi } from 'juice-sdk-core'
 import {
   JBRulesetContext,
-  useJBContractContext,
-  useWriteJbController4_1QueueRulesetsOf,
-  useWriteJbControllerQueueRulesetsOf
+  useJBContractContext
 } from 'juice-sdk-react'
+import { useWriteContract } from 'wagmi'
 import { useCallback, useContext } from 'react'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
@@ -26,23 +25,12 @@ export interface EditMetadataTxOpts {
  * CURRENTLY UN-USED, using useOmnichainEditCycle everywhere
  */
 export function useEditRulesetTx() {
-  const { writeContractAsync: writeEditController4Ruleset } =
-    useWriteJbControllerQueueRulesetsOf()
-
-  const { writeContractAsync: writeEditController4_1Ruleset } =
-    useWriteJbController4_1QueueRulesetsOf()
+  const { writeContractAsync: writeEditRuleset } = useWriteContract()
 
   const { contracts, projectId } = useJBContractContext()
   const projectControllerAddress = contracts.controller.data
 
-  let writeEditRuleset = writeEditController4Ruleset
-
-  if (projectControllerAddress && projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]) {
-    console.info('Using v4.1 controller for edit ruleset transaction')
-    writeEditRuleset = writeEditController4_1Ruleset
-  } else {
-    console.info('Using v4 controller for edit ruleset transaction')
-  }
+  const isV4_1 = projectControllerAddress && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][1]
   const { addTransaction } = useContext(TxHistoryContext)
   const { rulesetMetadata } = useContext(JBRulesetContext)
 
@@ -85,6 +73,8 @@ export function useEditRulesetTx() {
 
         const hash = await writeEditRuleset({
           address: contracts.controller.data,
+          abi: isV4_1 ? jbController4_1Abi : jbControllerAbi,
+          functionName: 'queueRulesetsOf',
           args,
         })
 
@@ -109,6 +99,7 @@ export function useEditRulesetTx() {
       contracts.primaryNativeTerminal.data,
       addTransaction,
       rulesetMetadata.data?.dataHook,
+      isV4_1,
     ],
   )
 }

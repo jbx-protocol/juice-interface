@@ -1,5 +1,5 @@
 import { Button, Tooltip } from 'antd'
-import { JB_TOKEN_DECIMALS, NATIVE_TOKEN } from 'juice-sdk-core'
+import { JB_TOKEN_DECIMALS, NATIVE_TOKEN, jbMultiTerminalAbi } from 'juice-sdk-core'
 import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
 import { Trans, t } from '@lingui/macro'
 import { formatEther, parseUnits } from 'viem'
@@ -9,8 +9,8 @@ import {
   useJBContractContext,
   useJBProjectId,
   useJBTokenContext,
-  useWriteJbMultiTerminalCashOutTokensOf,
 } from 'juice-sdk-react'
+import { useWriteContract } from 'wagmi'
 
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { EthereumLogo } from './EthereumLogo'
@@ -71,8 +71,7 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     ? formatEther(ethReceivedFromTokens)
     : ''
 
-  const { writeContractAsync: writeRedeem } =
-    useWriteJbMultiTerminalCashOutTokensOf()
+  const { writeContractAsync: writeRedeem } = useWriteContract()
   const { userAddress } = useWallet()
 
   const insufficientBalance =
@@ -123,6 +122,8 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
       const hash = await writeRedeem({
         chainId: selectedChainId,
         address: contracts.primaryNativeTerminal.data,
+        abi: jbMultiTerminalAbi,
+        functionName: 'cashOutTokensOf',
         args,
       })
       setModalOpen(true)

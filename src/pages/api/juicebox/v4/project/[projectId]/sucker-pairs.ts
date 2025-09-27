@@ -30,6 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       config: wagmiConfig,
       chainId,
       projectId: BigInt(projectId as string),
+      version: 4,
     })
 
     // cache for 1 week

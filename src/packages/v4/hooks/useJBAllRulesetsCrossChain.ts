@@ -1,26 +1,34 @@
-import { CashOutTaxRate, ReservedPercent, RulesetWeight, WeightCutPercent } from "juice-sdk-core"
-
-import { useReadJbControllerAllRulesetsOf } from "juice-sdk-react"
+import { CashOutTaxRate, ReservedPercent, RulesetWeight, WeightCutPercent, jbControllerAbi, jbContractAddress, JBCoreContracts } from "juice-sdk-core"
+import { useReadContract } from "wagmi"
+import { JBChainId } from "juice-sdk-react"
 
 export function useJBAllRulesetsCrossChain({
   projectId,
-  rulesetNumber
+  rulesetNumber,
+  chainId
 }: {
   projectId: bigint
   rulesetNumber: bigint
+  chainId: JBChainId
 }) {
-  const { data, isLoading } = useReadJbControllerAllRulesetsOf({
+  const controllerAddress = jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
+
+  const { data, isLoading } = useReadContract({
+    abi: jbControllerAbi,
+    address: controllerAddress,
+    functionName: 'allRulesetsOf',
     args: [
-      projectId, 
-      rulesetNumber, 
+      projectId,
+      rulesetNumber,
       10n, // size (The maximum number of rulesets to return). Arbritrarily set
-    ]
+    ],
+    chainId
   })
 
   if (!data) return { data: undefined, isLoading }
 
   return {
-    data: data.map((obj) => ({
+    data: data?.map((obj) => ({
       ruleset: {
         ...obj.ruleset, 
         weight: new RulesetWeight(obj.ruleset.weight), 

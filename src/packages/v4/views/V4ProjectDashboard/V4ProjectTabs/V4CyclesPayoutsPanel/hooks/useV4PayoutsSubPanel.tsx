@@ -1,6 +1,7 @@
-import { JBSplit, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { JBSplit, SPLITS_TOTAL_PERCENT, jbMultiTerminalAbi, JBCoreContracts } from 'juice-sdk-core'
 import { useCallback, useMemo } from 'react'
-import { useJBChainId, useJBContractContext, useReadJbMultiTerminalFee } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { useReadContract } from 'wagmi'
 
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { BigNumber } from 'ethers'
@@ -36,7 +37,14 @@ const calculateSplitAmountWad = (
 export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
-  const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
+  const { contractAddress } = useJBContractContext()
+  const terminalAddress = contractAddress(JBCoreContracts.JBMultiTerminal)
+
+  const { data: primaryNativeTerminalFee } = useReadContract({
+    abi: jbMultiTerminalAbi,
+    address: terminalAddress,
+    functionName: 'FEE',
+  })
 
   const { projectId } = useJBContractContext()  
   const chainId = useJBChainId()

@@ -1,7 +1,8 @@
 import {
   useJBContractContext,
-  useReadJbPermissionsHasPermissions,
 } from 'juice-sdk-react'
+import { jbPermissionsAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract, useChainId } from 'wagmi'
 
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useWallet } from 'hooks/Wallet'
@@ -15,6 +16,7 @@ export function useV4WalletHasPermission(
   permission: V4OperatorPermission | V4OperatorPermission[],
 ): boolean {
   const { userAddress } = useWallet()
+  const chainId = useChainId()
 
   const { projectId } = useJBContractContext()
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
@@ -24,7 +26,12 @@ export function useV4WalletHasPermission(
 
   const _operator = userAddress ?? zeroAddress
   const _account = projectOwnerAddress ?? zeroAddress
-  const hasOperatorPermission = useReadJbPermissionsHasPermissions({
+  const permissionsAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBPermissions][chainId as unknown as keyof typeof jbContractAddress['4'][JBCoreContracts.JBPermissions]] : undefined
+
+  const hasOperatorPermission = useReadContract({
+    abi: jbPermissionsAbi,
+    address: permissionsAddress,
+    functionName: 'hasPermissions',
     args: [
       _operator,
       _account,
@@ -33,6 +40,7 @@ export function useV4WalletHasPermission(
       true,
       true,
     ],
+    chainId,
   })
 
   // Treat a Safe signer the same as the project owner if the project owner is a Safe

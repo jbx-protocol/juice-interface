@@ -1,15 +1,11 @@
 import {
-  jb721TiersHookStoreAbi,
   useJBProjectId,
   useJBRulesetContext,
   useJBUpcomingRuleset,
-  useReadJb721TiersHookContractUri,
-  useReadJb721TiersHookPricingContext,
-  useReadJb721TiersHookStoreAddress,
-  useReadJb721TiersHookStoreFlagsOf,
-  useReadJb721TiersHookStoreTiersOf,
   useSuckers,
 } from 'juice-sdk-react'
+import { jb721TiersHookStoreAbi, jb721TiersHookAbi } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 import React, { createContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS_V4,
@@ -67,17 +63,21 @@ export const V4NftRewardsProvider: React.FC<
     dataHookAddress = upcomingRuleset?.rulesetMetadata?.dataHook
   }
 
-  const storeAddress = useReadJb721TiersHookStoreAddress({
+  const storeAddress = useReadContract({
+    abi: jb721TiersHookAbi,
     address: dataHookAddress,
+    functionName: 'STORE',
     chainId,
   })
 
   // Get all project chains, fallback to current chain if no suckers
-  const projectChains = suckers?.map(s => s.peerChainId) || [chainId]
+  const projectChains = suckers?.map(s => s.peerChainId).filter(id => id !== undefined) || (chainId ? [chainId] : [])
 
   // Fetch tiers from current chain (for metadata and structure)
-  const tiersOf = useReadJb721TiersHookStoreTiersOf({
+  const tiersOf = useReadContract({
+    abi: jb721TiersHookStoreAbi,
     address: storeAddress.data,
+    functionName: 'tiersOf',
     args: [
       dataHookAddress ?? zeroAddress,
       [], // _categories
@@ -100,17 +100,26 @@ export const V4NftRewardsProvider: React.FC<
 
   const loadedCIDs = CIDsOfNftRewardTiersResponse(tiersOf.data ?? [])
 
-  const p = useReadJb721TiersHookPricingContext()
+  const p = useReadContract({
+    abi: jb721TiersHookAbi,
+    address: dataHookAddress,
+    functionName: 'pricingContext',
+    chainId,
+  })
   const currency = Number(p.data ? p.data[0] : 0) as V2V3CurrencyOption
 
-  const flags = useReadJb721TiersHookStoreFlagsOf({
+  const flags = useReadContract({
+    abi: jb721TiersHookStoreAbi,
     address: storeAddress.data,
+    functionName: 'flagsOf',
     args: [dataHookAddress ?? zeroAddress],
     chainId,
   })
 
-  const { data: collectionMetadataUri } = useReadJb721TiersHookContractUri({
+  const { data: collectionMetadataUri } = useReadContract({
+    abi: jb721TiersHookAbi,
     address: dataHookAddress,
+    functionName: 'contractURI',
     chainId,
   })
 

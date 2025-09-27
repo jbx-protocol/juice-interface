@@ -1,18 +1,16 @@
 import { readContract, waitForTransactionReceipt } from '@wagmi/core'
-import { JBChainId, jbProjectsAddress } from 'juice-sdk-core'
+import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from 'juice-sdk-core'
 import {
-  useSuckers,
-  useWriteJbProjectsSafeTransferFrom
+  useSuckers
 } from 'juice-sdk-react'
-
-import { jbProjectsAbi } from 'juice-sdk-react'
+import { useWriteContract } from 'wagmi'
 import { useCallback } from 'react'
 import { Address } from 'viem'
 import { wagmiConfig } from '../wagmiConfig'
 
 export function useTransferOwnershipOnChain() {
   const { data: suckers } = useSuckers()
-  const { writeContractAsync: safeTransferFromTx } = useWriteJbProjectsSafeTransferFrom()
+  const { writeContractAsync: safeTransferFromTx } = useWriteContract()
 
   const transferOwnershipOnChain = useCallback(
     async (
@@ -32,7 +30,7 @@ export function useTransferOwnershipOnChain() {
       // This ensures we always use the correct owner, even if ownership
       // has been transferred on previous chains
       const ownerAddressOfThisChain = await readContract(wagmiConfig, {
-        address: jbProjectsAddress[chainId] as Address,
+        address: jbContractAddress['4'][JBCoreContracts.JBProjects][chainId] as Address,
         abi: jbProjectsAbi,
         functionName: 'ownerOf',
         args: [chainProjectId],
@@ -47,6 +45,9 @@ export function useTransferOwnershipOnChain() {
       const args = [ownerAddressOfThisChain, toAddress, chainProjectId] as const
       
       const hash = await safeTransferFromTx({
+        address: jbContractAddress['4'][JBCoreContracts.JBProjects][chainId] as Address,
+        abi: jbProjectsAbi,
+        functionName: 'safeTransferFrom',
         args,
         chainId,
       })

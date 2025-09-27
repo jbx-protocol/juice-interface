@@ -1,5 +1,5 @@
-import { JBChainId, jbController4_1Abi, jbProjectDeploymentAddresses } from 'juice-sdk-core'
-import { jbControllerAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, jbController4_1Abi, jbControllerAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
@@ -28,7 +28,7 @@ export function useDeployOmnichainErc20() {
       let encoded
       if (!args) throw new Error('No deploy data for chain ' + chainId)
       
-        if (projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]) {
+        if (projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][1]) {
         // Use v4.1 controller ABI
         encoded = encodeFunctionData({
           abi: jbController4_1Abi,

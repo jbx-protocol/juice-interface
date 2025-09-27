@@ -1,9 +1,8 @@
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import {
-  JBChainId,
-  useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
-} from 'juice-sdk-react'
+import { JBChainId } from 'juice-sdk-react'
+import { jb721TiersHookProjectDeployerAbi, JB721HookContracts, jbContractAddress } from 'juice-sdk-core'
+import { useWriteContract } from 'wagmi'
 import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { useContext } from 'react'
@@ -26,8 +25,7 @@ export const getProjectIdFromNftLaunchReceipt = (
 
 export function useLaunchProjectWithNftsTx() {
   const { addTransaction } = useContext(TxHistoryContext)
-  const { writeContractAsync: writeLaunchProject } =
-    useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
+  const { writeContractAsync: writeLaunchProject } = useWriteContract()
   const getLaunchData = useNftProjectLaunchData()
 
   return async (
@@ -62,9 +60,13 @@ export function useLaunchProjectWithNftsTx() {
       //   args,
       // })
 
+      const deployerAddress = jbContractAddress['4'][JB721HookContracts.JB721TiersHookProjectDeployer][chainId]
       const hash = await writeLaunchProject({
-        chainId: chainId as JBChainId,
+        address: deployerAddress,
+        abi: jb721TiersHookProjectDeployerAbi,
+        functionName: 'launchProjectFor',
         args,
+        chainId: chainId as JBChainId,
       })
 
       onTransactionPendingCallback(hash)

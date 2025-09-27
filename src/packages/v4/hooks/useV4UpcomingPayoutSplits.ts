@@ -1,10 +1,9 @@
-import { JBSplit, NATIVE_TOKEN, SplitPortion } from 'juice-sdk-core'
+import { JBSplit, NATIVE_TOKEN, SplitPortion, jbSplitsAbi, jbTokensAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
 import {
   JBChainId,
   useJBProjectId,
-  useReadJbSplitsSplitsOf,
-  useReadJbTokensTokenOf,
 } from 'juice-sdk-react'
+import { useReadContract } from 'wagmi'
 
 import { useJBUpcomingRuleset } from './useJBUpcomingRuleset'
 
@@ -13,20 +12,33 @@ export const useV4UpcomingPayoutSplits = (chainId?: JBChainId) => {
 
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } =
     useJBUpcomingRuleset(chainId)
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
+  const tokensAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBTokens][chainId] : undefined
+  const splitsAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBSplits][chainId] : undefined
+
+  const { data: tokenAddress } = useReadContract({
+    abi: jbTokensAbi,
+    address: tokensAddress,
+    functionName: 'tokenOf',
+    args: [BigInt(projectId ?? 0)],
+    chainId,
+  })
+
   const groupId = BigInt(tokenAddress ?? NATIVE_TOKEN) // contracts say this is: `uint256(uint160(tokenAddress))`
 
-  const { data, isLoading } = useReadJbSplitsSplitsOf({
+  const { data, isLoading } = useReadContract({
+    abi: jbSplitsAbi,
+    address: splitsAddress,
+    functionName: 'splitsOf',
     args: [BigInt(projectId ?? 0), BigInt(upcomingRuleset?.id ?? 0), groupId],
+    chainId,
     query: {
       select(data) {
-        return data.map(d => ({
+        return data?.map((d) => ({
           ...d,
           percent: new SplitPortion(d.percent),
         }))
       },
     },
-    chainId,
   }) as { data: JBSplit[]; isLoading: boolean }
 
   if (upcomingRulesetLoading) {

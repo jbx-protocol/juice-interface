@@ -1,5 +1,5 @@
-import { JBChainId, jbProjectsAddress } from 'juice-sdk-core'
-import { jbProjectsAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from 'juice-sdk-core'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
 import { Address, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
@@ -35,7 +35,7 @@ export function useTransferOmnichainProjectOwnership() {
         args: [args.from, args.to, args.tokenId],
       })
       
-      const to = jbProjectsAddress[1] as Address
+      const to = jbContractAddress['4'][JBCoreContracts.JBProjects][1] as Address
       return {
         data: {
           from: userAddress,

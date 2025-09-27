@@ -2,7 +2,9 @@ import {
   PlusCircleIcon,
   ReceiptRefundIcon
 } from '@heroicons/react/24/outline'
-import { useJBProjectId, useReadJbTokensCreditBalanceOf } from 'juice-sdk-react'
+import { useJBProjectId } from 'juice-sdk-react'
+import { jbTokensAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useReadContract } from 'wagmi'
 import { ReactNode, useMemo, useState } from 'react'
 
 import { t } from '@lingui/macro'
@@ -28,7 +30,12 @@ export const useV4YourBalanceMenuItems = () => {
 
   const { projectId, chainId } = useJBProjectId()
 
-  const { data: unclaimedBalance } = useReadJbTokensCreditBalanceOf({
+  const tokensAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBTokens][chainId] : undefined
+
+  const { data: unclaimedBalance } = useReadContract({
+    abi: jbTokensAbi,
+    address: tokensAddress,
+    functionName: 'creditBalanceOf',
     args: [userAddress ?? zeroAddress, projectId ?? 0n],
     chainId
   })

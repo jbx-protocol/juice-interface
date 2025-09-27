@@ -2,7 +2,8 @@ import {
   DEFAULT_MEMO,
   JBChainId,
   NATIVE_TOKEN,
-  jbProjectDeploymentAddresses,
+  jbContractAddress,
+  JBCoreContracts,
 } from 'juice-sdk-core'
 import {
   LaunchV2V3ProjectArgs,
@@ -49,7 +50,7 @@ export function useStandardProjectLaunchData() {
     withStartBuffer?: boolean
   }) => {
     const terminalAddress = chainId
-      ? (jbProjectDeploymentAddresses.JBMultiTerminal[
+      ? (jbContractAddress['4'][JBCoreContracts.JBMultiTerminal][
           chainId as JBChainId
         ] as Address)
       : undefined
@@ -59,7 +60,7 @@ export function useStandardProjectLaunchData() {
     }
 
     const controllerAddress = chainId
-      ? (jbProjectDeploymentAddresses.JBController[
+      ? (jbContractAddress['4'][JBCoreContracts.JBController][
           chainId as JBChainId
         ] as Address)
       : undefined

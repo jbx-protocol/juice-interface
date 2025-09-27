@@ -1,8 +1,11 @@
 import {
   SuckerPair,
-  readJbControllerPendingReservedTokenBalanceOf,
-  readJbDirectoryControllerOf
+  jbDirectoryAbi,
+  jbControllerAbi,
+  jbContractAddress,
+  JBCoreContracts
 } from "juice-sdk-core";
+import { readContract } from "wagmi/actions";
 import { useJBChainId, useJBContractContext, useSuckers } from "juice-sdk-react";
 import { useConfig } from "wagmi";
 import { useQuery } from "wagmi/query";
@@ -32,15 +35,22 @@ export function useSuckersPendingReservedTokens() {
         pairs.map(async pair => {
           const { peerChainId, projectId: peerProjectId } = pair;
 
-          const controllerAddress = await readJbDirectoryControllerOf(config, {
-            chainId,
-            args: [BigInt(projectId)],
-          })
+          const directoryAddress = jbContractAddress['4'][JBCoreContracts.JBDirectory][chainId];
 
-          const pendingReservedTokens = await readJbControllerPendingReservedTokenBalanceOf(config, {
-            chainId: Number(peerChainId),
+          const controllerAddress = await readContract(config, {
+            abi: jbDirectoryAbi,
+            address: directoryAddress,
+            functionName: 'controllerOf',
+            args: [BigInt(projectId)],
+            chainId,
+          });
+
+          const pendingReservedTokens = await readContract(config, {
+            abi: jbControllerAbi,
             address: controllerAddress,
+            functionName: 'pendingReservedTokenBalanceOf',
             args: [peerProjectId],
+            chainId: Number(peerChainId),
           });
 
           return {

@@ -5,7 +5,8 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
-import { useReadJbMultiTerminalFee } from 'juice-sdk-react'
+import { JBCoreContracts, jbMultiTerminalAbi } from 'juice-sdk-core'
+import { useJBContractContext } from 'juice-sdk-react'
 import moment, * as Moment from 'moment'
 import { isInfinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -18,11 +19,11 @@ import {
 import { hexToInt, stripCommas } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
 import { Hash } from 'viem'
+import { useReadContract } from 'wagmi'
 import { FeeTooltipLabel } from '../FeeTooltipLabel'
 import { Allocation } from './Allocation'
 import { AmountInput } from './components/AmountInput'
 import { PercentageInput } from './components/PercentageInput'
-
 
 export const allocationId = (
   beneficiary: string,
@@ -74,7 +75,12 @@ export const AddEditAllocationModal = ({
   hideProjectOwnerOption?: boolean
   hideFee?: boolean
 }) => {
-  const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
+  const { contractAddress } = useJBContractContext()
+  const { data: primaryNativeTerminalFee } = useReadContract({
+    abi: jbMultiTerminalAbi,
+    address: contractAddress(JBCoreContracts.JBMultiTerminal),
+    functionName: 'FEE',
+  })
 
   const { totalAllocationAmount, allocations, allocationCurrency } =
     Allocation.useAllocationInstance()
@@ -106,8 +112,7 @@ export const AddEditAllocationModal = ({
   const hasInfiniteTotalAllocationAmount: boolean = useMemo(
     () =>
       Boolean(
-        totalAllocationAmount &&
-          isInfinitePayoutLimit(totalAllocationAmount),
+        totalAllocationAmount && isInfinitePayoutLimit(totalAllocationAmount),
       ),
     [totalAllocationAmount],
   )
@@ -290,7 +295,10 @@ export const AddEditAllocationModal = ({
         {recipient !== 'projectOwner' && (
           <>
             <div className="mb-2 text-sm text-grey-600 dark:text-grey-400">
-              <Trans>Ensure this address exists on all chains where your project is deployed</Trans>
+              <Trans>
+                Ensure this address exists on all chains where your project is
+                deployed
+              </Trans>
             </div>
             <Form.Item
               name="address"

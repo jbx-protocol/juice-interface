@@ -1,4 +1,6 @@
-import { useJBChainId, useJBContractContext, useJBProjectId, useWriteJbControllerSetUriOf } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext, useJBProjectId } from 'juice-sdk-react'
+import { jbControllerAbi } from 'juice-sdk-core'
+import { useWriteContract } from 'wagmi'
 import { useCallback, useContext } from 'react'
 
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
@@ -15,7 +17,7 @@ export interface EditRulesetTxOpts {
  * @returns A function that deploys a project.
  */
 export function useEditProjectDetailsTx() {
-  const { writeContractAsync: writeEditMetadata } = useWriteJbControllerSetUriOf()
+  const { writeContractAsync: writeEditMetadata } = useWriteContract()
   const chainId = useJBChainId()
   const { projectId } = useJBProjectId(chainId)
   const { contracts } = useJBContractContext()
@@ -56,6 +58,8 @@ export function useEditProjectDetailsTx() {
 
         const hash = await writeEditMetadata({
           address: contracts.controller.data,
+          abi: jbControllerAbi,
+          functionName: 'setUriOf',
           args
         })
 

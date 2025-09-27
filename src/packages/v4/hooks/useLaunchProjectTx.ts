@@ -3,10 +3,8 @@ import {
   ContractFunctionArgs,
   WaitForTransactionReceiptReturnType,
 } from 'viem'
-import {
-  JBChainId,
-  useWriteJbController4_1LaunchProjectFor,
-} from 'juice-sdk-react'
+import { JBChainId } from 'juice-sdk-react'
+import { useWriteContract } from 'wagmi'
 import { useCallback, useContext } from 'react'
 
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
@@ -60,8 +58,7 @@ export const getProjectIdFromLaunchReceipt = (
  */
 export function useLaunchProjectTx() {
   const { addTransaction } = useContext(TxHistoryContext)
-  const { writeContractAsync: writeLaunchProject } =
-    useWriteJbController4_1LaunchProjectFor()
+  const { writeContractAsync: writeLaunchProject } = useWriteContract()
 
   return useCallback(
     async (
@@ -91,7 +88,10 @@ export function useLaunchProjectTx() {
         // })
         const hash = await writeLaunchProject({
           address: controllerAddress,
+          abi: jbController4_1Abi,
+          functionName: 'launchProjectFor',
           args: launchProjectForData,
+          chainId,
         })
 
         onTransactionPendingCallback(hash)

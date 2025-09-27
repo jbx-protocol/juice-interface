@@ -1,8 +1,4 @@
-import { JBChainId, jb721TiersHookProjectDeployerAddress, jbProjectDeploymentAddresses } from 'juice-sdk-core'
-import {
-  jb721TiersHookProjectDeployerAbi,
-  jbController4_1Abi
-} from 'juice-sdk-react'
+import { JBChainId, jbContractAddress, JBCoreContracts, JB721HookContracts, jb721TiersHookProjectDeployerAbi, jbController4_1Abi } from 'juice-sdk-core'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
 
@@ -48,7 +44,7 @@ export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: st
           args,
         })
         
-        to = jb721TiersHookProjectDeployerAddress[chainId] as `0x${string}`
+        to = jbContractAddress['4'][JB721HookContracts.JB721TiersHookProjectDeployer][chainId] as `0x${string}`
       } else {
         // Standard project launch
         const args = launchData.standardProjectData?.[chainId]
@@ -62,7 +58,7 @@ export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: st
           args,
         })
         
-        to = jbProjectDeploymentAddresses.JBController4_1[chainId] as `0x${string}`
+        to = jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId] as `0x${string}`
       }
 
       // Propose the transaction to the Safe

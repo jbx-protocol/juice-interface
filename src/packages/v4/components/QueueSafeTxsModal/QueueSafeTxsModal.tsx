@@ -123,7 +123,7 @@ export default function QueueSafeTxsModal({
     return NETWORKS[chainId]?.label || `Chain ${chainId}`
   }
   const goToProject = useCallback(() => {
-    router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId  }))
+    router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId ?? 1  }))
   }, [router, suckers])
   
   return (

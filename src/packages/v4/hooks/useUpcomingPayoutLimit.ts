@@ -1,6 +1,7 @@
 import * as constants from '@ethersproject/constants';
-import { NATIVE_TOKEN } from 'juice-sdk-core';
-import { useJBContractContext, useReadJbFundAccessLimitsPayoutLimitsOf } from 'juice-sdk-react';
+import { NATIVE_TOKEN, jbFundAccessLimitsAbi } from 'juice-sdk-core';
+import { useJBContractContext } from 'juice-sdk-react';
+import { useReadContract } from 'wagmi';
 import { V4CurrencyOption } from '../models/v4CurrencyOption';
 import { useJBUpcomingRuleset } from './useJBUpcomingRuleset';
 
@@ -15,8 +16,10 @@ export function useUpcomingPayoutLimit() {
 
   const { ruleset: latestUpcomingRuleset } = useJBUpcomingRuleset();
 
-  const upcomingPayoutLimits = useReadJbFundAccessLimitsPayoutLimitsOf({
+  const upcomingPayoutLimits = useReadContract({
+    abi: jbFundAccessLimitsAbi,
     address: fundAccessLimits.data || undefined,
+    functionName: 'payoutLimitsOf',
     args: [
       projectId,
       BigInt(latestUpcomingRuleset?.id ?? 0n),

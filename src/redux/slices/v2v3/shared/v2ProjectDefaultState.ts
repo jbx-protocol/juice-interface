@@ -29,7 +29,7 @@ import { projectDescriptionTemplate } from 'templates/create/projectDescriptionT
 
 const DEFAULT_DOMAIN = 'juicebox'
 
-export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
+export const DEFAULT_MUST_START_AT_OR_AFTER = '0'
 export const DEFAULT_MINT_RATE = ONE_MILLION
 
 export const DEFAULT_FUNDING_CYCLE_DATA: SerializedV2V3FundingCycleData =

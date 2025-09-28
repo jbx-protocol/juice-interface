@@ -52,7 +52,6 @@ export const useDeployProject = () => {
   const operationCallbacks = useCallback(
     (onProjectDeployed?: (projectId: number) => void): LaunchTxOpts => ({
       onTransactionPending: () => {
-        console.info('Project transaction executed. Await confirmation...')
         setTransactionPending(true)
       },
       onTransactionConfirmed: async (hash, projectId) => {

@@ -86,9 +86,6 @@ msgstr ""
 msgid "Redemptions"
 msgstr ""
 
-msgid "<0>When people pay your project, they receive its tokens.</0> <1>Tokens can be cashed out to reclaim ETH from your project depending on how you set your rules below – useful for refunds or sharing funds. They can also be used for utilities across other platforms, like governance or community access.</1> <2>You can reserve some of your tokens as they are issued and split to your choice of recipients.</2>"
-msgstr ""
-
 msgid "Contract address: {0}"
 msgstr ""
 
@@ -1958,6 +1955,9 @@ msgstr ""
 msgid "V3 Project ID"
 msgstr ""
 
+msgid "<0>When people pay your project, they receive its tokens.</0><1>Tokens can be cashed out to reclaim ETH from your project depending on how you set your rules below – useful for refunds or sharing funds. They can also be used for utilities across other platforms, like governance or community access.</1><2>You can reserve some of your tokens as they are issued and split to your choice of recipients.</2>"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -2349,6 +2349,9 @@ msgid "Unwatch all"
 msgstr ""
 
 msgid "No, keep editing"
+msgstr ""
+
+msgid "V5"
 msgstr ""
 
 msgid "While enabled, the project owner can migrate the project's current <0>controller</0> to another version of the contract."

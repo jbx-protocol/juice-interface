@@ -1,4 +1,4 @@
-import { JBChainId, JBProjectProvider, useJBProjectMetadataContext } from 'juice-sdk-react'
+import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import React, { PropsWithChildren } from 'react'
 
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
@@ -10,13 +10,12 @@ import { V4V5NftRewardsProvider } from 'packages/v4v5/contexts/V4V5NftRewards/V4
 import V4V5ProjectMetadataProvider from 'packages/v4v5/contexts/V4V5ProjectMetadataProvider'
 import { V4V5UserNftCreditsProvider } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { V4V5UserTotalTokensBalanceProvider } from 'packages/v4v5/contexts/V4V5UserTotalTokensBalanceProvider'
-import { V4V5VersionProvider, useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { Provider } from 'react-redux'
 
-const V4V5ProjectProvidersInner: React.FC<
+const V4V5ProjectProviders: React.FC<
   PropsWithChildren & { chainId: JBChainId; projectId: bigint }
 > = ({ chainId, projectId, children }) => {
-  const { metadata } = useJBProjectMetadataContext()
   const { version } = useV4V5Version()
 
   return (
@@ -49,18 +48,6 @@ const V4V5ProjectProvidersInner: React.FC<
         </V4V5ProjectMetadataProvider>
       </JBProjectProvider>
     </AppWrapper>
-  )
-}
-
-const V4V5ProjectProviders: React.FC<
-  PropsWithChildren & { chainId: JBChainId; projectId: bigint; defaultVersion?: 4 | 5 }
-> = ({ chainId, projectId, defaultVersion = 4, children }) => {
-  return (
-    <V4V5VersionProvider chainId={chainId} projectId={Number(projectId)} defaultVersion={defaultVersion}>
-      <V4V5ProjectProvidersInner chainId={chainId} projectId={projectId}>
-        {children}
-      </V4V5ProjectProvidersInner>
-    </V4V5VersionProvider>
   )
 }
 

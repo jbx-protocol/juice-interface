@@ -5,6 +5,7 @@ import { jbUrn } from 'juice-sdk-core'
 import { loadCatalog } from 'locales/utils'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
+import { V4V5VersionProvider } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import React, { PropsWithChildren } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import {
@@ -16,7 +17,7 @@ const V4V5ProjectProviders = dynamic(
   () => import('packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectProviders'),
   { ssr: false },
 )
-const V4ProjectDashboard = dynamic(
+const V4V5ProjectDashboard = dynamic(
   () => import('packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectDashboard'),
   { ssr: false },
 )
@@ -107,9 +108,11 @@ export default function V4ProjectPage({
         projectId={projectId}
       />
       <_Wrapper>
-        <V4V5ProjectProviders chainId={chainId} projectId={BigInt(projectId)} defaultVersion={4}>
-          <V4ProjectDashboard />
-        </V4V5ProjectProviders>
+        <V4V5VersionProvider chainId={chainId} projectId={projectId}>
+          <V4V5ProjectProviders chainId={chainId} projectId={BigInt(projectId)}>
+            <V4V5ProjectDashboard />
+          </V4V5ProjectProviders>
+        </V4V5VersionProvider>
       </_Wrapper>
     </>
   )

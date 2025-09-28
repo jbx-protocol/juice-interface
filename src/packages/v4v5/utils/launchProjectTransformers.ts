@@ -67,8 +67,17 @@ export function transformV2V3CreateArgsToV4({
       mustStartAtOrAfterNum = mustStartAtOrAfterNum / 1000,
     ) // convert ms to seconds
   }
-  
+
   const now = round(new Date().getTime() / 1000)
+
+
+  // TODO: V5 may have different approval hook addresses than v4
+  // For now, if the ballot is the v4 3-day default, use zero address for v5
+  const v4ThreeDayHook = '0xba8a653a5cc985d2f1458e80a9700490c11ab981'
+  const approvalHook = _fundingCycleData.ballot?.toLowerCase() === v4ThreeDayHook.toLowerCase()
+    ? ('0x0000000000000000000000000000000000000000' as Address)
+    : (_fundingCycleData.ballot as Address)
+
 
   const ruleset = {
     mustStartAtOrAfter:
@@ -77,7 +86,7 @@ export function transformV2V3CreateArgsToV4({
     weight: _fundingCycleData.weight.toBigInt(),
     weightCutPercent: _fundingCycleData.discountRate.toNumber(),
 
-    approvalHook: _fundingCycleData.ballot as Address,
+    approvalHook,
 
     metadata: transformFCMetadataToRulesetMetadata({
       fundingCycleMetadata: _fundingCycleMetadata,
@@ -101,13 +110,16 @@ export function transformV2V3CreateArgsToV4({
     currencyTokenAddress,
   })
 
-  return [
+  const result = [
     _owner as Address,
-    _projectMetadata[0],
+    _projectMetadata[0], // Just the CID string
     rulesetConfigurations,
     terminalConfigurations,
     _memo,
   ] as const
+
+
+  return result
 }
 
 export function transformFCMetadataToRulesetMetadata({
@@ -115,7 +127,7 @@ export function transformFCMetadataToRulesetMetadata({
 }: {
   fundingCycleMetadata: V2FundingCycleMetadata | V3FundingCycleMetadata
 }) {
-  return {
+  const metadata = {
     reservedPercent: fundingCycleMetadata.reservedRate.toNumber(),
     cashOutTaxRate: fundingCycleMetadata.redemptionRate.toNumber(),
     baseCurrency: ETH_CURRENCY_ID,
@@ -137,8 +149,11 @@ export function transformFCMetadataToRulesetMetadata({
     useDataHookForCashOut: fundingCycleMetadata.useDataSourceForRedeem,
     dataHook: fundingCycleMetadata.dataSource as Address,
     metadata: 0,
-    allowCrosschainSuckerExtension: false,
+    // Note: allowCrosschainSuckerExtension was removed - it doesn't exist in v4/v5 contracts
   }
+
+
+  return metadata
 }
 
 type LaunchProjectJBSplit = Omit<JBSplit, 'percent'> & { percent: number }

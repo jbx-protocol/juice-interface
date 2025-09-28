@@ -54,14 +54,13 @@ export const LaunchProjectModal: React.FC<{
   open: boolean
   setOpen: (open: boolean) => void
 }> = props => {
-  const createData = useAppSelector(state => state.creatingV2Project)
-  // Use v5 contracts for new project creation
-  const getStandardProjectLaunchData = useStandardProjectLaunchData(5)
-  const getNftProjectLaunchData = useNftProjectLaunchData(5)
-  // Use v5 contracts for new project creation
-  const { deployOmnichainProject, deployOmnichainNftProject } =
-    useDeployOmnichainProject(5)
   const router = useRouter()
+  const createData = useAppSelector(state => state.creatingV2Project)
+
+  const getStandardProjectLaunchData = useStandardProjectLaunchData()
+  const getNftProjectLaunchData = useNftProjectLaunchData()
+  const { deployOmnichainProject, deployOmnichainNftProject } =
+    useDeployOmnichainProject()
   const relayrBundle = useGetRelayrTxBundle()
   const { sendRelayrTx, data: txData } = useSendRelayrTx()
 
@@ -217,7 +216,6 @@ export const LaunchProjectModal: React.FC<{
       p => Number(p.chain) === Number(selectedGasChain),
     )
     if (!data) {
-      console.error('No payment info found for chain', selectedGasChain)
       setTxSigning(false)
       return
     }

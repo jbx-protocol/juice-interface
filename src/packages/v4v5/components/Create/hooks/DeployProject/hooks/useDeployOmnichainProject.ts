@@ -19,7 +19,7 @@ import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
 
-export function useDeployOmnichainProject(version: 4 | 5 = 5) {
+export function useDeployOmnichainProject() {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
   const { sendRelayrTx } = useSendRelayrTx()
@@ -64,46 +64,19 @@ export function useDeployOmnichainProject(version: 4 | 5 = 5) {
         },
       ] as const
 
-      // Use JBController4_1 for v4, JBController for v5
-      const controllerAddress =
-        version === 4
-          ? jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
-          : jbContractAddress['5'][JBCoreContracts.JBController][chainId]
+      // Always use v5 JBController
+      const controllerAddress = jbContractAddress['5'][JBCoreContracts.JBController][chainId]
       const encodedData = encodeFunctionData({
         abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
         functionName: 'launchProjectFor',
         args: [...args, controllerAddress as `0x${string}`],
       })
 
-      const controllerData = encodeFunctionData({
-        abi: jbController4_1Abi, // ABI of the contract
-        functionName: 'launchProjectFor',
-        args: [
-          chainDeployData[0],
-          chainDeployData[1],
-          chainDeployData[2],
-          chainDeployData[3],
-          chainDeployData[4],
-        ],
-      })
-      console.info('🧃launchProjectFor calldata (simulate in Tenderly):', {
-        chainId,
-        calldata: controllerData,
-        address:
-          version === 4
-            ? jbContractAddress['4'][JBCoreContracts.JBController][chainId]
-            : jbContractAddress['5'][JBCoreContracts.JBController][chainId],
-      })
 
-      // Use JBOmnichainDeployer4_1 for v4, JBOmnichainDeployer for v5
-      const omnichainDeployerAddress =
-        version === 4
-          ? jbContractAddress['4'][
-              JBOmnichainDeployerContracts.JBOmnichainDeployer4_1
-            ][chainId]
-          : jbContractAddress['5'][
-              JBOmnichainDeployerContracts.JBOmnichainDeployer
-            ][chainId]
+      // Always use v5 JBOmnichainDeployer
+      const omnichainDeployerAddress = jbContractAddress['5'][
+        JBOmnichainDeployerContracts.JBOmnichainDeployer
+      ][chainId]
       return {
         data: {
           from: userAddress,
@@ -156,11 +129,7 @@ export function useDeployOmnichainProject(version: 4 | 5 = 5) {
             suckerDeploymentConfiguration.deployerConfigurations,
           salt,
         },
-        (version === 4
-          ? jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
-          : jbContractAddress['5'][JBCoreContracts.JBController][
-              chainId
-            ]) as `0x${string}`, // all chains use the same controller
+        jbContractAddress['5'][JBCoreContracts.JBController][chainId] as `0x${string}`, // all chains use the same controller
       ] as const
 
       const encodedData = encodeFunctionData({
@@ -169,47 +138,11 @@ export function useDeployOmnichainProject(version: 4 | 5 = 5) {
         args,
       })
 
-      const controllerData = encodeFunctionData({
-        abi: jb721TiersHookProjectDeployerAbi, // ABI of the contract
-        functionName: 'launchProjectFor',
-        args: chainDeployData,
-      })
-      console.info('🧃721 launchProjectFor calldata (simulate in Tenderly):', {
-        jb721TiersHookProjectDeployer: {
-          chainId,
-          calldata: controllerData,
-          address:
-            version === 4
-              ? jbContractAddress['4'][
-                  JB721HookContracts.JB721TiersHookProjectDeployer
-                ][chainId]
-              : jbContractAddress['5'][
-                  JB721HookContracts.JB721TiersHookProjectDeployer
-                ][chainId],
-        },
-        jbOmnichainDeployer: {
-          chainId,
-          calldata: encodedData,
-          address:
-            version === 4
-              ? jbContractAddress['4'][
-                  JBOmnichainDeployerContracts.JBOmnichainDeployer4_1
-                ][chainId]
-              : jbContractAddress['5'][
-                  JBOmnichainDeployerContracts.JBOmnichainDeployer
-                ][chainId],
-        },
-      })
 
-      // Use JBOmnichainDeployer4_1 for v4, JBOmnichainDeployer for v5
-      const omnichainDeployerAddress =
-        version === 4
-          ? jbContractAddress['4'][
-              JBOmnichainDeployerContracts.JBOmnichainDeployer4_1
-            ][chainId]
-          : jbContractAddress['5'][
-              JBOmnichainDeployerContracts.JBOmnichainDeployer
-            ][chainId]
+      // Always use v5 JBOmnichainDeployer
+      const omnichainDeployerAddress = jbContractAddress['5'][
+        JBOmnichainDeployerContracts.JBOmnichainDeployer
+      ][chainId]
       return {
         data: {
           from: userAddress,

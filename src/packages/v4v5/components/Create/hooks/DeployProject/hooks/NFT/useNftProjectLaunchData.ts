@@ -24,11 +24,11 @@ import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { useStandardProjectLaunchData } from '../useStandardProjectLaunchData'
 import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 
-export function useNftProjectLaunchData(version: 4 | 5 = 5) {
+export function useNftProjectLaunchData() {
   const { projectMetadata, nftRewards, mustStartAtOrAfter } = useAppSelector(
     state => state.creatingV2Project,
   )
-  const getStandardProjectLaunchData = useStandardProjectLaunchData(version)
+  const getStandardProjectLaunchData = useStandardProjectLaunchData()
   const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
 
   const collectionName = nftRewards.collectionMetadata.name
@@ -55,14 +55,12 @@ export function useNftProjectLaunchData(version: 4 | 5 = 5) {
     chainId: JBChainId
     withStartBuffer?: boolean
   }) => {
-    // Use JBController4_1 for v4, JBController for v5
-    const defaultJBController = chainId
-      ? (version === 4
-          ? jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId as JBChainId]
-          : jbContractAddress['5'][JBCoreContracts.JBController][chainId as JBChainId]) as Address
-      : undefined
+    // Always use v5 JBController
+    const defaultJBController = jbContractAddress['5'][
+      JBCoreContracts.JBController
+    ][chainId as JBChainId] as Address
+
     if (
-      !defaultJBController ||
       !isValidMustStartAtOrAfter(
         BigInt(mustStartAtOrAfter),
         BigInt(fundingCycleData.duration.toString()),

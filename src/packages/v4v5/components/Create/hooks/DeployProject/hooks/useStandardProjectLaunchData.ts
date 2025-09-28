@@ -1,9 +1,9 @@
 import {
   DEFAULT_MEMO,
   JBChainId,
-  NATIVE_TOKEN,
   jbContractAddress,
   JBCoreContracts,
+  NATIVE_TOKEN,
 } from 'juice-sdk-core'
 import {
   LaunchV2V3ProjectArgs,
@@ -15,17 +15,17 @@ import {
   useCreatingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/create'
 
-import { Address } from 'viem'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useWallet } from 'hooks/Wallet'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { Address } from 'viem'
 
 /**
- * Hook that returns a function that deploys a v4/v5 project.
+ * Hook that returns a function that deploys a v5 project.
  *
- * Takes data from the redux store built for v2v3 projects, data is converted to v4/v5 format in useLaunchProjectTx.
+ * Takes data from the redux store built for v2v3 projects, data is converted to v5 format in useLaunchProjectTx.
  */
-export function useStandardProjectLaunchData(version: 4 | 5 = 5) {
+export function useStandardProjectLaunchData() {
   const {
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
@@ -50,9 +50,9 @@ export function useStandardProjectLaunchData(version: 4 | 5 = 5) {
     withStartBuffer?: boolean
   }) => {
     const terminalAddress = chainId
-      ? (version === 4
-          ? jbContractAddress['4'][JBCoreContracts.JBMultiTerminal][chainId as JBChainId]
-          : jbContractAddress['5'][JBCoreContracts.JBMultiTerminal][chainId as JBChainId]) as Address
+      ? (jbContractAddress['5'][JBCoreContracts.JBMultiTerminal][
+          chainId as JBChainId
+        ] as Address)
       : undefined
 
     if (!terminalAddress) {
@@ -60,9 +60,9 @@ export function useStandardProjectLaunchData(version: 4 | 5 = 5) {
     }
 
     const controllerAddress = chainId
-      ? (version === 4
-          ? jbContractAddress['4'][JBCoreContracts.JBController][chainId as JBChainId]
-          : jbContractAddress['5'][JBCoreContracts.JBController][chainId as JBChainId]) as Address
+      ? (jbContractAddress['5'][JBCoreContracts.JBController][
+          chainId as JBChainId
+        ] as Address)
       : undefined
 
     const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
@@ -72,16 +72,17 @@ export function useStandardProjectLaunchData(version: 4 | 5 = 5) {
         ? inputProjectOwner
         : userAddress
 
+    const mustStartAtOrAfterNum = parseInt(mustStartAtOrAfter)
     const _mustStartAtOrAfter = withStartBuffer
-      ? mustStartAtOrAfter + 60 * 5 // 5 minutes
-      : mustStartAtOrAfter
+      ? mustStartAtOrAfterNum + 60 * 5 // 5 minutes
+      : mustStartAtOrAfterNum
 
     const v2v3Args = [
       _owner,
       [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN],
       fundingCycleData,
       fundingCycleMetadata,
-      _mustStartAtOrAfter,
+      _mustStartAtOrAfter.toString(),
       groupedSplits,
       fundAccessConstraints,
       [terminalAddress], // _terminals, just supporting single for now

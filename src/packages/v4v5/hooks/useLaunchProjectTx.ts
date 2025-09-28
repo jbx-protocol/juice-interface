@@ -1,16 +1,16 @@
+import { JBChainId } from 'juice-sdk-react'
+import { useCallback, useContext } from 'react'
 import {
   Address,
   ContractFunctionArgs,
   WaitForTransactionReceiptReturnType,
 } from 'viem'
-import { JBChainId } from 'juice-sdk-react'
 import { useWriteContract } from 'wagmi'
-import { useCallback, useContext } from 'react'
 
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { jbController4_1Abi } from 'juice-sdk-core'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { waitForTransactionReceipt } from '@wagmi/core'
+import { wagmiConfig } from 'contexts/Para/Providers'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { jbControllerAbi } from 'juice-sdk-core'
 
 const CREATE_EVENT_IDX = 2
 const OMNICHAIN_721_CREATE_EVENT_IDX = 10
@@ -36,15 +36,15 @@ export const getProjectIdFromLaunchReceipt = (
     omnichain721?: boolean
   } = {},
 ): number => {
-  const launchProjectLog =
-    txReceipt?.logs[
-      omnichain721 ? OMNICHAIN_721_CREATE_EVENT_IDX : CREATE_EVENT_IDX
-    ]
+  const eventIdx = omnichain721
+    ? OMNICHAIN_721_CREATE_EVENT_IDX
+    : CREATE_EVENT_IDX
+  const topicIdx = omnichain721
+    ? OMNICHAIN_721_PROJECT_ID_TOPIC_IDX
+    : PROJECT_ID_TOPIC_IDX
 
-  const projectIdHex: string | undefined =
-    launchProjectLog?.topics?.[
-      omnichain721 ? OMNICHAIN_721_PROJECT_ID_TOPIC_IDX : PROJECT_ID_TOPIC_IDX
-    ]
+  const launchProjectLog = txReceipt?.logs?.[eventIdx]
+  const projectIdHex: string | undefined = launchProjectLog?.topics?.[topicIdx]
 
   if (!projectIdHex) return 0
 
@@ -63,7 +63,7 @@ export function useLaunchProjectTx() {
   return useCallback(
     async (
       launchProjectForData: ContractFunctionArgs<
-        typeof jbController4_1Abi,
+        typeof jbControllerAbi,
         'nonpayable',
         'launchProjectFor'
       >,
@@ -80,15 +80,12 @@ export function useLaunchProjectTx() {
       }
 
       try {
-        // SIMULATE TX:
-        // const encodedData = encodeFunctionData({
-        //   abi: jbControllerAbi, // ABI of the contract
-        //   functionName: 'launchProjectFor',
-        //   args,
-        // })
+        // V5 projects always use jbControllerAbi
+        const abi = jbControllerAbi
+
         const hash = await writeLaunchProject({
           address: controllerAddress,
-          abi: jbController4_1Abi,
+          abi,
           functionName: 'launchProjectFor',
           args: launchProjectForData,
           chainId,

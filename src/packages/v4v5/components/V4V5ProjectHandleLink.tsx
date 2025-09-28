@@ -4,12 +4,11 @@ import { PV_V4 } from 'constants/pv'
 import { JBChainId } from 'juice-sdk-react'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { getChainName } from '../utils/networks'
-import { v4ProjectRoute } from '../utils/routes'
+import { v4ProjectRoute, v5ProjectRoute } from '../utils/routes'
 import { ChainLogo } from './ChainLogo'
 
 /**
- * Renders a link to a V4 project
+ * Renders a link to a V4 or V5 project
  */
 export default function V4V5ProjectHandleLink({
   className,
@@ -18,6 +17,7 @@ export default function V4V5ProjectHandleLink({
   projectId,
   withProjectAvatar = false,
   chainId,
+  version = 4, // Default to v4 for backward compatibility
 }: {
   className?: string
   containerClassName?: string
@@ -25,9 +25,8 @@ export default function V4V5ProjectHandleLink({
   projectId: number
   withProjectAvatar?: boolean
   chainId: number | JBChainId
+  version?: 4 | 5
 }) {
-  const chainName = getChainName(chainId)
-
   return (
     <div
       className={twMerge('inline-flex items-center gap-3', containerClassName)}
@@ -42,8 +41,8 @@ export default function V4V5ProjectHandleLink({
       ) : null}
       <Link
         prefetch={false}
-        href={v4ProjectRoute({ projectId, chainId })}
-        as={v4ProjectRoute({ projectId, chainId })}
+        href={version === 5 ? v5ProjectRoute({ projectId, chainId }) : v4ProjectRoute({ projectId, chainId })}
+        as={version === 5 ? v5ProjectRoute({ projectId, chainId }) : v4ProjectRoute({ projectId, chainId })}
         className={twMerge(
           'select-all font-medium capitalize leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100 flex items-center gap-2',
           className,

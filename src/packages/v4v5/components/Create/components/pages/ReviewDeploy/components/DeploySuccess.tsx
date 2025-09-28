@@ -7,7 +7,7 @@ import { JBChainId } from 'juice-sdk-react'
 import Image from 'next/legacy/image'
 import { useRouter } from 'next/router'
 import V4V5ProjectHandleLink from 'packages/v4v5/components/V4V5ProjectHandleLink'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useMemo } from 'react'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
 
@@ -28,7 +28,7 @@ export const DeploySuccess = ({
     if (!projectIds || projectIds.length === 0) {
       return ''
     }
-    const juiceboxUrl = v4ProjectRoute(projectIds[0])
+    const juiceboxUrl = v5ProjectRoute(projectIds[0])
     const chain = JB_CHAINS[projectIds[0].chainId]
 
     const message = `Check out my project on ${
@@ -65,6 +65,7 @@ export const DeploySuccess = ({
                 <V4V5ProjectHandleLink
                   projectId={project.projectId}
                   chainId={project.chainId}
+                  version={5}
                 />
               </div>
             </div>

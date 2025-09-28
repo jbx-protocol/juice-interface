@@ -4,7 +4,7 @@ import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps
 
 export default function V4ProjectSettingsPage() {
   return (
-    <V4V5SettingsProvider>
+    <V4V5SettingsProvider version={4}>
       <ProjectSettingsDashboard />
     </V4V5SettingsProvider>
   )

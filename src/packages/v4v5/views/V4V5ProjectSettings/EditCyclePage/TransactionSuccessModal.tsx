@@ -1,6 +1,7 @@
 import { Button, Modal } from 'antd'
 import { useJBChainId, useJBProjectId } from 'juice-sdk-react'
-import { settingsPagePath, v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { settingsPagePath, v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
@@ -18,6 +19,7 @@ export function TransactionSuccessModal({
 }) {
   const chainId = useJBChainId()
   const { projectId } = useJBProjectId(chainId)
+  const { version } = useV4V5Version()
 
   const checkIconWithBackground = (
     <div className="flex h-20 w-20 items-center justify-center rounded-full bg-melon-100 dark:bg-melon-950">
@@ -40,12 +42,15 @@ export function TransactionSuccessModal({
         {checkIconWithBackground}
         {content}
         <div className="flex gap-2.5">
-          <Link href={settingsPagePath({ projectId: Number(projectId), chainId }, undefined)}>
+          <Link href={settingsPagePath({ projectId: Number(projectId), chainId, version }, undefined)}>
             <Button type="ghost" className={buttonClasses}>
               <Trans>Back to settings</Trans>
             </Button>
           </Link>
-          <Link href={v4ProjectRoute({ projectId: Number(projectId), chainId })}>
+          <Link href={version === 5
+            ? v5ProjectRoute({ projectId: Number(projectId), chainId })
+            : v4ProjectRoute({ projectId: Number(projectId), chainId })
+          }>
             <Button type="primary" className={buttonClasses}>
               <Trans>Go to project</Trans>
             </Button>

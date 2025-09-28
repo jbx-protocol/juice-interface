@@ -11,7 +11,7 @@ export default function V4CycleSettingsPage() {
   if (!settingsPage) return null
 
   return (
-    <V4V5SettingsProvider>
+    <V4V5SettingsProvider version={4}>
       <ProjectSettingsContent
         settingsPageKey={settingsPage as SettingsPageKey}
       />

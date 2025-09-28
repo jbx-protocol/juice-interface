@@ -15,6 +15,7 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { emitErrorNotification } from 'utils/notifications'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export function useUpdateCurrentCollection({
   rewardTiers,
@@ -32,6 +33,7 @@ export function useUpdateCurrentCollection({
 
   const { writeContractAsync: writeAdjustTiers } = useWriteContract()
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
 
   const [txLoading, setTxLoading] = useState<boolean>(false)
 
@@ -53,7 +55,7 @@ export function useUpdateCurrentCollection({
     const tiersToAdd = buildJB721TierParams({
       cids: rewardTiersCIDs,
       rewardTiers: newRewardTiers,
-      version: JB721DelegateVersion.JB721DELEGATE_V4,
+      version: version === 5 ? JB721DelegateVersion.JB721DELEGATE_V5 : JB721DelegateVersion.JB721DELEGATE_V4,
     }) as JB_721_TIER_PARAMS_V4[]
 
     if (!newRewardTiers) {
@@ -91,6 +93,7 @@ export function useUpdateCurrentCollection({
     addTransaction,
     rulesetMetadata?.dataHook,
     chainId,
+    version,
   ])
 
   return {

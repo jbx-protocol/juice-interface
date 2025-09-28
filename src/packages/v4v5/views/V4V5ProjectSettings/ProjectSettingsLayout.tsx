@@ -4,13 +4,15 @@ import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { Trans } from '@lingui/macro'
 import { JB_CHAINS } from 'juice-sdk-core'
 import Link from 'next/link'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const { projectId } = useJBContractContext()
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
 
   return (
     <>
@@ -26,7 +28,10 @@ export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
           </h1>
           {chainId ? (
             <Link
-              href={v4ProjectRoute({ projectId: Number(projectId), chainId })}
+              href={version === 5
+                ? v5ProjectRoute({ projectId: Number(projectId), chainId })
+                : v4ProjectRoute({ projectId: Number(projectId), chainId })
+              }
               className="text-secondary"
             >
               <XMarkIcon className="h-6 w-6" />

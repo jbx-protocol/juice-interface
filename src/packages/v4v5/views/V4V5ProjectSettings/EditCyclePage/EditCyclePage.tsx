@@ -16,6 +16,7 @@ import { settingsPagePath } from 'packages/v4v5/utils/routes'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 import { useJBChainId } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export function EditCyclePage() {
   const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false)
@@ -33,6 +34,7 @@ export function EditCyclePage() {
   const { section } = router.query
 
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
 
   const detailsRef = useRef<HTMLDivElement>(null)
   const payoutsRef = useRef<HTMLDivElement>(null)
@@ -128,7 +130,7 @@ export function EditCyclePage() {
 
       <div className="flex items-center justify-end gap-4">
         {projectId && chainId ? (
-          <Link href={settingsPagePath({ projectId, chainId })}>
+          <Link href={settingsPagePath({ projectId, chainId, version })}>
             <Button>
               <Trans>Cancel</Trans>
             </Button>

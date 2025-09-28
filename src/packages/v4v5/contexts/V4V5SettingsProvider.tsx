@@ -9,6 +9,7 @@ import store from 'redux/store'
 import { EditCycleFormProvider } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormContext'
 import { V4V5NftRewardsProvider } from './V4V5NftRewards/V4V5NftRewardsProvider'
 import V4V5ProjectMetadataProvider from './V4V5ProjectMetadataProvider'
+import { V4V5VersionProvider } from './V4V5VersionProvider'
 
 interface V4V5SettingsProviderProps extends React.PropsWithChildren {
   version?: 4 | 5
@@ -25,27 +26,33 @@ export const V4V5SettingsProvider: React.FC<V4V5SettingsProviderProps> = ({
   }
   return (
     <AppWrapper hideNav>
-      <JBProjectProvider
+      <V4V5VersionProvider
         chainId={chainId}
-        projectId={projectId}
-        version={version}
-        bendystraw={{
-          apiKey: '',
-        }}
-        ctxProps={{
-          metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
-        }}
+        projectId={Number(projectId)}
+        defaultVersion={version}
       >
-        <V4V5NftRewardsProvider>
-          <V4V5ProjectMetadataProvider projectId={projectId}>
-            <Provider store={store}>
-              <TransactionProvider>
-                <EditCycleFormProvider>{children}</EditCycleFormProvider>
-              </TransactionProvider>
-            </Provider>
-          </V4V5ProjectMetadataProvider>
-        </V4V5NftRewardsProvider>
-      </JBProjectProvider>
+        <JBProjectProvider
+          chainId={chainId}
+          projectId={projectId}
+          version={version}
+          bendystraw={{
+            apiKey: '',
+          }}
+          ctxProps={{
+            metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
+          }}
+        >
+          <V4V5NftRewardsProvider>
+            <V4V5ProjectMetadataProvider projectId={projectId}>
+              <Provider store={store}>
+                <TransactionProvider>
+                  <EditCycleFormProvider>{children}</EditCycleFormProvider>
+                </TransactionProvider>
+              </Provider>
+            </V4V5ProjectMetadataProvider>
+          </V4V5NftRewardsProvider>
+        </JBProjectProvider>
+      </V4V5VersionProvider>
     </AppWrapper>
   )
 }

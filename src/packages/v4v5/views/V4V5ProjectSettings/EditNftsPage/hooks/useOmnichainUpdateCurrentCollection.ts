@@ -6,12 +6,14 @@ import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBRulesetContext, useSend
 
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { useWallet } from 'hooks/Wallet'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export function useOmnichainUpdateCurrentCollection() {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
   const { sendRelayrTx } = useSendRelayrTx()
   const relayrBundle = useGetRelayrTxBundle()
+  const { version } = useV4V5Version()
   
   // Get NFT hook address from context
   const { rulesetMetadata: { data: rulesetMetadata } } = useJBRulesetContext()
@@ -37,7 +39,7 @@ export function useOmnichainUpdateCurrentCollection() {
     const tierParams = buildJB721TierParams({
       cids: tierCids,
       rewardTiers: newTiers,
-      version: JB721DelegateVersion.JB721DELEGATE_V4,
+      version: version === 5 ? JB721DelegateVersion.JB721DELEGATE_V5 : JB721DelegateVersion.JB721DELEGATE_V4,
     })
 
     // Common salt

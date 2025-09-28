@@ -23,6 +23,7 @@ import { ProjectHeaderStats } from './ProjectHeaderStats'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { useV4V5ProjectHeader } from './hooks/useV4V5ProjectHeader'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -30,6 +31,7 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
   const chainId = useJBChainId()
   const { data: suckers } = useSuckers() as { data: SuckerPair[] }
+  const { version } = useV4V5Version()
 
   const {
     title,
@@ -82,7 +84,7 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
               <ProjectHeaderPopupMenu projectId={projectId} />
               {canManageProject && chainId && (
                 <Link
-                  href={settingsPagePath({ projectId, chainId }, undefined)}
+                  href={settingsPagePath({ projectId, chainId, version }, undefined)}
                   legacyBehavior
                 >
                   <Button size="small">

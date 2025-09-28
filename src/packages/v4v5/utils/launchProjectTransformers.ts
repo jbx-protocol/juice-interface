@@ -6,6 +6,7 @@ import {
   SplitGroup,
   SplitPortion,
 } from 'juice-sdk-core'
+
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
@@ -15,15 +16,15 @@ import {
   Split as V2V3Split,
 } from 'packages/v2v3/models/splits'
 
-import { Address } from 'viem'
-import { FundAccessLimitGroup } from '../models/fundAccessLimits'
-import { LaunchProjectJBTerminal } from '../models/terminals'
+import round from 'lodash/round'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
+import { Address } from 'viem'
+import { FundAccessLimitGroup } from '../models/fundAccessLimits'
 import { GroupedSplits as V4GroupedSplits } from '../models/splits'
+import { LaunchProjectJBTerminal } from '../models/terminals'
 import { convertV2V3CurrencyOptionToV4 } from './currency'
-import round from 'lodash/round'
 
 const NATIVE_TOKEN_CURRENCY_ID = 61166 // v4TODO: put in SDK
 
@@ -64,20 +65,28 @@ export function transformV2V3CreateArgsToV4({
   // check if mustStartAtOrAfterNum is in ms or seconds, ensure in seconds
   if (mustStartAtOrAfterNum > 1000000000000) {
     mustStartAtOrAfterNum = round(
-      mustStartAtOrAfterNum = mustStartAtOrAfterNum / 1000,
+      (mustStartAtOrAfterNum = mustStartAtOrAfterNum / 1000),
     ) // convert ms to seconds
   }
 
   const now = round(new Date().getTime() / 1000)
 
+  // V5 uses different approval hook addresses than v4
+  // Map v4 approval hooks to their v5 equivalents
+  const v4ToV5ApprovalHookMap: Record<string, Address> = {
+    // v4 3-day hook -> v5 3-day hook
+    '0xba8a653a5cc985d2f1458e80a9700490c11ab981': '0x09b23b09af88bb6d7e9c957ff9f861f1c917111b',
+    // v4 1-day hook -> v5 1-day hook
+    '0xd7ce0fe638e02a31fc7c8c231684d85ad9b2ca3d': '0xcffdd1303f24145bd2c84e7bf15af1eb6ab924d7',
+    // v4 7-day hook -> v5 7-day hook
+    '0x05505582a553669f540ba2dd0b55fc75b8176c40': '0xdf911b94712cf117fb63b69838b16e1710636031',
+  }
 
-  // TODO: V5 may have different approval hook addresses than v4
-  // For now, if the ballot is the v4 3-day default, use zero address for v5
-  const v4ThreeDayHook = '0xba8a653a5cc985d2f1458e80a9700490c11ab981'
-  const approvalHook = _fundingCycleData.ballot?.toLowerCase() === v4ThreeDayHook.toLowerCase()
-    ? ('0x0000000000000000000000000000000000000000' as Address)
-    : (_fundingCycleData.ballot as Address)
-
+  const ballotAddress = _fundingCycleData.ballot?.toLowerCase()
+  const approvalHook =
+    ballotAddress && v4ToV5ApprovalHookMap[ballotAddress]
+      ? v4ToV5ApprovalHookMap[ballotAddress]
+      : (_fundingCycleData.ballot as Address)
 
   const ruleset = {
     mustStartAtOrAfter:
@@ -118,7 +127,6 @@ export function transformV2V3CreateArgsToV4({
     _memo,
   ] as const
 
-
   return result
 }
 
@@ -151,7 +159,6 @@ export function transformFCMetadataToRulesetMetadata({
     metadata: 0,
     // Note: allowCrosschainSuckerExtension was removed - it doesn't exist in v4/v5 contracts
   }
-
 
   return metadata
 }

@@ -2,7 +2,7 @@ import { Trans, t } from '@lingui/macro'
 import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
 import { useJBChainId, useJBContractContext, useJBProjectId, useJBRuleset, useSuckers } from 'juice-sdk-react'
 import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4v5/utils/editRuleset'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
@@ -22,6 +22,7 @@ import { useEditRulesetTx } from 'packages/v4v5/hooks/useEditRulesetTx'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { emitErrorNotification } from 'utils/notifications'
 import { useChainId } from 'wagmi'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
 import { TransactionSuccessModal } from '../TransactionSuccessModal'
@@ -50,6 +51,7 @@ export function ReviewConfirmModal({
   const { sectionHasDiff: detailsSectionHasDiff } = useDetailsSectionValues()
   const { sectionHasDiff: payoutsSectionHasDiff } = usePayoutsSectionValues()
   const { sectionHasDiff: tokensSectionHasDiff } = useTokensSectionValues()
+  const { addTransaction } = useContext(TxHistoryContext)
 
   const formHasChanges =
     detailsSectionHasDiff || payoutsSectionHasDiff || tokensSectionHasDiff
@@ -156,7 +158,14 @@ export function ReviewConfirmModal({
       }
       
       // Send the relayr transaction
-      await sendRelayrTx(payment)
+      const txHash = await sendRelayrTx(payment)
+      // Add transaction to history
+      if (txHash) {
+        addTransaction?.('Edit Ruleset (Omnichain)', {
+          hash: txHash,
+          chainId: selectedGasChain
+        })
+      }
       // Start polling for transaction status
       relayrBundle.startPolling(txQuote.bundle_uuid)
       

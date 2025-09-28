@@ -86,7 +86,7 @@ export function useEditRulesetTx() {
         })
 
         onTransactionPendingCallback(hash)
-        addTransaction?.('Edit Ruleset', { hash })
+        addTransaction?.('Edit Ruleset', { hash, chainId })
         await waitForTransactionReceipt(wagmiConfig, {
           hash,
         })

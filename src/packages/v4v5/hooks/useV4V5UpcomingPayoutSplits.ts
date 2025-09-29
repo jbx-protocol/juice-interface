@@ -4,16 +4,19 @@ import {
   useJBProjectId,
 } from 'juice-sdk-react'
 import { useReadContract } from 'wagmi'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 import { useJBUpcomingRuleset } from './useJBUpcomingRuleset'
 
 export const useV4V5UpcomingPayoutSplits = (chainId?: JBChainId) => {
   const { projectId } = useJBProjectId(chainId)
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } =
     useJBUpcomingRuleset(chainId)
-  const tokensAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBTokens][chainId] : undefined
-  const splitsAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBSplits][chainId] : undefined
+  const tokensAddress = chainId ? jbContractAddress[versionString][JBCoreContracts.JBTokens][chainId] : undefined
+  const splitsAddress = chainId ? jbContractAddress[versionString][JBCoreContracts.JBSplits][chainId] : undefined
 
   const { data: tokenAddress } = useReadContract({
     abi: jbTokensAbi,

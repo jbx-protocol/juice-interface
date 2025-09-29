@@ -29,6 +29,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { parseUnits } from 'viem'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
 import { useV4V5DistributableAmount } from './hooks/useV4V5DistributableAmount'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export default function V4V5DistributePayoutsModal({
   open,
@@ -42,6 +43,8 @@ export default function V4V5DistributePayoutsModal({
   const { data: payoutLimit } = usePayoutLimit()
   const { addTransaction } = useContext(TxHistoryContext)
   const { selectedChainId: defaultChainId } = useCyclesPanelSelectedChain()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(
     defaultChainId,
@@ -70,7 +73,7 @@ export default function V4V5DistributePayoutsModal({
 
   const { data: terminalAddress } = useReadContract({
     abi: jbDirectoryAbi,
-    address: jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId ?? 1],
+    address: jbContractAddress[versionString][JBCoreContracts.JBDirectory][selectedChainId ?? 1],
     functionName: 'primaryTerminalOf',
     args: [BigInt(projectId ?? 0), NATIVE_TOKEN],
     chainId: selectedChainId,

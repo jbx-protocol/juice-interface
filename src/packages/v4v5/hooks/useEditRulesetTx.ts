@@ -12,7 +12,6 @@ import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
-import { getContractVersionString } from '../utils/contractVersion'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
 import { EditCycleFormFields } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
 
@@ -33,7 +32,6 @@ export function useEditRulesetTx() {
   const { contracts, projectId } = useJBContractContext()
   const chainId = useJBChainId()
   const { version } = useV4V5Version()
-  const versionString = getContractVersionString(version)
   const projectControllerAddress = contracts.controller.data
 
   // For v4, check if it's the 4.1 controller version
@@ -107,6 +105,7 @@ export function useEditRulesetTx() {
       addTransaction,
       rulesetMetadata.data?.dataHook,
       isV4_1,
+      chainId,
     ],
   )
 }

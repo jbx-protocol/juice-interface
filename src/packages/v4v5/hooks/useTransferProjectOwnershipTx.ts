@@ -9,11 +9,14 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { Address } from 'viem'
 import { wagmiConfig } from '../wagmiConfig'
 import useV4V5ProjectOwnerOf from './useV4V5ProjectOwnerOf'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 export function useTransferProjectOwnershipTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { projectId } = useJBContractContext()
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
   
   // Get project title inline
   const { projectMetadata } = useContext(ProjectMetadataContext)
@@ -52,7 +55,7 @@ export function useTransferProjectOwnershipTx() {
 
       try {
         const hash = await safeTransferFromTx({
-          address: jbContractAddress['4'][JBCoreContracts.JBProjects][chainId as JBChainId] as Address,
+          address: jbContractAddress[versionString][JBCoreContracts.JBProjects][chainId as JBChainId] as Address,
           abi: jbProjectsAbi,
           functionName: 'safeTransferFrom',
           args,
@@ -82,6 +85,7 @@ export function useTransferProjectOwnershipTx() {
       projectTitle,
       addTransaction,
       chainId,
+      versionString,
     ]
   )
 }

@@ -17,6 +17,7 @@ import { useV4V5ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits
 import { useWallet } from 'hooks/Wallet'
 import { wagmiConfig } from 'packages/v4v5/wagmiConfig'
 import { waitForTransactionReceipt } from '@wagmi/core'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export default function V4V5DistributeReservedTokensModal({
   open,
@@ -30,7 +31,9 @@ export default function V4V5DistributeReservedTokensModal({
   chainId: JBChainId
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
-  
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
+
   // Chain selection state - separate from the hook's chain
   const [selectedChainId, setSelectedChainId] = useState<JBChainId>(defaultChainId)
   const { data: suckers } = useSuckers()
@@ -59,7 +62,7 @@ export default function V4V5DistributeReservedTokensModal({
   const projectIdBigInt = BigInt(projectId ?? 0)
   const { data: controllerAddress } = useReadContract({
     abi: jbDirectoryAbi,
-    address: jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId],
+    address: jbContractAddress[versionString][JBCoreContracts.JBDirectory][selectedChainId],
     functionName: 'controllerOf',
     args: [projectIdBigInt],
     chainId: selectedChainId,

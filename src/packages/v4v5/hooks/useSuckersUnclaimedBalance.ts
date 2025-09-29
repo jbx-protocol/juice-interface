@@ -11,11 +11,14 @@ import { useWallet } from "hooks/Wallet";
 import { zeroAddress } from "viem";
 import { useConfig } from "wagmi";
 import { useQuery } from "wagmi/query";
+import { useV4V5Version } from '../contexts/V4V5VersionProvider';
 
 export function useSuckersUnclaimedBalance() {
   const config = useConfig();
   const { userAddress } = useWallet();
   const { projectId: mainProjectId } = useJBContractContext();
+  const { version } = useV4V5Version();
+  const versionString = version.toString() as '4' | '5';
 
   const suckersQuery = useSuckers();
   const pairs: SuckerPair[] = suckersQuery.data ?? [];
@@ -34,7 +37,7 @@ export function useSuckersUnclaimedBalance() {
         pairs.map(async pair => {
           const { peerChainId, projectId: peerProjectId } = pair;
 
-          const tokensAddress = jbContractAddress['4'][JBCoreContracts.JBTokens][peerChainId];
+          const tokensAddress = jbContractAddress[versionString][JBCoreContracts.JBTokens][peerChainId];
 
           const unclaimedBalance = await readContract(config, {
             abi: jbTokensAbi,

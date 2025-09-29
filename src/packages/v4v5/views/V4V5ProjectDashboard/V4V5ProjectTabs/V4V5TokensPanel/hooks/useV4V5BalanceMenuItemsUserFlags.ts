@@ -7,11 +7,14 @@ import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { zeroAddress } from 'viem'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export const useV4V5BalanceMenuItemsUserFlags = () => {
   const { data: rulesetMetadata } = useJBRulesetMetadata()
   const chainId = useChainId()
-  const tokensAddress = jbContractAddress['4'][JBCoreContracts.JBTokens][chainId as unknown as keyof typeof jbContractAddress['4'][JBCoreContracts.JBTokens]]
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
+  const tokensAddress = jbContractAddress[versionString][JBCoreContracts.JBTokens][chainId as unknown as keyof typeof jbContractAddress[typeof versionString][JBCoreContracts.JBTokens]]
 
   const { projectId } = useJBContractContext()
   const { data: tokenAddress } = useReadContract({

@@ -28,6 +28,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { zeroAddress } from 'viem'
 import { useChainId } from 'wagmi'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export function V4V5ClaimTokensModal({
   open,
@@ -39,6 +40,8 @@ export function V4V5ClaimTokensModal({
   onConfirmed?: VoidFunction
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const { token } = useJBTokenContext()
   const { userAddress, changeNetworks } = useWallet()
@@ -61,7 +64,7 @@ export function V4V5ClaimTokensModal({
   // Get controller address for the selected chain
   const { data: controllerAddress } = useReadContract({
     abi: jbDirectoryAbi,
-    address: jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId],
+    address: jbContractAddress[versionString][JBCoreContracts.JBDirectory][selectedChainId],
     functionName: 'controllerOf',
     args: [projectId ?? 0n],
     chainId: selectedChainId,
@@ -70,7 +73,7 @@ export function V4V5ClaimTokensModal({
   // Get unclaimed balance for selected chain
   const { data: unclaimedBalance } = useReadContract({
     abi: jbTokensAbi,
-    address: jbContractAddress['4'][JBCoreContracts.JBTokens][selectedChainId],
+    address: jbContractAddress[versionString][JBCoreContracts.JBTokens][selectedChainId],
     functionName: 'creditBalanceOf',
     args: [userAddress ?? zeroAddress, projectId ?? 0n],
     chainId: selectedChainId

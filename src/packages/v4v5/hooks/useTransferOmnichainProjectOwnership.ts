@@ -3,12 +3,15 @@ import { useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juic
 import { Address, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 export function useTransferOmnichainProjectOwnership() {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
   const { sendRelayrTx } = useSendRelayrTx()
   const relayrBundle = useGetRelayrTxBundle()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   
   async function transferOmnichainProjectOwnership(
@@ -35,7 +38,7 @@ export function useTransferOmnichainProjectOwnership() {
         args: [args.from, args.to, args.tokenId],
       })
       
-      const to = jbContractAddress['4'][JBCoreContracts.JBProjects][1] as Address
+      const to = jbContractAddress[versionString][JBCoreContracts.JBProjects][chainId] as Address
       return {
         data: {
           from: userAddress,

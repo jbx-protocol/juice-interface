@@ -11,6 +11,7 @@ import { isSafeSigner } from 'utils/safe'
 import { zeroAddress } from 'viem'
 import { V4V5OperatorPermission } from '../models/v4Permissions'
 import useV4V5ProjectOwnerOf from './useV4V5ProjectOwnerOf'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 export function useV4V5WalletHasPermission(
   permission: V4V5OperatorPermission | V4V5OperatorPermission[],
@@ -20,13 +21,15 @@ export function useV4V5WalletHasPermission(
 
   const { projectId } = useJBContractContext()
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
+  const { version } = useV4V5Version()
 
   // If project owner is a Safe, fetch Safe details to determine signer membership
   const { data: safeData } = useGnosisSafe(projectOwnerAddress)
 
   const _operator = userAddress ?? zeroAddress
   const _account = projectOwnerAddress ?? zeroAddress
-  const permissionsAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBPermissions][chainId as unknown as keyof typeof jbContractAddress['4'][JBCoreContracts.JBPermissions]] : undefined
+  const versionString = version.toString() as '4' | '5'
+  const permissionsAddress = chainId ? jbContractAddress[versionString][JBCoreContracts.JBPermissions][chainId as unknown as keyof typeof jbContractAddress[typeof versionString][JBCoreContracts.JBPermissions]] : undefined
 
   const hasOperatorPermission = useReadContract({
     abi: jbPermissionsAbi,

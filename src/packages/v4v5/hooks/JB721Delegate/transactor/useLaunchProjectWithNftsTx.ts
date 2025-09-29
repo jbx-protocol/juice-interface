@@ -8,6 +8,7 @@ import { wagmiConfig } from 'contexts/Para/Providers'
 import { useContext } from 'react'
 import { WaitForTransactionReceiptReturnType } from 'viem'
 import { LaunchTxOpts } from '../../useLaunchProjectTx'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
@@ -27,6 +28,8 @@ export function useLaunchProjectWithNftsTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { writeContractAsync: writeLaunchProject } = useWriteContract()
   const getLaunchData = useNftProjectLaunchData()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   return async (
     chainId: JBChainId,
@@ -60,7 +63,7 @@ export function useLaunchProjectWithNftsTx() {
       //   args,
       // })
 
-      const deployerAddress = jbContractAddress['4'][JB721HookContracts.JB721TiersHookProjectDeployer][chainId]
+      const deployerAddress = jbContractAddress[versionString][JB721HookContracts.JB721TiersHookProjectDeployer][chainId]
       const hash = await writeLaunchProject({
         address: deployerAddress,
         abi: jb721TiersHookProjectDeployerAbi,

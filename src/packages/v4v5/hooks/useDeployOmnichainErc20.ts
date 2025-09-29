@@ -4,12 +4,14 @@ import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
 import { Address } from 'viem'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 export function useDeployOmnichainErc20() {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
   const { sendRelayrTx } = useSendRelayrTx()
   const relayrBundle = useGetRelayrTxBundle()
+  const { version } = useV4V5Version()
 
   const { contracts } = useJBContractContext()
 
@@ -28,7 +30,7 @@ export function useDeployOmnichainErc20() {
       let encoded
       if (!args) throw new Error('No deploy data for chain ' + chainId)
       
-        if (projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][1]) {
+        if (version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]) {
         // Use v4.1 controller ABI
         encoded = encodeFunctionData({
           abi: jbController4_1Abi,

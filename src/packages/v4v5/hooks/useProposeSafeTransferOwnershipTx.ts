@@ -4,12 +4,15 @@ import {
 } from 'juice-sdk-react'
 import { Address, encodeFunctionData } from 'viem'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 import { useCallback } from 'react'
 
 export function useProposeSafeTransferOwnershipTx({ safeAddress }: { safeAddress: string }) {
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress })
   const { data: suckers } = useSuckers()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const proposeTransferOwnershipTx = useCallback(
     async (
@@ -35,7 +38,7 @@ export function useProposeSafeTransferOwnershipTx({ safeAddress }: { safeAddress
 
       // Propose the transaction to the Safe
       return await proposeTransaction({
-        to: jbContractAddress['4'][JBCoreContracts.JBProjects][1] as Address,
+        to: jbContractAddress[versionString][JBCoreContracts.JBProjects][chainId] as Address,
         value: '0',
         data,
         chainId,
@@ -44,6 +47,7 @@ export function useProposeSafeTransferOwnershipTx({ safeAddress }: { safeAddress
     [
       proposeTransaction,
       suckers,
+      versionString,
     ],
   )
 

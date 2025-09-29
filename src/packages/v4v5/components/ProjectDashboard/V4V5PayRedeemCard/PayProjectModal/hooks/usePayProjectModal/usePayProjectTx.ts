@@ -29,6 +29,7 @@ import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5Nft
 import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { V4V5_CURRENCY_ETH } from 'packages/v4v5/utils/currency'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { ProjectPayReceipt } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useProjectPageQueries'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { emitErrorNotification } from 'utils/notifications'
@@ -63,6 +64,8 @@ export const usePayProjectTx = ({
   const converter = useCurrencyConverter()
   const { data: suckers } = useSuckers()
   const { projectId } = useJBProjectId()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const { receivedTickets } = useProjectPaymentTokens()
   // TODO: is this needed for preferClaimedTokens?
@@ -139,7 +142,7 @@ export const usePayProjectTx = ({
       // fetch the terminal address for the project on the chain. We don't necessarily know this ahead of time
       // (if the chain is different from the current route.)
       const terminalAddress = await readContract(wagmiConfig, {
-        address: jbContractAddress['4'][JBCoreContracts.JBDirectory][chainId] as Address,
+        address: jbContractAddress[versionString][JBCoreContracts.JBDirectory][chainId] as Address,
         abi: jbDirectoryAbi,
         functionName: 'primaryTerminalOf',
         args: [_projectId ?? 0n, NATIVE_TOKEN],
@@ -244,6 +247,7 @@ export const usePayProjectTx = ({
       onTransactionConfirmedCallback,
       buildPayReceipt,
       onTransactionErrorCallback,
+      versionString,
     ],
   )
 }

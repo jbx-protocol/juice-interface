@@ -1,6 +1,7 @@
 import { JBChainId, jbContractAddress, JBCoreContracts, JB721HookContracts, jb721TiersHookProjectDeployerAbi, jbController4_1Abi } from 'juice-sdk-core'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 import { useCallback } from 'react'
 
@@ -21,6 +22,8 @@ export interface SafeLaunchProjectData {
 
 export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: string }) {
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress })
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
   const proposeLaunchProjectTx = useCallback(
     async (
       chainId: JBChainId,
@@ -44,7 +47,7 @@ export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: st
           args,
         })
         
-        to = jbContractAddress['4'][JB721HookContracts.JB721TiersHookProjectDeployer][chainId] as `0x${string}`
+        to = jbContractAddress[versionString][JB721HookContracts.JB721TiersHookProjectDeployer][chainId] as `0x${string}`
       } else {
         // Standard project launch
         const args = launchData.standardProjectData?.[chainId]
@@ -57,8 +60,11 @@ export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: st
           functionName: 'launchProjectFor',
           args,
         })
-        
-        to = jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId] as `0x${string}`
+
+        // For standard projects, use JBController4_1 for v4, JBController for v5
+        to = version === 4
+          ? jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId] as `0x${string}`
+          : jbContractAddress['5'][JBCoreContracts.JBController][chainId] as `0x${string}`
       }
 
       // Propose the transaction to the Safe
@@ -71,6 +77,8 @@ export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: st
     },
     [
       proposeTransaction,
+      version,
+      versionString,
     ],
   )
 

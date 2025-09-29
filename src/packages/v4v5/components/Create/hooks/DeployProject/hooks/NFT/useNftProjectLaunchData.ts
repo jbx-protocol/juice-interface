@@ -23,6 +23,7 @@ import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { useStandardProjectLaunchData } from '../useStandardProjectLaunchData'
 import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export function useNftProjectLaunchData() {
   const { projectMetadata, nftRewards, mustStartAtOrAfter } = useAppSelector(
@@ -30,6 +31,7 @@ export function useNftProjectLaunchData() {
   )
   const getStandardProjectLaunchData = useStandardProjectLaunchData()
   const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
+  const { version } = useV4V5Version()
 
   const collectionName = nftRewards.collectionMetadata.name
     ? nftRewards.collectionMetadata.name
@@ -55,8 +57,8 @@ export function useNftProjectLaunchData() {
     chainId: JBChainId
     withStartBuffer?: boolean
   }) => {
-    // Always use v5 JBController
-    const defaultJBController = jbContractAddress['5'][
+    // Use version-specific JBController
+    const defaultJBController = jbContractAddress[version.toString() as '4' | '5'][
       JBCoreContracts.JBController
     ][chainId as JBChainId] as Address
 
@@ -88,7 +90,7 @@ export function useNftProjectLaunchData() {
       tiersConfig: {
         currency,
         decimals: NATIVE_TOKEN_DECIMALS,
-        prices: jbContractAddress['4'][JBCoreContracts.JBPrices][
+        prices: jbContractAddress[version.toString() as '4' | '5'][JBCoreContracts.JBPrices][
           chainId as JBChainId
         ] as Address,
         tiers,

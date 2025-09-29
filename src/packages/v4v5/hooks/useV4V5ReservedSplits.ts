@@ -5,9 +5,12 @@ import {
   useJBUpcomingRuleset,
 } from 'juice-sdk-react'
 import { useReadContract } from 'wagmi'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 const RESERVED_SPLITS_GROUP_ID = 1n
 export const useV4V5ReservedSplits = (chainId?: JBChainId) => {
   const { projectId } = useJBProjectId(chainId)
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
   const { ruleset } = useJBRuleset({
     projectId,
     chainId,
@@ -24,7 +27,7 @@ export const useV4V5ReservedSplits = (chainId?: JBChainId) => {
   }
   const { data: _splits, isLoading: currentSplitsLoading } = useReadContract({
     abi: jbSplitsAbi,
-    address: jbContractAddress['4'][JBCoreContracts.JBSplits][chainId ?? 1],
+    address: jbContractAddress[versionString][JBCoreContracts.JBSplits][chainId ?? 1],
     functionName: 'splitsOf',
     args: [
       BigInt(projectId ?? 0),

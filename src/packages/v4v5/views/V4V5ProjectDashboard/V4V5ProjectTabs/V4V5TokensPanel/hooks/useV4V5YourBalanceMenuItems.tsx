@@ -13,6 +13,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useSuckersUnclaimedBalance } from 'packages/v4v5/hooks/useSuckersUnclaimedBalance'
 import { zeroAddress } from 'viem'
 import { useV4V5BalanceMenuItemsUserFlags } from './useV4V5BalanceMenuItemsUserFlags'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export const useV4V5YourBalanceMenuItems = () => {
   const { canBurnTokens, canClaimErcTokens, canMintTokens } =
@@ -27,10 +28,12 @@ export const useV4V5YourBalanceMenuItems = () => {
   ] = useState(false)
 
   const { userAddress } = useWallet()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const { projectId, chainId } = useJBProjectId()
 
-  const tokensAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBTokens][chainId] : undefined
+  const tokensAddress = chainId ? jbContractAddress[versionString][JBCoreContracts.JBTokens][chainId] : undefined
 
   const { data: unclaimedBalance } = useReadContract({
     abi: jbTokensAbi,

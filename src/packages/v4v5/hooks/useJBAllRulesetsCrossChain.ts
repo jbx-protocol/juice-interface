@@ -1,6 +1,7 @@
 import { CashOutTaxRate, ReservedPercent, RulesetWeight, WeightCutPercent, jbControllerAbi, jbContractAddress, JBCoreContracts } from "juice-sdk-core"
 import { useReadContract } from "wagmi"
 import { JBChainId } from "juice-sdk-react"
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 export function useJBAllRulesetsCrossChain({
   projectId,
@@ -11,7 +12,11 @@ export function useJBAllRulesetsCrossChain({
   rulesetNumber: bigint
   chainId: JBChainId
 }) {
-  const controllerAddress = jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
+  const { version } = useV4V5Version()
+  // For v4, use JBController4_1. For v5, use standard JBController
+  const controllerAddress = version === 4
+    ? jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
+    : jbContractAddress['5'][JBCoreContracts.JBController][chainId]
 
   const { data, isLoading } = useReadContract({
     abi: jbControllerAbi,

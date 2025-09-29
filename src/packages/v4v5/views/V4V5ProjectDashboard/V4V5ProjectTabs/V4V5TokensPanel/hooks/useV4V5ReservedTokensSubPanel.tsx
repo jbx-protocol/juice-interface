@@ -24,10 +24,13 @@ import { useReservedTokensSelectedChain } from '../../V4V5CyclesPayoutsPanel/con
 import { useSuckersPendingReservedTokens } from 'packages/v4v5/hooks/useSuckersPendingReservedTokens'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useV4V5ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export const useV4V5ReservedTokensSubPanel = () => {
   const { selectedChainId, setSelectedChainId } =
     useReservedTokensSelectedChain()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const { projectId } = useJBProjectId(selectedChainId)
 
@@ -48,7 +51,7 @@ export const useV4V5ReservedTokensSubPanel = () => {
   ) : undefined
   const projectIdBigInt = BigInt(projectId ?? 0)
 
-  const directoryAddress = selectedChainId ? jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId] : undefined
+  const directoryAddress = selectedChainId ? jbContractAddress[versionString][JBCoreContracts.JBDirectory][selectedChainId] : undefined
 
   const { data: controllerAddress } = useReadContract({
     abi: jbDirectoryAbi,

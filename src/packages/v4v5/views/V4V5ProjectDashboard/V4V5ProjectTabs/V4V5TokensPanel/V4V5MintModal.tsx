@@ -27,6 +27,7 @@ import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { Address } from 'viem'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 type MintForm = {
   beneficary: string
@@ -45,10 +46,12 @@ export function V4V5MintModal({
 }) {
   const { writeContractAsync: writeMintTokens } = useWriteContract()
   const [form] = useForm<MintForm>()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
-  
+
   const defaultChainId = useJBChainId()
   const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(
     defaultChainId,
@@ -60,7 +63,7 @@ export function V4V5MintModal({
 
   const { data: controllerAddress } = useReadContract({
     abi: jbDirectoryAbi,
-    address: jbContractAddress['4'][JBCoreContracts.JBDirectory][selectedChainId ?? 1],
+    address: jbContractAddress[versionString][JBCoreContracts.JBDirectory][selectedChainId ?? 1],
     functionName: 'controllerOf',
     args: [BigInt(projectId ?? 0)],
     chainId: selectedChainId,

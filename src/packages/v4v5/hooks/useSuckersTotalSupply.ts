@@ -9,9 +9,12 @@ import { readContract } from "wagmi/actions";
 import { useJBChainId, useJBContractContext, useSuckers } from "juice-sdk-react";
 import { useConfig } from "wagmi";
 import { useQuery } from "wagmi/query";
+import { useV4V5Version } from '../contexts/V4V5VersionProvider';
 
 export function useSuckersTotalSupply() {
   const config = useConfig();
+  const { version } = useV4V5Version();
+  const versionString = version.toString() as '4' | '5';
 
   const chainId = useJBChainId();
 
@@ -35,7 +38,7 @@ export function useSuckersTotalSupply() {
         pairs.map(async pair => {
           const { peerChainId, projectId: peerProjectId } = pair;
 
-          const directoryAddress = jbContractAddress['4'][JBCoreContracts.JBDirectory][chainId];
+          const directoryAddress = jbContractAddress[versionString][JBCoreContracts.JBDirectory][chainId];
 
           const controllerAddress = await readContract(config, {
             abi: jbDirectoryAbi,

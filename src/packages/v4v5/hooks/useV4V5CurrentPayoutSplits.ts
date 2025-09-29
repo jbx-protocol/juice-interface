@@ -6,9 +6,12 @@ import {
   useJBContractContext,
 } from 'juice-sdk-react'
 import { useReadContract } from 'wagmi'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 export const useV4V5CurrentPayoutSplits = (chainId?: JBChainId) => {
   const { projectId } = useJBProjectId(chainId)
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
   const { contractAddress } = useJBContractContext()
   const { data: tokenAddress } = useReadContract({
@@ -26,7 +29,7 @@ export const useV4V5CurrentPayoutSplits = (chainId?: JBChainId) => {
 
   const { data, isLoading } = useReadContract({
     abi: jbSplitsAbi,
-    address: jbContractAddress['4'][JBCoreContracts.JBSplits][chainId ?? 1],
+    address: jbContractAddress[versionString][JBCoreContracts.JBSplits][chainId ?? 1],
     functionName: 'splitsOf',
     args: [BigInt(projectId ?? 0), rulesetId, groupId],
     query: {

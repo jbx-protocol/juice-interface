@@ -5,6 +5,7 @@ import {
   useJBTerminalContext,
 } from 'juice-sdk-react'
 import { useReadContract } from 'wagmi'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 import { zeroAddress } from 'viem'
 
@@ -17,8 +18,10 @@ export const useUsedPayoutLimitOf = ({
 }) => {
   const { store } = useJBTerminalContext()
   const { ruleset } = useJBRulesetContext()
+  const { version } = useV4V5Version()
+  const versionString = version.toString() as '4' | '5'
 
-  const directoryAddress = chainId ? jbContractAddress['4'][JBCoreContracts.JBDirectory][chainId] : undefined
+  const directoryAddress = chainId ? jbContractAddress[versionString][JBCoreContracts.JBDirectory][chainId] : undefined
 
   const { data: terminalAddress } = useReadContract({
     abi: jbDirectoryAbi,

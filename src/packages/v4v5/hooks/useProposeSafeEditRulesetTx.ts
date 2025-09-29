@@ -6,6 +6,7 @@ import {
 } from 'juice-sdk-react'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
 import { useCallback, useContext } from 'react'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 import { EditCycleFormFields } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
 import { encodeFunctionData } from 'viem'
@@ -21,6 +22,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress })
   const { data: suckers } = useSuckers()
   const { rulesetMetadata } = useContext(JBRulesetContext)
+  const { version } = useV4V5Version()
 
   const proposeEditRulesetTx = useCallback(
     async (
@@ -55,7 +57,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
       const projectControllerAddress = contracts.controller.data
       let data: `0x${string}`
 
-      if (projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][1]) {
+      if (version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]) {
         // Use v4.1 controller ABI
         data = encodeFunctionData({
           abi: jbController4_1Abi,
@@ -85,6 +87,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
       proposeTransaction,
       suckers,
       rulesetMetadata.data?.dataHook,
+      version,
     ],
   )
 

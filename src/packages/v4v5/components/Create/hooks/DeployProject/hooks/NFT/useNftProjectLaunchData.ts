@@ -15,7 +15,7 @@ import { encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { Address, parseEther, zeroAddress } from 'viem'
 
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
-import { convertV2V3CurrencyOptionToV4 } from 'packages/v4v5/utils/currency'
+import { convertV2V3CurrencyOptionToV4V5 } from 'packages/v4v5/utils/currency'
 import { isValidMustStartAtOrAfter } from 'packages/v4v5/utils/fundingCycle'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingV2V3FundingCycleDataSelector } from 'redux/hooks/v2v3/create'
@@ -26,12 +26,12 @@ import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export function useNftProjectLaunchData() {
+  const { version } = useV4V5Version()
   const { projectMetadata, nftRewards, mustStartAtOrAfter } = useAppSelector(
     state => state.creatingV2Project,
   )
   const getStandardProjectLaunchData = useStandardProjectLaunchData()
   const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
-  const { version } = useV4V5Version()
 
   const collectionName = nftRewards.collectionMetadata.name
     ? nftRewards.collectionMetadata.name
@@ -39,7 +39,7 @@ export function useNftProjectLaunchData() {
   const collectionSymbol = nftRewards.collectionMetadata.symbol ?? ''
   const nftFlags = nftRewards.flags ?? DEFAULT_NFT_FLAGS
   // const governanceType = nftRewards.governanceType
-  const currency = convertV2V3CurrencyOptionToV4(nftRewards.pricing.currency)
+  const currency = convertV2V3CurrencyOptionToV4V5(nftRewards.pricing.currency, version)
 
   return ({
     projectMetadataCID,

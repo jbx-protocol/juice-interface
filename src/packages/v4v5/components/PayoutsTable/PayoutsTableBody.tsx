@@ -3,6 +3,7 @@ import { Form } from 'antd'
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
 import { getV4V5CurrencyOption } from 'packages/v4v5/utils/currency'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { twMerge } from 'tailwind-merge'
 import { Allocation } from '../Allocation/Allocation'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
@@ -16,6 +17,7 @@ const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
 
 export function PayoutsTableBody() {
+  const { version } = useV4V5Version()
   const { topAccessory, hideHeader, createTreasurySelection } =
     usePayoutsTableContext()
   const {
@@ -39,7 +41,7 @@ export function PayoutsTableBody() {
       {topAccessory}
       <div className="rounded-lg border border-smoke-200 dark:border-slate-600">
         <Allocation
-          allocationCurrency={getV4V5CurrencyOption(currency)}
+          allocationCurrency={getV4V5CurrencyOption(currency, version)}
           setAllocationCurrency={setCurrency}
         >
           <div className="w-full text-left">

@@ -1,4 +1,5 @@
-import { V4V5_CURRENCY_ETH, V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH, getV4V5CurrencyUSD } from 'packages/v4v5/utils/currency'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useCallback, useState } from 'react'
 
 import { Trans } from '@lingui/macro'
@@ -15,6 +16,7 @@ export const AmountInput = ({
   value?: AmountPercentageInput
   onChange?: (input: AmountPercentageInput | undefined) => void
 }) => {
+  const { version } = useV4V5Version()
   const [_amount, _setAmount] = useState<AmountPercentageInput>({ value: '' })
   const amount = value ?? _amount
   const setAmount = onChange ?? _setAmount
@@ -46,7 +48,7 @@ export const AmountInput = ({
             <CurrencySwitch
               currency={currency === V4V5_CURRENCY_ETH ? 'ETH' : 'USD'}
               onCurrencyChange={c =>
-                setCurrency(c === 'ETH' ? V4V5_CURRENCY_ETH : V4V5_CURRENCY_USD)
+                setCurrency(c === 'ETH' ? V4V5_CURRENCY_ETH : getV4V5CurrencyUSD(version))
               }
               className="rounded"
             />

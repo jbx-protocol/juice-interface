@@ -24,7 +24,7 @@ import { Address } from 'viem'
 import { FundAccessLimitGroup } from '../models/fundAccessLimits'
 import { GroupedSplits as V4GroupedSplits } from '../models/splits'
 import { LaunchProjectJBTerminal } from '../models/terminals'
-import { convertV2V3CurrencyOptionToV4 } from './currency'
+import { convertV2V3CurrencyOptionToV4V5 } from './currency'
 
 const NATIVE_TOKEN_CURRENCY_ID = 61166 // v4TODO: put in SDK
 
@@ -44,10 +44,12 @@ export function transformV2V3CreateArgsToV4({
   v2v3Args,
   primaryNativeTerminal,
   currencyTokenAddress,
+  version,
 }: {
   v2v3Args: LaunchV2V3ProjectArgs
   primaryNativeTerminal: Address
   currencyTokenAddress: Address
+  version: 4 | 5
 }) {
   const [
     _owner,
@@ -109,6 +111,7 @@ export function transformV2V3CreateArgsToV4({
       v2V3FundAccessConstraints: _fundAccessConstraints,
       primaryNativeTerminal,
       currencyTokenAddress,
+      version,
     }),
   }
 
@@ -192,10 +195,12 @@ export function transformV2V3FundAccessConstraintsToV4({
   v2V3FundAccessConstraints,
   primaryNativeTerminal,
   currencyTokenAddress,
+  version,
 }: {
   v2V3FundAccessConstraints: V2V3FundAccessConstraint[]
   primaryNativeTerminal: Address
   currencyTokenAddress: Address
+  version: 4 | 5
 }): FundAccessLimitGroup[] {
   return v2V3FundAccessConstraints.map(constraint => ({
     terminal: primaryNativeTerminal as `0x${string}`,
@@ -203,8 +208,9 @@ export function transformV2V3FundAccessConstraintsToV4({
     payoutLimits: [
       {
         amount: constraint.distributionLimit.toBigInt(),
-        currency: convertV2V3CurrencyOptionToV4(
+        currency: convertV2V3CurrencyOptionToV4V5(
           constraint.distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+          version,
         ),
       },
     ],

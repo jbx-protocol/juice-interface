@@ -7,6 +7,7 @@ import round from 'lodash/round'
 import { AddEditAllocationModalEntity } from 'packages/v4v5/components/Allocation/AddEditAllocationModal'
 import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import { V4V5CurrencyName, V4V5_CURRENCY_METADATA, getV4V5CurrencyOption } from 'packages/v4v5/utils/currency'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import {
   JB_FEE,
   adjustedSplitPercents,
@@ -29,6 +30,7 @@ import { useMemo } from 'react'
 import { usePayoutsTableContext } from '../context/PayoutsTableContext'
 
 export const usePayoutsTable = () => {
+  const { version } = useV4V5Version()
   const {
     payoutSplits,
     setPayoutSplits,
@@ -93,7 +95,7 @@ export const usePayoutsTable = () => {
 
   const currencyOrPercentSymbol = distributionLimitIsInfinite
     ? '%'
-    : V4V5_CURRENCY_METADATA[getV4V5CurrencyOption(currency)].symbol
+    : V4V5_CURRENCY_METADATA[getV4V5CurrencyOption(currency, version)].symbol
 
   /* Payouts that don't go to Juicebox projects incur 2.5% fee */
   const nonJuiceboxProjectPayoutSplits = [

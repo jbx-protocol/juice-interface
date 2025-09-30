@@ -19,6 +19,7 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { useWallet } from 'hooks/Wallet'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { Address } from 'viem'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 /**
  * Hook that returns a function that deploys a v5 project.
@@ -26,6 +27,7 @@ import { Address } from 'viem'
  * Takes data from the redux store built for v2v3 projects, data is converted to v5 format in useLaunchProjectTx.
  */
 export function useStandardProjectLaunchData() {
+  const { version } = useV4V5Version()
   const {
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
@@ -98,6 +100,7 @@ export function useStandardProjectLaunchData() {
       v2v3Args,
       primaryNativeTerminal: terminalAddress,
       currencyTokenAddress: NATIVE_TOKEN,
+      version,
     })
 
     return { args, controllerAddress }

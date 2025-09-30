@@ -1,5 +1,6 @@
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
-import { V4V5_CURRENCY_ETH, V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH, getV4V5CurrencyUSD } from 'packages/v4v5/utils/currency'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import {
   payoutsTableMenuItemsIconClass,
@@ -14,6 +15,7 @@ import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 export function CurrencySwitcher() {
+  const { version } = useV4V5Version()
   const { setCurrency: setCurrencyName, usdDisabled } = usePayoutsTableContext()
   const { currency, setCurrency, distributionLimit, setDistributionLimit } =
     usePayoutsTable()
@@ -57,7 +59,7 @@ export function CurrencySwitcher() {
                 2,
               )
               setDistributionLimit(formattedUsdAmount)
-              setCurrency(V4V5_CURRENCY_USD)
+              setCurrency(getV4V5CurrencyUSD(version))
             },
           },
         ]

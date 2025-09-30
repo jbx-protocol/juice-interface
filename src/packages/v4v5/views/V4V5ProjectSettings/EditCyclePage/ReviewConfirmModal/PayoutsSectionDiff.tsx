@@ -2,6 +2,7 @@ import { Trans, t } from '@lingui/macro'
 
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import { getV4V5CurrencyOption } from 'packages/v4v5/utils/currency'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { emptySectionClasses } from './DetailsSectionDiff'
 import { DiffSection } from './DiffSection'
 import DiffedSplitList from './DiffedSplits/DiffedSplitList'
@@ -9,6 +10,7 @@ import { PayoutLimitValue } from './FormattedRulesetValues/DetailsSection/Payout
 import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
 
 export function PayoutsSectionDiff() {
+  const { version } = useV4V5Version()
   const {
     sectionHasDiff,
     advancedOptionsHasDiff,
@@ -68,9 +70,9 @@ export function PayoutsSectionDiff() {
               <DiffedSplitList
                 splits={newPayoutSplits}
                 diffSplits={currentPayoutSplits}
-                currency={BigInt(getV4V5CurrencyOption(newCurrency))}
+                currency={BigInt(getV4V5CurrencyOption(newCurrency, version))}
                 oldCurrency={BigInt(
-                  getV4V5CurrencyOption(currentCurrency),
+                  getV4V5CurrencyOption(currentCurrency, version),
                 )}
                 totalValue={newDistributionLimit}
                 previousTotalValue={currentDistributionLimit}

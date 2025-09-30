@@ -1,6 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import { Divider, Modal } from 'antd'
-import { V4V5_CURRENCY_ETH, V4V5_CURRENCY_USD, convertV2V3CurrencyOptionToV4 } from 'packages/v4v5/utils/currency'
+import { V4V5_CURRENCY_ETH, getV4V5CurrencyUSD, convertV2V3CurrencyOptionToV4V5 } from 'packages/v4v5/utils/currency'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import {
   deriveAmountAfterFee,
   derivePayoutAmount,
@@ -39,11 +40,12 @@ export const ConvertAmountsModal = ({
   onCancel: VoidFunction
   splits: Split[]
 }) => {
+  const { version } = useV4V5Version()
   const chainId = useChainId()
   const [distributionLimit] = useCreatingDistributionLimit()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>('')
-  
-  const initialCurrency = distributionLimit?.currency ? convertV2V3CurrencyOptionToV4(distributionLimit.currency) : V4V5_CURRENCY_ETH
+
+  const initialCurrency = distributionLimit?.currency ? convertV2V3CurrencyOptionToV4V5(distributionLimit.currency, version) : V4V5_CURRENCY_ETH
   const [currency, setCurrency] = useState<V4V5CurrencyOption>(initialCurrency)
 
   const totalPayoutsPercent = useMemo(
@@ -104,7 +106,7 @@ export const ConvertAmountsModal = ({
             <CurrencySwitch
               currency={currency === V4V5_CURRENCY_ETH ? 'ETH' : 'USD'}
               onCurrencyChange={c =>
-                setCurrency(c === 'ETH' ? V4V5_CURRENCY_ETH : V4V5_CURRENCY_USD)
+                setCurrency(c === 'ETH' ? V4V5_CURRENCY_ETH : getV4V5CurrencyUSD(version))
               }
             />
           }

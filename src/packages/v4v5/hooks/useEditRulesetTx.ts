@@ -1,11 +1,17 @@
-import { NATIVE_TOKEN, jbContractAddress, JBCoreContracts, jbControllerAbi, jbController4_1Abi } from 'juice-sdk-core'
+import {
+  JBCoreContracts,
+  NATIVE_TOKEN,
+  jbContractAddress,
+  jbController4_1Abi,
+  jbControllerAbi,
+} from 'juice-sdk-core'
 import {
   JBRulesetContext,
+  useJBChainId,
   useJBContractContext,
-  useJBChainId
 } from 'juice-sdk-react'
-import { useWriteContract } from 'wagmi'
 import { useCallback, useContext } from 'react'
+import { useWriteContract } from 'wagmi'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { wagmiConfig } from 'contexts/Para/Providers'
@@ -35,7 +41,12 @@ export function useEditRulesetTx() {
   const projectControllerAddress = contracts.controller.data
 
   // For v4, check if it's the 4.1 controller version
-  const isV4_1 = version === 4 && projectControllerAddress && chainId && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
+  const isV4_1 =
+    version === 4 &&
+    projectControllerAddress &&
+    chainId &&
+    projectControllerAddress ===
+      jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
   const { addTransaction } = useContext(TxHistoryContext)
   const { rulesetMetadata } = useContext(JBRulesetContext)
 
@@ -53,17 +64,22 @@ export function useEditRulesetTx() {
       if (
         !contracts.controller.data ||
         !contracts.primaryNativeTerminal.data ||
-        !userAddress
+        !userAddress ||
+        !chainId
       ) {
         return
       }
 
       const args = transformEditCycleFormFieldsToTxArgs({
         formValues,
-        primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
+        primaryNativeTerminal: contracts.primaryNativeTerminal
+          .data as `0x${string}`,
         tokenAddress: NATIVE_TOKEN as `0x${string}`,
-        dataHook: (rulesetMetadata.data?.dataHook ?? '0x0000000000000000000000000000000000000000') as `0x${string}`,
+        dataHook: (rulesetMetadata.data?.dataHook ??
+          '0x0000000000000000000000000000000000000000') as `0x${string}`,
         projectId,
+        chainId,
+        version,
       })
 
       try {
@@ -87,6 +103,7 @@ export function useEditRulesetTx() {
         addTransaction?.('Edit Ruleset', { hash, chainId })
         await waitForTransactionReceipt(wagmiConfig, {
           hash,
+          chainId,
         })
 
         onTransactionConfirmedCallback()
@@ -106,6 +123,7 @@ export function useEditRulesetTx() {
       rulesetMetadata.data?.dataHook,
       isV4_1,
       chainId,
+      version,
     ],
   )
 }

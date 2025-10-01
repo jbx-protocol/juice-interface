@@ -1,6 +1,10 @@
 import { Button, Divider } from 'antd'
 import { JBChainId, useJBChainId, useSuckers } from 'juice-sdk-react'
-import { settingsPagePath, v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import {
+  settingsPagePath,
+  v4ProjectRoute,
+  v4v5ProjectRoute,
+} from 'packages/v4v5/utils/routes'
 
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
@@ -21,9 +25,9 @@ import { twMerge } from 'tailwind-merge'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 // import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { useV4V5ProjectHeader } from './hooks/useV4V5ProjectHeader'
-import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -84,7 +88,10 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
               <ProjectHeaderPopupMenu projectId={projectId} />
               {canManageProject && chainId && (
                 <Link
-                  href={settingsPagePath({ projectId, chainId, version }, undefined)}
+                  href={settingsPagePath(
+                    { projectId, chainId, version },
+                    undefined,
+                  )}
                   legacyBehavior
                 >
                   <Button size="small">
@@ -107,15 +114,19 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
           </h1>
           <div className="flex gap-2">
             {suckers?.map(pair => {
-              if (!pair || !pair?.peerChainId || !pair?.projectId) return null
+              if (!pair || !pair?.peerChainId || !pair?.projectId) {
+                return null
+              }
+              const routeUrl = v4v5ProjectRoute({
+                chainId: pair.peerChainId,
+                projectId: Number(pair.projectId),
+                version,
+              })
               return (
                 <Link
                   className="underline"
                   key={pair?.peerChainId}
-                  href={`${v4ProjectRoute({
-                    chainId: pair?.peerChainId,
-                    projectId: Number(pair.projectId),
-                  })}`}
+                  href={routeUrl}
                 >
                   <ChainLogo
                     chainId={pair.peerChainId as JBChainId}

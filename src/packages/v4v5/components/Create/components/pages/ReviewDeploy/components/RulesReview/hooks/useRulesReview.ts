@@ -4,12 +4,20 @@ import {
   formatPaused,
 } from 'utils/format/formatBoolean'
 
+import { useJBChainId } from 'juice-sdk-react'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { getAvailableApprovalStrategies } from 'packages/v4v5/utils/approvalHooks'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 
 export const useRulesReview = () => {
-  const availableBallotStrategies = getAvailableApprovalStrategies()
+  const { version } = useV4V5Version()
+  const chainId = useJBChainId()
+  // For Create flow - chainId defaults to environment-based value
+  const availableBallotStrategies = getAvailableApprovalStrategies(
+    version ?? 5,
+    chainId,
+  )
   const {
     fundingCycleData: { ballot: customAddress },
     reconfigurationRuleSelection,

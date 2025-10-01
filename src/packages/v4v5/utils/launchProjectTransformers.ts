@@ -1,5 +1,7 @@
 import {
   ETH_CURRENCY_ID,
+  jbContractAddress,
+  JBCoreContracts,
   JBSplit,
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
@@ -45,11 +47,13 @@ export function transformV2V3CreateArgsToV4({
   primaryNativeTerminal,
   currencyTokenAddress,
   version,
+  chainId,
 }: {
   v2v3Args: LaunchV2V3ProjectArgs
   primaryNativeTerminal: Address
   currencyTokenAddress: Address
   version: 4 | 5
+  chainId: number
 }) {
   const [
     _owner,
@@ -73,22 +77,27 @@ export function transformV2V3CreateArgsToV4({
 
   const now = round(new Date().getTime() / 1000)
 
-  // V5 uses different approval hook addresses than v4
-  // Map v4 approval hooks to their v5 equivalents
-  const v4ToV5ApprovalHookMap: Record<string, Address> = {
-    // v4 3-day hook -> v5 3-day hook
-    '0xba8a653a5cc985d2f1458e80a9700490c11ab981': '0x09b23b09af88bb6d7e9c957ff9f861f1c917111b',
-    // v4 1-day hook -> v5 1-day hook
-    '0xd7ce0fe638e02a31fc7c8c231684d85ad9b2ca3d': '0xcffdd1303f24145bd2c84e7bf15af1eb6ab924d7',
-    // v4 7-day hook -> v5 7-day hook
-    '0x05505582a553669f540ba2dd0b55fc75b8176c40': '0xdf911b94712cf117fb63b69838b16e1710636031',
-  }
-
+  // Map v4 approval hooks to their v5 equivalents when version is 5
   const ballotAddress = _fundingCycleData.ballot?.toLowerCase()
-  const approvalHook =
-    ballotAddress && v4ToV5ApprovalHookMap[ballotAddress]
-      ? v4ToV5ApprovalHookMap[ballotAddress]
-      : (_fundingCycleData.ballot as Address)
+  let approvalHook = _fundingCycleData.ballot as Address
+
+  if (version === 5 && ballotAddress) {
+    const chainIdKey = String(
+      chainId,
+    ) as keyof (typeof jbContractAddress)['4'][JBCoreContracts.JBDeadline1Day]
+
+    // Check if ballot is a v4 approval hook and map to v5
+    const v4Hooks: Record<string, Address> = {
+      [jbContractAddress['4'][JBCoreContracts.JBDeadline1Day][chainIdKey]]:
+        jbContractAddress['5'][JBCoreContracts.JBDeadline1Day][chainIdKey],
+      [jbContractAddress['4'][JBCoreContracts.JBDeadline3Days][chainIdKey]]:
+        jbContractAddress['5'][JBCoreContracts.JBDeadline3Days][chainIdKey],
+      [jbContractAddress['4'][JBCoreContracts.JBDeadline7Days][chainIdKey]]:
+        jbContractAddress['5'][JBCoreContracts.JBDeadline7Days][chainIdKey],
+    }
+
+    approvalHook = (v4Hooks[ballotAddress] as Address) ?? approvalHook
+  }
 
   const ruleset = {
     mustStartAtOrAfter:

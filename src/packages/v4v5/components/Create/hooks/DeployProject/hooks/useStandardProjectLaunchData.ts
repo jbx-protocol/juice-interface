@@ -17,9 +17,9 @@ import {
 
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { useWallet } from 'hooks/Wallet'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { Address } from 'viem'
-import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 /**
  * Hook that returns a function that deploys a v5 project.
@@ -101,6 +101,7 @@ export function useStandardProjectLaunchData() {
       primaryNativeTerminal: terminalAddress,
       currencyTokenAddress: NATIVE_TOKEN,
       version,
+      chainId,
     })
 
     return { args, controllerAddress }

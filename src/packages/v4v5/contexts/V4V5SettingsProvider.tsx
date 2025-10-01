@@ -22,15 +22,31 @@ export const V4V5SettingsProvider: React.FC<React.PropsWithChildren> = ({
     return null
   }
 
+  // Only use API key for localhost. JBM domains (juicebox.money, sepolia.juicebox.money) are whitelisted.
+  const isLocalhost =
+    typeof window !== 'undefined' && window.location.hostname === 'localhost'
+  const bendystrawFullUrl =
+    process.env.NEXT_PUBLIC_TESTNET === 'true'
+      ? process.env.NEXT_PUBLIC_BENDYSTRAW_TESTNET_URL
+      : process.env.NEXT_PUBLIC_BENDYSTRAW_URL
+
+  // Parse URL to extract base URL and API key
+  const urlParts = bendystrawFullUrl?.split('/') ?? []
+  const bendystrawUrl = urlParts.slice(0, 3).join('/') // https://testnet.bendystraw.xyz or https://bendystraw.xyz
+  const bendystrawApiKey = urlParts[3] ?? '' // API key from path
+
+  const bendystrawConfig = {
+    apiKey: isLocalhost ? bendystrawApiKey : '',
+    url: bendystrawUrl,
+  }
+
   return (
     <AppWrapper hideNav>
       <JBProjectProvider
         chainId={chainId as JBChainId}
         projectId={projectId}
         version={version}
-        bendystraw={{
-          apiKey: '',
-        }}
+        bendystraw={bendystrawConfig}
         ctxProps={{
           metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
         }}

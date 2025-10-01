@@ -3,7 +3,10 @@ import {
   DEFAULT_REDUX_STATE,
   creatingV2ProjectActions,
 } from 'redux/slices/v2v3/creatingV2Project'
-import { CreateState, ProjectState } from 'redux/slices/v2v3/shared/v2ProjectTypes'
+import {
+  CreateState,
+  ProjectState,
+} from 'redux/slices/v2v3/shared/v2ProjectTypes'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import isEqual from 'lodash/isEqual'
@@ -73,8 +76,9 @@ const parseCreateFlowStateFromInitialState = (
     projectTokensSelection = 'custom'
   }
 
+  // Default to v5 for Create flow - chainId defaults to environment-based value
   const reconfigurationRuleSelection =
-    getAvailableApprovalStrategies().find(s =>
+    getAvailableApprovalStrategies(5).find(s =>
       isEqualAddress(s.address, initialState.fundingCycleData.ballot),
     )?.id ?? 'threeDay'
 

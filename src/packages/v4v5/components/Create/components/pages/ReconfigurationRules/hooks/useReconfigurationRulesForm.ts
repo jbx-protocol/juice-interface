@@ -1,15 +1,15 @@
-import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { useEffect, useMemo } from 'react'
+import { isEqualAddress, isZeroAddress } from 'utils/address'
 
 import { Form } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { getAvailableApprovalStrategies } from 'packages/v4v5/utils/approvalHooks'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useForm } from 'antd/lib/form/Form'
-import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { zeroAddress } from 'viem'
+import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 type ReconfigurationRulesFormProps = Partial<{
   selection: ReconfigurationStrategy
@@ -26,7 +26,8 @@ type ReconfigurationRulesFormProps = Partial<{
 
 export const useReconfigurationRulesForm = () => {
   const [form] = useForm<ReconfigurationRulesFormProps>()
-  const strategies = getAvailableApprovalStrategies()
+  // Always v5 for Create flow - chainId defaults to environment-based value
+  const strategies = getAvailableApprovalStrategies(5)
   const defaultStrategy = useMemo(
     () => strategies.find(s => s.isDefault),
     [strategies],
@@ -113,7 +114,7 @@ export const useReconfigurationRulesForm = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    let address: string | undefined = zeroAddress;
+    let address: string | undefined = zeroAddress
     switch (selection) {
       case 'threeDay':
       case 'oneDay':

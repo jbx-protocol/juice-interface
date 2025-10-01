@@ -51,6 +51,8 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
         tokenAddress: NATIVE_TOKEN as `0x${string}`,
         dataHook: (rulesetMetadata.data?.dataHook ?? '0x0000000000000000000000000000000000000000') as `0x${string}`,
         projectId: chainProjectId,
+        chainId,
+        version,
       })
 
       // Determine which ABI to use based on controller version

@@ -1,11 +1,12 @@
-import { ETH_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
 
-import { EditCycleFormFields } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
-import { isZeroAddress } from 'utils/address'
-import { issuanceRateFrom } from 'packages/v2v3/utils/math'
-import { otherUnitToSeconds } from 'utils/format/formatTime'
-import { parseWad } from 'utils/format/formatNumber'
 import round from 'lodash/round'
+import { issuanceRateFrom } from 'packages/v2v3/utils/math'
+import { isZeroAddress } from 'utils/address'
+import { parseWad } from 'utils/format/formatNumber'
+import { otherUnitToSeconds } from 'utils/format/formatTime'
+import { EditCycleFormFields } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { getApprovalStrategyByAddress } from './approvalHooks'
 
 export type EditCycleTxArgs = readonly [
   projectId: bigint,
@@ -62,7 +63,7 @@ export type EditCycleTxArgs = readonly [
       }[]
     }[]
   }[],
-  memo: string
+  memo: string,
 ]
 
 export function transformEditCycleFormFieldsToTxArgs({
@@ -71,25 +72,40 @@ export function transformEditCycleFormFieldsToTxArgs({
   tokenAddress,
   dataHook,
   projectId,
+  chainId,
+  version,
 }: {
   formValues: EditCycleFormFields
   primaryNativeTerminal: `0x${string}`
   tokenAddress: `0x${string}`
   dataHook: `0x${string}`
   projectId: bigint
+  chainId: JBChainId
+  version: 4 | 5
 }): EditCycleTxArgs {
   const now = round(new Date().getTime() / 1000)
-  
+
   // Use custom mustStartAtOrAfter if provided (for Safe projects), otherwise default to now + 5 minutes
   // allow for different chains taking different times to process the tx
-  const mustStartAtOrAfter = formValues.mustStartAtOrAfter ?? (now + 5 * 60) 
+  const mustStartAtOrAfter = formValues.mustStartAtOrAfter ?? now + 5 * 60
   const duration = otherUnitToSeconds({
     duration: formValues.duration,
     unit: formValues.durationUnit.value,
   })
   const weight = BigInt(issuanceRateFrom(formValues.issuanceRate.toString()))
   const weightCutPercent = round(formValues.weightCutPercent * 10000000)
-  const approvalHook = formValues.approvalHook
+
+  // Get the chain-specific approval hook address
+  // The form stores one address, but we need to get the equivalent address for the target chain
+  const approvalHookStrategy = getApprovalStrategyByAddress(
+    formValues.approvalHook,
+    version,
+    chainId,
+  )
+  const approvalHook = approvalHookStrategy.address as `0x${string}`
+
+  // Calculate metadata flags
+  const useDataHookForPayValue = Boolean(dataHook) && !isZeroAddress(dataHook)
 
   const rulesetConfigurations = [
     {
@@ -116,7 +132,7 @@ export function transformEditCycleFormFieldsToTxArgs({
         ownerMustSendPayouts: false, // Defaulting to false as it's not in formValues
         holdFees: formValues.holdFees,
         useTotalSurplusForCashOuts: false, // Defaulting to false as it's not in formValues
-        useDataHookForPay: Boolean(dataHook) && isZeroAddress(dataHook),
+        useDataHookForPay: useDataHookForPayValue,
         useDataHookForCashOut: false, // Defaulting to false as it's not in formValues
         dataHook, // doesn't change in edit ruleset
         metadata: 0, // Assuming no additional metadata is provided

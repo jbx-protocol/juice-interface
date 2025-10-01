@@ -1,31 +1,29 @@
+import { Trans, t } from '@lingui/macro'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
   HOLD_FEES_EXPLANATION,
   PAUSE_PAYMENTS_EXPLANATION,
   RECONFIG_RULES_WARN,
   TERMINAL_CONFIG_EXPLANATION,
-  TERMINAL_MIGRATION_EXPLANATION
+  TERMINAL_MIGRATION_EXPLANATION,
 } from 'components/strings'
-import { Trans, t } from '@lingui/macro'
 
-import { CREATE_FLOW } from 'constants/fathomEvents'
-import { Callout } from 'components/Callout/Callout'
-import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
-import { CustomRuleCard } from './components/CustomRuleCard'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { Form } from 'antd'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import { PageContext } from '../../Wizard/contexts/PageContext'
-import { RuleCard } from './components/RuleCard'
-import { Selection } from 'packages/v2v3/components/Create/components/Selection/Selection'
-import { Wizard } from '../../Wizard/Wizard'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { getAvailableApprovalStrategies } from 'packages/v4v5/utils/approvalHooks'
-import { trackFathomGoal } from 'lib/fathom'
-import { useContext } from 'react'
-import { useReconfigurationRulesForm } from './hooks/useReconfigurationRulesForm'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { useWatch } from 'antd/lib/form/Form'
+import { Callout } from 'components/Callout/Callout'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import { CREATE_FLOW } from 'constants/fathomEvents'
+import { trackFathomGoal } from 'lib/fathom'
+import { Selection } from 'packages/v2v3/components/Create/components/Selection/Selection'
+import { getAvailableApprovalStrategies } from 'packages/v4v5/utils/approvalHooks'
+import { useContext } from 'react'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
+import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
+import { PageContext } from '../../Wizard/contexts/PageContext'
+import { Wizard } from '../../Wizard/Wizard'
+import { CustomRuleCard } from './components/CustomRuleCard'
+import { RuleCard } from './components/RuleCard'
+import { useReconfigurationRulesForm } from './hooks/useReconfigurationRulesForm'
 
 export const ReconfigurationRulesPage = () => {
   useSetCreateFurthestPageReached('reconfigurationRules')
@@ -36,7 +34,8 @@ export const ReconfigurationRulesPage = () => {
   const selection = useWatch('selection', form)
   const isNextEnabled = !!selection
 
-  const reconfigurationStrategies = getAvailableApprovalStrategies()
+  // Always v5 for Create flow - chainId defaults to environment-based value
+  const reconfigurationStrategies = getAvailableApprovalStrategies(5)
 
   return (
     <Form

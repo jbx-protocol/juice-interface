@@ -1,114 +1,130 @@
-import { SECONDS_IN_DAY, SEVEN_DAYS_IN_HOURS, THREE_DAYS_IN_SECONDS } from 'constants/numbers'
+import {
+  SECONDS_IN_DAY,
+  SEVEN_DAYS_IN_HOURS,
+  THREE_DAYS_IN_SECONDS,
+} from 'constants/numbers'
 
+import { t } from '@lingui/macro'
+import { JBChainId, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
 import { ApprovalHook } from 'models/approvalHooks'
 import { durationBallotStrategyDescription } from 'packages/v2v3/constants/ballotStrategies'
 import { isEqualAddress } from 'utils/address'
-import { t } from '@lingui/macro'
 import { zeroAddress } from 'viem'
 
-// V5 approval hook addresses from https://github.com/Bananapus/nana-core-v5
-const V5_APPROVAL_HOOKS = {
-  oneDay: '0xcffdd1303f24145bd2c84e7bf15af1eb6ab924d7',
-  threeDay: '0x09b23b09af88bb6d7e9c957ff9f861f1c917111b',
-  threeHour: '0x4eeb65e13ade86155d169ba1fabd06828171799a',
-  sevenDay: '0xdf911b94712cf117fb63b69838b16e1710636031',
-}
-
-// V4 approval hook addresses (kept for backward compatibility)
-const V4_APPROVAL_HOOKS = {
-  oneDay: '0xd7ce0fe638e02a31fc7c8c231684d85ad9b2ca3d',
-  threeDay: '0xba8a653a5cc985d2f1458e80a9700490c11ab981',
-  sevenDay: '0x05505582a553669f540ba2dd0b55fc75b8176c40',
-  // threeHour: '0xd0adabed7c69758884d2287ddb6fc68bbaf831b1', // Not available in v4 UI yet
+/**
+ * Get the default chainId for the Create flow based on environment
+ * Sepolia (11155111) for testnet, Mainnet (1) for production
+ */
+export const getDefaultCreateFlowChainId = (): JBChainId => {
+  return process.env.NEXT_PUBLIC_TESTNET === 'true' ? 11155111 : 1
 }
 
 /**
- * Get all approval hook strategies
- * Uses v5 addresses as the default since new projects should use v5
+ * Get approval hook addresses for a specific version and chain from the SDK
+ *
+ * IMPORTANT: Always pass chainId to query dynamically from the SDK.
+ * This ensures we get the correct addresses per chain and is future-proof
+ * against potential SDK changes where addresses might differ per chain.
  */
-export const getAvailableApprovalStrategies = (): ApprovalHook[] => [
-  {
-    id: 'sevenDay',
-    address: V5_APPROVAL_HOOKS.sevenDay,
-    name: t`7-day deadline`,
-    description: durationBallotStrategyDescription(7),
-    durationSeconds: SEVEN_DAYS_IN_HOURS,
-  },
-  {
-    id: 'oneDay',
-    address: V5_APPROVAL_HOOKS.oneDay,
-    name: t`1-day deadline`,
-    description: durationBallotStrategyDescription(1),
-    durationSeconds: SECONDS_IN_DAY,
-  },
-  {
-    id: 'threeDay',
-    address: V5_APPROVAL_HOOKS.threeDay,
-    name: t`3-day deadline`,
-    description: durationBallotStrategyDescription(3),
-    durationSeconds: THREE_DAYS_IN_SECONDS,
-    isDefault: true
-  },
-  {
-    id: 'none',
-    address: zeroAddress,
-    name: t`No deadline`,
-    description: t`Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
-    durationSeconds: 0,
+const getApprovalHookAddresses = (version: 4 | 5, chainId: JBChainId) => {
+  const chainIdKey = String(
+    chainId,
+  ) as keyof (typeof jbContractAddress)['4'][JBCoreContracts.JBDeadline1Day]
+
+  return {
+    oneDay:
+      jbContractAddress[String(version) as '4' | '5'][
+        JBCoreContracts.JBDeadline1Day
+      ][chainIdKey],
+    threeDay:
+      jbContractAddress[String(version) as '4' | '5'][
+        JBCoreContracts.JBDeadline3Days
+      ][chainIdKey],
+    sevenDay:
+      jbContractAddress[String(version) as '4' | '5'][
+        JBCoreContracts.JBDeadline7Days
+      ][chainIdKey],
+    threeHour:
+      version === 5
+        ? jbContractAddress['5'][JBCoreContracts.JBDeadline3Hours][chainIdKey]
+        : undefined,
   }
-
-  // TODO: ApprovalHookId is still getting mixed with v2v3 stuff in ProjectState so can't use
-  // 3hrs until that's fixed
-
-  // {
-  //   id: 'threeHour',
-  //   address: V5_APPROVAL_HOOKS.threeHour,
-  //   name: '3 hours',
-  //   description: 'Approval after 3 hours',
-  //   durationSeconds: THREE_HOURS_IN_SECONDS,
-  // },
-]
+}
 
 /**
- * Get v4 approval hook strategies
- * Used for backward compatibility with existing v4 projects
+ * Get all approval hook strategies for a specific version and chain
+ *
+ * Usage:
+ * - For editing existing projects: Pass project's version and chainId
+ * - For creating new projects (v5 only): chainId defaults to environment-based default if not provided
+ *
+ * @param version - 4 or 5
+ * @param chainId - Optional chainId. If not provided, defaults to environment-based chainId for Create flow
  */
-export const getV4ApprovalStrategies = (): ApprovalHook[] => [
-  {
-    id: 'sevenDay',
-    address: V4_APPROVAL_HOOKS.sevenDay,
-    name: t`7-day deadline`,
-    description: durationBallotStrategyDescription(7),
-    durationSeconds: SEVEN_DAYS_IN_HOURS,
-  },
-  {
-    id: 'oneDay',
-    address: V4_APPROVAL_HOOKS.oneDay,
-    name: t`1-day deadline`,
-    description: durationBallotStrategyDescription(1),
-    durationSeconds: SECONDS_IN_DAY,
-  },
-  {
-    id: 'threeDay',
-    address: V4_APPROVAL_HOOKS.threeDay,
-    name: t`3-day deadline`,
-    description: durationBallotStrategyDescription(3),
-    durationSeconds: THREE_DAYS_IN_SECONDS,
-    isDefault: true
-  },
-  {
-    id: 'none',
-    address: zeroAddress,
-    name: t`No deadline`,
-    description: t`Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
-    durationSeconds: 0,
-  }
-]
+export const getAvailableApprovalStrategies = (
+  version: 4 | 5,
+  chainId?: JBChainId,
+): ApprovalHook[] => {
+  const resolvedChainId = chainId ?? getDefaultCreateFlowChainId()
+  const hooks = getApprovalHookAddresses(version, resolvedChainId)
+
+  return [
+    {
+      id: 'sevenDay',
+      address: hooks.sevenDay,
+      name: t`7-day deadline`,
+      description: durationBallotStrategyDescription(7),
+      durationSeconds: SEVEN_DAYS_IN_HOURS,
+    },
+    {
+      id: 'oneDay',
+      address: hooks.oneDay,
+      name: t`1-day deadline`,
+      description: durationBallotStrategyDescription(1),
+      durationSeconds: SECONDS_IN_DAY,
+    },
+    {
+      id: 'threeDay',
+      address: hooks.threeDay,
+      name: t`3-day deadline`,
+      description: durationBallotStrategyDescription(3),
+      durationSeconds: THREE_DAYS_IN_SECONDS,
+      isDefault: true,
+    },
+    {
+      id: 'none',
+      address: zeroAddress,
+      name: t`No deadline`,
+      description: t`Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
+      durationSeconds: 0,
+    },
+
+    // TODO: ApprovalHookId is still getting mixed with v2v3 stuff in ProjectState so can't use
+    // 3hrs until that's fixed
+
+    // {
+    //   id: 'threeHour',
+    //   address: hooks.threeHour,
+    //   name: '3 hours',
+    //   description: 'Approval after 3 hours',
+    //   durationSeconds: THREE_HOURS_IN_SECONDS,
+    // },
+  ]
+}
+
+/**
+ * Get v4 approval hook strategies (deprecated - use getAvailableApprovalStrategies with version param)
+ * @deprecated Use getAvailableApprovalStrategies(4, chainId) instead
+ */
+export const getV4ApprovalStrategies = (chainId: JBChainId): ApprovalHook[] =>
+  getAvailableApprovalStrategies(4, chainId)
 
 /**
  * Create a custom approval hook strategy
  */
-export const createCustomApprovalStrategy = (address: string): ApprovalHook => ({
+export const createCustomApprovalStrategy = (
+  address: string,
+): ApprovalHook => ({
   address,
   id: 'custom',
   name: 'Custom',
@@ -119,14 +135,34 @@ export const createCustomApprovalStrategy = (address: string): ApprovalHook => (
 /**
  * Get an approval strategy (1 day, 1 week, etc.) by address
  * Checks both v5 and v4 addresses for backward compatibility
+ *
+ * @param address - The approval hook address
+ * @param version - 4 or 5
+ * @param chainId - Optional chainId. If not provided, defaults to environment-based chainId for Create flow
  */
-export const getApprovalStrategyByAddress = (address: string): ApprovalHook => {
-  // First check v5 strategies
-  let strategy = getAvailableApprovalStrategies().find(s => isEqualAddress(s.address, address))
+export const getApprovalStrategyByAddress = (
+  address: string,
+  version: 4 | 5,
+  chainId?: JBChainId,
+): ApprovalHook => {
+  const resolvedChainId = chainId ?? getDefaultCreateFlowChainId()
 
-  // If not found, check v4 strategies for backward compatibility
+  // Check the specified version first
+  let strategy = getAvailableApprovalStrategies(version, resolvedChainId).find(
+    s => isEqualAddress(s.address, address),
+  )
+
+  if (strategy) return strategy
+
+  // Check both v5 and v4 strategies for backward compatibility
+  strategy = getAvailableApprovalStrategies(5, resolvedChainId).find(s =>
+    isEqualAddress(s.address, address),
+  )
+
   if (!strategy) {
-    strategy = getV4ApprovalStrategies().find(s => isEqualAddress(s.address, address))
+    strategy = getAvailableApprovalStrategies(4, resolvedChainId).find(s =>
+      isEqualAddress(s.address, address),
+    )
   }
 
   // If still not found, create a custom strategy

@@ -564,7 +564,7 @@ export const ReviewDeployPage = () => {
         </Callout.Info>
         <Callout.Warning className="mt-4">
           <Trans>
-            JUICEBOX V4 IS BRAND NEW. We highly recommend you talk to
+            JUICEBOX V5 IS BRAND NEW. We highly recommend you talk to
             JuiceboxDAO or Juiceworks before launching your project to help make
             sure things look good. If you know what you're doing, carry on.
           </Trans>

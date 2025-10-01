@@ -13707,18 +13707,18 @@ jsx-ast-utils@^3.3.5:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-juice-sdk-core@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/juice-sdk-core/-/juice-sdk-core-2.1.0.tgz#7f7a3a0b2ec0bc4b773d7c18b8377324c41d2ad2"
-  integrity sha512-FGmDvINWu+/9ru4k9tC0zM+UUtrY1oN55Ml7HRGKAoe5iNSoCpiodwZPzY02UZkJY3Fo13E8GhclQJgZchVMYQ==
+juice-sdk-core@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/juice-sdk-core/-/juice-sdk-core-2.1.1.tgz#1bab8d86e418c60e35bcc250ce86223608e41e08"
+  integrity sha512-wbivXVGVWHoNdwJfZVBk9BrdOSc3SywIBf2Tp6fUMwdTe0NOyd6FVz8S4JK+nETP4exbXO/f1IGIUfsuMsKVxw==
   dependencies:
     bs58 "^5.0.0"
     fpnum "^1.0.0"
 
-juice-sdk-react@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/juice-sdk-react/-/juice-sdk-react-5.0.1.tgz#66d886c187d87f8b8620963e57551b5be6741f75"
-  integrity sha512-QNZg/tggnydPSpOD9Vlb9nltPpAijEdjZ6MpTs833tQYoyFfcjw0MkaMsoYPGLOVt4XUuOqiC8L1ELtRqGcs1w==
+juice-sdk-react@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/juice-sdk-react/-/juice-sdk-react-5.0.2.tgz#02643e0cd70ce60319077da4678f8f1bb193f9e3"
+  integrity sha512-JrUxLygSYu3sVju9XX1SDtnNlt9gotGjhnRn7k+6UWPLop3PcgGjUoxGCCEid8Bu6y2fjrB2QNUQ0r1V2BWuWA==
   dependencies:
     graphql-request "^7.2.0"
 

@@ -26,6 +26,7 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
 import { TransactionSuccessModal } from '../TransactionSuccessModal'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
 import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
 import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
@@ -60,6 +61,7 @@ export function ReviewConfirmModal({
   const chainId = useJBChainId()
   const walletChainId = useChainId()
   const walletConnectedToWrongChain = chainId !== walletChainId
+  const { version } = useV4V5Version()
 
   // Project owner and Gnosis Safe detection
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
@@ -97,31 +99,33 @@ export function ReviewConfirmModal({
     try {
       const formVals = editCycleForm!.getFieldsValue(true)
       if (!contracts.primaryNativeTerminal.data) throw new Error('Terminal not ready')
-      
+
       const editData: Record<number, EditCycleTxArgs> = {}
-      
+
       if (!suckers || suckers.length === 0) {
         throw new Error('No project chains available')
       }
-      
+
       for (const sucker of suckers) {
         const chainId = sucker.peerChainId
         const chainProjectId = sucker.projectId
-        
-        // Calculate specific args for this chain using its projectId
+
+        // Calculate specific args for this chain using its projectId and chainId
         const chainArgs = transformEditCycleFormFieldsToTxArgs({
           formValues: formVals,
           primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
           tokenAddress: NATIVE_TOKEN as `0x${string}`,
           dataHook: rulesetMetadata?.dataHook as `0x${string}`,
           projectId: BigInt(chainProjectId),
+          chainId: chainId as JBChainId,
+          version: version,
         })
-        
+
         editData[chainId as JBChainId] = chainArgs
       }
-      
+
       const quote = await getEditQuote(editData, projectChains)
-      setTxQuote(quote!)    
+      setTxQuote(quote!)
     } catch (e) {
       emitErrorNotification((e as Error).message)
     } finally {

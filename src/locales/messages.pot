@@ -230,6 +230,9 @@ msgstr ""
 msgid "Built by the best"
 msgstr ""
 
+msgid "JUICEBOX V5 IS BRAND NEW. We highly recommend you talk to JuiceboxDAO or Juiceworks before launching your project to help make sure things look good. If you know what you're doing, carry on."
+msgstr ""
+
 msgid "<0>Edits to this project must be made before this deadline. This gives token holders time to verify the edits before they take effect.</0><1>For example: with a 1-day edit deadline, edits must be made at least 1 day before a ruleset cycle starts.</1>"
 msgstr ""
 
@@ -1446,9 +1449,6 @@ msgid "minutes"
 msgstr ""
 
 msgid "Convert to USD"
-msgstr ""
-
-msgid "JUICEBOX V4 IS BRAND NEW. We highly recommend you talk to JuiceboxDAO or Juiceworks before launching your project to help make sure things look good. If you know what you're doing, carry on."
 msgstr ""
 
 msgid "The project owner is the only payout recipient. Any ETH paid out this cycle will go to them."

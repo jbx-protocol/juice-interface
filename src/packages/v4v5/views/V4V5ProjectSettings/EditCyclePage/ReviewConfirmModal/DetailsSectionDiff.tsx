@@ -57,7 +57,7 @@ export function DetailsSectionDiff() {
               oldValue={<DurationValue duration={currentDuration} />}
             />
           )}
-          {ballotHasDiff && currentBallot && (
+          {ballotHasDiff && currentBallot && newBallot && (
             <FundingCycleListItem
               name={t`Rule change deadline`}
               value={

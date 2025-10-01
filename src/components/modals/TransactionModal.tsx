@@ -8,7 +8,7 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { TxStatus } from 'models/transaction'
 import Image from 'next/legacy/image'
-import { OmnichainTxLoadingContent } from 'packages/v4/components/Create/components/pages/ReviewDeploy/components/LaunchProjectModal/OmnichainTxLoadingContent'
+import { OmnichainTxLoadingContent } from 'packages/v4v5/components/Create/components/pages/ReviewDeploy/components/LaunchProjectModal/OmnichainTxLoadingContent'
 import { useChainId } from 'wagmi'
 import EtherscanLink from '../EtherscanLink'
 

@@ -2,15 +2,15 @@ import { Trans } from '@lingui/macro'
 import { Divider } from 'antd'
 import Loading from 'components/Loading'
 import { ProjectEventsQuery } from 'generated/graphql'
-import { useActivityEventsQuery } from 'generated/v4/graphql'
+import { useActivityEventsQuery } from 'generated/v4v5/graphql'
 import { useProjectEvents } from 'hooks/useProjectEvents'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
-import { ActivityEvent } from 'packages/v4/views/V4ProjectDashboard/V4ProjectTabs/V4ActivityPanel/activityEventElems/ActivityElement'
+import { ActivityEvent } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/activityEventElems/ActivityElement'
 import {
   AnyEvent,
   transformEventData,
-} from 'packages/v4/views/V4ProjectDashboard/V4ProjectTabs/V4ActivityPanel/utils/transformEventsData'
-import { translateEventDataToPresenter } from 'packages/v4/views/V4ProjectDashboard/V4ProjectTabs/V4ActivityPanel/V4ActivityList'
+} from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/utils/transformEventsData'
+import { translateEventDataToPresenter } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/V4V5ActivityList'
 import { useMemo } from 'react'
 import { AnyProjectEvent } from './activityEventElems/AnyProjectEvent'
 

@@ -1,4 +1,5 @@
-import { readJbMultiTerminalStore } from 'juice-sdk-core'
+import { jbMultiTerminalAbi } from 'juice-sdk-core'
+import { readContract } from 'wagmi/actions'
 import { JBChainId } from 'juice-sdk-react'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
@@ -25,9 +26,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .status(400)
         .json({ error: 'terminalAddress and chainId is required' })
     }
-    const terminalStoreAddress = await readJbMultiTerminalStore(wagmiConfig, {
-      chainId,
+    const terminalStoreAddress = await readContract(wagmiConfig, {
+      abi: jbMultiTerminalAbi,
+      functionName: 'STORE',
       address: terminalAddress as Address,
+      chainId,
     })
 
     // cache for 1 week

@@ -16,7 +16,7 @@ const V2V3CreateProviders = dynamic(
   () => import('packages/v2v3/components/Create/CreateProviders'),
   { ssr: false },
 )
-const V4Create = dynamic(() => import('packages/v4/components/Create/Create'), {
+const V4Create = dynamic(() => import('packages/v4v5/components/Create/Create'), {
   ssr: false,
 })
 

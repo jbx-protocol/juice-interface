@@ -16,7 +16,7 @@ const V2V3CreateProviders = dynamic(
   () => import('packages/v2v3/components/Create/CreateProviders'),
   { ssr: false },
 )
-const V4Create = dynamic(() => import('packages/v4v5/components/Create/Create'), {
+const V4V5Create = dynamic(() => import('packages/v4v5/components/Create/Create'), {
   ssr: false,
 })
 const V4V5VersionProvider = dynamic(
@@ -30,7 +30,7 @@ const V4V5VersionProvider = dynamic(
 export default function CreatePage() {
   const contentByVersion = featureFlagEnabled(FEATURE_FLAGS.V4) ? (
     <V4V5VersionProvider defaultVersion={5}>
-      <V4Create />
+      <V4V5Create />
     </V4V5VersionProvider>
   ) : (
     <V2V3CreateProviders>

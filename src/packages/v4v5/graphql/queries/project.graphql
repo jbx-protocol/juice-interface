@@ -1,0 +1,21 @@
+query Projects($where: projectFilter) {
+  projects(where: $where) {
+    items {
+      projectId
+      metadataUri
+      handle
+      createdAt
+      volume
+      trendingVolume
+      paymentsCount
+    }
+  }
+}
+
+query Project($chainId: Float!, $projectId: Float!, $version: Float!) {
+  project(chainId: $chainId, projectId: $projectId, version: $version) {
+    version
+    suckerGroupId
+    createdAt
+  }
+}

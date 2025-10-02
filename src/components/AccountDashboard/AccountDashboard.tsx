@@ -13,7 +13,7 @@ import WalletContributionCard from 'components/WalletContributionCard'
 import { PV_V4 } from 'constants/pv'
 import { BigNumber } from 'ethers'
 import { useWalletContributionsQuery } from 'generated/graphql'
-import { useWalletContributionsQuery as useV4WalletContributionsQuery } from 'generated/v4/graphql'
+import { useWalletContributionsQuery as useV4V5WalletContributionsQuery } from 'generated/v4v5/graphql'
 import { useDBProjectsAggregateQuery } from 'hooks/useDBProjects'
 import useMobile from 'hooks/useMobile'
 import {
@@ -64,7 +64,7 @@ function ContributedList({ address }: { address: string }) {
       },
     })
 
-  const { data: v4Participants } = useV4WalletContributionsQuery({
+  const { data: v4Participants } = useV4V5WalletContributionsQuery({
     client: bendystrawClient,
     variables: {
       address,

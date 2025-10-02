@@ -11,8 +11,8 @@ import { JBChainId } from 'juice-sdk-core'
 import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
-import { v4ProjectRoute } from 'packages/v4/utils/routes'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
+import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
 export default function TrendingProjectCard({

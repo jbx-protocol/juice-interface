@@ -22,7 +22,7 @@ import {
   Dbv4V5ProjectsDocument,
   Dbv4V5ProjectsQuery,
   Dbv4V5ProjectsQueryVariables,
-} from 'packages/v4/graphql/client/graphql'
+} from 'packages/v4v5/graphql/client/graphql'
 import { Database } from 'types/database.types'
 import { isHardArchived } from 'utils/archived'
 import { getSubgraphIdForProject } from 'utils/graph'

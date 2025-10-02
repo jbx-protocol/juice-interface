@@ -1,15 +1,15 @@
 import * as constants from '@ethersproject/constants'
 import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 import { Skeleton } from 'antd'
-import { PV_V2, PV_V4 } from 'constants/pv'
+import { PV_V2, PV_V4, PV_V5 } from 'constants/pv'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useSubtitle } from 'hooks/useSubtitle'
 import { DBProjectsAggregate } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
-import { v4ProjectRoute } from 'packages/v4/utils/routes'
+import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
+import { v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { isHardArchived } from 'utils/archived'
 import { formatDate } from 'utils/format/formatDate'
 import { ArchivedBadge } from './ArchivedBadge'
@@ -61,6 +61,11 @@ export default function ProjectCard({
   const projectCardUrl =
     pv === PV_V4
       ? v4ProjectRoute({
+          projectId,
+          chainId,
+        })
+      : pv === PV_V5
+      ? v5ProjectRoute({
           projectId,
           chainId,
         })

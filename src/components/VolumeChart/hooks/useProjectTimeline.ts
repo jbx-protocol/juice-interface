@@ -1,6 +1,6 @@
 import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectTlQuery, useProjectsQuery } from 'generated/graphql'
-import { useProjectQuery, useSuckerGroupTlQuery } from 'generated/v4/graphql'
+import { useProjectQuery, useSuckerGroupTlQuery } from 'generated/v4v5/graphql'
 import { daysToMS, minutesToMS } from 'utils/units'
 import { ProjectTimelinePoint, ProjectTimelineRange } from '../types'
 

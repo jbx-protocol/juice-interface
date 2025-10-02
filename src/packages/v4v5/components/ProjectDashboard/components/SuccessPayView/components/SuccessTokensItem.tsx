@@ -1,0 +1,41 @@
+import { Trans, t } from '@lingui/macro'
+
+import { CartItemBadge } from 'components/CartItemBadge'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
+import { useProjectPageQueries } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useProjectPageQueries'
+import { useV4V5TokensPanel } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5TokensPanel/hooks/useV4V5TokensPanel'
+
+export const SuccessTokensItem = () => {
+  const { projectPayReceipt } = useProjectPageQueries()
+
+  const {
+      projectToken,
+      projectHasErc20Token,
+    } = useV4V5TokensPanel()
+
+  if (
+    !projectPayReceipt ||
+    !projectPayReceipt.tokensReceived.length ||
+    projectPayReceipt.tokensReceived === '0'
+  )
+    return null
+
+  return (
+    <div className="flex items-center py-5">
+      <ProjectHeaderLogo className="h-14 w-14 rounded-full" />
+      <div className="ml-3">
+        <div>
+          <span className="text-sm font-medium">
+            <Trans>Project tokens</Trans>
+          </span>
+          <div className="mt-1 flex items-center gap-1">
+            <span className="text-sm text-grey-500 dark:text-slate-200">
+              {projectPayReceipt.tokensReceived}
+            </span>
+            <CartItemBadge className="w-fit">{projectHasErc20Token ? projectToken : t`Token`}</CartItemBadge>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

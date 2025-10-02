@@ -35,10 +35,9 @@ export const V4V5SettingsProvider: React.FC<React.PropsWithChildren> = ({
   const bendystrawUrl = urlParts.slice(0, 3).join('/') // https://testnet.bendystraw.xyz or https://bendystraw.xyz
   const bendystrawApiKey = urlParts[3] ?? '' // API key from path
 
-  const bendystrawConfig = {
-    apiKey: isLocalhost ? bendystrawApiKey : '',
-    url: bendystrawUrl,
-  }
+  const bendystrawConfig = isLocalhost && bendystrawApiKey
+    ? { apiKey: bendystrawApiKey, url: bendystrawUrl } // Localhost: pass both API key and URL
+    : { apiKey: '' } // Production (whitelisted domains): just empty API key, no URL
 
   return (
     <AppWrapper hideNav>

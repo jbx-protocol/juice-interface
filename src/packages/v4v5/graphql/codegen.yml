@@ -1,0 +1,24 @@
+overwrite: true
+schema: https://bendystraw.xyz/schema
+documents: 'src/packages/v4v5/graphql/queries/**/*.graphql'
+generates:
+  src/generated/v4v5/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+      - add:
+          content: "import { BigNumber } from '@ethersproject/bignumber'"
+  src/packages/v4v5/graphql/client/:
+    preset: 'client'
+  src/packages/v4v5/graphql/graphql.schema.json:
+    plugins:
+      - 'introspection'
+config:
+  namingConvention:
+    enumValues: keep
+  scalars:
+    BigInt: bigint
+  avoidOptionals:
+    field: true
+  skipTypename: true

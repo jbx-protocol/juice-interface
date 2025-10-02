@@ -28,6 +28,9 @@ export default function ProjectsFilterAndSort({
   includeV4,
   setIncludeV4,
 
+  includeV5,
+  setIncludeV5,
+
   showArchived,
   setShowArchived,
   searchTags,
@@ -45,6 +48,9 @@ export default function ProjectsFilterAndSort({
 
   includeV4: boolean
   setIncludeV4: CheckboxOnChange
+
+  includeV5: boolean
+  setIncludeV5: CheckboxOnChange
 
   showArchived: boolean
   setShowArchived: CheckboxOnChange
@@ -172,6 +178,11 @@ export default function ProjectsFilterAndSort({
               label={t`V4`}
               checked={includeV4}
               onChange={setIncludeV4}
+            />
+            <FilterCheckboxItem
+              label={t`V5`}
+              checked={includeV5}
+              onChange={setIncludeV5}
             />
             <FilterCheckboxItem
               label={t`Archived`}

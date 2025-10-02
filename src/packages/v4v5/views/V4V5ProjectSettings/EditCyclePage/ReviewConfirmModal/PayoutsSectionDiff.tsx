@@ -1,0 +1,99 @@
+import { Trans, t } from '@lingui/macro'
+
+import { FundingCycleListItem } from 'components/FundingCycleListItem'
+import { getV4V5CurrencyOption } from 'packages/v4v5/utils/currency'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
+import { emptySectionClasses } from './DetailsSectionDiff'
+import { DiffSection } from './DiffSection'
+import DiffedSplitList from './DiffedSplits/DiffedSplitList'
+import { PayoutLimitValue } from './FormattedRulesetValues/DetailsSection/PayoutLimitValue'
+import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
+
+export function PayoutsSectionDiff() {
+  const { version } = useV4V5Version()
+  const {
+    sectionHasDiff,
+    advancedOptionsHasDiff,
+
+    newCurrency,
+    currentCurrency,
+
+    currentDistributionLimit,
+    newDistributionLimit,
+    distributionLimitHasDiff,
+
+    currentPayoutSplits,
+    newPayoutSplits,
+    payoutSplitsHasDiff,
+
+    newHoldFees,
+    currentHoldFees,
+  } = usePayoutsSectionValues()
+
+  if (!sectionHasDiff) {
+    return (
+      <div className={emptySectionClasses}>
+        <Trans>No edits were made to payouts for this cycle.</Trans>
+      </div>
+    )
+  }
+
+  const roundingPrecision = newCurrency === 'ETH' ? 4 : 2
+  return (
+    <DiffSection
+      content={
+        <div className="mb-5 flex flex-col gap-3 text-sm">
+          {distributionLimitHasDiff && (
+            <FundingCycleListItem
+              name={t`Total payouts`}
+              value={
+                <PayoutLimitValue
+                  payoutLimit={newDistributionLimit}
+                  currencyName={newCurrency}
+                  shortName
+                />
+              }
+              oldValue={
+                <PayoutLimitValue
+                  payoutLimit={currentDistributionLimit}
+                  currencyName={currentCurrency}
+                  shortName
+                />
+              }
+            />
+          )}
+          {payoutSplitsHasDiff && (
+            <div className="pb-4">
+              <div className="mb-3 mt-2 text-sm font-semibold">
+                <Trans>Payout recipients:</Trans>
+              </div>
+              <DiffedSplitList
+                splits={newPayoutSplits}
+                diffSplits={currentPayoutSplits}
+                currency={BigInt(getV4V5CurrencyOption(newCurrency, version))}
+                oldCurrency={BigInt(
+                  getV4V5CurrencyOption(currentCurrency, version),
+                )}
+                totalValue={newDistributionLimit}
+                previousTotalValue={currentDistributionLimit}
+                valueFormatProps={{ precision: roundingPrecision }}
+                showDiffs
+              />
+            </div>
+          )}
+        </div>
+      }
+      advancedOptions={
+        advancedOptionsHasDiff && (
+          <FundingCycleListItem
+            name={t`Hold fees`}
+            value={<span className="capitalize">{newHoldFees.toString()}</span>}
+            oldValue={
+              <span className="capitalize">{currentHoldFees.toString()}</span>
+            }
+          />
+        )
+      }
+    />
+  )
+}

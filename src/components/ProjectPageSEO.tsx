@@ -49,3 +49,14 @@ export const V4ProjectSEO: React.FC<{
     <ProjectPageSEO metadata={metadata} url={`${SiteBaseUrl}v4/p/${urn}`} />
   )
 }
+
+export const V5ProjectSEO: React.FC<{
+  metadata?: ProjectMetadata
+  chainId: JBChainId
+  projectId: number
+}> = ({ metadata, chainId, projectId }) => {
+  const urn = toJbUrn(chainId, BigInt(projectId))
+  return (
+    <ProjectPageSEO metadata={metadata} url={`${SiteBaseUrl}v5/p/${urn}`} />
+  )
+}

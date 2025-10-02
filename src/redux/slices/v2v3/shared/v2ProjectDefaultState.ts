@@ -24,12 +24,12 @@ import { CreateState, ProjectState } from './v2ProjectTypes'
 
 import { ONE_MILLION } from 'constants/numbers'
 import { JBChainId } from 'juice-sdk-react'
-import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
+import { JB721TiersHookFlags } from 'packages/v4v5/models/nfts'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
 
 const DEFAULT_DOMAIN = 'juicebox'
 
-export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
+export const DEFAULT_MUST_START_AT_OR_AFTER = '0'
 export const DEFAULT_MINT_RATE = ONE_MILLION
 
 export const DEFAULT_FUNDING_CYCLE_DATA: SerializedV2V3FundingCycleData =

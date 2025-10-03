@@ -53,7 +53,7 @@ export function useV4V5IssueErc20TokenTx() {
         })
 
         onTransactionPendingCallback(hash)
-        addTransaction?.('Launch ERC20 Token', { hash })
+        addTransaction?.('Launch ERC20 Token', { hash, chainId: chainId as JBChainId })
         await waitForTransactionReceipt(
           wagmiConfig,
           {

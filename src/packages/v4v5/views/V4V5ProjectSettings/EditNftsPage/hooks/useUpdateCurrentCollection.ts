@@ -73,7 +73,7 @@ export function useUpdateCurrentCollection({
         address: rulesetMetadata.dataHook,
       })
 
-      addTransaction?.('Update NFT rewards', { hash })
+      addTransaction?.('Update NFT rewards', { hash, chainId })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
         chainId,

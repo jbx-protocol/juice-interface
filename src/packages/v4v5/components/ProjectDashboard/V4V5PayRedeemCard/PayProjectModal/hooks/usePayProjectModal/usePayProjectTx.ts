@@ -217,7 +217,7 @@ export const usePayProjectTx = ({
         })
 
         onTransactionPendingCallback(formikHelpers)
-        addTransaction?.('Pay', { hash })
+        addTransaction?.('Pay', { hash, chainId })
         const transactionReceipt = await waitForTransactionReceipt(
           wagmiConfig,
           {

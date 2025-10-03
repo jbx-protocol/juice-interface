@@ -4,7 +4,7 @@ import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
-import { PV_V2, PV_V4 } from 'constants/pv'
+import { PV_V2, PV_V4, PV_V5 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { JBChainId } from 'juice-sdk-core'
@@ -12,7 +12,7 @@ import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
 export default function TrendingProjectCard({
@@ -65,7 +65,12 @@ export default function TrendingProjectCard({
       prefetch={false}
       key={project.handle}
       href={
-        project.pv === PV_V4 && project.chainIds?.length
+        project.pv === PV_V5 && project.chainIds?.length
+          ? v5ProjectRoute({
+              projectId: project.projectId,
+              chainId: project.chainIds[0],
+            })
+          : project.pv === PV_V4 && project.chainIds?.length
           ? v4ProjectRoute({
               projectId: project.projectId,
               chainId: project.chainIds[0],

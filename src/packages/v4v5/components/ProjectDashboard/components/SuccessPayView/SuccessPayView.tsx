@@ -4,7 +4,8 @@ import { Button } from 'antd'
 import { useJBChainId } from 'juice-sdk-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
+import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useEffect } from 'react'
 import { SuccessNftItem } from './components/SuccessNftItem'
 import { SuccessPayCard } from './components/SuccessPayCard'
@@ -24,6 +25,7 @@ export const SuccessPayView = () => {
   } = useSuccessPayView()
 
   const chainId = useJBChainId()
+  const { version } = useV4V5Version()
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -60,7 +62,7 @@ export const SuccessPayView = () => {
               </SubscribeButton>
             )} */}
 
-            <Link href={v4ProjectRoute({ projectId, chainId })}>
+            <Link href={v4v5ProjectRoute({ projectId, chainId, version })}>
               <Button
                 className="flex items-center gap-2 py-2 px-3.5 font-medium"
                 type="link"

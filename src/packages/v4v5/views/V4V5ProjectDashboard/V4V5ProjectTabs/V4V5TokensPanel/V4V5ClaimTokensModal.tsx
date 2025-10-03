@@ -141,9 +141,10 @@ export function V4V5ClaimTokensModal({
       })
       setTransactionPending(true)
 
-      addTransaction?.('Claim tokens as ERC20', { hash })
+      addTransaction?.('Claim tokens as ERC20', { hash, chainId: selectedChainId })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
+        chainId: selectedChainId,
       })
 
       setLoading(false)

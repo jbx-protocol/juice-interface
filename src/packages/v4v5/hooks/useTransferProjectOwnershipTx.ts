@@ -63,9 +63,10 @@ export function useTransferProjectOwnershipTx() {
         })
 
         onTransactionPending?.(hash)
-        addTransaction?.(`Transfer ownership of ${projectTitle}`, { hash })
+        addTransaction?.(`Transfer ownership of ${projectTitle}`, { hash, chainId: chainId as JBChainId })
         await waitForTransactionReceipt(wagmiConfig, {
           hash,
+          chainId: chainId as JBChainId,
         })
 
         onTransactionConfirmed?.()

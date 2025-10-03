@@ -130,6 +130,7 @@ export function V4V5MintModal({
 
       addTransaction?.(`Mint tokens on ${NETWORKS[selectedChainId]?.label}`, {
         hash,
+        chainId: selectedChainId,
       })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,

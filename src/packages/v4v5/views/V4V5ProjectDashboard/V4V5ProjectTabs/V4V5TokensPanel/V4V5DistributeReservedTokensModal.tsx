@@ -126,6 +126,7 @@ export default function V4V5DistributeReservedTokensModal({
       addTransaction?.('Send reserved tokens', { hash })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
+        chainId: selectedChainId,
       })
 
       setLoading(false)

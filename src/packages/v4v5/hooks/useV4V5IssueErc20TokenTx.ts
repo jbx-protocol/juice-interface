@@ -3,8 +3,8 @@ import { useCallback, useContext } from 'react'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useJBContractContext } from 'juice-sdk-react'
-import { jbControllerAbi } from 'juice-sdk-core'
-import { useWriteContract } from 'wagmi'
+import { jbControllerAbi, JBChainId } from 'juice-sdk-core'
+import { useWriteContract, useChainId } from 'wagmi'
 import { Address, zeroAddress } from 'viem'
 import { BaseTxOpts } from '../models/transactions'
 import { wagmiConfig } from '../wagmiConfig'
@@ -12,6 +12,7 @@ import { wagmiConfig } from '../wagmiConfig'
 export function useV4V5IssueErc20TokenTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { projectId, contracts } = useJBContractContext()
+  const chainId = useChainId()
 
   const { writeContractAsync: deployErc20Tx } = useWriteContract()
 
@@ -57,6 +58,7 @@ export function useV4V5IssueErc20TokenTx() {
           wagmiConfig,
           {
             hash,
+            chainId: chainId as JBChainId,
           },
         )
 
@@ -72,6 +74,7 @@ export function useV4V5IssueErc20TokenTx() {
       projectId,
       addTransaction,
       contracts.controller.data,
+      chainId,
     ],
   )
 }

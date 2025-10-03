@@ -76,6 +76,7 @@ export function useUpdateCurrentCollection({
       addTransaction?.('Update NFT rewards', { hash })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
+        chainId,
       })
 
       setTxLoading(false)

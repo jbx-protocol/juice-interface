@@ -222,6 +222,7 @@ export const usePayProjectTx = ({
           wagmiConfig,
           {
             hash,
+            chainId,
           },
         )
 

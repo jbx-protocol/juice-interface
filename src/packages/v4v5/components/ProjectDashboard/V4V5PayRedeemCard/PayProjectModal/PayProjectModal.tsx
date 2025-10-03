@@ -127,7 +127,7 @@ export const PayProjectModal: React.FC = () => {
                 setOpen(false)
                 setTimeout(() => props.resetForm(), 300)
               }}
-              disableOkButton={Boolean(isAddressListedInOFAC)}
+              disableOkButton={Boolean(isAddressListedInOFAC) || !props.values.userAcceptsTerms}
             >
               {isTransactionPending ? (
                 <div className="flex h-full w-full flex-col items-center justify-center">

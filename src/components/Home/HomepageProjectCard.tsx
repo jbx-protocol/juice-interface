@@ -3,13 +3,13 @@ import { Skeleton } from 'antd'
 import { HomepageCard } from 'components/Home/HomepageCard'
 import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
-import { PV_V2, PV_V4 } from 'constants/pv'
+import { PV_V2, PV_V4, PV_V5 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { JBChainId } from 'juice-sdk-react'
 import { SubgraphQueryProject } from 'models/subgraphProjects'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
 
 function Statistic({
   name,
@@ -55,7 +55,12 @@ export function HomepageProjectCard({
   return (
     <HomepageCard
       href={
-        project.pv === PV_V4 && project.chainId
+        project.pv === PV_V5 && project.chainId
+          ? v5ProjectRoute({
+              projectId: project.projectId,
+              chainId: project.chainId,
+            })
+          : project.pv === PV_V4 && project.chainId
           ? v4ProjectRoute({
               projectId: project.projectId,
               chainId: project.chainId,

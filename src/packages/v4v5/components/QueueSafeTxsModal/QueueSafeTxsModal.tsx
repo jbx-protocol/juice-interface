@@ -8,7 +8,8 @@ import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { SafeProposeTransactionResponse } from 'packages/v4v5/hooks/useProposeSafeTransaction'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { twMerge } from 'tailwind-merge'
 import { safeTxUrl } from 'utils/safe'
 
@@ -49,6 +50,7 @@ export default function QueueSafeTxsModal({
   
   const { eip1193Provider, chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
   const router = useRouter()
+  const { version } = useV4V5Version()
 
   const { data: suckers } = useSuckers()
   const suckersChains = useMemo(() => {
@@ -123,8 +125,8 @@ export default function QueueSafeTxsModal({
     return NETWORKS[chainId]?.label || `Chain ${chainId}`
   }
   const goToProject = useCallback(() => {
-    router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId ?? 1  }))
-  }, [router, suckers])
+    router.push(v4v5ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId ?? 1, version }))
+  }, [router, suckers, version])
   
   return (
     <Modal

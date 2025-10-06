@@ -2,7 +2,6 @@ import { Button, Divider } from 'antd'
 import { JBChainId, useJBChainId, useSuckers } from 'juice-sdk-react'
 import {
   settingsPagePath,
-  v4ProjectRoute,
   v4v5ProjectRoute,
 } from 'packages/v4v5/utils/routes'
 
@@ -173,7 +172,7 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
                 {gnosisSafe && projectId && chainId && (
                   <GnosisSafeBadge
                     safe={gnosisSafe}
-                    href={`${v4ProjectRoute({ projectId, chainId })}/safe`}
+                    href={`${v4v5ProjectRoute({ projectId, chainId, version })}/safe`}
                   />
                 )}
               </span>

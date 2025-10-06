@@ -29,7 +29,10 @@ import { useNftRewards } from './useNftRewards'
 
 const NFT_PAGE_SIZE = 100n
 
-// TODO: This should be imported from the SDK
+/**
+ * Type for individual NFT tier data returned from the 721 Hook Store.
+ * Inferred from the tiersOf function return type in the ABI.
+ */
 export type JB721TierV4 = ContractFunctionReturnType<
   typeof jb721TiersHookStoreAbi,
   'view',
@@ -37,7 +40,6 @@ export type JB721TierV4 = ContractFunctionReturnType<
 >[0]
 
 type NftRewardsContextType = {
-  // nftRewards: is useReadJb721TiersHookStoreTiersOf.data returned
   nftRewards: V4V5NftRewardsData
   loading: boolean | undefined
 }
@@ -54,6 +56,17 @@ export const V4V5NftRewardsContext = createContext<NftRewardsContextType>({
   loading: false,
 })
 
+/**
+ * Provides NFT rewards data for V4/V5 projects.
+ *
+ * Handles three patterns of NFT hook storage:
+ * 1. Direct 721 Hook - dataHook points directly to the 721 Hook contract
+ * 2. Omnichain Deployer - dataHook points to deployer, which stores the real hook
+ * 3. Revnet Deployer - dataHook points to revnet deployer, which stores the real hook
+ *
+ * The resolver logic detects which pattern is being used and fetches the actual
+ * 721 Hook address before loading NFT tier data.
+ */
 export const V4V5NftRewardsProvider: React.FC<
   React.PropsWithChildren<unknown>
 > = ({ children }) => {
@@ -63,15 +76,13 @@ export const V4V5NftRewardsProvider: React.FC<
   const { data: suckers } = useSuckers()
   const { version } = useV4V5Version()
 
+  // Use upcoming ruleset's dataHook for projects that haven't started yet (cycle 0)
   let dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
-
   if (jbRuleSet.ruleset.data?.cycleNumber === 0) {
-    // If the ruleset is the first one, we use the upcoming ruleset's data hook address
-    // (projects that haven't started yet)
     dataHookAddress = upcomingRuleset?.rulesetMetadata?.dataHook
   }
 
-  // Get known deployer addresses from SDK for current version and chain
+  // Check if dataHook is a known deployer that needs resolution
   const omnichainDeployerAddress = chainId
     ? getJBContractAddress('JBOmnichainDeployer', version, chainId)?.toLowerCase()
     : undefined
@@ -84,8 +95,7 @@ export const V4V5NftRewardsProvider: React.FC<
   const isRevnetDeployer =
     dataHookAddress?.toLowerCase() === revDeployerAddress
 
-  // Resolve 721 Hook from Omnichain Deployer if needed
-  // dataHookOf requires (projectId, rulesetId) - both as bigint
+  // Resolve the actual 721 Hook address from deployer contracts
   const currentRulesetId = jbRuleSet.ruleset.data?.id
   const omnichainHook = useReadContract({
     abi: jbOmnichainDeployerAbi,
@@ -101,7 +111,6 @@ export const V4V5NftRewardsProvider: React.FC<
     },
   })
 
-  // Resolve 721 Hook from Revnet Deployer if needed
   const revnetHook = useReadContract({
     abi: revDeployerAbi,
     address: dataHookAddress,
@@ -113,11 +122,12 @@ export const V4V5NftRewardsProvider: React.FC<
     },
   })
 
-  // Use resolved 721 Hook address, or fall back to original dataHook address
+  // Use resolved hook address if available, otherwise use original dataHook
   const resolved721HookAddress = (omnichainHook.data ||
     revnetHook.data ||
     dataHookAddress) as `0x${string}` | undefined
 
+  // Load NFT tier data from the 721 Hook and its store
   const storeAddress = useReadContract({
     abi: jb721TiersHookAbi,
     address: resolved721HookAddress,
@@ -125,20 +135,20 @@ export const V4V5NftRewardsProvider: React.FC<
     chainId,
   })
 
-  // Get all project chains, fallback to current chain if no suckers
-  const projectChains = suckers?.map(s => s.peerChainId).filter(id => id !== undefined) || (chainId ? [chainId] : [])
+  const projectChains =
+    suckers?.map(s => s.peerChainId).filter(id => id !== undefined) ||
+    (chainId ? [chainId] : [])
 
-  // Fetch tiers from current chain (for metadata and structure)
   const tiersOf = useReadContract({
     abi: jb721TiersHookStoreAbi,
     address: storeAddress.data,
     functionName: 'tiersOf',
     args: [
       resolved721HookAddress ?? zeroAddress,
-      [], // _categories
-      false, // _includeResolvedUri, return in each tier a result from a tokenUriResolver if one is included in the delegate
-      0n, // _startingId
-      NFT_PAGE_SIZE, // limit
+      [],
+      false,
+      0n,
+      NFT_PAGE_SIZE,
     ],
     chainId,
   })

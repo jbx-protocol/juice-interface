@@ -75,14 +75,6 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
   // Get first operator with ROOT permission (permission ID = 1)
   const operatorAddress = permissionHolders?.[0]?.operator
 
-  // eslint-disable-next-line no-console
-  console.log('[ProjectHeader] Revnet data:', {
-    isRevnet,
-    permissionHoldersCount: permissionHolders?.length ?? 0,
-    operatorAddress,
-    allHolders: permissionHolders
-  })
-
   return {
     title: projectMetadata?.name,
     subtitle,

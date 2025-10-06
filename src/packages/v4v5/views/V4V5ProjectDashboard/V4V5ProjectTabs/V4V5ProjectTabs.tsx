@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Tab } from '@headlessui/react'
@@ -30,17 +29,12 @@ export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
   const hasNftRewards = useMemo(
       () => {
         const hasRewards = (rewardTiers ?? []).length !== 0
-        console.log('[V4V5ProjectTabs] hasNftRewards calculation:', {
-          rewardTiersCount: rewardTiers?.length ?? 0,
-          hasRewards,
-        })
         return hasRewards
       },
       [rewardTiers],
     )
 
   const showNftRewards = hasNftRewards
-  console.log('[V4V5ProjectTabs] NFT tab visibility decision:', { showNftRewards, hasNftRewards })
 
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)

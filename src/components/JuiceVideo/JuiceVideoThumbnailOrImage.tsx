@@ -70,6 +70,7 @@ export function JuiceVideoThumbnailOrImage({
           onClick={handleClick}
           crossOrigin="anonymous"
           onLoad={() => setLoading(false)}
+          onError={() => setLoading(false)}
           alt="Enlarged media preview"
         />
       )}

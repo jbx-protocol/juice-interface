@@ -49,9 +49,6 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
     operatorAddress,
   } = useV4V5ProjectHeader()
 
-  // eslint-disable-next-line no-console
-  console.log('[V4V5ProjectHeader] Owner display logic:', { isRevnet, operatorAddress, owner, gnosisSafe })
-
   const isMobile = useMobile()
 
   const canQueueRuleSets = useV4V5WalletHasPermission(

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   useJBProjectId,
   useJBRulesetContext,
@@ -56,11 +57,13 @@ export const V4V5NftRewardsProvider: React.FC<
   const { data: suckers } = useSuckers()
 
   let dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
+  console.log('[V4V5NftRewards] Initial dataHook address from rulesetMetadata:', dataHookAddress)
 
   if (jbRuleSet.ruleset.data?.cycleNumber === 0) {
     // If the ruleset is the first one, we use the upcoming ruleset's data hook address
     // (projects that haven't started yet)
     dataHookAddress = upcomingRuleset?.rulesetMetadata?.dataHook
+    console.log('[V4V5NftRewards] Using upcoming ruleset dataHook (cycle #0):', dataHookAddress)
   }
 
   const storeAddress = useReadContract({
@@ -69,9 +72,15 @@ export const V4V5NftRewardsProvider: React.FC<
     functionName: 'STORE',
     chainId,
   })
+  console.log('[V4V5NftRewards] STORE address result:', {
+    data: storeAddress.data,
+    isLoading: storeAddress.isLoading,
+    error: storeAddress.error,
+  })
 
   // Get all project chains, fallback to current chain if no suckers
   const projectChains = suckers?.map(s => s.peerChainId).filter(id => id !== undefined) || (chainId ? [chainId] : [])
+  console.log('[V4V5NftRewards] Project chains for NFT fetching:', projectChains)
 
   // Fetch tiers from current chain (for metadata and structure)
   const tiersOf = useReadContract({
@@ -87,6 +96,12 @@ export const V4V5NftRewardsProvider: React.FC<
     ],
     chainId,
   })
+  console.log('[V4V5NftRewards] tiersOf result:', {
+    tierCount: tiersOf.data?.length ?? 0,
+    isLoading: tiersOf.isLoading,
+    error: tiersOf.error,
+    firstTier: tiersOf.data?.[0],
+  })
 
   const { data: loadedRewardTiers, isLoading: nftRewardTiersLoading } =
     useNftRewards(
@@ -97,6 +112,11 @@ export const V4V5NftRewardsProvider: React.FC<
       storeAddress.data as `0x${string}` | undefined,
       dataHookAddress as `0x${string}` | undefined,
     )
+  console.log('[V4V5NftRewards] Loaded reward tiers after useNftRewards:', {
+    tierCount: loadedRewardTiers?.length ?? 0,
+    isLoading: nftRewardTiersLoading,
+    firstTier: loadedRewardTiers?.[0],
+  })
 
   const loadedCIDs = CIDsOfNftRewardTiersResponse(tiersOf.data ?? [])
 
@@ -153,6 +173,12 @@ export const V4V5NftRewardsProvider: React.FC<
     },
     loading,
   }
+  console.log('[V4V5NftRewards] Final context data being provided:', {
+    rewardTiersCount: ctx.nftRewards.rewardTiers?.length ?? 0,
+    loading: ctx.loading,
+    hasCIDs: (ctx.nftRewards.CIDs?.length ?? 0) > 0,
+    hasFlags: !!ctx.nftRewards.flags,
+  })
 
   return (
     <V4V5NftRewardsContext.Provider value={ctx}>

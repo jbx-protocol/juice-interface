@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import { formatEther, jb721TiersHookStoreAbi } from 'juice-sdk-core'
 import { readContract } from 'wagmi/actions'
@@ -166,12 +167,25 @@ export const useNftRewards = (
     queryKey: ['nftRewards', projectId?.toString(), chainId, dataSourceAddress, projectChains],
     enabled,
     queryFn: async () => {
-      if (!dataSourceAddress || !dataHookAddress) return []
-      
+      console.log('[useNftRewards] Starting NFT fetch with params:', {
+        projectId: projectId?.toString(),
+        chainId,
+        dataSourceAddress,
+        dataHookAddress,
+        projectChains,
+        tiersCount: tiers.length,
+      })
+
+      if (!dataSourceAddress || !dataHookAddress) {
+        console.log('[useNftRewards] Missing addresses, returning empty:', { dataSourceAddress, dataHookAddress })
+        return []
+      }
+
       // Fetch tiers from all chains for supply aggregation
       const allChainTiersData = await Promise.all(
         projectChains.map(async currentChainId => {
           try {
+            console.log(`[useNftRewards] Fetching tiers for chain ${currentChainId}`)
             const chainTiers = await readContract(config, {
               abi: jb721TiersHookStoreAbi,
               address: dataSourceAddress as `0x${string}`,
@@ -185,13 +199,14 @@ export const useNftRewards = (
               ],
               chainId: currentChainId
             })
-            
+            console.log(`[useNftRewards] Chain ${currentChainId} returned ${chainTiers.length} tiers`)
+
             return {
               chainId: currentChainId,
               tiers: chainTiers
             }
           } catch (error) {
-            console.warn(`Failed to fetch tiers for chain ${currentChainId}:`, error)
+            console.warn(`[useNftRewards] Failed to fetch tiers for chain ${currentChainId}:`, error)
             return {
               chainId: currentChainId,
               tiers: []
@@ -199,18 +214,19 @@ export const useNftRewards = (
           }
         })
       )
+      console.log('[useNftRewards] All chain tiers fetched:', allChainTiersData.map(d => ({ chainId: d.chainId, count: d.tiers.length })))
 
       // Aggregate supply data from all chains
       const aggregatedTiers = tiers.map(tier => {
         const perChainSupply = projectChains.map(currentChainId => {
-          const chainTiersData = allChainTiersData.find(chainData => 
+          const chainTiersData = allChainTiersData.find(chainData =>
             chainData.chainId === currentChainId
           )?.tiers
-          
-          const matchingTier = chainTiersData?.find((chainTier: JB721TierV4) => 
+
+          const matchingTier = chainTiersData?.find((chainTier: JB721TierV4) =>
             chainTier.id === tier.id
           )
-          
+
           return {
             chainId: currentChainId,
             remainingSupply: matchingTier?.remainingSupply || 0
@@ -219,12 +235,22 @@ export const useNftRewards = (
 
         return { tier, perChainSupply }
       })
+      console.log('[useNftRewards] Aggregated tiers with per-chain supply:', aggregatedTiers.length)
 
-      return await Promise.all(
-        aggregatedTiers.map(({ tier, perChainSupply }) => 
-          fetchRewardTierMetadata({ tier, perChainSupply })
-        ),
+      const results = await Promise.all(
+        aggregatedTiers.map(async ({ tier, perChainSupply }) => {
+          try {
+            const metadata = await fetchRewardTierMetadata({ tier, perChainSupply })
+            console.log(`[useNftRewards] Successfully fetched metadata for tier ${tier.id}:`, metadata.name)
+            return metadata
+          } catch (error) {
+            console.error(`[useNftRewards] Failed to fetch metadata for tier ${tier.id}:`, error)
+            throw error
+          }
+        }),
       )
+      console.log('[useNftRewards] Final NFT rewards result:', results.length, 'tiers')
+      return results
     },
   })
 }

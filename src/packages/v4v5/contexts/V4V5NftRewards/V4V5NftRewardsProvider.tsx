@@ -4,8 +4,15 @@ import {
   useJBUpcomingRuleset,
   useSuckers,
 } from 'juice-sdk-react'
-import { jb721TiersHookStoreAbi, jb721TiersHookAbi } from 'juice-sdk-core'
+import {
+  jb721TiersHookStoreAbi,
+  jb721TiersHookAbi,
+  jbOmnichainDeployerAbi,
+  revDeployerAbi,
+  getJBContractAddress,
+} from 'juice-sdk-core'
 import { useReadContract } from 'wagmi'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import React, { createContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS_V4,
@@ -54,6 +61,7 @@ export const V4V5NftRewardsProvider: React.FC<
   const { projectId, chainId } = useJBProjectId()
   const upcomingRuleset = useJBUpcomingRuleset({ projectId, chainId })
   const { data: suckers } = useSuckers()
+  const { version } = useV4V5Version()
 
   let dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
 
@@ -63,9 +71,56 @@ export const V4V5NftRewardsProvider: React.FC<
     dataHookAddress = upcomingRuleset?.rulesetMetadata?.dataHook
   }
 
+  // Get known deployer addresses from SDK for current version and chain
+  const omnichainDeployerAddress = chainId
+    ? getJBContractAddress('JBOmnichainDeployer', version, chainId)?.toLowerCase()
+    : undefined
+  const revDeployerAddress = chainId
+    ? getJBContractAddress('REVDeployer', version, chainId)?.toLowerCase()
+    : undefined
+
+  const isOmnichainDeployer =
+    dataHookAddress?.toLowerCase() === omnichainDeployerAddress
+  const isRevnetDeployer =
+    dataHookAddress?.toLowerCase() === revDeployerAddress
+
+  // Resolve 721 Hook from Omnichain Deployer if needed
+  // dataHookOf requires (projectId, rulesetId) - both as bigint
+  const currentRulesetId = jbRuleSet.ruleset.data?.id
+  const omnichainHook = useReadContract({
+    abi: jbOmnichainDeployerAbi,
+    address: dataHookAddress,
+    functionName: 'dataHookOf',
+    args:
+      projectId && currentRulesetId
+        ? [projectId, BigInt(currentRulesetId)]
+        : undefined,
+    chainId,
+    query: {
+      enabled: isOmnichainDeployer && !!projectId && !!currentRulesetId,
+    },
+  })
+
+  // Resolve 721 Hook from Revnet Deployer if needed
+  const revnetHook = useReadContract({
+    abi: revDeployerAbi,
+    address: dataHookAddress,
+    functionName: 'tiered721HookOf',
+    args: projectId ? [projectId] : undefined,
+    chainId,
+    query: {
+      enabled: isRevnetDeployer && !!projectId,
+    },
+  })
+
+  // Use resolved 721 Hook address, or fall back to original dataHook address
+  const resolved721HookAddress = (omnichainHook.data ||
+    revnetHook.data ||
+    dataHookAddress) as `0x${string}` | undefined
+
   const storeAddress = useReadContract({
     abi: jb721TiersHookAbi,
-    address: dataHookAddress,
+    address: resolved721HookAddress,
     functionName: 'STORE',
     chainId,
   })
@@ -79,7 +134,7 @@ export const V4V5NftRewardsProvider: React.FC<
     address: storeAddress.data,
     functionName: 'tiersOf',
     args: [
-      dataHookAddress ?? zeroAddress,
+      resolved721HookAddress ?? zeroAddress,
       [], // _categories
       false, // _includeResolvedUri, return in each tier a result from a tokenUriResolver if one is included in the delegate
       0n, // _startingId
@@ -95,14 +150,14 @@ export const V4V5NftRewardsProvider: React.FC<
       projectId,
       chainId,
       storeAddress.data as `0x${string}` | undefined,
-      dataHookAddress as `0x${string}` | undefined,
+      resolved721HookAddress,
     )
 
   const loadedCIDs = CIDsOfNftRewardTiersResponse(tiersOf.data ?? [])
 
   const p = useReadContract({
     abi: jb721TiersHookAbi,
-    address: dataHookAddress,
+    address: resolved721HookAddress,
     functionName: 'pricingContext',
     chainId,
   })
@@ -112,25 +167,29 @@ export const V4V5NftRewardsProvider: React.FC<
     abi: jb721TiersHookStoreAbi,
     address: storeAddress.data,
     functionName: 'flagsOf',
-    args: [dataHookAddress ?? zeroAddress],
+    args: [resolved721HookAddress ?? zeroAddress],
     chainId,
   })
 
   const { data: collectionMetadataUri } = useReadContract({
     abi: jb721TiersHookAbi,
-    address: dataHookAddress,
+    address: resolved721HookAddress,
     functionName: 'contractURI',
     chainId,
   })
 
   const loading = React.useMemo(
     () =>
+      omnichainHook.isLoading ||
+      revnetHook.isLoading ||
       storeAddress.isLoading ||
       tiersOf.isLoading ||
       nftRewardTiersLoading ||
       p.isLoading ||
       flags.isLoading,
     [
+      omnichainHook.isLoading,
+      revnetHook.isLoading,
       storeAddress.isLoading,
       tiersOf.isLoading,
       nftRewardTiersLoading,

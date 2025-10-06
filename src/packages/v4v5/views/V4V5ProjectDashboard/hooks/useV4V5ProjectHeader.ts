@@ -25,6 +25,8 @@ export interface ProjectHeaderData {
   gnosisSafe: GnosisSafe | undefined | null
   archived: boolean | undefined
   createdAtSeconds: number | undefined
+  isRevnet: boolean | undefined
+  operatorAddress: string | undefined
 }
 
 export const useV4V5ProjectHeader = (): ProjectHeaderData => {
@@ -67,6 +69,20 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
 
   const subtitle = useSubtitle(projectMetadata ?? undefined)
 
+  // Extract revnet data
+  const isRevnet = project?.project?.isRevnet ?? undefined
+  const permissionHolders = project?.project?.permissionHolders?.items
+  // Get first operator with ROOT permission (permission ID = 1)
+  const operatorAddress = permissionHolders?.[0]?.operator
+
+  // eslint-disable-next-line no-console
+  console.log('[ProjectHeader] Revnet data:', {
+    isRevnet,
+    permissionHoldersCount: permissionHolders?.length ?? 0,
+    operatorAddress,
+    allHolders: permissionHolders
+  })
+
   return {
     title: projectMetadata?.name,
     subtitle,
@@ -78,5 +94,7 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
     gnosisSafe,
     archived: projectMetadata?.archived,
     createdAtSeconds: sg?.createdAt,
+    isRevnet,
+    operatorAddress,
   }
 }

@@ -1,5 +1,5 @@
 import { Button, Divider } from 'antd'
-import { JBChainId, useJBChainId, useSuckers } from 'juice-sdk-react'
+import { JBChainId, useJBChainId, useJBProjectMetadataContext, useSuckers } from 'juice-sdk-react'
 import {
   settingsPagePath,
   v4v5ProjectRoute,
@@ -36,6 +36,7 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
   const chainId = useJBChainId()
   const { data: suckers } = useSuckers() as { data: SuckerPair[] }
   const { version } = useV4V5Version()
+  const { metadata } = useJBProjectMetadataContext()
 
   const {
     title,
@@ -175,7 +176,11 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
                       Operator:{' '}
                       <EthereumAddress address={operatorAddress} chainId={chainId} />
                     </Trans>
-                    <RevnetBadge />
+                    <RevnetBadge
+                      projectId={projectId}
+                      logoUri={metadata?.data?.logoUri}
+                      projectName={title}
+                    />
                   </>
                 ) : (
                   <>

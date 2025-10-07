@@ -13,6 +13,7 @@ import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { GnosisSafe } from 'models/safe'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
+import { getJBContractAddress } from 'juice-sdk-core'
 
 export interface ProjectHeaderData {
   title: string | undefined
@@ -69,11 +70,27 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
 
   const subtitle = useSubtitle(projectMetadata ?? undefined)
 
-  // Extract revnet data
-  const isRevnet = project?.project?.isRevnet ?? undefined
+  // Extract revnet data from GraphQL (if available)
+  const graphQLIsRevnet = project?.project?.isRevnet
   const permissionHolders = project?.project?.permissionHolders?.items
-  // Get first operator with ROOT permission (permission ID = 1)
-  const operatorAddress = permissionHolders?.[0]?.operator
+  // For Revnets: Filter out REVLoans contract (permission 16 - USE_ALLOWANCE)
+  // The remaining permission holder is the actual operator
+  const graphQLOperatorAddress = permissionHolders?.find(
+    holder => !holder.permissions?.includes(16)
+  )?.operator
+
+  // Frontend fallback: Detect Revnet by checking if owner matches REVDeployer contract
+  const revDeployerAddress = chainId
+    ? getJBContractAddress('REVDeployer', version, chainId)?.toLowerCase()
+    : undefined
+  const ownerIsRevDeployer =
+    projectOwnerAddress && revDeployerAddress
+      ? projectOwnerAddress.toLowerCase() === revDeployerAddress
+      : false
+
+  // Use GraphQL data if available, otherwise fall back to on-chain detection
+  const isRevnet = graphQLIsRevnet ?? (ownerIsRevDeployer ? true : undefined)
+  const operatorAddress = graphQLOperatorAddress
 
   return {
     title: projectMetadata?.name,

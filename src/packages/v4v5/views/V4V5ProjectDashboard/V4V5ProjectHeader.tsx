@@ -169,12 +169,16 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
               {!isMobile && <Divider className="mx-4" type="vertical" />}
 
               <span className="inline-flex items-center gap-1">
-                {isRevnet && operatorAddress ? (
+                {isRevnet ? (
                   <>
-                    <Trans>
-                      Operator:{' '}
-                      <EthereumAddress address={operatorAddress} chainId={chainId} />
-                    </Trans>
+                    {operatorAddress ? (
+                      <Trans>
+                        Operator:{' '}
+                        <EthereumAddress address={operatorAddress} chainId={chainId} />
+                      </Trans>
+                    ) : (
+                      <Trans>Managed by Revnet</Trans>
+                    )}
                     <RevnetBadge />
                   </>
                 ) : (

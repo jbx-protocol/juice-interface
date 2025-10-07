@@ -4160,6 +4160,9 @@ msgstr ""
 msgid "Create token"
 msgstr ""
 
+msgid "Managed by Revnet"
+msgstr ""
+
 msgid "Save project details"
 msgstr ""
 

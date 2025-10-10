@@ -32,7 +32,7 @@ export default function QueueSafeProjectDetailsTxsModal({
   const { contracts } = useJBContractContext()
   const formData = useWatch([], form) as ProjectDetailsFormFields | undefined
 
-  const handleExecuteProjectDetailsOnChain = useCallback(async (chainId: JBChainId) => {
+  const handleExecuteProjectDetailsOnChain = useCallback(async (chainId: JBChainId, signerAddress?: string) => {
     if (!formData) throw new Error('Form data is required')
     if (!safeAddress) throw new Error('Safe address is required')
     if (!suckers) throw new Error('No project chains available')
@@ -74,7 +74,8 @@ export default function QueueSafeProjectDetailsTxsModal({
       to: contracts.controller.data ?? '',
       data,
       value: '0',
-      chainId
+      chainId,
+      signerAddressOverride: signerAddress,
     })
     
     emitInfoNotification(

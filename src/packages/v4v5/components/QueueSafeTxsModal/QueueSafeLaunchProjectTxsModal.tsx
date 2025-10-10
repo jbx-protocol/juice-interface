@@ -26,8 +26,8 @@ export default function QueueSafeLaunchProjectTxsModal({
   const { proposeLaunchProjectTx } = useProposeSafeLaunchProjectTx({ safeAddress })
 
   const handleExecuteChain = useCallback(
-    async (chainId: JBChainId): Promise<SafeProposeTransactionResponse> => {
-      return await proposeLaunchProjectTx(chainId, launchData)
+    async (chainId: JBChainId, signerAddress?: string): Promise<SafeProposeTransactionResponse> => {
+      return await proposeLaunchProjectTx(chainId, launchData, signerAddress)
     },
     [proposeLaunchProjectTx, launchData],
   )

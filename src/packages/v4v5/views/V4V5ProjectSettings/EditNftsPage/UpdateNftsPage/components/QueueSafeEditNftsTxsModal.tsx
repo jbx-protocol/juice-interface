@@ -28,7 +28,7 @@ export default function QueueSafeEditNftsTxsModal({
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress: safeAddress || '' })
   const { populateTransaction } = usePopulateNftUpdateTx()
 
-  const handleExecuteNftUpdateOnChain = useCallback(async (chainId: JBChainId) => {
+  const handleExecuteNftUpdateOnChain = useCallback(async (chainId: JBChainId, signerAddress?: string) => {
     if (!safeAddress) throw new Error('Safe address is required')
 
     // 1. Prepare transaction data for NFT update
@@ -40,6 +40,7 @@ export default function QueueSafeEditNftsTxsModal({
       data: txData.data,
       value: txData.value,
       chainId,
+      signerAddressOverride: signerAddress,
     })
 
     emitInfoNotification(`Safe transaction queued on ${chainId}`)

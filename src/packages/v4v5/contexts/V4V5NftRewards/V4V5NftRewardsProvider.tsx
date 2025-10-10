@@ -4,8 +4,15 @@ import {
   useJBUpcomingRuleset,
   useSuckers,
 } from 'juice-sdk-react'
-import { jb721TiersHookStoreAbi, jb721TiersHookAbi } from 'juice-sdk-core'
+import {
+  jb721TiersHookStoreAbi,
+  jb721TiersHookAbi,
+  jbOmnichainDeployerAbi,
+  revDeployerAbi,
+  getJBContractAddress,
+} from 'juice-sdk-core'
 import { useReadContract } from 'wagmi'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import React, { createContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS_V4,
@@ -22,7 +29,10 @@ import { useNftRewards } from './useNftRewards'
 
 const NFT_PAGE_SIZE = 100n
 
-// TODO: This should be imported from the SDK
+/**
+ * Type for individual NFT tier data returned from the 721 Hook Store.
+ * Inferred from the tiersOf function return type in the ABI.
+ */
 export type JB721TierV4 = ContractFunctionReturnType<
   typeof jb721TiersHookStoreAbi,
   'view',
@@ -30,7 +40,6 @@ export type JB721TierV4 = ContractFunctionReturnType<
 >[0]
 
 type NftRewardsContextType = {
-  // nftRewards: is useReadJb721TiersHookStoreTiersOf.data returned
   nftRewards: V4V5NftRewardsData
   loading: boolean | undefined
 }
@@ -47,6 +56,17 @@ export const V4V5NftRewardsContext = createContext<NftRewardsContextType>({
   loading: false,
 })
 
+/**
+ * Provides NFT rewards data for V4/V5 projects.
+ *
+ * Handles three patterns of NFT hook storage:
+ * 1. Direct 721 Hook - dataHook points directly to the 721 Hook contract
+ * 2. Omnichain Deployer - dataHook points to deployer, which stores the real hook
+ * 3. Revnet Deployer - dataHook points to revnet deployer, which stores the real hook
+ *
+ * The resolver logic detects which pattern is being used and fetches the actual
+ * 721 Hook address before loading NFT tier data.
+ */
 export const V4V5NftRewardsProvider: React.FC<
   React.PropsWithChildren<unknown>
 > = ({ children }) => {
@@ -54,36 +74,81 @@ export const V4V5NftRewardsProvider: React.FC<
   const { projectId, chainId } = useJBProjectId()
   const upcomingRuleset = useJBUpcomingRuleset({ projectId, chainId })
   const { data: suckers } = useSuckers()
+  const { version } = useV4V5Version()
 
+  // Use upcoming ruleset's dataHook for projects that haven't started yet (cycle 0)
   let dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
-
   if (jbRuleSet.ruleset.data?.cycleNumber === 0) {
-    // If the ruleset is the first one, we use the upcoming ruleset's data hook address
-    // (projects that haven't started yet)
     dataHookAddress = upcomingRuleset?.rulesetMetadata?.dataHook
   }
 
+  // Check if dataHook is a known deployer that needs resolution
+  const omnichainDeployerAddress = chainId
+    ? getJBContractAddress('JBOmnichainDeployer', version, chainId)?.toLowerCase()
+    : undefined
+  const revDeployerAddress = chainId
+    ? getJBContractAddress('REVDeployer', version, chainId)?.toLowerCase()
+    : undefined
+
+  const isOmnichainDeployer =
+    dataHookAddress?.toLowerCase() === omnichainDeployerAddress
+  const isRevnetDeployer =
+    dataHookAddress?.toLowerCase() === revDeployerAddress
+
+  // Resolve the actual 721 Hook address from deployer contracts
+  const currentRulesetId = jbRuleSet.ruleset.data?.id
+  const omnichainHook = useReadContract({
+    abi: jbOmnichainDeployerAbi,
+    address: dataHookAddress,
+    functionName: 'dataHookOf',
+    args:
+      projectId && currentRulesetId
+        ? [projectId, BigInt(currentRulesetId)]
+        : undefined,
+    chainId,
+    query: {
+      enabled: isOmnichainDeployer && !!projectId && !!currentRulesetId,
+    },
+  })
+
+  const revnetHook = useReadContract({
+    abi: revDeployerAbi,
+    address: dataHookAddress,
+    functionName: 'tiered721HookOf',
+    args: projectId ? [projectId] : undefined,
+    chainId,
+    query: {
+      enabled: isRevnetDeployer && !!projectId,
+    },
+  })
+
+  // Use resolved hook address if available, otherwise use original dataHook
+  const resolved721HookAddress = (omnichainHook.data ||
+    revnetHook.data ||
+    dataHookAddress) as `0x${string}` | undefined
+
+  // Load NFT tier data from the 721 Hook and its store
   const storeAddress = useReadContract({
     abi: jb721TiersHookAbi,
-    address: dataHookAddress,
+    address: resolved721HookAddress,
     functionName: 'STORE',
     chainId,
   })
 
-  // Get all project chains, fallback to current chain if no suckers
-  const projectChains = suckers?.map(s => s.peerChainId).filter(id => id !== undefined) || (chainId ? [chainId] : [])
+  const projectChains =
+    suckers?.map(s => s.peerChainId).filter(id => id !== undefined) ||
+    (chainId ? [chainId] : [])
 
-  // Fetch tiers from current chain (for metadata and structure)
   const tiersOf = useReadContract({
     abi: jb721TiersHookStoreAbi,
     address: storeAddress.data,
     functionName: 'tiersOf',
     args: [
-      dataHookAddress ?? zeroAddress,
-      [], // _categories
-      false, // _includeResolvedUri, return in each tier a result from a tokenUriResolver if one is included in the delegate
-      0n, // _startingId
-      NFT_PAGE_SIZE, // limit
+      resolved721HookAddress ?? zeroAddress,
+      [],
+      false,
+      0n,
+      NFT_PAGE_SIZE,
     ],
     chainId,
   })
@@ -95,14 +160,14 @@ export const V4V5NftRewardsProvider: React.FC<
       projectId,
       chainId,
       storeAddress.data as `0x${string}` | undefined,
-      dataHookAddress as `0x${string}` | undefined,
+      resolved721HookAddress,
     )
 
   const loadedCIDs = CIDsOfNftRewardTiersResponse(tiersOf.data ?? [])
 
   const p = useReadContract({
     abi: jb721TiersHookAbi,
-    address: dataHookAddress,
+    address: resolved721HookAddress,
     functionName: 'pricingContext',
     chainId,
   })
@@ -112,25 +177,29 @@ export const V4V5NftRewardsProvider: React.FC<
     abi: jb721TiersHookStoreAbi,
     address: storeAddress.data,
     functionName: 'flagsOf',
-    args: [dataHookAddress ?? zeroAddress],
+    args: [resolved721HookAddress ?? zeroAddress],
     chainId,
   })
 
   const { data: collectionMetadataUri } = useReadContract({
     abi: jb721TiersHookAbi,
-    address: dataHookAddress,
+    address: resolved721HookAddress,
     functionName: 'contractURI',
     chainId,
   })
 
   const loading = React.useMemo(
     () =>
+      omnichainHook.isLoading ||
+      revnetHook.isLoading ||
       storeAddress.isLoading ||
       tiersOf.isLoading ||
       nftRewardTiersLoading ||
       p.isLoading ||
       flags.isLoading,
     [
+      omnichainHook.isLoading,
+      revnetHook.isLoading,
       storeAddress.isLoading,
       tiersOf.isLoading,
       nftRewardTiersLoading,

@@ -54,7 +54,7 @@ async function fetchRewardTierMetadata({
       tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
     } else if (tierMetadata?.image && ipfsIoRegex.test(tierMetadata.image)) {
       const imageUrlCid = cidFromUrl(tierMetadata.image)
-      tierMetadata.image = v2exGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to v2ex.pro gateway
+      tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert ipfs.io URLs to eth.sucks gateway
     }
 
     const rawContributionFloor = tier.price
@@ -166,8 +166,10 @@ export const useNftRewards = (
     queryKey: ['nftRewards', projectId?.toString(), chainId, dataSourceAddress, projectChains],
     enabled,
     queryFn: async () => {
-      if (!dataSourceAddress || !dataHookAddress) return []
-      
+      if (!dataSourceAddress || !dataHookAddress) {
+        return []
+      }
+
       // Fetch tiers from all chains for supply aggregation
       const allChainTiersData = await Promise.all(
         projectChains.map(async currentChainId => {
@@ -185,13 +187,13 @@ export const useNftRewards = (
               ],
               chainId: currentChainId
             })
-            
+
             return {
               chainId: currentChainId,
               tiers: chainTiers
             }
           } catch (error) {
-            console.warn(`Failed to fetch tiers for chain ${currentChainId}:`, error)
+            console.warn(`[useNftRewards] Failed to fetch tiers for chain ${currentChainId}:`, error)
             return {
               chainId: currentChainId,
               tiers: []
@@ -203,14 +205,14 @@ export const useNftRewards = (
       // Aggregate supply data from all chains
       const aggregatedTiers = tiers.map(tier => {
         const perChainSupply = projectChains.map(currentChainId => {
-          const chainTiersData = allChainTiersData.find(chainData => 
+          const chainTiersData = allChainTiersData.find(chainData =>
             chainData.chainId === currentChainId
           )?.tiers
-          
-          const matchingTier = chainTiersData?.find((chainTier: JB721TierV4) => 
+
+          const matchingTier = chainTiersData?.find((chainTier: JB721TierV4) =>
             chainTier.id === tier.id
           )
-          
+
           return {
             chainId: currentChainId,
             remainingSupply: matchingTier?.remainingSupply || 0
@@ -220,11 +222,12 @@ export const useNftRewards = (
         return { tier, perChainSupply }
       })
 
-      return await Promise.all(
-        aggregatedTiers.map(({ tier, perChainSupply }) => 
-          fetchRewardTierMetadata({ tier, perChainSupply })
-        ),
+      const results = await Promise.all(
+        aggregatedTiers.map(async ({ tier, perChainSupply }) => {
+          return fetchRewardTierMetadata({ tier, perChainSupply })
+        }),
       )
+      return results
     },
   })
 }

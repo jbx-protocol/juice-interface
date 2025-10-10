@@ -28,6 +28,7 @@ export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: st
     async (
       chainId: JBChainId,
       launchData: SafeLaunchProjectData,
+      signerAddressOverride?: string,
     ): Promise<SafeProposeTransactionResponse> => {
       // Find the project deployment will happen on this chain
 
@@ -73,6 +74,7 @@ export function useProposeSafeLaunchProjectTx({ safeAddress }: { safeAddress: st
         value: '0',
         data,
         chainId,
+        signerAddressOverride,
       })
     },
     [

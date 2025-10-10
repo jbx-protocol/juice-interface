@@ -2,7 +2,6 @@ import { Button, Divider } from 'antd'
 import { JBChainId, useJBChainId, useSuckers } from 'juice-sdk-react'
 import {
   settingsPagePath,
-  v4ProjectRoute,
   v4v5ProjectRoute,
 } from 'packages/v4v5/utils/routes'
 
@@ -11,6 +10,7 @@ import { Trans } from '@lingui/macro'
 import { Badge } from 'components/Badge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
+import { RevnetBadge } from 'components/Project/ProjectHeader/RevnetBadge'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
 import { TruncatedText } from 'components/TruncatedText'
@@ -45,7 +45,10 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
     gnosisSafe,
     archived,
     createdAtSeconds,
+    isRevnet,
+    operatorAddress,
   } = useV4V5ProjectHeader()
+
   const isMobile = useMobile()
 
   const canQueueRuleSets = useV4V5WalletHasPermission(
@@ -166,15 +169,31 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
               {!isMobile && <Divider className="mx-4" type="vertical" />}
 
               <span className="inline-flex items-center gap-1">
-                <Trans>
-                  Owned by:{' '}
-                  <EthereumAddress address={owner} chainId={chainId} />
-                </Trans>
-                {gnosisSafe && projectId && chainId && (
-                  <GnosisSafeBadge
-                    safe={gnosisSafe}
-                    href={`${v4ProjectRoute({ projectId, chainId })}/safe`}
-                  />
+                {isRevnet ? (
+                  <>
+                    {operatorAddress ? (
+                      <Trans>
+                        Operator:{' '}
+                        <EthereumAddress address={operatorAddress} chainId={chainId} />
+                      </Trans>
+                    ) : (
+                      <Trans>Managed by Revnet</Trans>
+                    )}
+                    <RevnetBadge />
+                  </>
+                ) : (
+                  <>
+                    <Trans>
+                      Owned by:{' '}
+                      <EthereumAddress address={owner} chainId={chainId} />
+                    </Trans>
+                    {gnosisSafe && projectId && chainId && (
+                      <GnosisSafeBadge
+                        safe={gnosisSafe}
+                        href={`${v4v5ProjectRoute({ projectId, chainId, version })}/safe`}
+                      />
+                    )}
+                  </>
                 )}
               </span>
               {createdAt ? (

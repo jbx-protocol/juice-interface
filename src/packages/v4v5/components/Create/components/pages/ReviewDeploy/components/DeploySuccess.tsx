@@ -65,7 +65,6 @@ export const DeploySuccess = ({
                 <V4V5ProjectHandleLink
                   projectId={project.projectId}
                   chainId={project.chainId}
-                  version={5}
                 />
               </div>
             </div>

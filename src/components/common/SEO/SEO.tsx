@@ -17,6 +17,7 @@ export interface SEOProps {
   overrideFormattedTitle?: boolean
   description?: string
   twitter?: Omit<TwitterMetaTagsProps, 'title' | 'description'>
+  image?: string // Open Graph and Twitter image URL
   robots?: string
   children?: ReactNode
 }
@@ -27,6 +28,7 @@ export const SEO: FC<React.PropsWithChildren<SEOProps>> = ({
   overrideFormattedTitle,
   description,
   twitter,
+  image,
   robots,
   children,
 }) => {
@@ -39,6 +41,21 @@ export const SEO: FC<React.PropsWithChildren<SEOProps>> = ({
   }
   if (overrideFormattedTitle) {
     formattedTitle = title ?? config.title
+  }
+
+  // Use provided image, or fall back to twitter.image, or finally to default config
+  const finalImage = image ?? twitter?.image ?? config.twitter.image
+  const processedImage = ipfsUriToGatewayUrl(finalImage)
+
+  // Use default JBM banner dimensions if using default, otherwise use standard OG dimensions
+  const isDefaultImage = finalImage === config.twitter.image
+  const ogImage = {
+    src: isDefaultImage
+      ? (SiteBaseUrl ? SiteBaseUrl : '/') + 'assets/JBM-Unfurl-banner.png'
+      : processedImage,
+    type: 'image/png',
+    width: isDefaultImage ? '1136' : '1200',
+    height: isDefaultImage ? '497' : '630',
   }
 
   return (
@@ -66,7 +83,7 @@ export const SEO: FC<React.PropsWithChildren<SEOProps>> = ({
           twitter?.creator ?? config.twitter.creator,
         )}
         card={twitter?.card ?? (config.twitter.cardType as TwitterCardType)}
-        image={ipfsUriToGatewayUrl(twitter?.image ?? config.twitter.image)}
+        image={processedImage}
       />
       <OpenGraphMetaTags
         type="website"
@@ -74,13 +91,7 @@ export const SEO: FC<React.PropsWithChildren<SEOProps>> = ({
         title={formattedTitle}
         description={description ?? config.description}
         siteName={config.title}
-        image={{
-          src:
-            (SiteBaseUrl ? SiteBaseUrl : '/') + 'assets/JBM-Unfurl-banner.png',
-          type: 'image/png',
-          width: '1136',
-          height: '497',
-        }}
+        image={ogImage}
       />
 
       <Head>{children}</Head>

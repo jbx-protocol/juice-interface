@@ -17,7 +17,8 @@ import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { V4V5TokenHoldersModal } from 'packages/v4v5/components/modals/V4V5TokenHoldersModal/V4V5TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { reloadWindow } from 'utils/windowUtils'
 import { ReservedTokensSelectedChainProvider } from '../V4V5CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 import { useV4V5BalanceMenuItemsUserFlags } from './hooks/useV4V5BalanceMenuItemsUserFlags'
@@ -33,6 +34,7 @@ export const V4V5TokensPanel = () => {
     useV4V5TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
   const { data: suckersBalance } = useSuckersUserTokenBalance()
+  const { version } = useV4V5Version()
 
   const { canMintTokens } = useV4V5BalanceMenuItemsUserFlags()
 
@@ -198,6 +200,7 @@ const ProjectTokenCard = () => {
   const chainId = useJBChainId()
   const { projectId: projectIdBig } = useJBContractContext()
   const projectId = Number(projectIdBig)
+  const { version } = useV4V5Version()
 
   const {
     projectToken,
@@ -235,9 +238,10 @@ const ProjectTokenCard = () => {
               <a
                 href={
                   chainId
-                    ? `${v4ProjectRoute({
+                    ? `${v4v5ProjectRoute({
                         chainId,
                         projectId,
+                        version,
                       })}/settings/createerc20`
                     : ''
                 }

@@ -27,10 +27,13 @@ export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
       nftRewards: { rewardTiers },
     } = useV4V5NftRewards()
   const hasNftRewards = useMemo(
-      () => (rewardTiers ?? []).length !== 0,
+      () => {
+        const hasRewards = (rewardTiers ?? []).length !== 0
+        return hasRewards
+      },
       [rewardTiers],
     )
-  
+
   const showNftRewards = hasNftRewards
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -58,8 +61,8 @@ export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
 
   const tabs: ProjectTabConfig[] = useMemo(
     () => [
-      { id: 'activity', name: t`Activity`, panel: <V4V5ActivityPanel /> },
       { id: 'about', name: t`About`, panel: <V4V5AboutPanel /> },
+      { id: 'activity', name: t`Activity`, panel: <V4V5ActivityPanel /> },
       {
         id: 'nft_rewards',
         name: t`NFTs`,

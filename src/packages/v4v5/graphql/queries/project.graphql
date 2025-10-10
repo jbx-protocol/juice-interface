@@ -17,5 +17,13 @@ query Project($chainId: Float!, $projectId: Float!, $version: Float!) {
     version
     suckerGroupId
     createdAt
+    isRevnet
+    permissionHolders {
+      items {
+        operator
+        permissions
+        isRevnetOperator
+      }
+    }
   }
 }

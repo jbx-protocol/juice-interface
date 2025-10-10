@@ -26,8 +26,8 @@ export default function QueueSafeTransferOwnershipTxsModal({
   const { proposeTransferOwnershipTx } = useProposeSafeTransferOwnershipTx({ safeAddress })
 
   const handleExecuteChain = useCallback(
-    async (chainId: JBChainId): Promise<SafeProposeTransactionResponse> => {
-      return await proposeTransferOwnershipTx(chainId, fromAddress, toAddress)
+    async (chainId: JBChainId, signerAddress?: string): Promise<SafeProposeTransactionResponse> => {
+      return await proposeTransferOwnershipTx(chainId, fromAddress, toAddress, signerAddress)
     },
     [proposeTransferOwnershipTx, fromAddress, toAddress],
   )

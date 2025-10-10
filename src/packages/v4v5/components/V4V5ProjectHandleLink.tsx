@@ -4,7 +4,8 @@ import { PV_V4 } from 'constants/pv'
 import { JBChainId } from 'juice-sdk-react'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { v4ProjectRoute, v5ProjectRoute } from '../utils/routes'
+import { useV4V5Version } from '../contexts/V4V5VersionProvider'
+import { v4v5ProjectRoute } from '../utils/routes'
 import { ChainLogo } from './ChainLogo'
 
 /**
@@ -17,7 +18,6 @@ export default function V4V5ProjectHandleLink({
   projectId,
   withProjectAvatar = false,
   chainId,
-  version = 4, // Default to v4 for backward compatibility
 }: {
   className?: string
   containerClassName?: string
@@ -25,8 +25,8 @@ export default function V4V5ProjectHandleLink({
   projectId: number
   withProjectAvatar?: boolean
   chainId: number | JBChainId
-  version?: 4 | 5
 }) {
+  const { version } = useV4V5Version()
   return (
     <div
       className={twMerge('inline-flex items-center gap-3', containerClassName)}
@@ -41,8 +41,8 @@ export default function V4V5ProjectHandleLink({
       ) : null}
       <Link
         prefetch={false}
-        href={version === 5 ? v5ProjectRoute({ projectId, chainId }) : v4ProjectRoute({ projectId, chainId })}
-        as={version === 5 ? v5ProjectRoute({ projectId, chainId }) : v4ProjectRoute({ projectId, chainId })}
+        href={v4v5ProjectRoute({ projectId, chainId, version })}
+        as={v4v5ProjectRoute({ projectId, chainId, version })}
         className={twMerge(
           'select-all font-medium capitalize leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100 flex items-center gap-2',
           className,

@@ -8,7 +8,8 @@ import { Trans } from '@lingui/macro'
 import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { twMerge } from 'tailwind-merge'
 import { Address } from 'viem'
 
@@ -48,6 +49,7 @@ export default function QueueTransferOwnershipTxsModal({
   
   const { chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
   const router = useRouter()
+  const { version } = useV4V5Version()
 
   const { data: suckers } = useSuckers()
   const chains = useMemo(() => {
@@ -135,7 +137,7 @@ export default function QueueTransferOwnershipTxsModal({
         </Button>,
         allChainsCompleted && (
           <Button key="done" type="primary" onClick={() => {
-            router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId ?? 1  }))
+            router.push(v4v5ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId ?? 1, version }))
           }}>
             <Trans>Go to project</Trans>
           </Button>

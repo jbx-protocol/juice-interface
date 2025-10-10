@@ -28,6 +28,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
     async (
       chainId: JBChainId,
       formValues: EditCycleFormFields,
+      signerAddressOverride?: string,
     ): Promise<SafeProposeTransactionResponse> => {
       if (
         !contracts.controller.data ||
@@ -81,6 +82,7 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
         value: '0',
         data,
         chainId,
+        signerAddressOverride,
       })
     },
     [

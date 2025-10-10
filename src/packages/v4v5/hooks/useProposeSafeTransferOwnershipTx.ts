@@ -19,6 +19,7 @@ export function useProposeSafeTransferOwnershipTx({ safeAddress }: { safeAddress
       chainId: JBChainId,
       fromAddress: Address,
       toAddress: Address,
+      signerAddressOverride?: string,
     ): Promise<SafeProposeTransactionResponse> => {
 
       // Find the project ID for this specific chain
@@ -42,6 +43,7 @@ export function useProposeSafeTransferOwnershipTx({ safeAddress }: { safeAddress
         value: '0',
         data,
         chainId,
+        signerAddressOverride,
       })
     },
     [

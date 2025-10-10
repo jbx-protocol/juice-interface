@@ -13,6 +13,7 @@ import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { GnosisSafe } from 'models/safe'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
+import { getJBContractAddress } from 'juice-sdk-core'
 
 export interface ProjectHeaderData {
   title: string | undefined
@@ -25,6 +26,8 @@ export interface ProjectHeaderData {
   gnosisSafe: GnosisSafe | undefined | null
   archived: boolean | undefined
   createdAtSeconds: number | undefined
+  isRevnet: boolean | undefined
+  operatorAddress: string | undefined
 }
 
 export const useV4V5ProjectHeader = (): ProjectHeaderData => {
@@ -67,6 +70,31 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
 
   const subtitle = useSubtitle(projectMetadata ?? undefined)
 
+  // Extract revnet data from GraphQL (if available)
+  const graphQLIsRevnet = project?.project?.isRevnet
+  const permissionHolders = project?.project?.permissionHolders?.items
+  // For Revnets: Get the permission holder marked as the revnet operator
+  // bendystraw sets isRevnetOperator=true for the operator with the required permission set
+  const graphQLOperatorAddress = permissionHolders?.find(
+    holder => holder.isRevnetOperator
+  )?.operator
+
+  // Frontend fallback: Detect Revnet by checking if owner matches REVDeployer contract
+  const revDeployerAddress = chainId
+    ? getJBContractAddress('REVDeployer', version, chainId)?.toLowerCase()
+    : undefined
+  const ownerIsRevDeployer =
+    projectOwnerAddress && revDeployerAddress
+      ? projectOwnerAddress.toLowerCase() === revDeployerAddress
+      : false
+
+  // Use GraphQL data if available, otherwise fall back to on-chain detection
+  // If GraphQL explicitly says isRevnet=false but owner IS REVDeployer, trust the chain
+  const isRevnet = graphQLIsRevnet === false && ownerIsRevDeployer
+    ? true
+    : graphQLIsRevnet ?? (ownerIsRevDeployer ? true : undefined)
+  const operatorAddress = graphQLOperatorAddress
+
   return {
     title: projectMetadata?.name,
     subtitle,
@@ -78,5 +106,7 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
     gnosisSafe,
     archived: projectMetadata?.archived,
     createdAtSeconds: sg?.createdAt,
+    isRevnet,
+    operatorAddress,
   }
 }

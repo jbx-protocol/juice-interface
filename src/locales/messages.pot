@@ -2297,6 +2297,9 @@ msgstr ""
 msgid "Edited cycle"
 msgstr ""
 
+msgid "Choose your Safe owner address"
+msgstr ""
+
 msgid "Total redemption value"
 msgstr ""
 
@@ -4412,6 +4415,9 @@ msgstr ""
 msgid "Changes will take effect in your next cycle as long as it starts after your Rule change deadline."
 msgstr ""
 
+msgid "Select your address"
+msgstr ""
+
 msgid "Locked cycles"
 msgstr ""
 
@@ -4788,6 +4794,9 @@ msgid "Payment notice"
 msgstr ""
 
 msgid "Make changes to your cycle settings and rules"
+msgstr ""
+
+msgid "Please select your address to continue"
 msgstr ""
 
 msgid "Reserved tokens"

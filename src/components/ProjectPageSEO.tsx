@@ -8,29 +8,34 @@ import { SEO } from './common/SEO/SEO'
 const ProjectPageSEO: React.FC<{
   metadata?: ProjectMetadata
   url: string
-}> = ({ metadata, url }) => (
-  <SEO
-    // Set known values, leave others undefined to be overridden
-    title={metadata?.name}
-    url={url}
-    description={
-      metadata?.projectTagline
-        ? metadata.projectTagline
-        : metadata?.description
-        ? stripHtmlTags(metadata.description)
-        : undefined
-    }
-    twitter={{
-      card: 'summary',
-      creator: metadata?.twitter,
-      handle: metadata?.twitter,
-      // Swap out all gateways with ipfs.io public gateway until we can resolve our meta tag issue.
-      image: metadata?.logoUri
-        ? ipfsPublicGatewayUrl(cidFromUrl(metadata.logoUri))
-        : undefined,
-    }}
-  />
-)
+}> = ({ metadata, url }) => {
+  // Use project logo for both Twitter and Open Graph
+  const projectImage = metadata?.logoUri
+    ? ipfsPublicGatewayUrl(cidFromUrl(metadata.logoUri))
+    : undefined
+
+  return (
+    <SEO
+      // Set known values, leave others undefined to be overridden
+      title={metadata?.name}
+      url={url}
+      description={
+        metadata?.projectTagline
+          ? metadata.projectTagline
+          : metadata?.description
+          ? stripHtmlTags(metadata.description)
+          : undefined
+      }
+      image={projectImage}
+      twitter={{
+        card: 'summary_large_image',
+        creator: metadata?.twitter,
+        handle: metadata?.twitter,
+        image: projectImage,
+      }}
+    />
+  )
+}
 
 export const V2V3ProjectSEO: React.FC<{
   metadata?: ProjectMetadata

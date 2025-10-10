@@ -16,6 +16,7 @@ const BUFFER = 5000
 
 interface ProposeSafeTransactionProps {
   safeAddress: string
+  signerAddressOverride?: string
 }
 
 interface TransactionDetails {
@@ -24,6 +25,7 @@ interface TransactionDetails {
   data: string
   operation?: OperationType
   chainId: JBChainId
+  signerAddressOverride?: string // Allow override per transaction
 }
 
 export interface SafeProposeTransactionResponse {
@@ -31,7 +33,7 @@ export interface SafeProposeTransactionResponse {
   nonce: string
 }
 
-export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactionProps) {
+export function useProposeSafeTransaction({ safeAddress, signerAddressOverride }: ProposeSafeTransactionProps) {
   const { signer, userAddress, eip1193Provider } = useWallet()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -55,7 +57,8 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       const apiKit = new SafeApiKit({ chainId: BigInt(chainId) })
       
       // Convert addresses to checksum format
-      const checksumSignerAddress = getAddress(userAddress)
+      // Use transaction-level override first, then hook-level, then fallback to userAddress
+      const checksumSignerAddress = getAddress(txDetails.signerAddressOverride ?? signerAddressOverride ?? userAddress)
       const checksumSafeAddress = getAddress(safeAddress)
       
       const protocolKit = await Safe.init({

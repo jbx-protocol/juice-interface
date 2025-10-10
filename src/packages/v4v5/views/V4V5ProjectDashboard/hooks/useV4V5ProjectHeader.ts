@@ -89,7 +89,10 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
       : false
 
   // Use GraphQL data if available, otherwise fall back to on-chain detection
-  const isRevnet = graphQLIsRevnet ?? (ownerIsRevDeployer ? true : undefined)
+  // If GraphQL explicitly says isRevnet=false but owner IS REVDeployer, trust the chain
+  const isRevnet = graphQLIsRevnet === false && ownerIsRevDeployer
+    ? true
+    : graphQLIsRevnet ?? (ownerIsRevDeployer ? true : undefined)
   const operatorAddress = graphQLOperatorAddress
 
   return {

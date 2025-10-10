@@ -73,10 +73,10 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
   // Extract revnet data from GraphQL (if available)
   const graphQLIsRevnet = project?.project?.isRevnet
   const permissionHolders = project?.project?.permissionHolders?.items
-  // For Revnets: Filter out REVLoans contract (permission 16 - USE_ALLOWANCE)
-  // The remaining permission holder is the actual operator
+  // For Revnets: Get the permission holder marked as the revnet operator
+  // bendystraw sets isRevnetOperator=true for the operator with the required permission set
   const graphQLOperatorAddress = permissionHolders?.find(
-    holder => !holder.permissions?.includes(16)
+    holder => holder.isRevnetOperator
   )?.operator
 
   // Frontend fallback: Detect Revnet by checking if owner matches REVDeployer contract

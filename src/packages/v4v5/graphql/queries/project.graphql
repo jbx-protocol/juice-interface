@@ -22,6 +22,7 @@ query Project($chainId: Float!, $projectId: Float!, $version: Float!) {
       items {
         operator
         permissions
+        isRevnetOperator
       }
     }
   }

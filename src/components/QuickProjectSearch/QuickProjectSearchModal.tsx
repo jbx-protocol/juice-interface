@@ -13,14 +13,14 @@ import Modal from 'antd/lib/modal/Modal'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { PV_V2, PV_V4 } from 'constants/pv'
+import { PV_V2, PV_V4, PV_V5 } from 'constants/pv'
 import { useDBProjectsAggregateQuery } from 'hooks/useDBProjects'
 import { useRouter } from 'next/router'
 import V1ProjectHandle from 'packages/v1/components/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { twMerge } from 'tailwind-merge'
 import { QuickProjectSearchContext } from './QuickProjectSearchContext'
 
@@ -53,7 +53,9 @@ export const QuickProjectSearchModal = () => {
     const { projectId, handle, pv, chainId } = searchResults[highlightIndex]
 
     router.push(
-      pv === PV_V4
+      pv === PV_V5
+        ? v5ProjectRoute({ chainId, projectId })
+        : pv === PV_V4
         ? v4ProjectRoute({ chainId, projectId })
         : pv === PV_V2
         ? v2v3ProjectRoute({ projectId, handle })
@@ -186,7 +188,9 @@ export const QuickProjectSearchModal = () => {
                   onClick={goToProject}
                   onMouseEnter={() => setHighlightIndex(i)}
                 >
-                  {p.pv === PV_V4 ? (
+                  {p.pv === PV_V5 ? (
+                    p.name ?? `@${p.handle ?? '--'}`
+                  ) : p.pv === PV_V4 ? (
                     p.name ?? `@${p.handle ?? '--'}`
                   ) : p.pv === PV_V2 ? (
                     <V2V3ProjectHandleLink

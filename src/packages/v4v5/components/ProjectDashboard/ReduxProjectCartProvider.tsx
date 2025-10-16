@@ -35,7 +35,7 @@ export const ReduxProjectCartProvider = ({
   // Set the user's NFT credits on load
   React.useEffect(() => {
     if (nftCredits.isLoading) return
-    dispatch(projectCartActions.setUserNftCredits(nftCredits.data ?? 0n))
+    dispatch(projectCartActions.setUserNftCredits((nftCredits.data ?? 0n).toString()))
   }, [dispatch, nftCredits.isLoading, nftCredits.data])
 
   return <>{children}</>

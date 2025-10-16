@@ -66,7 +66,7 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
     trendingVolume: BigNumber.from(sg?.trendingVolume ?? 0),
   })
 
-  const { data: gnosisSafe } = useGnosisSafe(projectOwnerAddress)
+  const { data: gnosisSafe } = useGnosisSafe(projectOwnerAddress, Number(chainId))
 
   const subtitle = useSubtitle(projectMetadata ?? undefined)
 

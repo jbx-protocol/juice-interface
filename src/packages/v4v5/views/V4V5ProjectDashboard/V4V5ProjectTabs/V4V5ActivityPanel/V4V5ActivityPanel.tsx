@@ -7,10 +7,10 @@ import { useProjectQuery } from 'generated/v4v5/graphql'
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
-import { Suspense } from 'react'
+import { forwardRef, Suspense } from 'react'
 import { V4V5ActivityList } from './V4V5ActivityList'
 
-export function V4V5ActivityPanel() {
+export const V4V5ActivityPanel = forwardRef<HTMLDivElement>((props, ref) => {
   const { projectId } = useJBContractContext()
   const chainId = useJBChainId()
   const { version } = useV4V5Version()
@@ -27,7 +27,7 @@ export function V4V5ActivityPanel() {
   const createdAt = data?.project?.createdAt
 
   return (
-    <div className="min-h-[384px] w-full">
+    <div ref={ref} className="min-h-[384px] w-full">
       {Boolean(projectId) && (
         <div className="mb-10">
           <Suspense fallback={<Loading />}>
@@ -47,4 +47,6 @@ export function V4V5ActivityPanel() {
       <V4V5ActivityList />
     </div>
   )
-}
+})
+
+V4V5ActivityPanel.displayName = 'V4V5ActivityPanel'

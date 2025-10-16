@@ -104,7 +104,7 @@ export default function TimelineChart({
           tickLine={false}
           tickSize={0}
           tick={props => {
-            if (view === 'trendingScore' || !points?.length) return <g></g>
+            if (view === 'trendingScore' || !points?.length) return <g key={`y-tick-${props.index}`}></g>
 
             const { value } = props.payload
 
@@ -112,7 +112,7 @@ export default function TimelineChart({
 
             // <rect> serves as a mask to prevent CartesianGrid lines overlapping tick text
             return (
-              <g>
+              <g key={`y-tick-${props.index}-${value}`}>
                 <rect
                   transform={`translate(${props.x},${props.y - 6})`}
                   height={12}
@@ -139,6 +139,7 @@ export default function TimelineChart({
           stroke={stroke}
           tick={props => (
             <text
+              key={`x-tick-${props.index}-${props.payload.value}`}
               fontSize={fontSize}
               fill={color}
               transform={`translate(${props.x - 12},${props.y + 14})`}

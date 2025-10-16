@@ -131,7 +131,7 @@ export const PayRedeemInput = ({
               <input
                 className="min-w-0 bg-transparent text-3xl font-medium text-grey-900 placeholder:text-grey-300 focus:outline-none dark:text-slate-100 dark:placeholder-slate-400"
                 // TODO: Format and de-format
-                value={value}
+                value={value ?? ''}
                 placeholder="0"
                 readOnly={readOnly}
                 onChange={handleInputChange}

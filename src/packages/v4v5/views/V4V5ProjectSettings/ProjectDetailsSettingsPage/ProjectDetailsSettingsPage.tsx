@@ -1,5 +1,5 @@
 import { ProjectDetailsForm, ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'
-import { RelayrPostBundleResponse, useJBProjectMetadataContext, useSuckers } from 'juice-sdk-react'
+import { RelayrPostBundleResponse, useJBChainId, useJBProjectMetadataContext, useSuckers } from 'juice-sdk-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
@@ -22,6 +22,7 @@ import { TransactionSuccessModal } from '../EditCyclePage/TransactionSuccessModa
 import QueueSafeProjectDetailsTxsModal from './components/QueueSafeProjectDetailsTxsModal'
 
 export function ProjectDetailsSettingsPage() {
+  const chainId = useJBChainId()
   const { metadata } = useJBProjectMetadataContext()
   const projectMetadata = metadata.data
 
@@ -43,7 +44,7 @@ export function ProjectDetailsSettingsPage() {
 
   // Project owner and Gnosis Safe detection
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
-  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress)
+  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress, Number(chainId))
   const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
   const isOmnichainProject = projectChains.length > 1
 

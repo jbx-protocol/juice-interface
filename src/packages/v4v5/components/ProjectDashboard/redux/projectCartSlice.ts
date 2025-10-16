@@ -201,8 +201,8 @@ const projectCartSlice = createSlice({
     setAllNftRewards: (state, action: PayloadAction<NftRewardTier[]>) => {
       state.allNftRewards = action.payload
     },
-    setUserNftCredits: (state, action: PayloadAction<bigint>) => {
-      state.userNftCredits = action.payload.toString()
+    setUserNftCredits: (state, action: PayloadAction<string>) => {
+      state.userNftCredits = action.payload
     },
     openPayModal: state => {
       state.payModalOpen = true

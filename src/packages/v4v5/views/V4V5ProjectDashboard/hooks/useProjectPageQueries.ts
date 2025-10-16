@@ -49,10 +49,14 @@ export const useProjectPageQueries = () => {
 
   const setProjectPageTab = useCallback(
     (tabId: string) => {
+      const { tabid, payReceipt } = router.query
       router.replace(
         {
-          pathname: router.pathname,
-          query: { ...router.query, tabid: tabId },
+          pathname: router.asPath.split('?')[0], // Use actual path instead of pattern to prevent encoding
+          query: {
+            ...(payReceipt && { payReceipt }), // Only include if it exists
+            tabid: tabId,
+          },
         },
         undefined,
         { shallow: true },
@@ -63,12 +67,13 @@ export const useProjectPageQueries = () => {
 
   const setProjectPayReceipt = useCallback(
     (payReceipt: ProjectPayReceipt | undefined) => {
+      const { tabid } = router.query
       router.replace(
         {
-          pathname: router.pathname,
+          pathname: router.asPath.split('?')[0], // Use actual path instead of pattern to prevent encoding
           query: {
-            ...router.query,
-            payReceipt: payReceipt ? JSON.stringify(payReceipt) : undefined,
+            ...(tabid && { tabid }), // Only include if it exists
+            ...(payReceipt && { payReceipt: JSON.stringify(payReceipt) }),
           },
         },
         undefined,

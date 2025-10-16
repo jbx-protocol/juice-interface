@@ -39,6 +39,12 @@ export const useGnosisSafe = (address?: string, chainId?: number) => {
         }
         return null
       } catch (error) {
+        // 404 is expected when address is not a Safe - don't log it
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+          return null
+        }
+        // Log unexpected errors
+        console.warn('Error fetching Safe data:', error)
         return null
       }
     },

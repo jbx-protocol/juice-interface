@@ -28,6 +28,7 @@ import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocial
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { useV4V5ProjectHeader } from './hooks/useV4V5ProjectHeader'
+import { safeTxUrl } from 'utils/safe'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -187,10 +188,10 @@ export const V4V5ProjectHeader = ({ className }: { className?: string }) => {
                       Owned by:{' '}
                       <EthereumAddress address={owner} chainId={chainId} />
                     </Trans>
-                    {gnosisSafe && projectId && chainId && (
+                    {gnosisSafe && chainId && (
                       <GnosisSafeBadge
                         safe={gnosisSafe}
-                        href={`${v4v5ProjectRoute({ projectId, chainId, version })}/safe`}
+                        href={safeTxUrl({ chainId, safeAddress: gnosisSafe.address })}
                       />
                     )}
                   </>

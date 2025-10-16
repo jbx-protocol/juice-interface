@@ -11,6 +11,31 @@ import {
 import { dbpQueryAll, queryAllSGProjectsForServer, writeDBProjects } from '.'
 import { dbpLog } from './logger'
 
+/**
+ * Process promises in batches with a delay between batches to avoid rate limiting
+ */
+async function batchProcessWithDelay<T, R>(
+  items: T[],
+  processFn: (item: T) => Promise<R>,
+  batchSize: number = 50,
+  delayMs: number = 1000,
+): Promise<R[]> {
+  const results: R[] = []
+
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize)
+    const batchResults = await Promise.all(batch.map(processFn))
+    results.push(...batchResults)
+
+    // Add delay between batches (except for the last batch)
+    if (i + batchSize < items.length) {
+      await new Promise(resolve => setTimeout(resolve, delayMs))
+    }
+  }
+
+  return results
+}
+
 export async function updateDBProjects(
   res: NextApiResponse,
   retryIpfs: boolean,
@@ -50,13 +75,16 @@ export async function updateDBProjects(
     })
 
     // Append metadata props to all changed subgraph projects, and re-resolve metadata where needed
-    const resolveMetadataResults = await Promise.all(
-      sgProjectsToUpdate.map(sgProject =>
+    // Process in batches to avoid IPFS gateway rate limiting (HTTP 429)
+    const resolveMetadataResults = await batchProcessWithDelay(
+      sgProjectsToUpdate,
+      sgProject =>
         formatWithMetadata({
           sgProject,
           dbProject: dbProjects[sgProject.id],
         }),
-      ),
+      50, // Process 50 projects at a time
+      1000, // Wait 1 second between batches
     )
 
     const ipfsErrors = resolveMetadataResults.filter(r => r.error)

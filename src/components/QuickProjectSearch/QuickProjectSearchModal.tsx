@@ -50,13 +50,17 @@ export const QuickProjectSearchModal = () => {
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined || !searchResults?.length) return
 
-    const { projectId, handle, pv, chainId } = searchResults[highlightIndex]
+    const project = searchResults[highlightIndex]
+    const { projectId, handle, pv, chainId, chainIds } = project
+
+    // For V4/V5 projects from aggregate view, use first chainId from chainIds array
+    const effectiveChainId = chainId ?? chainIds?.[0]
 
     router.push(
       pv === PV_V5
-        ? v5ProjectRoute({ chainId, projectId })
+        ? v5ProjectRoute({ chainId: effectiveChainId, projectId })
         : pv === PV_V4
-        ? v4ProjectRoute({ chainId, projectId })
+        ? v4ProjectRoute({ chainId: effectiveChainId, projectId })
         : pv === PV_V2
         ? v2v3ProjectRoute({ projectId, handle })
         : `/p/${handle}`,
@@ -189,9 +193,9 @@ export const QuickProjectSearchModal = () => {
                   onMouseEnter={() => setHighlightIndex(i)}
                 >
                   {p.pv === PV_V5 ? (
-                    p.name ?? `@${p.handle ?? '--'}`
+                    p.name || `Project #${p.projectId}`
                   ) : p.pv === PV_V4 ? (
-                    p.name ?? `@${p.handle ?? '--'}`
+                    p.name || `Project #${p.projectId}`
                   ) : p.pv === PV_V2 ? (
                     <V2V3ProjectHandleLink
                       projectId={p.projectId}

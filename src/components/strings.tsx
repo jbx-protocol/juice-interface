@@ -178,7 +178,7 @@ export const OWNER_MINTING_RISK = (
 export const TERMINAL_CONFIG_EXPLANATION = (
   <Trans>
     While enabled, the project owner can change the project's{' '}
-    <ExternalLink href={helpPagePath(`/v4/learn/glossary/terminal/`)}>
+    <ExternalLink href="https://docs.juicebox.money/dev/v5/learn/risks/#28-add-and-remove-payment-terminals">
       payment terminals
     </ExternalLink>{' '}
     at any time.
@@ -189,7 +189,7 @@ export const CONTROLLER_CONFIG_EXPLANATION = (
   <Trans>
     While enabled, the project owner can change the project's{' '}
     <ExternalLink
-      href={helpPagePath(`/v4/learn/glossary/controller`)}
+      href="https://docs.juicebox.money/dev/v5/learn/risks/#28-add-and-remove-payment-terminals"
     >
       controller
     </ExternalLink>{' '}
@@ -200,7 +200,7 @@ export const CONTROLLER_CONFIG_EXPLANATION = (
 export const TERMINAL_MIGRATION_EXPLANATION = (
   <Trans>
     While enabled, the project owner can migrate the project's current{' '}
-    <ExternalLink href={helpPagePath(`/v4/learn/glossary/terminal/`)}>
+    <ExternalLink href="https://docs.juicebox.money/dev/v5/learn/risks/#28-add-and-remove-payment-terminals">
       payment terminals
     </ExternalLink>{' '}
     to another version of the contract.
@@ -211,7 +211,7 @@ export const CONTROLLER_MIGRATION_EXPLANATION = (
   <Trans>
     While enabled, the project owner can migrate the project's current{' '}
     <ExternalLink
-      href={helpPagePath(`/v4/learn/glossary/controller`)}
+      href="https://docs.juicebox.money/dev/v5/learn/risks/#28-add-and-remove-payment-terminals"
     >
       controller
     </ExternalLink>{' '}

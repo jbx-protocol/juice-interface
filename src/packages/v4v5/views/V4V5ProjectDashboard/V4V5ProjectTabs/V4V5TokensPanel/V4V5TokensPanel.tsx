@@ -182,11 +182,13 @@ export const V4V5TokensPanel = forwardRef<HTMLDivElement>((props, ref) => {
         onCancel={() => setClaimTokensModalVisible(false)}
         onConfirmed={reloadWindow}
       />
-      <V4V5MintModal
-        open={mintModalVisible}
-        onCancel={() => setMintModalVisible(false)}
-        onConfirmed={reloadWindow}
-      />
+      {mintModalVisible && (
+        <V4V5MintModal
+          open={mintModalVisible}
+          onCancel={() => setMintModalVisible(false)}
+          onConfirmed={reloadWindow}
+        />
+      )}
       {/*<TransferUnclaimedTokensModalWrapper
         open={transferUnclaimedTokensModalVisible}
         onCancel={() => setTransferUnclaimedTokensModalVisible(false)}

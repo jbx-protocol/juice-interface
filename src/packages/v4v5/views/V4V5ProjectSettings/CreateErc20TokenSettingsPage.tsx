@@ -1,7 +1,9 @@
-import { Button, Form, Input } from 'antd'
+import { CheckCircleIcon } from '@heroicons/react/24/outline'
+import { Button, Form, Input, Modal } from 'antd'
 import { JBChainId, createSalt, jbControllerAbi } from 'juice-sdk-core'
-import { RelayrPostBundleResponse, useGetRelayrTxBundle, useJBContractContext, useSendRelayrTx, useSuckers } from 'juice-sdk-react'
+import { RelayrPostBundleResponse, useGetRelayrTxBundle, useJBChainId, useJBContractContext, useJBProjectId, useSendRelayrTx, useSuckers } from 'juice-sdk-react'
 import { Trans, t } from '@lingui/macro'
+import { useRouter } from 'next/router'
 import { mainnet, sepolia } from 'viem/chains'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -18,6 +20,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { useDeployOmnichainErc20 } from 'packages/v4v5/hooks/useDeployOmnichainErc20'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { useV4V5IssueErc20TokenTx } from 'packages/v4v5/hooks/useV4V5IssueErc20TokenTx'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 
 export function CreateErc20TokenSettingsPage() {
@@ -25,6 +28,13 @@ export function CreateErc20TokenSettingsPage() {
   const [confirmLoading, setConfirmLoading] = useState<boolean>()
   const [transactionModalOpen, setTransactionModalOpen] =
     useState<boolean>(false)
+  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
+
+  const router = useRouter()
+  const chainId = useJBChainId()
+  const { projectId } = useJBProjectId(chainId)
+  const { version } = useV4V5Version()
+
   const issueErc20TokenTx = useV4V5IssueErc20TokenTx()
   const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4V5WalletHasPermission(
@@ -126,10 +136,10 @@ export function CreateErc20TokenSettingsPage() {
 
   useEffect(() => {
     if (relayrBundle.isComplete) {
-      // close modal on complete then reload
+      // close modal on complete then show success
       setConfirmLoading(false)
       setTransactionModalOpen(false)
-      window.location.reload()
+      setSuccessModalOpen(true)
     }
   }, [relayrBundle.isComplete])
 
@@ -153,10 +163,7 @@ export function CreateErc20TokenSettingsPage() {
         onTransactionConfirmed: () => {
           setConfirmLoading(false)
           setTransactionModalOpen(false)
-          setConfirmLoading(false)
-          setTimeout(() => {
-            window.location.reload()
-          }, 1000)
+          setSuccessModalOpen(true)
         },
         onTransactionError: (e: Error) => {
           setConfirmLoading(false)
@@ -275,6 +282,45 @@ export function CreateErc20TokenSettingsPage() {
         relayrResponse={relayrBundle.response}
         centered
       />
+
+      <Modal
+        open={successModalOpen}
+        onCancel={() => {
+          setSuccessModalOpen(false)
+          if (projectId && chainId) {
+            router.push(`/v${version}/${router.query.jbUrn}?tabid=tokens`)
+          }
+        }}
+        footer={null}
+      >
+        <div className="flex w-full flex-col items-center gap-4 pt-2 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-melon-100 dark:bg-melon-950">
+            <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-melon-200 dark:bg-melon-900">
+              <CheckCircleIcon className="h-10 w-10 text-melon-700 dark:text-melon-500" />
+            </div>
+          </div>
+          <div className="w-80 pt-1 text-2xl font-medium">
+            <Trans>Congrats! Your ERC-20 token has been created</Trans>
+          </div>
+          <div className="text-secondary pb-6">
+            <Trans>
+              Token holders can now claim their tokens as ERC-20.
+            </Trans>
+          </div>
+          <Button
+            type="primary"
+            className="w-[185px] h-12"
+            onClick={() => {
+              setSuccessModalOpen(false)
+              if (projectId && chainId) {
+                router.push(`/v${version}/${router.query.jbUrn}?tabid=tokens`)
+              }
+            }}
+          >
+            <Trans>Back to project</Trans>
+          </Button>
+        </div>
+      </Modal>
     </>
   )
 }

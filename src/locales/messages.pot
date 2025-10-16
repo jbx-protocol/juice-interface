@@ -1001,6 +1001,9 @@ msgstr ""
 msgid "Using crowdfunding platforms for films has been around for a while, but Juicebox adds an extra layer of transparency to the process, allowing fans to see where funds are going. Unlike traditional models where money is controlled behind the scenes, StudioDAO members source, vote, fund, and distribute movies transparently using the treasury while creators retain 100% of their creative control and ownership. With the entertainment market currently valued at two trillion dollars, StudioDAO founder Kenny Miller can see a “clear scenario for a decentralized studio to do one billion dollars of production 2-3 years from now.” To learn more about Kenny's vision for StudioDAO, listen to episode 9 of the Juicecast: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 
+msgid "Congrats! Your ERC-20 token has been created"
+msgstr ""
+
 msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
 msgstr ""
 
@@ -1194,6 +1197,9 @@ msgid "<0>No cycle duration.</0>You can edit your rules and start new cycles at 
 msgstr ""
 
 msgid "The project owner can mint any amount of project tokens at any time."
+msgstr ""
+
+msgid "Token holders can now claim their tokens as ERC-20."
 msgstr ""
 
 msgid "This cycle doesn't reserve any tokens."

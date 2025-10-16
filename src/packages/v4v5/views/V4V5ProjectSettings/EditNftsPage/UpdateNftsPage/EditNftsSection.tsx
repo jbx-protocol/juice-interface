@@ -11,7 +11,7 @@ import TransactionModal from 'components/modals/TransactionModal'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { JBChainId } from 'juice-sdk-core'
 import type { RelayrPostBundleResponse } from 'juice-sdk-react'
-import { useSuckers } from 'juice-sdk-react'
+import { useJBChainId, useSuckers } from 'juice-sdk-react'
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { useHasNftRewards } from 'packages/v4v5/hooks/useHasNftRewards'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
@@ -24,6 +24,7 @@ import { useUpdateCurrentCollection } from '../hooks/useUpdateCurrentCollection'
 import QueueSafeEditNftsTxsModal from './components/QueueSafeEditNftsTxsModal'
 
 export function EditNftsSection() {
+  const chainId = useJBChainId()
   const nftRewardsData = useAppSelector(
     state => state.editingV2Project.nftRewards,
   )
@@ -49,13 +50,13 @@ export function EditNftsSection() {
 
   const { data: suckers } = useSuckers()
   const chainIds = useMemo(() => suckers?.map(s => s.peerChainId as JBChainId) ?? [], [suckers])
-  useEffect(() => { 
-    if (chainIds.length && !selectedGasChain) setSelectedGasChain(chainIds[0]) 
+  useEffect(() => {
+    if (chainIds.length && !selectedGasChain) setSelectedGasChain(chainIds[0])
   }, [chainIds, selectedGasChain])
 
   // Project owner and Gnosis Safe detection
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
-  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress)
+  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress, Number(chainId))
   const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
   const isOmnichainProject = chainIds.length > 1
 

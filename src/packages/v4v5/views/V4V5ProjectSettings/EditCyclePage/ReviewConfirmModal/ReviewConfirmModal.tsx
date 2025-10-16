@@ -65,7 +65,7 @@ export function ReviewConfirmModal({
 
   // Project owner and Gnosis Safe detection
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
-  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress)
+  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress, chainId)
   const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
 
   // Omnichain edit state

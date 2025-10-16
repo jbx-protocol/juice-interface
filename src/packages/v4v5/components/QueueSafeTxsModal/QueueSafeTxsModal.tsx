@@ -76,10 +76,6 @@ export default function QueueSafeTxsModal({
   const router = useRouter()
   const { version } = useV4V5Version()
 
-  // Fetch Safe owners
-  const { data: safeData } = useGnosisSafe(safeAddress)
-  const owners = safeData?.owners || []
-
   const { data: suckers } = useSuckers()
   const suckersChains = useMemo(() => {
     if (!suckers?.length) return []
@@ -88,6 +84,11 @@ export default function QueueSafeTxsModal({
 
   // Use provided chains or fall back to suckers chains
   const chains = chainsProps || suckersChains
+
+  // Fetch Safe owners - use first available chain since Safe address is same across chains
+  const safeChainId = chains[0]
+  const { data: safeData } = useGnosisSafe(safeAddress, safeChainId)
+  const owners = safeData?.owners || []
   
   const handleExecuteOnChain = useCallback(async (chainId: JBChainId, signerAddress?: string) => {
     // Check if wallet is connected

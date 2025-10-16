@@ -24,7 +24,7 @@ export function useV4V5WalletHasPermission(
   const { version } = useV4V5Version()
 
   // If project owner is a Safe, fetch Safe details to determine signer membership
-  const { data: safeData } = useGnosisSafe(projectOwnerAddress)
+  const { data: safeData } = useGnosisSafe(projectOwnerAddress, chainId)
 
   const _operator = userAddress ?? zeroAddress
   const _account = projectOwnerAddress ?? zeroAddress

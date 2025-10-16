@@ -20,10 +20,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     )
   }
 
+  // Only render default HEAD if page doesn't provide project metadata
+  // This prevents default meta tags from overriding project-specific ones during SSG
+  const shouldRenderDefaultHead = !pageProps.metadata
+
   return (
     <LanguageProvider i18n={pageProps.i18n}>
-      {/* Default HEAD - overwritten by specific page SEO */}
-      <Head />
+      {/* Default HEAD - only rendered when page doesn't provide metadata */}
+      {shouldRenderDefaultHead && <Head />}
       {/* Moving ThemeProvider up so Para can react to the theme changes and update modal*/}
       <ThemeProvider>
         <ReactQueryProvider>

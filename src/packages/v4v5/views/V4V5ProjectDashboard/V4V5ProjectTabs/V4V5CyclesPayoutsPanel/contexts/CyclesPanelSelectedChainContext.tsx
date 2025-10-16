@@ -1,7 +1,5 @@
 import { JBChainId, useJBChainId } from 'juice-sdk-react'
-import { createContext, useContext, useEffect } from 'react'
-
-import { useState } from 'react'
+import { createContext, forwardRef, useContext, useEffect, useState } from 'react'
 
 type CyclesPanelSelectedChainContextType = {
   selectedChainId: JBChainId | undefined
@@ -15,9 +13,9 @@ export const CyclesPanelSelectedChainContext = createContext<CyclesPanelSelected
   },
 })
 
-export const CyclesPanelSelectedChainProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+export const CyclesPanelSelectedChainProvider = forwardRef<HTMLDivElement, React.PropsWithChildren<unknown>>(({
   children,
-}) => {
+}, ref) => {
   const [selectedChainId, setSelectedChainId] = useState<JBChainId>()
   const projectPageChainId = useJBChainId()
 
@@ -26,16 +24,20 @@ export const CyclesPanelSelectedChainProvider: React.FC<React.PropsWithChildren<
   }, [projectPageChainId])
 
   return (
-    <CyclesPanelSelectedChainContext.Provider
-      value={{
-        selectedChainId,
-        setSelectedChainId
-      }}
-    >
-      {children}
-    </CyclesPanelSelectedChainContext.Provider>
+    <div ref={ref}>
+      <CyclesPanelSelectedChainContext.Provider
+        value={{
+          selectedChainId,
+          setSelectedChainId
+        }}
+      >
+        {children}
+      </CyclesPanelSelectedChainContext.Provider>
+    </div>
   )
-}
+})
+
+CyclesPanelSelectedChainProvider.displayName = 'CyclesPanelSelectedChainProvider'
 
 export const useCyclesPanelSelectedChain = () => {
   const context = useContext(CyclesPanelSelectedChainContext)

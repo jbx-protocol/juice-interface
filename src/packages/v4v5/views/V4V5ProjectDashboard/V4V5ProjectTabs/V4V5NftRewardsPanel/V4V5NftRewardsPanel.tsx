@@ -1,11 +1,12 @@
 import { Trans, t } from '@lingui/macro'
+import { forwardRef } from 'react'
 import { NftReward, NftRewardSkeleton } from './NftReward/NftReward'
 
 import { EmptyScreen } from 'components/Project/ProjectTabs/EmptyScreen'
 import { RedeemNftsSection } from './RedeemNftsSection/RedeemNftsSection'
 import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'
 
-export const V4V5NftRewardsPanel = () => {
+export const V4V5NftRewardsPanel = forwardRef<HTMLDivElement>((props, ref) => {
   const {
     rewardTiers,
     handleTierSelect,
@@ -14,7 +15,7 @@ export const V4V5NftRewardsPanel = () => {
   } = useNftRewardsPanel()
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div ref={ref} className="flex w-full flex-col gap-5">
       <h2 className="font-heading text-2xl font-medium">
         <Trans>NFTs</Trans>
       </h2>
@@ -45,4 +46,6 @@ export const V4V5NftRewardsPanel = () => {
       )}
     </div>
   )
-}
+})
+
+V4V5NftRewardsPanel.displayName = 'V4V5NftRewardsPanel'

@@ -267,6 +267,15 @@ export function formatSgProjectsForUpdate({
           return true
         }
 
+        // If the project has a valid metadataUri but null metadata, it should be updated
+        if (
+          sgProject.metadataUri &&
+          dbProject.name === null &&
+          !_hasUnresolvedMetadata
+        ) {
+          return true
+        }
+
         if (dbProject.tags?.some(t => !isValidProjectTag(t))) {
           return true
         }
@@ -343,6 +352,7 @@ export async function formatWithMetadata({
     ? metadataUri.split('ipfs://')[1]
     : metadataUri
 
+
   // if metadataUri is missing or invalid, or no retries remaining for unresolved metadata
   if (
     !_metadataUri ||
@@ -364,9 +374,14 @@ export async function formatWithMetadata({
     }
   }
 
-  // If metadataUri has not changed, we don't need to resolve new metadata and can simply append existing dbProject metadata properties
-  if (sgProject.metadataUri === dbProject?.metadataUri) {
+  // If metadataUri has not changed AND we have resolved metadata, we don't need to resolve new metadata and can simply append existing dbProject metadata properties
+  // However, if the metadata is null (unresolved) and we're not explicitly marked as having unresolved metadata with no retries left, we should try to fetch it
+  if (
+    sgProject.metadataUri === dbProject?.metadataUri &&
+    (dbProject?.name !== null || dbProject?._hasUnresolvedMetadata === true)
+  ) {
     const { archived, description, logoUri, name, tags } = dbProject
+
 
     return {
       project: {

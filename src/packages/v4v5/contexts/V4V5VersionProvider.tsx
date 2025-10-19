@@ -1,5 +1,5 @@
 import { useProjectQuery } from 'generated/v4v5/graphql'
-import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
 import { useRouter } from 'next/router'
 import React, {
   createContext,
@@ -53,7 +53,7 @@ export const V4V5VersionProvider: React.FC<V4V5VersionProviderProps> = ({
 
   // Query bendystraw to get the actual project version
   const { data, loading } = useProjectQuery({
-    client: bendystrawClient,
+    client: getBendystrawClient(chainId),
     variables: {
       projectId: Number(projectId),
       chainId: chainId || 0,

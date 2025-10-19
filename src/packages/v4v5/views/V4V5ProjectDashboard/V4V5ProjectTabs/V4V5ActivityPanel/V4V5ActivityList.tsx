@@ -14,7 +14,7 @@ import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
 import { NETWORKS } from 'constants/networks'
 import { useActivityEventsQuery, useProjectQuery } from 'generated/v4v5/graphql'
-import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import React, { useState } from 'react'
@@ -47,7 +47,7 @@ export function V4V5ActivityList() {
 
   // Load the bendystraw project to get its suckerGroupId
   const { data: project } = useProjectQuery({
-    client: bendystrawClient,
+    client: getBendystrawClient(chainId),
     variables: {
       chainId: Number(chainId),
       projectId: Number(projectId),
@@ -57,7 +57,7 @@ export function V4V5ActivityList() {
   })
 
   const { data: activityEvents, loading } = useActivityEventsQuery({
-    client: bendystrawClient,
+    client: getBendystrawClient(chainId),
     skip: !project?.project?.suckerGroupId,
     variables: {
       where: {

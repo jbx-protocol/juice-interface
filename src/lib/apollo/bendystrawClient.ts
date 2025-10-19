@@ -3,6 +3,7 @@ import {
   ApolloLink,
   HttpLink,
   InMemoryCache,
+  NormalizedCacheObject,
 } from '@apollo/client';
 import { FunctionsMap, withScalars } from 'apollo-link-scalars';
 import { IntrospectionQuery, buildClientSchema } from 'graphql';
@@ -70,6 +71,37 @@ const httpLink = new HttpLink({
   uri: `${bendystrawUri()}/graphql`,
 })
 
+// Mainnet client
+const mainnetHttpLink = new HttpLink({
+  uri: `${process.env.NEXT_PUBLIC_BENDYSTRAW_URL}/graphql`,
+})
+
+export const mainnetBendystrawClient = new ApolloClient({
+  cache: new InMemoryCache(cacheConfig),
+  link: ApolloLink.from([scalarsLink, mainnetHttpLink]),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
+})
+
+// Testnet client
+const testnetHttpLink = new HttpLink({
+  uri: `${process.env.NEXT_PUBLIC_BENDYSTRAW_TESTNET_URL}/graphql`,
+})
+
+export const testnetBendystrawClient = new ApolloClient({
+  cache: new InMemoryCache(cacheConfig),
+  link: ApolloLink.from([scalarsLink, testnetHttpLink]),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
+})
+
+// Legacy client (uses environment variable to determine which backend)
 export const bendystrawClient = new ApolloClient({
   cache: new InMemoryCache(cacheConfig),
   link: ApolloLink.from([scalarsLink, httpLink]),
@@ -79,3 +111,16 @@ export const bendystrawClient = new ApolloClient({
     },
   },
 })
+
+// Get the appropriate client based on chainId
+export function getBendystrawClient(chainId?: number): ApolloClient<NormalizedCacheObject> {
+  if (!chainId) {
+    return bendystrawClient
+  }
+
+  // Testnet chain IDs: Sepolia (11155111), Optimism Sepolia (11155420), Base Sepolia (84532), Arbitrum Sepolia (421614)
+  const testnetChainIds = [11155111, 11155420, 84532, 421614]
+  const isTestnetChain = testnetChainIds.includes(chainId)
+
+  return isTestnetChain ? testnetBendystrawClient : mainnetBendystrawClient
+}

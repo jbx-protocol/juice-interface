@@ -5,12 +5,16 @@ import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import { Layout } from 'antd'
 import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
 import { SiteNavigation } from 'components/Navbar/SiteNavigation'
+import { ProtocolActivityProvider } from 'components/ProtocolActivity/ProtocolActivityContext'
+import { ProtocolActivityPanel } from 'components/ProtocolActivity/ProtocolActivityPanel'
 
 import dynamic from 'next/dynamic'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { redirectTo } from 'utils/windowUtils'
-import { twJoin } from 'tailwind-merge'
+import { twJoin, twMerge } from 'tailwind-merge'
 import { useRouter } from 'next/router'
+import { useProtocolActivity } from 'components/ProtocolActivity/ProtocolActivityContext'
+import useMobile from 'hooks/useMobile'
 
 const EthersTxHistoryProvider = dynamic(
   () => import('contexts/Transaction/EthersTxHistoryProvider'),
@@ -60,7 +64,9 @@ export const AppWrapper: React.FC<
       <TxHistoryProvider>
         <EtherPriceProvider>
           <QuickProjectSearchProvider>
-            <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
+            <ProtocolActivityProvider>
+              <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
+            </ProtocolActivityProvider>
           </QuickProjectSearchProvider>
         </EtherPriceProvider>
       </TxHistoryProvider>
@@ -73,6 +79,8 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   hideNav,
 }) => {
   const router = useRouter()
+  const { isOpen } = useProtocolActivity()
+  const isMobile = useMobile()
   useAdjustUrl()
 
   // run on initial mount
@@ -86,10 +94,19 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   }
 
   return (
-    <Layout className="flex h-screen flex-col bg-transparent">
+    <Layout className="flex min-h-screen flex-col bg-transparent">
       {hideNav ? null : <SiteNavigation />}
-      <Content className={twJoin(!hideNav ? 'pt-20' : '', 'md:p-0')}>
-        {children}
+      <Content
+        className={twMerge(
+          twJoin(!hideNav ? 'pt-20' : '', 'md:p-0'),
+        )}
+      >
+        <div className="flex">
+          <div className="flex-1 min-w-0">
+            {children}
+          </div>
+          {!isMobile && <ProtocolActivityPanel />}
+        </div>
       </Content>
     </Layout>
   )

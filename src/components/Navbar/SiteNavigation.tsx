@@ -14,6 +14,7 @@ import ThemePicker from './components/ThemePicker'
 import { TransactionsList } from './components/TransactionList/TransactionsList'
 import { ChangeNetworksButton } from './components/Wallet/ChangeNetworksButton'
 import { WalletButton } from './components/Wallet/WalletButton'
+import ProtocolActivityToggle from 'components/ProtocolActivity/ProtocolActivityToggle'
 
 export function SiteNavigation() {
   const [hasMounted, setHasMounted] = useState(false)
@@ -73,6 +74,7 @@ const DesktopSiteNavigation = () => {
                   <NavLanguageSelector className="md:order-2" />
                   <ThemePicker className="md:order-3" />
                   <QuickProjectSearchButton className="md:order-1" />
+                  <ProtocolActivityToggle className="hidden md:flex md:order-4" />
                   <TransactionsList listClassName="absolute top-full mt-4 right-0 md:-right-6 md:w-[320px] w-full" />
                 </div>
               </div>
@@ -155,6 +157,7 @@ const MobileSiteNavigation = () => {
                         <NavLanguageSelector className="md:order-2" />
                         <ThemePicker className="md:order-3" />
                         <QuickProjectSearchButton className="md:order-1" />
+                        <ProtocolActivityToggle className="hidden md:flex md:order-4" />
                         <TransactionsList listClassName="absolute top-full mt-4 right-0 md:-right-6 md:w-[320px] w-full" />
                       </div>
                     </div>

@@ -8,8 +8,7 @@ import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5Nft
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4V5AboutPanel from './V4V5AboutPanel'
-import { V4V5ActivityPanel } from './V4V5ActivityPanel/V4V5ActivityPanel'
-import { CyclesPanelSelectedChainProvider } from './V4V5CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
+import { V4V5AnalyticsPanel } from './V4V5ActivityPanel/V4V5AnalyticsPanel'
 import { V4V5CyclesPayoutsPanel } from './V4V5CyclesPayoutsPanel/V4V5CyclesPayoutsPanel'
 import { V4V5NftRewardsPanel } from './V4V5NftRewardsPanel/V4V5NftRewardsPanel'
 import { V4V5TokensPanel } from './V4V5TokensPanel/V4V5TokensPanel'
@@ -62,7 +61,7 @@ export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
   const tabs: ProjectTabConfig[] = useMemo(
     () => [
       { id: 'about', name: t`About`, panel: <V4V5AboutPanel /> },
-      { id: 'activity', name: t`Activity`, panel: <V4V5ActivityPanel /> },
+      { id: 'analytics', name: t`Analytics`, panel: <V4V5AnalyticsPanel /> },
       {
         id: 'nft_rewards',
         name: t`NFTs`,
@@ -72,7 +71,7 @@ export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
       {
         id: 'ruleset_payouts',
         name: t`Rulesets & Funds`,
-        panel: <CyclesPanelSelectedChainProvider><V4V5CyclesPayoutsPanel /></CyclesPanelSelectedChainProvider>,
+        panel: <V4V5CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <V4V5TokensPanel /> },
     ],

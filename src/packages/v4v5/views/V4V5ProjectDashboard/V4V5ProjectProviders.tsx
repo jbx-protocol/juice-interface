@@ -11,6 +11,7 @@ import V4V5ProjectMetadataProvider from 'packages/v4v5/contexts/V4V5ProjectMetad
 import { V4V5UserNftCreditsProvider } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { V4V5UserTotalTokensBalanceProvider } from 'packages/v4v5/contexts/V4V5UserTotalTokensBalanceProvider'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
+import { CyclesPanelSelectedChainProvider } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
 import { Provider } from 'react-redux'
 
 const V4V5ProjectProviders: React.FC<
@@ -52,9 +53,11 @@ const V4V5ProjectProviders: React.FC<
               <V4V5UserNftCreditsProvider>
                 <V4V5UserTotalTokensBalanceProvider>
                   <V4V5NftRewardsProvider>
-                    <ReduxProjectCartProvider>
-                      {children}
-                    </ReduxProjectCartProvider>
+                    <CyclesPanelSelectedChainProvider>
+                      <ReduxProjectCartProvider>
+                        {children}
+                      </ReduxProjectCartProvider>
+                    </CyclesPanelSelectedChainProvider>
                   </V4V5NftRewardsProvider>
                 </V4V5UserTotalTokensBalanceProvider>
               </V4V5UserNftCreditsProvider>

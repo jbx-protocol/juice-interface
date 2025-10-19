@@ -66,21 +66,63 @@ export default function TimelineChart({
     theme: { colors },
   } = tailwind
 
-  const xDomain = useMemo(
-    () =>
-      [Math.floor((now - daysToMS(range)) / 1000), Math.floor(now / 1000)] as [
-        number,
-        number,
-      ],
-    [range],
-  )
+  const xDomain = useMemo(() => {
+    // If we have data points, use their actual timestamp range for perfect alignment
+    if (points && points.length > 0) {
+      const timestamps = points.map(p => p.timestamp)
+      const min = Math.min(...timestamps)
+      const max = Math.max(...timestamps)
+      // Add 5% padding on each side so first/last points aren't cut off
+      const padding = (max - min) * 0.05
+      return [min - padding, max + padding] as [number, number]
+    }
+    // Fallback to calculated range if no points yet
+    return [Math.floor((now - daysToMS(range)) / 1000), Math.floor(now / 1000)] as [
+      number,
+      number,
+    ]
+  }, [range, points])
 
   const stroke = themeOption === 'dark' ? colors.slate[300] : colors.grey[400]
   const color = themeOption === 'dark' ? colors.slate[200] : colors.grey[400]
   const bg = themeOption === 'dark' ? colors.slate[900] : 'white'
   const fontSize = '0.75rem'
 
-  const xTicks = useTicks({ range: xDomain, resolution: 7, offset: 0.5 })
+  const calculatedTicks = useTicks({ range: xDomain, resolution: 7, offset: 0.5 })
+
+  // Select appropriate number of ticks to avoid overlap
+  const xTicks = useMemo(() => {
+    if (points && points.length > 0) {
+      const timestamps = points.map(p => p.timestamp)
+
+      // Determine how many ticks to show based on range
+      let tickInterval: number
+      if (range <= 7) {
+        // 7 days: show all
+        tickInterval = 1
+      } else if (range <= 30) {
+        // 30 days: show every ~4 days (about 8 ticks)
+        tickInterval = Math.ceil(timestamps.length / 8)
+      } else {
+        // 365 days: show every ~4-5 points (about 6-7 ticks)
+        tickInterval = Math.ceil(timestamps.length / 7)
+      }
+
+      // Select evenly spaced timestamps including first and last
+      const selectedTicks: number[] = []
+      for (let i = 0; i < timestamps.length; i += tickInterval) {
+        selectedTicks.push(timestamps[i])
+      }
+      // Always include the last timestamp if not already included
+      if (selectedTicks[selectedTicks.length - 1] !== timestamps[timestamps.length - 1]) {
+        selectedTicks.push(timestamps[timestamps.length - 1])
+      }
+
+      return selectedTicks
+    }
+    // Fallback to calculated ticks if no points
+    return calculatedTicks
+  }, [points, calculatedTicks, range])
 
   const yTicks = useTicks({ range: yDomain, resolution: 5, offset: 0.5 })
 
@@ -88,7 +130,7 @@ export default function TimelineChart({
     moment(timestampSecs * 1000).format('M/DD')
 
   return (
-    <ResponsiveContainer width={'100%'} height={height}>
+    <ResponsiveContainer width={'100%'} height={height as number | `${number}%` | undefined}>
       <LineChart
         margin={{
           top: -1, // hacky way to hide top border of CartesianGrid

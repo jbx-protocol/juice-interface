@@ -147,7 +147,7 @@ function processMetadata(
     fileUrl: tierMetadata.image,
     beneficiary: tier.reserveBeneficiary,
     reservedRate: tier.reserveFrequency,
-    votingWeight: tier.votingUnits,
+    votingWeight: tier.votingUnits?.toString(),
   }
 }
 

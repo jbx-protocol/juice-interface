@@ -3,6 +3,7 @@ import { PV } from 'models/pv'
 import { CSSProperties, useMemo, useState } from 'react'
 
 import { PV_V4 } from 'constants/pv'
+import { useV4V5ProjectTimeline } from 'packages/v4v5/hooks/useV4V5ProjectTimeline'
 import RangeSelector from './components/RangeSelector'
 import TimelineChart from './components/TimelineChart'
 import TimelineViewSelector from './components/TimelineViewSelector'
@@ -15,31 +16,36 @@ export default function VolumeChart({
   createdAt,
   projectId,
   pv,
+  version,
 }: {
   height: CSSProperties['height']
   createdAt: number | undefined
   projectId: number
   pv: PV
+  version?: number
 }) {
   const [timelineView, setTimelineView] =
     useState<ProjectTimelineView>('volume')
 
   const [range, setRange] = useTimelineRange({ createdAt })
 
-  const { v1v2v3Points, v4Points, loading } = useProjectTimeline({
+  // V1/V2/V3: Use legacy blockchain-based hook
+  const { v1v2v3Points, loading: legacyLoading } = useProjectTimeline({
     projectId,
     pv,
     range,
   })
 
-  const points = useMemo(() => {
-    switch (pv) {
-      case PV_V4:
-        return v4Points
-      default:
-        return v1v2v3Points
-    }
-  }, [pv, v1v2v3Points, v4Points])
+  // V4/V5: Use new database-based hook (only for V4 projects)
+  const shouldUseV4Hook = pv === PV_V4
+  const { points: v4v5Points, loading: v4v5Loading } = useV4V5ProjectTimeline({
+    projectId: shouldUseV4Hook ? projectId : 0,
+    range,
+    version: version || 4,
+  })
+
+  const points = shouldUseV4Hook ? v4v5Points : v1v2v3Points
+  const loading = shouldUseV4Hook ? v4v5Loading : legacyLoading
 
   return (
     <div>

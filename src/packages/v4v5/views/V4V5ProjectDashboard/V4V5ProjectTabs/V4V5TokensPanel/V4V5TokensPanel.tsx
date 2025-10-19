@@ -6,7 +6,7 @@ import {
   useJBContractContext,
   useSuckersUserTokenBalance,
 } from 'juice-sdk-react'
-import { forwardRef, useCallback, useMemo, useState } from 'react'
+import { forwardRef, useMemo } from 'react'
 
 import { SettingOutlined } from '@ant-design/icons'
 import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
@@ -15,7 +15,6 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
-import { V4V5TokenHoldersModal } from 'packages/v4v5/components/modals/V4V5TokenHoldersModal/V4V5TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
 import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
@@ -37,16 +36,6 @@ export const V4V5TokensPanel = forwardRef<HTMLDivElement>((props, ref) => {
   const { version } = useV4V5Version()
 
   const { canMintTokens } = useV4V5BalanceMenuItemsUserFlags()
-
-  const [tokenHolderModalOpen, setTokenHolderModalOpen] = useState(false)
-  const openTokenHolderModal = useCallback(
-    () => setTokenHolderModalOpen(true),
-    [],
-  )
-  const closeTokenHolderModal = useCallback(
-    () => setTokenHolderModalOpen(false),
-    [],
-  )
 
   const {
     items,
@@ -160,23 +149,12 @@ export const V4V5TokensPanel = forwardRef<HTMLDivElement>((props, ref) => {
                 description={totalTokenSupplyElement}
               />
             </div>
-            <a
-              role="button"
-              className="font-medium md:self-end"
-              onClick={openTokenHolderModal}
-            >
-              <Trans>View token holders</Trans>
-            </a>
           </div>
           <ReservedTokensSelectedChainProvider>
             <V4V5ReservedTokensSubPanel className="mt-12" />
           </ReservedTokensSelectedChainProvider>
         </div>
       </div>
-      <V4V5TokenHoldersModal
-        open={tokenHolderModalOpen}
-        onClose={closeTokenHolderModal}
-      />
       <V4V5ClaimTokensModal
         open={claimTokensModalVisible}
         onCancel={() => setClaimTokensModalVisible(false)}

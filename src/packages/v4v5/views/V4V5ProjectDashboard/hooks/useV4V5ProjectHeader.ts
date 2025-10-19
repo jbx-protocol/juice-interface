@@ -9,7 +9,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useProjectQuery, useSuckerGroupQuery } from 'generated/v4v5/graphql'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
-import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
 import { GnosisSafe } from 'models/safe'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
@@ -42,7 +42,7 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
   const projectIdNum = parseInt(projectId.toString())
 
   const { data: project } = useProjectQuery({
-    client: bendystrawClient,
+    client: getBendystrawClient(Number(chainId)),
     variables: {
       projectId: projectIdNum,
       chainId: Number(chainId),
@@ -52,7 +52,7 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
   })
 
   const { data: suckerGroup } = useSuckerGroupQuery({
-    client: bendystrawClient,
+    client: getBendystrawClient(Number(chainId)),
     variables: {
       id: project?.project?.suckerGroupId || '',
     },

@@ -1,9 +1,9 @@
-import { Button, Modal, Select, Spin, Tooltip } from 'antd'
+import { Button, Modal, Spin, Tooltip } from 'antd'
 import { JBChainId, useSuckers } from 'juice-sdk-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 import { ApiFilled } from '@ant-design/icons'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
@@ -12,29 +12,7 @@ import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { twMerge } from 'tailwind-merge'
 import { safeTxUrl } from 'utils/safe'
-import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
-import { useEnsName } from 'wagmi'
-
-// Component to render each owner option with ENS name if available
-const OwnerOption = ({ address }: { address: string }) => {
-  const { data: ensName } = useEnsName({ address: address as `0x${string}` })
-  const truncated = `${address.slice(0, 6)}...${address.slice(-4)}`
-
-  return (
-    <Tooltip title={address} placement="right">
-      <div>
-        {ensName ? (
-          <>
-            <div className="font-medium">{ensName}</div>
-            <div className="text-xs text-grey-500 dark:text-grey-400">{truncated}</div>
-          </>
-        ) : (
-          <div>{truncated}</div>
-        )}
-      </div>
-    </Tooltip>
-  )
-}
+import { Callout } from 'components/Callout/Callout'
 
 export interface QueueSafeTxsModalProps {
   open: boolean
@@ -70,7 +48,6 @@ export default function QueueSafeTxsModal({
   const [loadingChainId, setLoadingChainId] = useState<JBChainId | null>(null)
   const [completedChains, setCompletedChains] = useState<Set<JBChainId>>(new Set())
   const [txResults, setTxResults] = useState<Map<JBChainId, SafeProposeTransactionResponse>>(new Map())
-  const [selectedOwner, setSelectedOwner] = useState<string | undefined>()
 
   const { eip1193Provider, chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
   const router = useRouter()
@@ -84,11 +61,6 @@ export default function QueueSafeTxsModal({
 
   // Use provided chains or fall back to suckers chains
   const chains = chainsProps || suckersChains
-
-  // Fetch Safe owners - use first available chain since Safe address is same across chains
-  const safeChainId = chains[0]
-  const { data: safeData } = useGnosisSafe(safeAddress, safeChainId)
-  const owners = safeData?.owners || []
   
   const handleExecuteOnChain = useCallback(async (chainId: JBChainId, signerAddress?: string) => {
     // Check if wallet is connected
@@ -179,36 +151,11 @@ export default function QueueSafeTxsModal({
           {description}
         </div>
 
-        {owners.length > 0 && (
-          <div className="mb-6 pb-6 border-b border-smoke-300 dark:border-smoke-500">
-            <div className="mb-2 font-medium">
-              <Trans>Select your address</Trans>
-            </div>
-            <Select
-              className="w-full"
-              placeholder={t`Choose your Safe owner address`}
-              value={selectedOwner}
-              onChange={setSelectedOwner}
-              showSearch
-              optionFilterProp="label"
-            >
-              {owners.map((ownerAddress) => (
-                <Select.Option
-                  key={ownerAddress}
-                  value={ownerAddress}
-                  label={ownerAddress}
-                >
-                  <OwnerOption address={ownerAddress} />
-                </Select.Option>
-              ))}
-            </Select>
-            {!selectedOwner && (
-              <div className="mt-2 text-sm text-grey-500 dark:text-slate-400">
-                <Trans>Please select your address to continue</Trans>
-              </div>
-            )}
-          </div>
-        )}
+        <Callout.Info>
+          <Trans>
+            For projects owned by Safes, connect to this site using your signer's address, not using your Safe.
+          </Trans>
+        </Callout.Info>
 
         {chains.length === 0 && (
           <div className="text-center py-8">
@@ -282,9 +229,9 @@ export default function QueueSafeTxsModal({
                 
                 <Button
                   type={isCompleted ? "default" : "primary"}
-                  onClick={() => handleExecuteOnChain(chainId, selectedOwner)}
+                  onClick={() => handleExecuteOnChain(chainId)}
                   loading={isLoadingThisChain}
-                  disabled={isCompleted || (isLoading && loadingChainId !== chainId) || (owners.length > 0 && !selectedOwner)}
+                  disabled={isCompleted || (isLoading && loadingChainId !== chainId)}
                 >
                   {buttonText}
                 </Button>
@@ -294,11 +241,11 @@ export default function QueueSafeTxsModal({
         </div>
 
         {allChainsCompleted ? (
-          <div className="mt-4 p-4 bg-success-50 border border-success-200 rounded-lg">
-            <div className="text-green-800 font-medium">
+          <div className="mt-4 p-4 bg-bluebs-50 border border-bluebs-200 rounded-lg dark:bg-bluebs-900 dark:border-bluebs-700">
+            <div className="text-bluebs-800 font-medium dark:text-bluebs-100">
               <Trans>All transactions queued to Safe!</Trans>
             </div>
-            <div className="text-green-600 text-sm mt-1">
+            <div className="text-bluebs-600 text-sm mt-1 dark:text-bluebs-200">
               <Trans>
                 You can execute each transaction through the Safe interface when the required signatures are collected.
               </Trans>

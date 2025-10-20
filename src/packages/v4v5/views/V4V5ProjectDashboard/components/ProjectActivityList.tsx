@@ -62,7 +62,7 @@ export function ProjectActivityList() {
       <h2 className="mb-6 font-heading text-2xl font-medium">
         Activity
       </h2>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 max-h-[38rem] overflow-y-auto">
           {loading && <Loading />}
           {error && (
             <div className="text-red-500 text-sm">

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { AccountDashboard } from 'components/AccountDashboard/AccountDashboard'
 import Loading from 'components/Loading'
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
-import { SEO } from 'components/common/SEO/SEO'
+import { SEOHead } from 'components/SEOHead'
 import { isAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
 import { loadCatalog } from 'locales/utils'
@@ -61,7 +61,7 @@ function _AccountPage({ addressOrEnsName }: { addressOrEnsName: string }) {
 
   return (
     <>
-      <SEO title={ensName ?? truncateEthAddress({ address })} />
+      <SEOHead title={ensName ?? truncateEthAddress({ address })} />
       <AccountDashboard address={address} ensName={ensName} profile={profile} />
     </>
   )

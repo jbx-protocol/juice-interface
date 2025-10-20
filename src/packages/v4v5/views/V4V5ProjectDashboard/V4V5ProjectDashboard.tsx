@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { V4V5ProjectHeader } from './V4V5ProjectHeader'
 import { V4V5ProjectTabs } from './V4V5ProjectTabs/V4V5ProjectTabs'
-import { V4V5ActivityList } from './V4V5ProjectTabs/V4V5ActivityPanel/V4V5ActivityList'
+import { ProjectActivityList } from './components/ProjectActivityList'
 
 export default function V4V5ProjectDashboard() {
   const { projectPayReceipt } = useProjectPageQueries()
@@ -45,10 +45,7 @@ export default function V4V5ProjectDashboard() {
               )}
             >
               <V4V5PayRedeemCard className="mt-10" />
-              {/* Activity Section */}
-              <div className="max-h-[600px] overflow-y-auto rounded-lg border border-grey-200 p-6 dark:border-slate-600">
-                <V4V5ActivityList />
-              </div>
+              <ProjectActivityList />
             </div>
             <V4V5ProjectTabs
               className={twMerge(

@@ -260,7 +260,7 @@ export const CustomTokenSettings = () => {
               </>
             )}
             
-            {!Form.useWatch('enableCashOuts', form) && (
+            {Form.useWatch('cashOutTaxRate', form) === 100 && (
               <Callout.Info>
                 <Trans>
                   Cash outs are disabled. Token holders will not be able to redeem their tokens for ETH.

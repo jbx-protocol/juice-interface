@@ -17,7 +17,22 @@ export default function TokenDistributionChart({
   const [viewMode, setViewMode] = useState<'pie' | 'area'>('pie')
 
   // Don't render chart for projects with no token supply
-  if (tokenSupply === 0n || !participants?.length) return null
+  if (tokenSupply === 0n || !participants?.length) {
+    return null
+  }
+
+  // Check if all participants have zero balances
+  const hasNonZeroBalances = participants.some((p) => {
+    const balance = BigInt(p.balance || 0)
+    const creditBalance = BigInt(p.creditBalance || 0)
+    const erc20Balance = BigInt(p.erc20Balance || 0)
+    const totalBalance = balance + creditBalance + erc20Balance
+    return totalBalance > 0n
+  })
+
+  if (!hasNonZeroBalances) {
+    return null
+  }
 
   const size = 320
 

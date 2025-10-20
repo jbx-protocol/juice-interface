@@ -3089,6 +3089,9 @@ msgstr ""
 msgid "Search projects"
 msgstr ""
 
+msgid "Balance chart failed to load."
+msgstr ""
+
 msgid "Collection details"
 msgstr ""
 
@@ -3144,6 +3147,9 @@ msgid "<0/> fee"
 msgstr ""
 
 msgid "Advanced options:"
+msgstr ""
+
+msgid "Trending chart failed to load."
 msgstr ""
 
 msgid "Payments to this project are paused in this cycle."

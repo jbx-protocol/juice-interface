@@ -5,10 +5,9 @@ import {
   EventType,
   transformEventData,
 } from './utils/transformEventsData'
+// import { groupEventsByTransaction } from './utils/groupEvents'
 
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
-import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
@@ -19,6 +18,7 @@ import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectD
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import React, { useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
+import { formatActivityAmount } from 'utils/format/formatActivityAmount'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { ActivityEvent } from './activityEventElems/ActivityElement'
 
@@ -74,11 +74,18 @@ export function V4V5ActivityList() {
   })
 
   const projectEvents = React.useMemo(
-    () =>
-      activityEvents?.activityEvents.items
+    () => {
+      if (!activityEvents?.activityEvents.items) return []
+
+      // TODO: Event grouping temporarily disabled
+      // const groupedEvents = groupEventsByTransaction(activityEvents.activityEvents.items)
+
+      // Transform and present events
+      return activityEvents.activityEvents.items
         .map(transformEventData)
         .filter((event): event is AnyEvent => !!event)
-        .map(e => translateEventDataToPresenter(e, tokenSymbol)) ?? [],
+        .map(e => translateEventDataToPresenter(e, tokenSymbol))
+    },
     [activityEvents?.activityEvents.items, tokenSymbol],
   )
 
@@ -142,11 +149,7 @@ export function translateEventDataToPresenter(
         header: 'Paid',
         subject: (
           <span className="font-heading text-lg">
-            <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)}
-              currency="ETH"
-              hideTooltip
-            />
+            {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -157,11 +160,7 @@ export function translateEventDataToPresenter(
         header: 'Added to balance',
         subject: (
           <span className="font-heading text-lg">
-            <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)}
-              currency="ETH"
-              hideTooltip
-            />
+            {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
         extra: event.note ? <RichNote note={event.note} /> : null,
@@ -188,11 +187,7 @@ export function translateEventDataToPresenter(
         header: 'Cashed out',
         subject: (
           <span className="font-heading text-lg">
-            <AmountInCurrency
-              amount={BigNumber.from(event.reclaimAmount.value)}
-              currency="ETH"
-              hideTooltip
-            />
+            {formatActivityAmount(event.reclaimAmount.value)} ETH
           </span>
         ),
       }
@@ -216,16 +211,12 @@ export function translateEventDataToPresenter(
         header: 'Send payouts',
         subject: (
           <span className="font-heading text-lg">
-            <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)}
-              currency="ETH"
-              hideTooltip
-            />
+            {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
         extra: (
           <RichNote
-            note={`Paid out: Ξ${event.amountPaidOut.format()}, Fee: Ξ${event.fee.format()}`}
+            note={`Paid out: Ξ${formatActivityAmount(event.amountPaidOut.value)}, Fee: Ξ${formatActivityAmount(event.fee.value)}`}
           />
         ),
       }
@@ -265,11 +256,7 @@ export function translateEventDataToPresenter(
         header: 'Send to payout split',
         subject: (
           <span className="font-heading text-lg">
-            <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)}
-              currency="ETH"
-              hideTooltip
-            />
+            {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
         extra: (
@@ -286,11 +273,7 @@ export function translateEventDataToPresenter(
         header: 'Used allowance',
         subject: (
           <span className="font-heading text-lg">
-            <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)}
-              currency="ETH"
-              hideTooltip
-            />
+            {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -310,12 +293,106 @@ export function translateEventDataToPresenter(
         ),
         extra: (
           <RichNote
-            note={`Staked: ${fromWad(
-              event.stakedAmount.value,
-            )}, ERC20: ${fromWad(event.erc20Amount.value)}`}
+            note={`Staked: ${formatActivityAmount(event.stakedAmount.value)}, ERC20: ${formatActivityAmount(event.erc20Amount.value)}`}
           />
         ),
       }
+    // TODO: Aggregated Events - temporarily disabled until event grouping is implemented
+    // case 'paymentEvent':
+    //   return {
+    //     event,
+    //     header: 'Payment',
+    //     subject: (
+    //       <span className="font-heading text-lg">
+    //         <AmountInCurrency
+    //           amount={BigNumber.from(event.amountPaid.value)}
+    //           currency="ETH"
+    //           hideTooltip
+    //         />
+    //         {' → '}
+    //         {event.tokensMinted.format()}{' '}
+    //         {tokenSymbolText({
+    //           capitalize: true,
+    //           tokenSymbol,
+    //           plural: event.tokensMinted.toFloat() > 1,
+    //         })}
+    //       </span>
+    //     ),
+    //     extra: event.note ? <RichNote note={event.note} /> : null,
+    //   }
+    // case 'cashOutAggregatedEvent':
+    //   return {
+    //     event,
+    //     header: 'Cash out',
+    //     subject: (
+    //       <span className="font-heading text-lg">
+    //         {Number(event.tokensBurned.toFloat())}{' '}
+    //         {tokenSymbolText({
+    //           tokenSymbol,
+    //           plural: event.tokensBurned.toFloat() > 1,
+    //         })}
+    //         {' → '}
+    //         <AmountInCurrency
+    //           amount={BigNumber.from(event.ethReceived.value)}
+    //           currency="ETH"
+    //           hideTooltip
+    //         />
+    //       </span>
+    //     ),
+    //     extra: (
+    //       <RichNote
+    //         note={`Tokens burned: ${fromWad(event.tokensBurned.value)} (Staked: ${fromWad(
+    //           event.stakedAmount.value,
+    //         )}, ERC20: ${fromWad(event.erc20Amount.value)})`}
+    //       />
+    //     ),
+    //   }
+    // case 'erc20CreationEvent':
+    //   return {
+    //     event,
+    //     header: 'ERC-20 token created',
+    //     subject: <span className="font-heading text-lg">{event.symbol}</span>,
+    //     extra: (
+    //       <RichNote
+    //         note={`Deployed on ${event.chains.length} chain${
+    //           event.chains.length > 1 ? 's' : ''
+    //         }: ${event.chains.map(c => NETWORKS[c.chainId]?.label || `Chain ${c.chainId}`).join(', ')}`}
+    //       />
+    //     ),
+    //   }
+    // case 'payoutDistributionEvent':
+    //   return {
+    //     event,
+    //     header: 'Payouts distributed',
+    //     subject: (
+    //       <span className="font-heading text-lg">
+    //         <AmountInCurrency
+    //           amount={BigNumber.from(event.totalAmount.value)}
+    //           currency="ETH"
+    //           hideTooltip
+    //         />
+    //         {event.numberOfSplits > 0 && ` to ${event.numberOfSplits} split${event.numberOfSplits > 1 ? 's' : ''}`}
+    //       </span>
+    //     ),
+    //     extra: (
+    //       <RichNote
+    //         note={`Paid out: Ξ${event.amountPaidOut.format()}, Fee: Ξ${event.fee.format()}, Cycle: ${event.rulesetCycleNumber}`}
+    //       />
+    //     ),
+    //   }
+    // case 'reservedTokenDistributionEvent':
+    //   return {
+    //     event,
+    //     header: 'Reserved tokens distributed',
+    //     subject: (
+    //       <span className="font-heading text-lg">
+    //         {fromWad(event.totalTokens)}{' '}
+    //         {tokenSymbolText({ tokenSymbol, plural: event.totalTokens > 1 })}
+    //         {event.numberOfSplits > 0 && ` to ${event.numberOfSplits} split${event.numberOfSplits > 1 ? 's' : ''}`}
+    //       </span>
+    //     ),
+    //     extra: <RichNote note={`Cycle: ${event.rulesetCycleNumber}`} />,
+    //   }
   }
 }
 

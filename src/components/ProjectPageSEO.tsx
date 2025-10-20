@@ -3,7 +3,7 @@ import { JBChainId, toJbUrn } from 'juice-sdk-core'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import { stripHtmlTags } from 'utils/string'
-import { SEO } from './common/SEO/SEO'
+import { SEOHead } from './SEOHead'
 
 const ProjectPageSEO: React.FC<{
   metadata?: ProjectMetadata
@@ -14,25 +14,20 @@ const ProjectPageSEO: React.FC<{
     ? ipfsPublicGatewayUrl(cidFromUrl(metadata.logoUri))
     : undefined
 
+  const description = metadata?.projectTagline
+    ? metadata.projectTagline
+    : metadata?.description
+    ? stripHtmlTags(metadata.description)
+    : undefined
+
   return (
-    <SEO
-      // Set known values, leave others undefined to be overridden
+    <SEOHead
       title={metadata?.name}
       url={url}
-      description={
-        metadata?.projectTagline
-          ? metadata.projectTagline
-          : metadata?.description
-          ? stripHtmlTags(metadata.description)
-          : undefined
-      }
+      description={description}
       image={projectImage}
-      twitter={{
-        card: 'summary_large_image',
-        creator: metadata?.twitter,
-        handle: metadata?.twitter,
-        image: projectImage,
-      }}
+      twitterCard="summary_large_image"
+      twitterCreator={metadata?.twitter}
     />
   )
 }
@@ -50,9 +45,7 @@ export const V4ProjectSEO: React.FC<{
   projectId: number
 }> = ({ metadata, chainId, projectId }) => {
   const urn = toJbUrn(chainId, BigInt(projectId))
-  return (
-    <ProjectPageSEO metadata={metadata} url={`${SiteBaseUrl}v4/p/${urn}`} />
-  )
+  return <ProjectPageSEO metadata={metadata} url={`${SiteBaseUrl}v4/${urn}`} />
 }
 
 export const V5ProjectSEO: React.FC<{
@@ -61,7 +54,5 @@ export const V5ProjectSEO: React.FC<{
   projectId: number
 }> = ({ metadata, chainId, projectId }) => {
   const urn = toJbUrn(chainId, BigInt(projectId))
-  return (
-    <ProjectPageSEO metadata={metadata} url={`${SiteBaseUrl}v5/p/${urn}`} />
-  )
+  return <ProjectPageSEO metadata={metadata} url={`${SiteBaseUrl}v5/${urn}`} />
 }

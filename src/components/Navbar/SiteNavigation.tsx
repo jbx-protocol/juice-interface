@@ -15,6 +15,7 @@ import { TransactionsList } from './components/TransactionList/TransactionsList'
 import { ChangeNetworksButton } from './components/Wallet/ChangeNetworksButton'
 import { WalletButton } from './components/Wallet/WalletButton'
 import ProtocolActivityToggle from 'components/ProtocolActivity/ProtocolActivityToggle'
+import { useRouter } from 'next/router'
 
 export function SiteNavigation() {
   const [hasMounted, setHasMounted] = useState(false)
@@ -33,6 +34,12 @@ export function SiteNavigation() {
 
 const DesktopSiteNavigation = () => {
   const { chainUnsupported } = useWallet()
+  const router = useRouter()
+
+  // Hide protocol activity toggle on project pages
+  const isProjectPage = router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
+  const isProjectRoute = /^\/(v4|v5)\/[^\/]+/.test(router.asPath)
+  const showProtocolActivityToggle = !(isProjectPage && isProjectRoute)
 
   return (
     <div className="z-20 w-full min-w-0 px-6 xl:px-20">
@@ -74,7 +81,7 @@ const DesktopSiteNavigation = () => {
                   <NavLanguageSelector className="md:order-2" />
                   <ThemePicker className="md:order-3" />
                   <QuickProjectSearchButton className="md:order-1" />
-                  <ProtocolActivityToggle className="hidden md:flex md:order-4" />
+                  {showProtocolActivityToggle && <ProtocolActivityToggle className="hidden md:flex md:order-4" />}
                   <TransactionsList listClassName="absolute top-full mt-4 right-0 md:-right-6 md:w-[320px] w-full" />
                 </div>
               </div>
@@ -93,6 +100,12 @@ const DesktopSiteNavigation = () => {
 
 const MobileSiteNavigation = () => {
   const { chainUnsupported } = useWallet()
+  const router = useRouter()
+
+  // Hide protocol activity toggle on project pages
+  const isProjectPage = router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
+  const isProjectRoute = /^\/(v4|v5)\/[^\/]+/.test(router.asPath)
+  const showProtocolActivityToggle = !(isProjectPage && isProjectRoute)
 
   return (
     <div className="fixed z-20 w-full min-w-0 md:static md:px-6 xl:px-20">
@@ -157,7 +170,7 @@ const MobileSiteNavigation = () => {
                         <NavLanguageSelector className="md:order-2" />
                         <ThemePicker className="md:order-3" />
                         <QuickProjectSearchButton className="md:order-1" />
-                        <ProtocolActivityToggle className="hidden md:flex md:order-4" />
+                        {showProtocolActivityToggle && <ProtocolActivityToggle className="hidden md:flex md:order-4" />}
                         <TransactionsList listClassName="absolute top-full mt-4 right-0 md:-right-6 md:w-[320px] w-full" />
                       </div>
                     </div>

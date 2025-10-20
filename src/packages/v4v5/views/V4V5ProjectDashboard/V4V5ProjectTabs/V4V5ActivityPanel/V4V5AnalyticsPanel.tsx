@@ -30,7 +30,11 @@ export const V4V5AnalyticsPanel = forwardRef<HTMLDivElement>((props, ref) => {
     <div ref={ref} className="min-h-[384px] w-full">
       {Boolean(projectId) && (
         <>
+          {/* Volume Chart */}
           <div className="mb-10">
+            <h3 className="mb-4 font-heading text-xl font-medium">
+              <Trans>Volume</Trans>
+            </h3>
             <Suspense fallback={<Loading />}>
               <ErrorBoundaryCallout
                 message={<Trans>Volume chart failed to load.</Trans>}
@@ -41,17 +45,64 @@ export const V4V5AnalyticsPanel = forwardRef<HTMLDivElement>((props, ref) => {
                   createdAt={createdAt}
                   pv={PV_V4}
                   version={version}
+                  lockedView="volume"
+                  hideViewSelector={true}
                 />
               </ErrorBoundaryCallout>
             </Suspense>
           </div>
 
+          {/* Token Holders Chart */}
           <div className="mb-10">
             <Suspense fallback={<Loading />}>
               <ErrorBoundaryCallout
                 message={<Trans>Token holders chart failed to load.</Trans>}
               >
                 <V4V5TokenHoldersChart />
+              </ErrorBoundaryCallout>
+            </Suspense>
+          </div>
+
+          {/* In Juicebox Chart */}
+          <div className="mb-10">
+            <h3 className="mb-4 font-heading text-xl font-medium">
+              <Trans>In Juicebox</Trans>
+            </h3>
+            <Suspense fallback={<Loading />}>
+              <ErrorBoundaryCallout
+                message={<Trans>Balance chart failed to load.</Trans>}
+              >
+                <VolumeChart
+                  height={240}
+                  projectId={Number(projectId)}
+                  createdAt={createdAt}
+                  pv={PV_V4}
+                  version={version}
+                  lockedView="balance"
+                  hideViewSelector={true}
+                />
+              </ErrorBoundaryCallout>
+            </Suspense>
+          </div>
+
+          {/* Trending Chart */}
+          <div className="mb-10">
+            <h3 className="mb-4 font-heading text-xl font-medium">
+              <Trans>Trending</Trans>
+            </h3>
+            <Suspense fallback={<Loading />}>
+              <ErrorBoundaryCallout
+                message={<Trans>Trending chart failed to load.</Trans>}
+              >
+                <VolumeChart
+                  height={240}
+                  projectId={Number(projectId)}
+                  createdAt={createdAt}
+                  pv={PV_V4}
+                  version={version}
+                  lockedView="trendingScore"
+                  hideViewSelector={true}
+                />
               </ErrorBoundaryCallout>
             </Suspense>
           </div>

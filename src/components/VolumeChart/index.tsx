@@ -17,15 +17,19 @@ export default function VolumeChart({
   projectId,
   pv,
   version,
+  lockedView,
+  hideViewSelector,
 }: {
   height: CSSProperties['height']
   createdAt: number | undefined
   projectId: number
   pv: PV
   version?: number
+  lockedView?: ProjectTimelineView
+  hideViewSelector?: boolean
 }) {
   const [timelineView, setTimelineView] =
-    useState<ProjectTimelineView>('volume')
+    useState<ProjectTimelineView>(lockedView || 'volume')
 
   const [range, setRange] = useTimelineRange({ createdAt })
 
@@ -47,13 +51,18 @@ export default function VolumeChart({
   const points = shouldUseV4Hook ? v4v5Points : v1v2v3Points
   const loading = shouldUseV4Hook ? v4v5Loading : legacyLoading
 
+  // Use locked view if provided, otherwise use state
+  const currentView = lockedView || timelineView
+
   return (
     <div>
       <div className="mb-2 flex items-baseline justify-between">
-        <TimelineViewSelector
-          timelineView={timelineView}
-          setTimelineView={setTimelineView}
-        />
+        {!hideViewSelector && (
+          <TimelineViewSelector
+            timelineView={currentView}
+            setTimelineView={setTimelineView}
+          />
+        )}
 
         <RangeSelector range={range} setRange={setRange} />
       </div>
@@ -61,7 +70,7 @@ export default function VolumeChart({
       <div style={{ height }} className="relative">
         <TimelineChart
           points={points}
-          view={timelineView}
+          view={currentView}
           range={range}
           height={height}
         />

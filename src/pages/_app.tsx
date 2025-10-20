@@ -28,6 +28,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <LanguageProvider i18n={pageProps.i18n}>
       {/* Default HEAD - only rendered when page doesn't provide metadata */}
       {shouldRenderDefaultHead && <Head />}
+      {/* Project-specific HEAD - rendered when metadata is provided */}
+      {!shouldRenderDefaultHead && pageProps.metadata && pageProps.seoProps && (
+        <Head {...pageProps.seoProps} />
+      )}
       {/* Moving ThemeProvider up so Para can react to the theme changes and update modal*/}
       <ThemeProvider>
         <ReactQueryProvider>

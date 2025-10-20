@@ -21,6 +21,8 @@ export interface Event {
   id: string
   type: EventType
   projectId: number
+  projectName?: string | null
+  projectHandle?: string | null
   timestamp: number
   txHash: string
   from: string
@@ -124,6 +126,13 @@ export interface BurnEvent extends Event {
   erc20Amount: Ether
 }
 
+// TODO: Aggregated Event Interfaces - to be implemented later
+// export interface PaymentEvent extends Event...
+// export interface CashOutAggregatedEvent extends Event...
+// export interface ERC20CreationEvent extends Event...
+// export interface PayoutDistributionEvent extends Event...
+// export interface ReservedTokenDistributionEvent extends Event...
+
 export type AnyEvent =
   | PayEvent
   | AddToBalanceEvent
@@ -139,13 +148,15 @@ export type AnyEvent =
   | BurnEvent
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function extractBaseEventData(event: any): AnyEvent {
+function extractBaseEventData(event: any, projectName?: string | null, projectHandle?: string | null): AnyEvent {
   return {
     // Make type null and set it later
     // @ts-ignore
     type: null,
     id: event.id,
     projectId: event.projectId,
+    projectName,
+    projectHandle,
     timestamp: event.timestamp,
     txHash: event.txHash,
     from: event.from,
@@ -157,9 +168,21 @@ function extractBaseEventData(event: any): AnyEvent {
 export function transformEventData(
   data: ActivityEventsQuery['activityEvents']['items'][number],
 ): AnyEvent | null {
+  const projectName = data.project?.name ?? null
+  const projectHandle = data.project?.handle ?? null
+
+  // Check for aggregated events first
+  // TODO: Aggregated event handling - temporarily disabled
+  // const aggregatedType = (data as any).__aggregatedType
+  // const relatedEvents = (data as any).__relatedEvents || []
+  // if (aggregatedType === 'paymentEvent') { return transformPaymentEvent(data, relatedEvents) }
+  // if (aggregatedType === 'cashOutAggregatedEvent') { return transformCashOutAggregatedEvent(data, relatedEvents) }
+  // etc...
+
+  // Handle individual events
   if (data.payEvent) {
     return {
-      ...extractBaseEventData(data.payEvent),
+      ...extractBaseEventData(data.payEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'payEvent',
       amount: new Ether(BigInt(data.payEvent.amount)),
@@ -174,7 +197,7 @@ export function transformEventData(
   }
   if (data.addToBalanceEvent) {
     return {
-      ...extractBaseEventData(data.addToBalanceEvent),
+      ...extractBaseEventData(data.addToBalanceEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'addToBalanceEvent',
       amount: new Ether(BigInt(data.addToBalanceEvent.amount)),
@@ -183,7 +206,7 @@ export function transformEventData(
   }
   if (data.mintTokensEvent) {
     return {
-      ...extractBaseEventData(data.mintTokensEvent),
+      ...extractBaseEventData(data.mintTokensEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'mintTokensEvent',
       amount: new Ether(BigInt(data.mintTokensEvent.tokenCount)),
@@ -193,7 +216,7 @@ export function transformEventData(
   }
   if (data.cashOutTokensEvent) {
     return {
-      ...extractBaseEventData(data.cashOutTokensEvent),
+      ...extractBaseEventData(data.cashOutTokensEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'cashOutEvent',
       metadata: data.cashOutTokensEvent.metadata,
@@ -205,7 +228,7 @@ export function transformEventData(
   }
   if (data.deployErc20Event) {
     return {
-      ...extractBaseEventData(data.deployErc20Event),
+      ...extractBaseEventData(data.deployErc20Event, projectName, projectHandle),
       chainId: data.chainId,
       type: 'deployedERC20Event',
       symbol: data.deployErc20Event.symbol,
@@ -214,14 +237,14 @@ export function transformEventData(
   }
   if (data.projectCreateEvent) {
     return {
-      ...extractBaseEventData(data.projectCreateEvent),
+      ...extractBaseEventData(data.projectCreateEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'projectCreateEvent',
     }
   }
   if (data.sendPayoutsEvent) {
     return {
-      ...extractBaseEventData(data.sendPayoutsEvent),
+      ...extractBaseEventData(data.sendPayoutsEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'distributePayoutsEvent',
       amount: new Ether(BigInt(data.sendPayoutsEvent.amount)),
@@ -233,7 +256,7 @@ export function transformEventData(
   }
   if (data.sendReservedTokensToSplitsEvent) {
     return {
-      ...extractBaseEventData(data.sendReservedTokensToSplitsEvent),
+      ...extractBaseEventData(data.sendReservedTokensToSplitsEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'distributeReservedTokensEvent',
       rulesetCycleNumber:
@@ -243,7 +266,7 @@ export function transformEventData(
   }
   if (data.sendReservedTokensToSplitEvent) {
     return {
-      ...extractBaseEventData(data.sendReservedTokensToSplitEvent),
+      ...extractBaseEventData(data.sendReservedTokensToSplitEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'distributeToReservedTokenSplitEvent',
       tokenCount: data.sendReservedTokensToSplitEvent.tokenCount,
@@ -257,7 +280,7 @@ export function transformEventData(
   }
   if (data.sendPayoutToSplitEvent) {
     return {
-      ...extractBaseEventData(data.sendPayoutToSplitEvent),
+      ...extractBaseEventData(data.sendPayoutToSplitEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'distributeToPayoutSplitEvent',
       amount: new Ether(BigInt(data.sendPayoutToSplitEvent.amount)),
@@ -270,7 +293,7 @@ export function transformEventData(
   }
   if (data.useAllowanceEvent) {
     return {
-      ...extractBaseEventData(data.useAllowanceEvent),
+      ...extractBaseEventData(data.useAllowanceEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'useAllowanceEvent',
       rulesetId: BigInt(data.useAllowanceEvent.rulesetId),
@@ -288,7 +311,7 @@ export function transformEventData(
   }
   if (data.burnEvent) {
     return {
-      ...extractBaseEventData(data.burnEvent),
+      ...extractBaseEventData(data.burnEvent, projectName, projectHandle),
       chainId: data.chainId,
       type: 'burnEvent',
       holder: data.burnEvent.from,
@@ -300,3 +323,148 @@ export function transformEventData(
   console.warn('Unknown event type', data)
   return null
 }
+
+// TODO: Transform functions for aggregated events - temporarily disabled
+/*
+function transformPaymentEvent(
+  data: ActivityEventsQuery['activityEvents']['items'][number],
+  relatedEvents: ActivityEventsQuery['activityEvents']['items'],
+): any | null {
+  const payEvent = relatedEvents.find(e => e.payEvent)?.payEvent
+  const mintEvent = relatedEvents.find(e => e.mintTokensEvent)?.mintTokensEvent
+
+  if (!payEvent) return null
+
+  const projectName = data.project?.name ?? null
+  const projectHandle = data.project?.handle ?? null
+
+  return {
+    ...extractBaseEventData(payEvent, projectName, projectHandle),
+    chainId: data.chainId,
+    type: 'paymentEvent',
+    amountPaid: new Ether(BigInt(payEvent.amount)),
+    tokensMinted: new JBProjectToken(
+      BigInt(mintEvent?.tokenCount || payEvent.newlyIssuedTokenCount),
+    ),
+    beneficiary: payEvent.beneficiary,
+    note: payEvent.memo || '',
+    distributionFromProjectId: payEvent.distributionFromProjectId,
+    feeFromProject: payEvent.feeFromProject,
+  }
+}
+
+function transformCashOutAggregatedEvent(
+  data: ActivityEventsQuery['activityEvents']['items'][number],
+  relatedEvents: ActivityEventsQuery['activityEvents']['items'],
+): CashOutAggregatedEvent | null {
+  const cashOutEvent = relatedEvents.find(e => e.cashOutTokensEvent)
+    ?.cashOutTokensEvent
+  const burnEvent = relatedEvents.find(e => e.burnEvent)?.burnEvent
+
+  if (!cashOutEvent || !burnEvent) return null
+
+  const projectName = data.project?.name ?? null
+  const projectHandle = data.project?.handle ?? null
+
+  return {
+    ...extractBaseEventData(cashOutEvent, projectName, projectHandle),
+    chainId: data.chainId,
+    type: 'cashOutAggregatedEvent',
+    holder: cashOutEvent.holder,
+    beneficiary: cashOutEvent.beneficiary,
+    tokensBurned: new Ether(BigInt(burnEvent.amount)),
+    stakedAmount: new Ether(BigInt(burnEvent.creditAmount)),
+    erc20Amount: new Ether(BigInt(burnEvent.erc20Amount)),
+    ethReceived: new Ether(BigInt(cashOutEvent.reclaimAmount)),
+    metadata: cashOutEvent.metadata,
+  }
+}
+
+function transformERC20CreationEvent(
+  data: ActivityEventsQuery['activityEvents']['items'][number],
+  relatedEvents: ActivityEventsQuery['activityEvents']['items'],
+): ERC20CreationEvent | null {
+  const erc20Events = relatedEvents.filter(e => e.deployErc20Event)
+
+  if (erc20Events.length === 0) return null
+
+  const firstEvent = erc20Events[0].deployErc20Event
+  if (!firstEvent) return null
+
+  const projectName = data.project?.name ?? null
+  const projectHandle = data.project?.handle ?? null
+
+  return {
+    ...extractBaseEventData(firstEvent, projectName, projectHandle),
+    chainId: data.chainId,
+    type: 'erc20CreationEvent',
+    symbol: firstEvent.symbol,
+    chains: erc20Events.map(e => ({
+      chainId: e.chainId,
+      address: e.deployErc20Event?.token || '',
+    })),
+  }
+}
+
+function transformPayoutDistributionEvent(
+  data: ActivityEventsQuery['activityEvents']['items'][number],
+  relatedEvents: ActivityEventsQuery['activityEvents']['items'],
+): PayoutDistributionEvent | null {
+  const distributeEvent = relatedEvents.find(e => e.sendPayoutsEvent)
+    ?.sendPayoutsEvent
+  const splitEvents = relatedEvents.filter(e => e.sendPayoutToSplitEvent)
+
+  if (!distributeEvent) return null
+
+  const projectName = data.project?.name ?? null
+  const projectHandle = data.project?.handle ?? null
+
+  return {
+    ...extractBaseEventData(distributeEvent, projectName, projectHandle),
+    chainId: data.chainId,
+    type: 'payoutDistributionEvent',
+    totalAmount: new Ether(BigInt(distributeEvent.amount)),
+    amountPaidOut: new Ether(BigInt(distributeEvent.amountPaidOut)),
+    fee: new Ether(BigInt(distributeEvent.fee)),
+    numberOfSplits: splitEvents.length,
+    rulesetCycleNumber: BigInt(distributeEvent.rulesetCycleNumber),
+    rulesetId: BigInt(distributeEvent.rulesetId),
+    splits: splitEvents.map(e => ({
+      beneficiary: e.sendPayoutToSplitEvent?.beneficiary || '',
+      amount: new Ether(BigInt(e.sendPayoutToSplitEvent?.amount || 0)),
+      percent: e.sendPayoutToSplitEvent?.percent || 0,
+      splitProjectId: e.sendPayoutToSplitEvent?.splitProjectId || 0,
+    })),
+  }
+}
+
+function transformReservedTokenDistributionEvent(
+  data: ActivityEventsQuery['activityEvents']['items'][number],
+  relatedEvents: ActivityEventsQuery['activityEvents']['items'],
+): ReservedTokenDistributionEvent | null {
+  const distributeEvent = relatedEvents.find(
+    e => e.sendReservedTokensToSplitsEvent,
+  )?.sendReservedTokensToSplitsEvent
+  const splitEvents = relatedEvents.filter(e => e.sendReservedTokensToSplitEvent)
+
+  if (!distributeEvent) return null
+
+  const projectName = data.project?.name ?? null
+  const projectHandle = data.project?.handle ?? null
+
+  return {
+    ...extractBaseEventData(distributeEvent, projectName, projectHandle),
+    chainId: data.chainId,
+    type: 'reservedTokenDistributionEvent',
+    totalTokens: distributeEvent.tokenCount,
+    numberOfSplits: splitEvents.length,
+    rulesetCycleNumber: distributeEvent.rulesetCycleNumber,
+    splits: splitEvents.map(e => ({
+      beneficiary: e.sendReservedTokensToSplitEvent?.beneficiary || '',
+      tokenCount: e.sendReservedTokensToSplitEvent?.tokenCount || BigInt(0),
+      percent: e.sendReservedTokensToSplitEvent?.percent || 0,
+      splitProjectId: e.sendReservedTokensToSplitEvent?.splitProjectId || 0,
+    })),
+  }
+}
+*/

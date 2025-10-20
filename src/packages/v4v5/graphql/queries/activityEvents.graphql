@@ -20,6 +20,10 @@ query ActivityEvents(
       id
       chainId
       timestamp
+      project {
+        name
+        handle
+      }
       payEvent {
         id
         projectId

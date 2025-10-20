@@ -12,9 +12,8 @@ import dynamic from 'next/dynamic'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { redirectTo } from 'utils/windowUtils'
 import { twJoin, twMerge } from 'tailwind-merge'
-import { useRouter } from 'next/router'
-import { useProtocolActivity } from 'components/ProtocolActivity/ProtocolActivityContext'
 import useMobile from 'hooks/useMobile'
+import { useRouter } from 'next/router'
 
 const EthersTxHistoryProvider = dynamic(
   () => import('contexts/Transaction/EthersTxHistoryProvider'),
@@ -79,7 +78,6 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   hideNav,
 }) => {
   const router = useRouter()
-  const { isOpen } = useProtocolActivity()
   const isMobile = useMobile()
   useAdjustUrl()
 
@@ -88,10 +86,10 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
     installJuiceboxWindowObject()
   }, [])
 
-  // redirect legacy hash routes
-  if (router.asPath.match(/^\/#\//)) {
-    redirectTo(router.asPath.replace('/#/', ''))
-  }
+  // Check if we're on a project page (v4/v5 projects render their own activity panel)
+  const isProjectPage = router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
+  const isProjectRoute = /^\/(v4|v5)\/[^\/]+/.test(router.asPath)
+  const showProtocolActivity = !isMobile && !(isProjectPage && isProjectRoute)
 
   return (
     <Layout className="flex min-h-screen flex-col bg-transparent">
@@ -105,7 +103,7 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
           <div className="flex-1 min-w-0">
             {children}
           </div>
-          {!isMobile && <ProtocolActivityPanel />}
+          {showProtocolActivity && <ProtocolActivityPanel />}
         </div>
       </Content>
     </Layout>

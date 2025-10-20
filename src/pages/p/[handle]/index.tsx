@@ -1,7 +1,7 @@
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
-import { SEO } from 'components/common/SEO/SEO'
+import { SEOHead } from 'components/SEOHead'
 import { SiteBaseUrl } from 'constants/url'
 import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
@@ -51,20 +51,17 @@ export default function V1HandlePage({
   // Checks URL to see if user was just directed from project deploy
   return (
     <>
-      <SEO
-        // Set known values, leave others undefined to be overridden
+      <SEOHead
         title={metadata?.name}
         url={`${SiteBaseUrl}p/${handle}`}
         description={metadata?.description ? metadata.description : undefined}
-        twitter={{
-          card: 'summary',
-          creator: metadata?.twitter,
-          handle: metadata?.twitter,
-          // Swap out all gateways with ipfs.io public gateway until we can resolve our meta tag issue.
-          image: metadata?.logoUri
+        twitterCard="summary"
+        twitterCreator={metadata?.twitter}
+        image={
+          metadata?.logoUri
             ? ipfsPublicGatewayUrl(cidFromUrl(metadata.logoUri))
-            : undefined,
-        }}
+            : undefined
+        }
       />
       <AppWrapper>
         <Provider store={store}>

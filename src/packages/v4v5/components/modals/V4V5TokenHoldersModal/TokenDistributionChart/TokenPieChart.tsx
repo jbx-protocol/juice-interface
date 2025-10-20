@@ -31,7 +31,9 @@ export default function TokenPieChart({
 
   // Format participants for chart display
   const pieChartData = useMemo(() => {
-    if (!tokenSupply || !participants) return []
+    if (!tokenSupply || !participants) {
+      return []
+    }
 
     // Only show (arbitrary) max number of wallets to avoid chart clutter
     const maxVisibleWallets = 100

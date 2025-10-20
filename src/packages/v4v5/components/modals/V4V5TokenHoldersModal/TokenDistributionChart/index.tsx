@@ -17,7 +17,9 @@ export default function TokenDistributionChart({
   const [viewMode, setViewMode] = useState<'pie' | 'area'>('pie')
 
   // Don't render chart for projects with no token supply
-  if (tokenSupply === 0n || !participants?.length) return null
+  if (tokenSupply === 0n || !participants?.length) {
+    return null
+  }
 
   const size = 320
 

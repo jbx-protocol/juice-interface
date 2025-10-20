@@ -47,11 +47,20 @@ export const V4V5TokenHoldersChart = forwardRef<HTMLDivElement>(
 
     const allParticipants = data?.participants
 
-    // Don't render if no token supply or participants
+    // Filter to only include participants with non-zero token balances
+    const tokenHolders = allParticipants?.items.filter((p) => {
+      const balance = BigInt(p.balance || 0)
+      const creditBalance = BigInt(p.creditBalance || 0)
+      const erc20Balance = BigInt(p.erc20Balance || 0)
+      const totalBalance = balance + creditBalance + erc20Balance
+      return totalBalance > 0n
+    })
+
+    // Don't render if no token supply or no actual token holders
     if (
       !totalTokenSupply ||
       totalTokenSupply === 0n ||
-      !allParticipants?.items.length
+      !tokenHolders?.length
     ) {
       return null
     }
@@ -65,13 +74,13 @@ export const V4V5TokenHoldersChart = forwardRef<HTMLDivElement>(
             </Trans>
           </h3>
           <div className="text-sm text-grey-500 dark:text-slate-400">
-            {allParticipants.items.length} wallets
+            {tokenHolders.length} wallets
           </div>
         </div>
 
         <div className="flex items-center justify-center">
           <TokenDistributionChart
-            participants={allParticipants.items}
+            participants={tokenHolders}
             isLoading={loading}
             tokenSupply={totalTokenSupply}
           />

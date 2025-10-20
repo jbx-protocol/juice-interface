@@ -56,6 +56,15 @@ export const V4V5TokenHoldersModal = ({
 
   const allParticipants = data?.participants
 
+  // Filter to only include participants with non-zero token balances
+  const tokenHolders = allParticipants?.items.filter((p) => {
+    const balance = BigInt(p.balance || 0)
+    const creditBalance = BigInt(p.creditBalance || 0)
+    const erc20Balance = BigInt(p.erc20Balance || 0)
+    const totalBalance = balance + creditBalance + erc20Balance
+    return totalBalance > 0n
+  })
+
   return (
     <Modal
       open={open}
@@ -81,12 +90,12 @@ export const V4V5TokenHoldersModal = ({
                 </Trans>
               </div>
             )}
-            <div>{allParticipants?.items.length} wallets</div>
+            <div>{tokenHolders?.length ?? 0} wallets</div>
           </div>
 
           <div className="flex items-center justify-center">
             <TokenDistributionChart
-              participants={allParticipants?.items}
+              participants={tokenHolders}
               isLoading={loading}
               tokenSupply={totalTokenSupply}
             />

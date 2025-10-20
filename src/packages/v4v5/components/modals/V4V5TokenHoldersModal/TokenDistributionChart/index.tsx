@@ -21,6 +21,19 @@ export default function TokenDistributionChart({
     return null
   }
 
+  // Check if all participants have zero balances
+  const hasNonZeroBalances = participants.some((p) => {
+    const balance = BigInt(p.balance || 0)
+    const creditBalance = BigInt(p.creditBalance || 0)
+    const erc20Balance = BigInt(p.erc20Balance || 0)
+    const totalBalance = balance + creditBalance + erc20Balance
+    return totalBalance > 0n
+  })
+
+  if (!hasNonZeroBalances) {
+    return null
+  }
+
   const size = 320
 
   if (isLoading) {

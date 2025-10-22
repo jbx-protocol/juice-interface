@@ -788,6 +788,9 @@ msgstr ""
 msgid "<0/>{0} distributed"
 msgstr ""
 
+msgid "Create NFT Rewards"
+msgstr ""
+
 msgid "Project ownership has been successfully transferred to {toAddress} on all chains."
 msgstr ""
 
@@ -2139,6 +2142,9 @@ msgid "Juicebox is an open-source protocol that is transparent, community-owned,
 msgstr ""
 
 msgid "Unlimited payouts"
+msgstr ""
+
+msgid "Add NFT Tier"
 msgstr ""
 
 msgid "Configuration rules"

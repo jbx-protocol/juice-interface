@@ -20,7 +20,7 @@ export function translateEventDataToProtocolPresenter(event: AnyEvent) {
         header: 'Added to balance',
         subject: `${formatActivityAmount(event.amount.value)} ETH`,
       }
-    case 'mintTokensEvent':
+    case 'manualMintTokensEvent':
       return {
         event,
         header: 'Minted tokens',
@@ -74,7 +74,7 @@ export function translateEventDataToProtocolPresenter(event: AnyEvent) {
         header: 'Used allowance',
         subject: `${formatActivityAmount(event.amount.value)} ETH`,
       }
-    case 'burnEvent':
+    case 'manualBurnEvent':
       return {
         event,
         header: 'Burned',

@@ -128,7 +128,7 @@ function TimestampVersion({
 }
 
 function Subject({ subject }: { subject: string | JSX.Element | null }) {
-  return <div className="text-sm">{subject}</div>
+  return <div className="text-xs">{subject}</div>
 }
 
 /**

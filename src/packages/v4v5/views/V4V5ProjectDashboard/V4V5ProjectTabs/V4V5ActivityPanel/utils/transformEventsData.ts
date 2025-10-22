@@ -6,7 +6,7 @@ import { ActivityEventsQuery } from 'packages/v4v5/graphql/client/graphql'
 export type EventType =
   | 'payEvent'
   | 'addToBalanceEvent'
-  | 'mintTokensEvent'
+  | 'manualMintTokensEvent'
   | 'cashOutEvent'
   | 'deployedERC20Event'
   | 'projectCreateEvent'
@@ -15,7 +15,7 @@ export type EventType =
   | 'distributeToReservedTokenSplitEvent'
   | 'distributeToPayoutSplitEvent'
   | 'useAllowanceEvent'
-  | 'burnEvent'
+  | 'manualBurnEvent'
 
 export interface Event {
   id: string
@@ -46,8 +46,8 @@ export interface AddToBalanceEvent extends Event {
   note: string | null
 }
 
-export interface MintTokensEvent extends Event {
-  type: 'mintTokensEvent'
+export interface ManualMintTokensEvent extends Event {
+  type: 'manualMintTokensEvent'
   amount: Ether
   beneficiary: string
   note: string
@@ -118,8 +118,8 @@ export interface UseAllowanceEvent extends Event {
   note: string
 }
 
-export interface BurnEvent extends Event {
-  type: 'burnEvent'
+export interface ManualBurnEvent extends Event {
+  type: 'manualBurnEvent'
   holder: string
   amount: Ether
   stakedAmount: Ether
@@ -136,7 +136,7 @@ export interface BurnEvent extends Event {
 export type AnyEvent =
   | PayEvent
   | AddToBalanceEvent
-  | MintTokensEvent
+  | ManualMintTokensEvent
   | CashOutEvent
   | DeployedERC20Event
   | ProjectCreateEvent
@@ -145,7 +145,7 @@ export type AnyEvent =
   | DistributeToReservedTokenSplitEvent
   | DistributeToPayoutSplitEvent
   | UseAllowanceEvent
-  | BurnEvent
+  | ManualBurnEvent
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractBaseEventData(event: any, projectName?: string | null, projectHandle?: string | null): AnyEvent {
@@ -204,14 +204,14 @@ export function transformEventData(
       note: data.addToBalanceEvent.memo,
     }
   }
-  if (data.mintTokensEvent) {
+  if (data.manualMintTokensEvent) {
     return {
-      ...extractBaseEventData(data.mintTokensEvent, projectName, projectHandle),
+      ...extractBaseEventData(data.manualMintTokensEvent, projectName, projectHandle),
       chainId: data.chainId,
-      type: 'mintTokensEvent',
-      amount: new Ether(BigInt(data.mintTokensEvent.tokenCount)),
-      beneficiary: data.mintTokensEvent.beneficiary,
-      note: data.mintTokensEvent.memo || '',
+      type: 'manualMintTokensEvent',
+      amount: new Ether(BigInt(data.manualMintTokensEvent.tokenCount)),
+      beneficiary: data.manualMintTokensEvent.beneficiary,
+      note: data.manualMintTokensEvent.memo || '',
     }
   }
   if (data.cashOutTokensEvent) {
@@ -309,15 +309,15 @@ export function transformEventData(
       note: data.useAllowanceEvent.memo || '',
     }
   }
-  if (data.burnEvent) {
+  if (data.manualBurnEvent) {
     return {
-      ...extractBaseEventData(data.burnEvent, projectName, projectHandle),
+      ...extractBaseEventData(data.manualBurnEvent, projectName, projectHandle),
       chainId: data.chainId,
-      type: 'burnEvent',
-      holder: data.burnEvent.from,
-      amount: new Ether(BigInt(data.burnEvent.amount)),
-      stakedAmount: new Ether(BigInt(data.burnEvent.creditAmount)),
-      erc20Amount: new Ether(BigInt(data.burnEvent.erc20Amount)),
+      type: 'manualBurnEvent',
+      holder: data.manualBurnEvent.from,
+      amount: new Ether(BigInt(data.manualBurnEvent.amount)),
+      stakedAmount: new Ether(BigInt(data.manualBurnEvent.creditAmount)),
+      erc20Amount: new Ether(BigInt(data.manualBurnEvent.erc20Amount)),
     }
   }
   console.warn('Unknown event type', data)

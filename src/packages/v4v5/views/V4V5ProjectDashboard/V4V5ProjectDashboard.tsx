@@ -41,7 +41,7 @@ export default function V4V5ProjectDashboard() {
             <div
               className={twMerge(
                 'flex flex-col gap-8',
-                '[@media(min-width:960px)]:order-last [@media(min-width:960px)]:min-w-[340px] [@media(min-width:960px)]:max-w-md',
+                '[@media(min-width:960px)]:order-last [@media(min-width:960px)]:min-w-[320px] [@media(min-width:960px)]:max-w-[400px]',
               )}
             >
               <V4V5PayRedeemCard className="mt-10" />

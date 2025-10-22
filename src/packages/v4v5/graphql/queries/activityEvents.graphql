@@ -48,7 +48,7 @@ query ActivityEvents(
         amount
         memo
       }
-      mintTokensEvent {
+      manualMintTokensEvent {
         id
         projectId
         timestamp
@@ -158,7 +158,7 @@ query ActivityEvents(
         netAmountPaidOut
         memo
       }
-      burnEvent {
+      manualBurnEvent {
         id
         projectId
         timestamp

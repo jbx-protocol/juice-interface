@@ -7,6 +7,7 @@ import { EmptyScreen } from 'components/Project/ProjectTabs/EmptyScreen'
 import { useWallet } from 'hooks/Wallet/useWallet'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useV4V5ProjectHeader } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useV4V5ProjectHeader'
+import { useSettingsPagePath } from 'packages/v4v5/views/V4V5ProjectSettings/hooks/useSettingsPagePath'
 import { useRouter } from 'next/router'
 import { RedeemNftsSection } from './RedeemNftsSection/RedeemNftsSection'
 import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'
@@ -23,6 +24,7 @@ export const V4V5NftRewardsPanel = forwardRef<HTMLDivElement>((props, ref) => {
   const { userAddress } = useWallet()
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
   const { isRevnet, operatorAddress } = useV4V5ProjectHeader()
+  const nftSettingsPath = useSettingsPagePath('nfts')
 
   // Check if user can add NFTs (project owner or revnet operator)
   const canAddNfts =
@@ -37,8 +39,8 @@ export const V4V5NftRewardsPanel = forwardRef<HTMLDivElement>((props, ref) => {
         <h2 className="font-heading text-2xl font-medium">
           <Trans>NFTs</Trans>
         </h2>
-        {canAddNfts && rewardTiers?.length ? (
-          <Button type="primary" onClick={() => router.push('/settings/nfts')}>
+        {canAddNfts && rewardTiers?.length && nftSettingsPath ? (
+          <Button type="primary" onClick={() => router.push(nftSettingsPath)}>
             <Trans>Add NFT Tier</Trans>
           </Button>
         ) : null}
@@ -65,13 +67,13 @@ export const V4V5NftRewardsPanel = forwardRef<HTMLDivElement>((props, ref) => {
             <NftRewardSkeleton key={i} />
           ))}
         </div>
-      ) : canAddNfts ? (
+      ) : canAddNfts && nftSettingsPath ? (
         <div className="flex flex-col items-center gap-4">
           <EmptyScreen subtitle={t`This project has no NFTs`} />
           <Button
             type="primary"
             size="large"
-            onClick={() => router.push('/settings/nfts')}
+            onClick={() => router.push(nftSettingsPath)}
           >
             <Trans>Create NFT Rewards</Trans>
           </Button>

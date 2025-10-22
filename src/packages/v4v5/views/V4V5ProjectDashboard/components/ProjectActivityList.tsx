@@ -59,7 +59,7 @@ export function ProjectActivityList() {
 
   return (
     <div className="flex flex-col">
-      <h2 className="mb-6 font-heading text-2xl font-medium">
+      <h2 className="mb-6 font-heading text-xl font-medium">
         Activity
       </h2>
       <div className="flex flex-col gap-3 max-h-[38rem] overflow-y-auto">
@@ -100,7 +100,7 @@ export function ProjectActivityList() {
               )}
             </>
           ) : (
-            !loading && <span className="text-zinc-500 text-sm">No activity yet.</span>
+            !loading && <span className="text-zinc-500 text-xs">No activity yet.</span>
           )}
       </div>
     </div>

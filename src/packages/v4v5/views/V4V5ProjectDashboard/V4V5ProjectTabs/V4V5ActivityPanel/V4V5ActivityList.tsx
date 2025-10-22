@@ -91,7 +91,7 @@ export function V4V5ActivityList() {
 
   return (
     <div>
-      <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
+      <h2 className="mb-6 font-heading text-xl font-medium">Activity</h2>
       <div className="flex flex-col gap-3">
         <JuiceListbox
           className="mb-5"
@@ -130,7 +130,7 @@ export function V4V5ActivityList() {
             )}
           </>
         ) : (
-          <span className="text-zinc-500 text-sm">No activity yet.</span>
+          <span className="text-zinc-500 text-xs">No activity yet.</span>
         )}
       </div>
     </div>
@@ -148,7 +148,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Paid',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
@@ -159,7 +159,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Added to balance',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
@@ -170,7 +170,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Minted tokens',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {event.amount.format()}{' '}
             {tokenSymbolText({
               capitalize: true,
@@ -186,7 +186,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Cashed out',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {formatActivityAmount(event.reclaimAmount.value)} ETH
           </span>
         ),
@@ -195,7 +195,7 @@ export function translateEventDataToPresenter(
       return {
         event,
         header: 'Deployed ERC20',
-        subject: <span className="font-heading text-lg">{event.symbol}</span>,
+        subject: <span className="font-heading text-base">{event.symbol}</span>,
         extra: <RichNote note={event.address} />,
       }
     case 'projectCreateEvent':
@@ -210,7 +210,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Send payouts',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
@@ -225,7 +225,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Send reserved tokens',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {fromWad(event.tokenCount)}{' '}
             {tokenSymbolText({ tokenSymbol, plural: event.tokenCount > 1 })}
           </span>
@@ -237,7 +237,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Send to reserved token split',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {fromWad(event.tokenCount)}{' '}
             {tokenSymbolText({ tokenSymbol, plural: event.tokenCount > 1 })}
           </span>
@@ -255,7 +255,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Send to payout split',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
@@ -272,7 +272,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Used allowance',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {formatActivityAmount(event.amount.value)} ETH
           </span>
         ),
@@ -283,7 +283,7 @@ export function translateEventDataToPresenter(
         event,
         header: 'Burned',
         subject: (
-          <span className="font-heading text-lg">
+          <span className="font-heading text-base">
             {Number(event.amount.toFloat())}{' '}
             {tokenSymbolText({
               tokenSymbol,

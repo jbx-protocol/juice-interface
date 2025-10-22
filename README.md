@@ -15,7 +15,6 @@
 | -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | Mainnet  | https://juicebox.money                                                                                                              |
 | Sepolia  | https://sepolia.juicebox.money                                                                                                      |
-| Subgraph | [https://thegraph.com/explorer/subgraph...](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC) |
 
 ## Report a bug
 

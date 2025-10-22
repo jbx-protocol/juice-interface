@@ -165,7 +165,7 @@ export function translateEventDataToPresenter(
         ),
         extra: event.note ? <RichNote note={event.note} /> : null,
       }
-    case 'mintTokensEvent':
+    case 'manualMintTokensEvent':
       return {
         event,
         header: 'Minted tokens',
@@ -278,7 +278,7 @@ export function translateEventDataToPresenter(
         ),
         extra: <RichNote note={event.note} />,
       }
-    case 'burnEvent':
+    case 'manualBurnEvent':
       return {
         event,
         header: 'Burned',
@@ -402,7 +402,7 @@ const ACTIVITY_OPTIONS = [
   { label: 'All activity', value: 'all' },
   { label: 'Paid', value: 'payEvent' },
   { label: 'Added to balance', value: 'addToBalanceEvent' },
-  { label: 'Minted tokens', value: 'mintTokensEvent' },
+  { label: 'Minted tokens', value: 'manualMintTokensEvent' },
   { label: 'Cashed out', value: 'cashOutEvent' },
   { label: 'Deployed ERC20', value: 'deployedERC20Event' },
   { label: 'Project created', value: 'projectCreateEvent' },
@@ -420,7 +420,7 @@ const ACTIVITY_OPTIONS = [
     value: 'sendPayoutsToSplitEvent',
   },
   { label: 'Used allowance', value: 'useAllowanceEvent' },
-  { label: 'Burned', value: 'burnEvent' },
+  { label: 'Burned', value: 'manualBurnEvent' },
 ]
 
 const CHAIN_OPTIONS = Object.entries(NETWORKS).map(

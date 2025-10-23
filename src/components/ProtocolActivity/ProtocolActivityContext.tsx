@@ -2,6 +2,7 @@ import React, {
   createContext,
   PropsWithChildren,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react'
@@ -17,6 +18,8 @@ const ProtocolActivityContext = createContext<
   ProtocolActivityContextType | undefined
 >(undefined)
 
+const STORAGE_KEY = 'protocolActivityPanelOpen'
+
 export const useProtocolActivity = () => {
   const context = useContext(ProtocolActivityContext)
   if (!context) {
@@ -30,7 +33,17 @@ export const useProtocolActivity = () => {
 export const ProtocolActivityProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [isOpen, setIsOpen] = useState(true)
+  // Initialize state from localStorage, default to true if not set
+  const [isOpen, setIsOpen] = useState(() => {
+    if (typeof window === 'undefined') return true
+    const stored = localStorage.getItem(STORAGE_KEY)
+    return stored !== null ? stored === 'true' : true
+  })
+
+  // Persist state changes to localStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, String(isOpen))
+  }, [isOpen])
 
   const value = useMemo(
     () => ({

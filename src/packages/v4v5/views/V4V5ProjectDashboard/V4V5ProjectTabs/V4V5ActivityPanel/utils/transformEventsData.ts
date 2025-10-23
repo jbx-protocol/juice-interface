@@ -188,7 +188,10 @@ export function transformEventData(
   const projectHandle = data.project?.handle ?? null
   const projectLogoUri = data.project?.logoUri ?? null
   const projectToken = data.project?.token ? String(data.project.token) : null
-  const projectCurrency = data.project?.currency ? String(data.project.currency) : null
+  // Convert currency bigint to hex address format (0x...)
+  const projectCurrency = data.project?.currency
+    ? '0x' + BigInt(data.project.currency).toString(16).padStart(40, '0')
+    : null
   const projectDecimals = data.project?.decimals ? Number(data.project.decimals) : null
 
   // Check for aggregated events first

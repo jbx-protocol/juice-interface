@@ -3,18 +3,19 @@ import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { AnyEvent } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/utils/transformEventsData'
 import { formatActivityAmount } from 'utils/format/formatActivityAmount'
 
-// Known currency addresses to symbol mapping
+// Known currency addresses to symbol mapping (lowercase addresses)
 const CURRENCY_SYMBOLS: Record<string, string> = {
-  '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913': 'USDC', // Base USDC
+  '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': 'USDC', // Base USDC
   '0x0000000000000000000000000000000000000000': 'ETH', // Native ETH
 }
 
 /**
- * Get currency symbol from currency address
+ * Get currency symbol from currency address (hex string)
  */
 function getCurrencySymbol(currency?: string | null): string {
   if (!currency) return 'ETH'
-  const symbol = CURRENCY_SYMBOLS[currency]
+  // Normalize to lowercase for lookup
+  const symbol = CURRENCY_SYMBOLS[currency.toLowerCase()]
   return symbol || 'ETH'
 }
 

@@ -11,8 +11,24 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { useV4V5ProjectHeader } from './hooks/useV4V5ProjectHeader'
 
+// Known currency addresses to symbol mapping (lowercase addresses)
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': 'USDC', // Base USDC
+  '0x0000000000000000000000000000000000000000': 'ETH', // Native ETH
+}
+
+/**
+ * Get currency symbol from currency address (hex string)
+ */
+function getCurrencySymbol(currency?: string | null): string {
+  if (!currency) return 'ETH'
+  // Normalize to lowercase for lookup
+  const symbol = CURRENCY_SYMBOLS[currency.toLowerCase()]
+  return symbol || 'ETH'
+}
+
 export function ProjectHeaderStats() {
-  const { payments, totalVolume, last7DaysPercent } = useV4V5ProjectHeader()
+  const { payments, totalVolume, last7DaysPercent, projectToken, projectDecimals } = useV4V5ProjectHeader()
   const { setProjectPageTab } = useProjectPageQueries()
 
   const openActivityTab = useCallback(
@@ -21,7 +37,22 @@ export function ProjectHeaderStats() {
   )
 
   const converter = useCurrencyConverter()
-  const usdTotalAmount = converter.wadToCurrency(totalVolume, 'USD', 'ETH')
+  const currencySymbol = getCurrencySymbol(projectToken)
+
+  // Volume from Bendystraw is stored in the token's native decimals
+  // For USDC (decimals=6): divide by 10^6, then treat as USD (1 USDC ≈ $1)
+  // For ETH: volume is in wei (18 decimals), use currency converter
+  let usdTotalAmount: BigNumber | undefined
+  if (currencySymbol === 'USDC' && projectDecimals) {
+    // Convert from token decimals (6) to WAD (18) for USDAmount display
+    // volume is in token decimals, so we multiply by 10^(18 - decimals)
+    const volumeBN = BigNumber.from(totalVolume ?? 0)
+    const decimalDiff = 18 - projectDecimals
+    usdTotalAmount = volumeBN.mul(BigNumber.from(10).pow(decimalDiff))
+  } else {
+    // For ETH, volume is already in wei (18 decimals)
+    usdTotalAmount = converter.wadToCurrency(totalVolume, 'USD', 'ETH')
+  }
 
   return (
     <div className="flex min-w-0 gap-12 md:shrink-0">

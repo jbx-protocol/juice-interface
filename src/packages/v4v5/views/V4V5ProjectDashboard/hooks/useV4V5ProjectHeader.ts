@@ -28,6 +28,8 @@ export interface ProjectHeaderData {
   createdAtSeconds: number | undefined
   isRevnet: boolean | undefined
   operatorAddress: string | undefined
+  projectToken: string | undefined
+  projectDecimals: number | undefined
 }
 
 export const useV4V5ProjectHeader = (): ProjectHeaderData => {
@@ -108,5 +110,7 @@ export const useV4V5ProjectHeader = (): ProjectHeaderData => {
     createdAtSeconds: sg?.createdAt,
     isRevnet,
     operatorAddress,
+    projectToken: project?.project?.token ?? undefined,
+    projectDecimals: project?.project?.decimals ? Number(project.project.decimals) : undefined,
   }
 }

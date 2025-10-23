@@ -15,6 +15,9 @@ export interface ProtocolActivityElementEvent {
   projectName?: string | null
   projectHandle?: string | null
   projectLogoUri?: string | null
+  projectToken?: string | null
+  projectCurrency?: string | null
+  projectDecimals?: number | null
 }
 
 export function ProtocolActivityElement({

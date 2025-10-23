@@ -137,11 +137,28 @@ export function V4V5ActivityList() {
   )
 }
 
+// Known currency addresses to symbol mapping
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913': 'USDC', // Base USDC
+  '0x0000000000000000000000000000000000000000': 'ETH', // Native ETH
+}
+
+/**
+ * Get currency symbol from currency address
+ */
+function getCurrencySymbol(currency?: string | null): string {
+  if (!currency) return 'ETH'
+  const symbol = CURRENCY_SYMBOLS[currency]
+  return symbol || 'ETH'
+}
+
 // TODO this should be exported from somewhere else. Components are currently awkward due to shared dependencies on v1v2v3 and v4 parts
 export function translateEventDataToPresenter(
   event: AnyEvent,
   tokenSymbol: string | undefined,
 ) {
+  const currencySymbol = getCurrencySymbol(event.projectCurrency)
+
   switch (event.type) {
     case 'payEvent':
       return {
@@ -149,7 +166,7 @@ export function translateEventDataToPresenter(
         header: 'Paid',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value)} {currencySymbol}
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -160,7 +177,7 @@ export function translateEventDataToPresenter(
         header: 'Added to balance',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value)} {currencySymbol}
           </span>
         ),
         extra: event.note ? <RichNote note={event.note} /> : null,
@@ -187,7 +204,7 @@ export function translateEventDataToPresenter(
         header: 'Cashed out',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.reclaimAmount.value)} ETH
+            {formatActivityAmount(event.reclaimAmount.value)} {currencySymbol}
           </span>
         ),
       }
@@ -211,7 +228,7 @@ export function translateEventDataToPresenter(
         header: 'Send payouts',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value)} {currencySymbol}
           </span>
         ),
         extra: (
@@ -256,7 +273,7 @@ export function translateEventDataToPresenter(
         header: 'Send to payout split',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value)} {currencySymbol}
           </span>
         ),
         extra: (
@@ -273,7 +290,7 @@ export function translateEventDataToPresenter(
         header: 'Used allowance',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value)} {currencySymbol}
           </span>
         ),
         extra: <RichNote note={event.note} />,

@@ -24,6 +24,9 @@ query ActivityEvents(
         name
         handle
         logoUri
+        token
+        currency
+        decimals
       }
       payEvent {
         id

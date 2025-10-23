@@ -3,22 +3,39 @@ import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { AnyEvent } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/utils/transformEventsData'
 import { formatActivityAmount } from 'utils/format/formatActivityAmount'
 
+// Known currency addresses to symbol mapping
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913': 'USDC', // Base USDC
+  '0x0000000000000000000000000000000000000000': 'ETH', // Native ETH
+}
+
+/**
+ * Get currency symbol from currency address
+ */
+function getCurrencySymbol(currency?: string | null): string {
+  if (!currency) return 'ETH'
+  const symbol = CURRENCY_SYMBOLS[currency]
+  return symbol || 'ETH'
+}
+
 /**
  * Translate event data to protocol activity presenter with formatted amounts
  */
 export function translateEventDataToProtocolPresenter(event: AnyEvent) {
+  const currencySymbol = getCurrencySymbol(event.projectCurrency)
+
   switch (event.type) {
     case 'payEvent':
       return {
         event,
         header: 'Paid',
-        subject: `${formatActivityAmount(event.amount.value)} ETH`,
+        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
       }
     case 'addToBalanceEvent':
       return {
         event,
         header: 'Added to balance',
-        subject: `${formatActivityAmount(event.amount.value)} ETH`,
+        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
       }
     case 'manualMintTokensEvent':
       return {
@@ -30,7 +47,7 @@ export function translateEventDataToProtocolPresenter(event: AnyEvent) {
       return {
         event,
         header: 'Cashed out',
-        subject: `${formatActivityAmount(event.reclaimAmount.value)} ETH`,
+        subject: `${formatActivityAmount(event.reclaimAmount.value)} ${currencySymbol}`,
       }
     case 'deployedERC20Event':
       return {
@@ -48,7 +65,7 @@ export function translateEventDataToProtocolPresenter(event: AnyEvent) {
       return {
         event,
         header: 'Send payouts',
-        subject: `${formatActivityAmount(event.amount.value)} ETH`,
+        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
       }
     case 'distributeReservedTokensEvent':
       return {
@@ -66,13 +83,13 @@ export function translateEventDataToProtocolPresenter(event: AnyEvent) {
       return {
         event,
         header: 'Send to payout split',
-        subject: `${formatActivityAmount(event.amount.value)} ETH`,
+        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
       }
     case 'useAllowanceEvent':
       return {
         event,
         header: 'Used allowance',
-        subject: `${formatActivityAmount(event.amount.value)} ETH`,
+        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
       }
     case 'manualBurnEvent':
       return {

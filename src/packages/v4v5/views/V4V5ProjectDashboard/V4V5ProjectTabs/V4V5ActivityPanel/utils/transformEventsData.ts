@@ -151,9 +151,17 @@ export type AnyEvent =
   | UseAllowanceEvent
   | ManualBurnEvent
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface BaseEventInput {
+  id: string
+  projectId: number
+  timestamp: number
+  txHash: string
+  from: string
+  caller: string
+}
+
 function extractBaseEventData(
-  event: any,
+  event: BaseEventInput,
   projectName?: string | null,
   projectHandle?: string | null,
   projectLogoUri?: string | null,

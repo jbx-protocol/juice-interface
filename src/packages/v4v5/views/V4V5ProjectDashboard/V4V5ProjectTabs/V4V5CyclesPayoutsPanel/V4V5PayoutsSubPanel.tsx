@@ -86,7 +86,7 @@ export const V4V5PayoutsSubPanel = ({
                         {currencySymbol === 'ETH' ? (
                           <AmountInCurrency amount={BigNumber.from(sucker.balance)} currency="ETH" />
                         ) : (
-                          formatCurrencyAmount(sucker.balance, 18, currencySymbol)
+                          formatCurrencyAmount(sucker.balance, projectDecimals, currencySymbol)
                         )}
                       </span>
                     </div>

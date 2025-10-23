@@ -80,8 +80,9 @@ export const useV4V5TreasuryStats = () => {
       return <AmountInCurrency amount={BigNumber.from(totalBalance ?? 0n)} currency="ETH" />
     }
     // For USDC and other tokens, use formatted text
-    return <span>{formatCurrencyAmount(totalBalance, projectDecimals, currencySymbol)}</span>
-  }, [totalBalance, currencySymbol, projectDecimals])
+    // Note: SDK hooks return balances in wei (18 decimals) regardless of token decimals
+    return <span>{formatCurrencyAmount(totalBalance, 18, currencySymbol)}</span>
+  }, [totalBalance, currencySymbol])
 
   const surplusElement = useMemo(() => {
     // NOTE: Don't think we need this since other chains payouts limits may be different?
@@ -112,7 +113,7 @@ export const useV4V5TreasuryStats = () => {
                     {currencySymbol === 'ETH' ? (
                       <AmountInCurrency amount={BigNumber.from(surplus.surplus)} currency="ETH" />
                     ) : (
-                      formatCurrencyAmount(surplus.surplus, projectDecimals, currencySymbol)
+                      formatCurrencyAmount(surplus.surplus, 18, currencySymbol)
                     )}
                   </span>
                 </div>
@@ -125,12 +126,12 @@ export const useV4V5TreasuryStats = () => {
           {currencySymbol === 'ETH' ? (
             <AmountInCurrency amount={BigNumber.from(totalEthSurplus)} currency="ETH" hideTooltip />
           ) : (
-            formatCurrencyAmount(totalEthSurplus, projectDecimals, currencySymbol)
+            formatCurrencyAmount(totalEthSurplus, 18, currencySymbol)
           )}
         </span>
       </Tooltip>
     )
-  }, [totalEthSurplus, ethSurplusByChain, currencySymbol, projectDecimals])
+  }, [totalEthSurplus, ethSurplusByChain, currencySymbol])
 
   const availableToPayout = useMemo(() => {
     return (
@@ -162,7 +163,7 @@ export const useV4V5TreasuryStats = () => {
                       {currencySymbol === 'ETH' ? (
                         <AmountInCurrency amount={BigNumber.from(distributableAmountObj.distributableAmount ?? 0n)} currency="ETH" />
                       ) : (
-                        formatCurrencyAmount(distributableAmountObj.distributableAmount ?? 0n, projectDecimals, currencySymbol)
+                        formatCurrencyAmount(distributableAmountObj.distributableAmount ?? 0n, 18, currencySymbol)
                       )}
                     </span>
                   </div>
@@ -176,12 +177,12 @@ export const useV4V5TreasuryStats = () => {
           {currencySymbol === 'ETH' ? (
             <AmountInCurrency amount={BigNumber.from(totalDistributableAmount ?? 0n)} currency="ETH" hideTooltip />
           ) : (
-            formatCurrencyAmount(totalDistributableAmount ?? 0n, projectDecimals, currencySymbol)
+            formatCurrencyAmount(totalDistributableAmount ?? 0n, 18, currencySymbol)
           )}
         </span>
       </Tooltip>
     )
-  }, [totalDistributableAmount, distributableAmountByChain, currencySymbol, projectDecimals])
+  }, [totalDistributableAmount, distributableAmountByChain, currencySymbol])
 
   return {
     totalTreasuryBalance: totalTreasuryBalance,

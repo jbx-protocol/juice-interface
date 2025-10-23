@@ -157,7 +157,7 @@ interface BaseEventInput {
   timestamp: number
   txHash: string
   from: string
-  caller: string
+  caller?: string
 }
 
 function extractBaseEventData(
@@ -184,7 +184,7 @@ function extractBaseEventData(
     timestamp: event.timestamp,
     txHash: event.txHash,
     from: event.from,
-    caller: event.caller,
+    caller: event.caller ?? event.from,
   }
 }
 

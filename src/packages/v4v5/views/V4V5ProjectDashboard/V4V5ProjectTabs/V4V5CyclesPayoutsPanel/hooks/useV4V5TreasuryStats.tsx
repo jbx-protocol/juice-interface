@@ -1,5 +1,7 @@
 import {
   JBChainId,
+  useJBChainId,
+  useJBContractContext,
   useJBRulesetMetadata,
   useSuckersNativeTokenBalance,
   useSuckersNativeTokenSurplus
@@ -9,11 +11,33 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { NETWORKS } from 'constants/networks'
+import { useProjectQuery } from 'generated/v4v5/graphql'
+import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
+import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useMemo } from 'react'
+import { formatCurrencyAmount, getCurrencySymbol } from 'utils/format/formatCurrencyAmount'
 
 export const useV4V5TreasuryStats = () => {
+  const { projectId } = useJBContractContext()
+  const chainId = useJBChainId()
+  const { version } = useV4V5Version()
   const { data: rulesetMetadata } = useJBRulesetMetadata()
+
+  // Query project token and decimals
+  const { data: project } = useProjectQuery({
+    client: getBendystrawClient(chainId),
+    variables: {
+      projectId: Number(projectId),
+      chainId: chainId || 0,
+      version: version
+    },
+    skip: !chainId || !projectId,
+  })
+
+  const projectToken = project?.project?.token ?? undefined
+  const projectDecimals = project?.project?.decimals ? Number(project.project.decimals) : 18
+  const currencySymbol = getCurrencySymbol(projectToken)
 
   const { data: suckersBalance } = useSuckersNativeTokenBalance()
   const totalBalance =
@@ -52,8 +76,12 @@ export const useV4V5TreasuryStats = () => {
     ) ?? 0n
 
   const totalTreasuryBalance = useMemo(() => {
-    return <AmountInCurrency amount={BigNumber.from(totalBalance ?? 0n)} currency="ETH" />
-  }, [totalBalance])
+    if (currencySymbol === 'ETH') {
+      return <AmountInCurrency amount={BigNumber.from(totalBalance ?? 0n)} currency="ETH" />
+    }
+    // For USDC and other tokens, use formatted text
+    return <span>{formatCurrencyAmount(totalBalance, projectDecimals, currencySymbol)}</span>
+  }, [totalBalance, currencySymbol, projectDecimals])
 
   const surplusElement = useMemo(() => {
     // NOTE: Don't think we need this since other chains payouts limits may be different?
@@ -78,10 +106,14 @@ export const useV4V5TreasuryStats = () => {
                     />
                     <span>{NETWORKS[surplus.chainId].label}</span>
                   </div>
-                  {/* (NOTE: Following comment copied from Revnet: 
+                  {/* (NOTE: Following comment copied from Revnet:
                   "TODO maybe show USD-converted value here instead?" */}
                   <span className="whitespace-nowrap font-medium">
-                    <AmountInCurrency amount={BigNumber.from(surplus.surplus)} currency="ETH" />
+                    {currencySymbol === 'ETH' ? (
+                      <AmountInCurrency amount={BigNumber.from(surplus.surplus)} currency="ETH" />
+                    ) : (
+                      formatCurrencyAmount(surplus.surplus, projectDecimals, currencySymbol)
+                    )}
                   </span>
                 </div>
               ))}
@@ -90,11 +122,15 @@ export const useV4V5TreasuryStats = () => {
         }
       >
         <span>
-          <AmountInCurrency amount={BigNumber.from(totalEthSurplus)} currency="ETH" hideTooltip />
+          {currencySymbol === 'ETH' ? (
+            <AmountInCurrency amount={BigNumber.from(totalEthSurplus)} currency="ETH" hideTooltip />
+          ) : (
+            formatCurrencyAmount(totalEthSurplus, projectDecimals, currencySymbol)
+          )}
         </span>
       </Tooltip>
     )
-  }, [totalEthSurplus, ethSurplusByChain])
+  }, [totalEthSurplus, ethSurplusByChain, currencySymbol, projectDecimals])
 
   const availableToPayout = useMemo(() => {
     return (
@@ -123,7 +159,11 @@ export const useV4V5TreasuryStats = () => {
                       </span>
                     </div>
                     <span className="whitespace-nowrap font-medium">
-                      <AmountInCurrency amount={BigNumber.from(distributableAmountObj.distributableAmount ?? 0n)} currency="ETH" />
+                      {currencySymbol === 'ETH' ? (
+                        <AmountInCurrency amount={BigNumber.from(distributableAmountObj.distributableAmount ?? 0n)} currency="ETH" />
+                      ) : (
+                        formatCurrencyAmount(distributableAmountObj.distributableAmount ?? 0n, projectDecimals, currencySymbol)
+                      )}
                     </span>
                   </div>
                 ),
@@ -133,11 +173,15 @@ export const useV4V5TreasuryStats = () => {
         }
       >
         <span>
-          <AmountInCurrency amount={BigNumber.from(totalDistributableAmount ?? 0n)} currency="ETH" hideTooltip />
+          {currencySymbol === 'ETH' ? (
+            <AmountInCurrency amount={BigNumber.from(totalDistributableAmount ?? 0n)} currency="ETH" hideTooltip />
+          ) : (
+            formatCurrencyAmount(totalDistributableAmount ?? 0n, projectDecimals, currencySymbol)
+          )}
         </span>
       </Tooltip>
     )
-  }, [totalDistributableAmount, distributableAmountByChain])
+  }, [totalDistributableAmount, distributableAmountByChain, currencySymbol, projectDecimals])
 
   return {
     totalTreasuryBalance: totalTreasuryBalance,
@@ -147,5 +191,7 @@ export const useV4V5TreasuryStats = () => {
     availableToPayout,
     surplusElement,
     cashOutTaxRate: rulesetMetadata?.cashOutTaxRate,
+    currencySymbol,
+    projectDecimals,
   }
 }

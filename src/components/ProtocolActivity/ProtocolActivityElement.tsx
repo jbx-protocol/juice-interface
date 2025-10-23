@@ -14,6 +14,7 @@ export interface ProtocolActivityElementEvent {
   projectId?: number
   projectName?: string | null
   projectHandle?: string | null
+  projectLogoUri?: string | null
 }
 
 export function ProtocolActivityElement({
@@ -39,6 +40,7 @@ export function ProtocolActivityElement({
           className="h-12 w-12"
           projectId={event.projectId}
           name={displayName}
+          uri={event.projectLogoUri ?? undefined}
           pv={'5'}
         />
       </div>

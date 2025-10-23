@@ -28,20 +28,43 @@ import {
 
 const now = Date.now().valueOf()
 
+// Known currency addresses to symbol mapping (lowercase addresses)
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': 'USDC', // Base USDC
+  '0x0000000000000000000000000000000000000000': 'ETH', // Native ETH
+}
+
+/**
+ * Get currency symbol from currency address (hex string)
+ */
+function getCurrencySymbol(currency?: string | null): string {
+  if (!currency) return 'ETH'
+  // Normalize to lowercase for lookup
+  const symbol = CURRENCY_SYMBOLS[currency.toLowerCase()]
+  return symbol || 'ETH'
+}
+
 export default function TimelineChart({
   points,
   view,
   range,
   height,
+  projectToken,
+  projectDecimals,
 }: {
   points: ProjectTimelinePoint[] | undefined
   view: ProjectTimelineView
   range: ProjectTimelineRange
   height: CSSProperties['height']
+  projectToken?: string
+  projectDecimals?: number
 }) {
   const { themeOption } = useContext(ThemeContext)
 
   const defaultYDomain = useTimelineYDomain(points?.map(p => p[view]))
+
+  // Determine currency symbol based on project token
+  const currencySymbol = getCurrencySymbol(projectToken)
 
   const { data: trendingProjects } = useTrendingProjects(1)
   const highTrendingScore = trendingProjects?.length
@@ -166,7 +189,11 @@ export default function TimelineChart({
                   fill={color}
                   transform={`translate(${props.x + 4},${props.y + 4})`}
                 >
-                  <CurrencySymbol currency="ETH" />
+                  {currencySymbol === 'ETH' ? (
+                    <CurrencySymbol currency="ETH" />
+                  ) : (
+                    `${currencySymbol} `
+                  )}
                   {formattedValue}
                 </text>
               </g>
@@ -241,7 +268,11 @@ export default function TimelineChart({
                 </div>
                 {view !== 'trendingScore' && (
                   <div className="font-medium">
-                    <CurrencySymbol currency="ETH" />
+                    {currencySymbol === 'ETH' ? (
+                      <CurrencySymbol currency="ETH" />
+                    ) : (
+                      `${currencySymbol} `
+                    )}
                     {amount.toFixed(amount > 10 ? 1 : amount > 1 ? 2 : 4)}
                   </div>
                 )}

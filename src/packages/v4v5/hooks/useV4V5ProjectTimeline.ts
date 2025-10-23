@@ -5,6 +5,17 @@ import { useMemo } from 'react'
 import { wadToFloat } from 'utils/format/formatNumber'
 import { ProjectTimelinePoint, ProjectTimelineRange } from 'components/VolumeChart/types'
 
+/**
+ * Convert volume/balance value from token decimals to float
+ * Volume in Bendystraw is stored in the token's native decimals (6 for USDC, 18 for ETH)
+ */
+function formatVolumeValue(value: string | bigint, decimals: number = 18): number {
+  const num = typeof value === 'string' ? BigInt(value) : value
+  const divisor = BigInt(10) ** BigInt(decimals)
+  // Convert to float with proper decimal places
+  return Number(num) / Number(divisor)
+}
+
 export function useV4V5ProjectTimeline({
   projectId,
   range,
@@ -89,21 +100,24 @@ export function useV4V5ProjectTimeline({
     if (!timestamps || !project?.project) return
     if (queryResult === undefined) return // Still loading
 
+    // Get project decimals for proper volume/balance conversion
+    const decimals = project.project.decimals ? Number(project.project.decimals) : 18
+
     const previous = queryResult.previous.items.length
       ? queryResult.previous.items[0]
       : undefined
 
     const rangeItems = queryResult.range.items.map(item => ({
       timestamp: item.timestamp,
-      volume: wadToFloat(item.volume),
-      balance: wadToFloat(item.balance),
-      trendingScore: wadToFloat(item.trendingScore),
+      volume: formatVolumeValue(item.volume, decimals),
+      balance: formatVolumeValue(item.balance, decimals),
+      trendingScore: wadToFloat(item.trendingScore), // Trending score is always in wad
     }))
 
     // Base values to use when no data exists
     const baseValues = previous ? {
-      volume: wadToFloat(previous.volume),
-      balance: wadToFloat(previous.balance),
+      volume: formatVolumeValue(previous.volume, decimals),
+      balance: formatVolumeValue(previous.balance, decimals),
       trendingScore: wadToFloat(previous.trendingScore),
     } : {
       volume: 0,
@@ -153,5 +167,7 @@ export function useV4V5ProjectTimeline({
   return {
     points,
     loading: isLoadingProject || isLoadingTimeline,
+    projectToken: project?.project?.token ?? undefined,
+    projectDecimals: project?.project?.decimals ? Number(project.project.decimals) : undefined,
   }
 }

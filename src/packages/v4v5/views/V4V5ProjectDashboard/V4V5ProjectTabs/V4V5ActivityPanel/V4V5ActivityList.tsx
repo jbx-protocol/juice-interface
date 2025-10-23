@@ -160,6 +160,8 @@ export function translateEventDataToPresenter(
 ) {
   // Use projectToken (the actual token address) for currency symbol lookup
   const currencySymbol = getCurrencySymbol(event.projectToken)
+  // Use project decimals (e.g., 6 for USDC, 18 for ETH)
+  const decimals = event.projectDecimals ?? 18
 
   switch (event.type) {
     case 'payEvent':
@@ -168,7 +170,7 @@ export function translateEventDataToPresenter(
         header: 'Paid',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} {currencySymbol}
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -179,7 +181,7 @@ export function translateEventDataToPresenter(
         header: 'Added to balance',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} {currencySymbol}
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: event.note ? <RichNote note={event.note} /> : null,
@@ -206,7 +208,7 @@ export function translateEventDataToPresenter(
         header: 'Cashed out',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.reclaimAmount.value)} {currencySymbol}
+            {formatActivityAmount(event.reclaimAmount.value, decimals)} {currencySymbol}
           </span>
         ),
       }
@@ -230,7 +232,7 @@ export function translateEventDataToPresenter(
         header: 'Send payouts',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} {currencySymbol}
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: (
@@ -275,7 +277,7 @@ export function translateEventDataToPresenter(
         header: 'Send to payout split',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} {currencySymbol}
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: (
@@ -292,7 +294,7 @@ export function translateEventDataToPresenter(
         header: 'Used allowance',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} {currencySymbol}
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: <RichNote note={event.note} />,

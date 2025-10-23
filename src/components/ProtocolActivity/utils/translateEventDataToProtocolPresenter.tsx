@@ -25,19 +25,21 @@ function getCurrencySymbol(currency?: string | null): string {
 export function translateEventDataToProtocolPresenter(event: AnyEvent) {
   // Use projectToken (the actual token address) for currency symbol lookup
   const currencySymbol = getCurrencySymbol(event.projectToken)
+  // Use project decimals (e.g., 6 for USDC, 18 for ETH)
+  const decimals = event.projectDecimals ?? 18
 
   switch (event.type) {
     case 'payEvent':
       return {
         event,
         header: 'Paid',
-        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
+        subject: `${formatActivityAmount(event.amount.value, decimals)} ${currencySymbol}`,
       }
     case 'addToBalanceEvent':
       return {
         event,
         header: 'Added to balance',
-        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
+        subject: `${formatActivityAmount(event.amount.value, decimals)} ${currencySymbol}`,
       }
     case 'manualMintTokensEvent':
       return {
@@ -49,7 +51,7 @@ export function translateEventDataToProtocolPresenter(event: AnyEvent) {
       return {
         event,
         header: 'Cashed out',
-        subject: `${formatActivityAmount(event.reclaimAmount.value)} ${currencySymbol}`,
+        subject: `${formatActivityAmount(event.reclaimAmount.value, decimals)} ${currencySymbol}`,
       }
     case 'deployedERC20Event':
       return {
@@ -67,7 +69,7 @@ export function translateEventDataToProtocolPresenter(event: AnyEvent) {
       return {
         event,
         header: 'Send payouts',
-        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
+        subject: `${formatActivityAmount(event.amount.value, decimals)} ${currencySymbol}`,
       }
     case 'distributeReservedTokensEvent':
       return {
@@ -85,13 +87,13 @@ export function translateEventDataToProtocolPresenter(event: AnyEvent) {
       return {
         event,
         header: 'Send to payout split',
-        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
+        subject: `${formatActivityAmount(event.amount.value, decimals)} ${currencySymbol}`,
       }
     case 'useAllowanceEvent':
       return {
         event,
         header: 'Used allowance',
-        subject: `${formatActivityAmount(event.amount.value)} ${currencySymbol}`,
+        subject: `${formatActivityAmount(event.amount.value, decimals)} ${currencySymbol}`,
       }
     case 'manualBurnEvent':
       return {

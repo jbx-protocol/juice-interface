@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { fromWad } from './formatNumber'
+import { formatUnits } from '@ethersproject/units'
 
 /**
  * Format amounts for activity feeds with adaptive decimal places.
@@ -7,11 +7,16 @@ import { fromWad } from './formatNumber'
  * - Small (0.01 - 1): 3 decimals
  * - Medium/Large (>= 1): 2 decimals
  * - Adds comma separators for thousands
+ * @param amount - The amount to format
+ * @param decimals - Number of decimals (default 18 for ETH)
  */
-export function formatActivityAmount(amount: BigNumber | bigint | string): string {
+export function formatActivityAmount(
+  amount: BigNumber | bigint | string,
+  decimals: number = 18
+): string {
   const num = typeof amount === 'string'
-    ? parseFloat(fromWad(amount))
-    : parseFloat(fromWad(BigNumber.from(amount)))
+    ? parseFloat(formatUnits(amount, decimals))
+    : parseFloat(formatUnits(BigNumber.from(amount), decimals))
 
   if (isNaN(num)) return '0'
 

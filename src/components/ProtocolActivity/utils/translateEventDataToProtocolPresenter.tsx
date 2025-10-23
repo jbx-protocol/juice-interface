@@ -23,7 +23,8 @@ function getCurrencySymbol(currency?: string | null): string {
  * Translate event data to protocol activity presenter with formatted amounts
  */
 export function translateEventDataToProtocolPresenter(event: AnyEvent) {
-  const currencySymbol = getCurrencySymbol(event.projectCurrency)
+  // Use projectToken (the actual token address) for currency symbol lookup
+  const currencySymbol = getCurrencySymbol(event.projectToken)
 
   switch (event.type) {
     case 'payEvent':

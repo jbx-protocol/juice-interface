@@ -187,11 +187,10 @@ export function transformEventData(
   const projectName = data.project?.name ?? null
   const projectHandle = data.project?.handle ?? null
   const projectLogoUri = data.project?.logoUri ?? null
-  const projectToken = data.project?.token ? String(data.project.token) : null
-  // Convert currency bigint to hex address format (0x...)
-  const projectCurrency = data.project?.currency
-    ? '0x' + BigInt(data.project.currency).toString(16).padStart(40, '0')
-    : null
+  // Token is already a hex string address (e.g., "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913")
+  const projectToken = data.project?.token ?? null
+  // Currency appears to be an ID/enum, not the token address
+  const projectCurrency = data.project?.currency ? String(data.project.currency) : null
   const projectDecimals = data.project?.decimals ? Number(data.project.decimals) : null
 
   // Check for aggregated events first

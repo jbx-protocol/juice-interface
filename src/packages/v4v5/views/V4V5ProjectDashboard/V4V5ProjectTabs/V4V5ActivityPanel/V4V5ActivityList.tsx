@@ -158,7 +158,8 @@ export function translateEventDataToPresenter(
   event: AnyEvent,
   tokenSymbol: string | undefined,
 ) {
-  const currencySymbol = getCurrencySymbol(event.projectCurrency)
+  // Use projectToken (the actual token address) for currency symbol lookup
+  const currencySymbol = getCurrencySymbol(event.projectToken)
 
   switch (event.type) {
     case 'payEvent':

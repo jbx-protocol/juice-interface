@@ -1,4 +1,4 @@
-import { SplitPortion } from 'juice-sdk-core'
+import { SplitPortion, USDC_ADDRESSES } from 'juice-sdk-core'
 import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
 import {
   AnyEvent,
@@ -11,6 +11,7 @@ import { Button } from 'antd'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { NETWORKS } from 'constants/networks'
 import { useActivityEventsQuery, useProjectQuery } from 'generated/v4v5/graphql'
 import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
@@ -137,10 +138,13 @@ export function V4V5ActivityList() {
   )
 }
 
-// Known currency addresses to symbol mapping (lowercase addresses)
+// Build currency mapping from SDK constants
 const CURRENCY_SYMBOLS: Record<string, string> = {
-  '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': 'USDC', // Base USDC
-  '0x0000000000000000000000000000000000000000': 'ETH', // Native ETH
+  [ETH_TOKEN_ADDRESS.toLowerCase()]: 'ETH',
+  ...Object.values(USDC_ADDRESSES).reduce((acc, address) => {
+    acc[address.toLowerCase()] = 'USDC'
+    return acc
+  }, {} as Record<string, string>),
 }
 
 /**

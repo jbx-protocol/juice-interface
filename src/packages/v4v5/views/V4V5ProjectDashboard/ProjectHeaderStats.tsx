@@ -10,11 +10,16 @@ import { twMerge } from 'tailwind-merge'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { useV4V5ProjectHeader } from './hooks/useV4V5ProjectHeader'
+import { USDC_ADDRESSES } from 'juice-sdk-core'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 
-// Known currency addresses to symbol mapping (lowercase addresses)
+// Build currency mapping from SDK constants
 const CURRENCY_SYMBOLS: Record<string, string> = {
-  '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': 'USDC', // Base USDC
-  '0x0000000000000000000000000000000000000000': 'ETH', // Native ETH
+  [ETH_TOKEN_ADDRESS.toLowerCase()]: 'ETH',
+  ...Object.values(USDC_ADDRESSES).reduce((acc, address) => {
+    acc[address.toLowerCase()] = 'USDC'
+    return acc
+  }, {} as Record<string, string>),
 }
 
 /**

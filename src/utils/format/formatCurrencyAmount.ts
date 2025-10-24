@@ -1,11 +1,18 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
+import { USDC_ADDRESSES } from 'juice-sdk-core'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 
-// Known currency addresses to symbol mapping (lowercase addresses)
+// Build currency mapping from SDK constants
+// Maps token addresses (lowercase) to their symbols
 export const CURRENCY_SYMBOLS: Record<string, string> = {
-  '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': 'USDC', // Base USDC
-  [ETH_TOKEN_ADDRESS.toLowerCase()]: 'ETH', // Juicebox ETH token address
+  // Add ETH token address
+  [ETH_TOKEN_ADDRESS.toLowerCase()]: 'ETH',
+  // Add USDC addresses for all supported chains
+  ...Object.values(USDC_ADDRESSES).reduce((acc, address) => {
+    acc[address.toLowerCase()] = 'USDC'
+    return acc
+  }, {} as Record<string, string>),
 }
 
 /**

@@ -19,6 +19,8 @@ export default function VolumeChart({
   version,
   lockedView,
   hideViewSelector,
+  projectToken,
+  projectDecimals,
 }: {
   height: CSSProperties['height']
   createdAt: number | undefined
@@ -27,6 +29,8 @@ export default function VolumeChart({
   version?: number
   lockedView?: ProjectTimelineView
   hideViewSelector?: boolean
+  projectToken?: string
+  projectDecimals?: number
 }) {
   const [timelineView, setTimelineView] =
     useState<ProjectTimelineView>(lockedView || 'volume')
@@ -42,7 +46,12 @@ export default function VolumeChart({
 
   // V4/V5: Use new database-based hook (only for V4 projects)
   const shouldUseV4Hook = pv === PV_V4
-  const { points: v4v5Points, loading: v4v5Loading } = useV4V5ProjectTimeline({
+  const {
+    points: v4v5Points,
+    loading: v4v5Loading,
+    projectToken: v4v5Token,
+    projectDecimals: v4v5Decimals,
+  } = useV4V5ProjectTimeline({
     projectId: shouldUseV4Hook ? projectId : 0,
     range,
     version: version || 4,
@@ -50,6 +59,10 @@ export default function VolumeChart({
 
   const points = shouldUseV4Hook ? v4v5Points : v1v2v3Points
   const loading = shouldUseV4Hook ? v4v5Loading : legacyLoading
+
+  // Use token/decimals from hook if not provided via props
+  const token = projectToken ?? v4v5Token
+  const decimals = projectDecimals ?? v4v5Decimals
 
   // Use locked view if provided, otherwise use state
   const currentView = lockedView || timelineView
@@ -73,6 +86,8 @@ export default function VolumeChart({
           view={currentView}
           range={range}
           height={height}
+          projectToken={token}
+          projectDecimals={decimals}
         />
         {!points?.length && (
           <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">

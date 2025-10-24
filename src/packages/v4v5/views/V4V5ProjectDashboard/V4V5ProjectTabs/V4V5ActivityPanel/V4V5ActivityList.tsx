@@ -1,4 +1,4 @@
-import { SplitPortion } from 'juice-sdk-core'
+import { SplitPortion, USDC_ADDRESSES } from 'juice-sdk-core'
 import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
 import {
   AnyEvent,
@@ -11,6 +11,7 @@ import { Button } from 'antd'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { NETWORKS } from 'constants/networks'
 import { useActivityEventsQuery, useProjectQuery } from 'generated/v4v5/graphql'
 import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
@@ -137,11 +138,35 @@ export function V4V5ActivityList() {
   )
 }
 
+// Build currency mapping from SDK constants
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  [ETH_TOKEN_ADDRESS.toLowerCase()]: 'ETH',
+  ...Object.values(USDC_ADDRESSES).reduce((acc, address) => {
+    acc[address.toLowerCase()] = 'USDC'
+    return acc
+  }, {} as Record<string, string>),
+}
+
+/**
+ * Get currency symbol from currency address (hex string)
+ */
+function getCurrencySymbol(currency?: string | null): string {
+  if (!currency) return 'ETH'
+  // Normalize to lowercase for lookup
+  const symbol = CURRENCY_SYMBOLS[currency.toLowerCase()]
+  return symbol || 'ETH'
+}
+
 // TODO this should be exported from somewhere else. Components are currently awkward due to shared dependencies on v1v2v3 and v4 parts
 export function translateEventDataToPresenter(
   event: AnyEvent,
   tokenSymbol: string | undefined,
 ) {
+  // Use projectToken (the actual token address) for currency symbol lookup
+  const currencySymbol = getCurrencySymbol(event.projectToken)
+  // Use project decimals (e.g., 6 for USDC, 18 for ETH)
+  const decimals = event.projectDecimals ?? 18
+
   switch (event.type) {
     case 'payEvent':
       return {
@@ -149,7 +174,7 @@ export function translateEventDataToPresenter(
         header: 'Paid',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -160,7 +185,7 @@ export function translateEventDataToPresenter(
         header: 'Added to balance',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: event.note ? <RichNote note={event.note} /> : null,
@@ -187,7 +212,7 @@ export function translateEventDataToPresenter(
         header: 'Cashed out',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.reclaimAmount.value)} ETH
+            {formatActivityAmount(event.reclaimAmount.value, decimals)} {currencySymbol}
           </span>
         ),
       }
@@ -211,7 +236,7 @@ export function translateEventDataToPresenter(
         header: 'Send payouts',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: (
@@ -256,7 +281,7 @@ export function translateEventDataToPresenter(
         header: 'Send to payout split',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: (
@@ -273,7 +298,7 @@ export function translateEventDataToPresenter(
         header: 'Used allowance',
         subject: (
           <span className="font-heading text-base">
-            {formatActivityAmount(event.amount.value)} ETH
+            {formatActivityAmount(event.amount.value, decimals)} {currencySymbol}
           </span>
         ),
         extra: <RichNote note={event.note} />,

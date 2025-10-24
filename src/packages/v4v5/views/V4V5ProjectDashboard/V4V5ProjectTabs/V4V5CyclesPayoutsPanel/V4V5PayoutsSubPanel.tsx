@@ -10,6 +10,7 @@ import { JBChainId } from 'juice-sdk-core'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
+import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { useV4V5PayoutsSubPanel } from './hooks/useV4V5PayoutsSubPanel'
 import { useV4V5TreasuryStats } from './hooks/useV4V5TreasuryStats'
 import { V4V5ExportPayoutsCsvItem } from './V4V5ExportPayoutsCsvItem'
@@ -31,6 +32,8 @@ export const V4V5PayoutsSubPanel = ({
     surplusElement,
     availableToPayout,
     cashOutTaxRate,
+    currencySymbol,
+    projectDecimals,
   } = useV4V5TreasuryStats()
 
   const surplusTooltip = React.useMemo(
@@ -80,7 +83,11 @@ export const V4V5PayoutsSubPanel = ({
                         />
                       </span>
                       <span className="flex-shrink-0 flex-nowrap text-sm text-grey-900 dark:text-slate-50">
-                        <AmountInCurrency amount={BigNumber.from(sucker.balance)} currency="ETH" />
+                        {currencySymbol === 'ETH' ? (
+                          <AmountInCurrency amount={BigNumber.from(sucker.balance)} currency="ETH" />
+                        ) : (
+                          formatCurrencyAmount(sucker.balance, projectDecimals, currencySymbol)
+                        )}
                       </span>
                     </div>
                   ))}

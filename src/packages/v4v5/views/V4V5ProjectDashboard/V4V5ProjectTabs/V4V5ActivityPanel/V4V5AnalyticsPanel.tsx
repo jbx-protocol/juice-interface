@@ -25,6 +25,8 @@ export const V4V5AnalyticsPanel = forwardRef<HTMLDivElement>((props, ref) => {
   })
 
   const createdAt = data?.project?.createdAt
+  const projectToken = data?.project?.token ?? undefined
+  const projectDecimals = data?.project?.decimals ? Number(data.project.decimals) : undefined
 
   return (
     <div ref={ref} className="min-h-[384px] w-full">
@@ -47,6 +49,8 @@ export const V4V5AnalyticsPanel = forwardRef<HTMLDivElement>((props, ref) => {
                   version={version}
                   lockedView="volume"
                   hideViewSelector={true}
+                  projectToken={projectToken}
+                  projectDecimals={projectDecimals}
                 />
               </ErrorBoundaryCallout>
             </Suspense>
@@ -80,6 +84,8 @@ export const V4V5AnalyticsPanel = forwardRef<HTMLDivElement>((props, ref) => {
                   version={version}
                   lockedView="balance"
                   hideViewSelector={true}
+                  projectToken={projectToken}
+                  projectDecimals={projectDecimals}
                 />
               </ErrorBoundaryCallout>
             </Suspense>
@@ -102,6 +108,8 @@ export const V4V5AnalyticsPanel = forwardRef<HTMLDivElement>((props, ref) => {
                   version={version}
                   lockedView="trendingScore"
                   hideViewSelector={true}
+                  projectToken={projectToken}
+                  projectDecimals={projectDecimals}
                 />
               </ErrorBoundaryCallout>
             </Suspense>

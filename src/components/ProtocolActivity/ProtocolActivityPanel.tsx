@@ -12,7 +12,7 @@ export function ProtocolActivityPanel() {
         'sticky top-0 self-start bg-white transition-all duration-300 dark:bg-slate-900',
         'border-l-2 border-smoke-300 shadow-2xl dark:border-slate-700',
         'h-screen flex flex-col',
-        isOpen ? 'w-[460px]' : 'w-0',
+        isOpen ? 'w-[400px]' : 'w-0',
       )}
     >
       {isOpen && (

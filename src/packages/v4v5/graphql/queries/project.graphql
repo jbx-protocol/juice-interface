@@ -18,6 +18,9 @@ query Project($chainId: Float!, $projectId: Float!, $version: Float!) {
     suckerGroupId
     createdAt
     isRevnet
+    token
+    currency
+    decimals
     permissionHolders {
       items {
         operator

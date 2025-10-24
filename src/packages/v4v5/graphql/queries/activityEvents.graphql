@@ -23,6 +23,10 @@ query ActivityEvents(
       project {
         name
         handle
+        logoUri
+        token
+        currency
+        decimals
       }
       payEvent {
         id

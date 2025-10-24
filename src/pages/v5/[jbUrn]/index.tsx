@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<
         description,
         image: projectImage,
         twitterCard: 'summary_large_image' as const,
-        twitterCreator: metadata?.twitter,
+        ...(metadata?.twitter && { twitterCreator: metadata.twitter }),
       }
     }
   }

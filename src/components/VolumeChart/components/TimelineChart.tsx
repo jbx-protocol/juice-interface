@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useTrendingProjects } from 'hooks/useTrendingProjects'
+import { USDC_ADDRESSES } from 'juice-sdk-core'
 import tailwind from 'lib/tailwind'
 import moment from 'moment'
 import { CSSProperties, useContext, useMemo } from 'react'
@@ -25,23 +26,50 @@ import {
   ProjectTimelineRange,
   ProjectTimelineView,
 } from '../types'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 
 const now = Date.now().valueOf()
+
+// Build currency mapping from SDK constants
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  [ETH_TOKEN_ADDRESS.toLowerCase()]: 'ETH',
+  ...Object.values(USDC_ADDRESSES).reduce((acc, address) => {
+    acc[address.toLowerCase()] = 'USDC'
+    return acc
+  }, {} as Record<string, string>),
+}
+
+/**
+ * Get currency symbol from currency address (hex string)
+ */
+function getCurrencySymbol(currency?: string | null): string {
+  if (!currency) return 'ETH'
+  // Normalize to lowercase for lookup
+  const symbol = CURRENCY_SYMBOLS[currency.toLowerCase()]
+  return symbol || 'ETH'
+}
 
 export default function TimelineChart({
   points,
   view,
   range,
   height,
+  projectToken,
+  projectDecimals,
 }: {
   points: ProjectTimelinePoint[] | undefined
   view: ProjectTimelineView
   range: ProjectTimelineRange
   height: CSSProperties['height']
+  projectToken?: string
+  projectDecimals?: number
 }) {
   const { themeOption } = useContext(ThemeContext)
 
   const defaultYDomain = useTimelineYDomain(points?.map(p => p[view]))
+
+  // Determine currency symbol based on project token
+  const currencySymbol = getCurrencySymbol(projectToken)
 
   const { data: trendingProjects } = useTrendingProjects(1)
   const highTrendingScore = trendingProjects?.length
@@ -166,7 +194,11 @@ export default function TimelineChart({
                   fill={color}
                   transform={`translate(${props.x + 4},${props.y + 4})`}
                 >
-                  <CurrencySymbol currency="ETH" />
+                  {currencySymbol === 'ETH' ? (
+                    <CurrencySymbol currency="ETH" />
+                  ) : (
+                    `${currencySymbol} `
+                  )}
                   {formattedValue}
                 </text>
               </g>
@@ -241,7 +273,11 @@ export default function TimelineChart({
                 </div>
                 {view !== 'trendingScore' && (
                   <div className="font-medium">
-                    <CurrencySymbol currency="ETH" />
+                    {currencySymbol === 'ETH' ? (
+                      <CurrencySymbol currency="ETH" />
+                    ) : (
+                      `${currencySymbol} `
+                    )}
                     {amount.toFixed(amount > 10 ? 1 : amount > 1 ? 2 : 4)}
                   </div>
                 )}

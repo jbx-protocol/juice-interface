@@ -1,0 +1,68 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { formatUnits } from '@ethersproject/units'
+import { USDC_ADDRESSES } from 'juice-sdk-core'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
+
+// Build currency mapping from SDK constants
+// Maps token addresses (lowercase) to their symbols
+export const CURRENCY_SYMBOLS: Record<string, string> = {
+  // Add ETH token address
+  [ETH_TOKEN_ADDRESS.toLowerCase()]: 'ETH',
+  // Add USDC addresses for all supported chains
+  ...Object.values(USDC_ADDRESSES).reduce((acc, address) => {
+    acc[address.toLowerCase()] = 'USDC'
+    return acc
+  }, {} as Record<string, string>),
+}
+
+/**
+ * Get currency symbol from currency address (hex string)
+ */
+export function getCurrencySymbol(currency?: string | null): string {
+  if (!currency) return 'ETH'
+  // Normalize to lowercase for lookup
+  const symbol = CURRENCY_SYMBOLS[currency.toLowerCase()]
+  return symbol || 'ETH'
+}
+
+/**
+ * Format a currency amount with proper decimals and symbol
+ * @param amount - The amount as bigint, BigNumber, or string
+ * @param decimals - Token decimals (6 for USDC, 18 for ETH)
+ * @param symbol - Currency symbol (USDC, ETH, etc.)
+ * @returns Formatted string like "1,234.56 USDC" or "Ξ1,234.56"
+ */
+export function formatCurrencyAmount(
+  amount: bigint | BigNumber | string,
+  decimals: number,
+  symbol: string,
+): string {
+  const amountBN = typeof amount === 'string'
+    ? BigNumber.from(amount)
+    : amount instanceof BigNumber
+    ? amount
+    : BigNumber.from(amount.toString())
+
+  const num = parseFloat(formatUnits(amountBN, decimals))
+
+  if (isNaN(num)) return symbol === 'ETH' ? 'Ξ0' : `0 ${symbol}`
+
+  // Format with appropriate decimal places
+  let formatted: string
+  if (num < 0.01 && num > 0) {
+    // Very small amounts: keep precision
+    formatted = num.toFixed(Math.min(decimals, 6))
+  } else if (num < 1) {
+    // Small amounts (0.01 - 1): 3 decimals
+    formatted = num.toFixed(3)
+  } else {
+    // Medium and large amounts (>= 1): 2 decimals with comma separators
+    formatted = num.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+  }
+
+  // ETH uses Ξ symbol, others use text
+  return symbol === 'ETH' ? `Ξ${formatted}` : `${formatted} ${symbol}`
+}

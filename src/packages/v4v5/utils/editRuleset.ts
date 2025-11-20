@@ -7,6 +7,7 @@ import { parseWad } from 'utils/format/formatNumber'
 import { otherUnitToSeconds } from 'utils/format/formatTime'
 import { EditCycleFormFields } from '../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
 import { getApprovalStrategyByAddress } from './approvalHooks'
+import { MAX_PAYOUT_LIMIT } from './math'
 
 export type EditCycleTxArgs = readonly [
   projectId: bigint,
@@ -170,7 +171,9 @@ export function transformEditCycleFormFieldsToTxArgs({
           token: tokenAddress,
           payoutLimits: [
             {
-              amount: parseWad(formValues.payoutLimit).toBigInt(),
+              amount: formValues.payoutLimit === undefined
+                ? MAX_PAYOUT_LIMIT
+                : parseWad(formValues.payoutLimit).toBigInt(),
               currency: 1, // Assuming currency is constant (e.g., USD)
             },
           ],

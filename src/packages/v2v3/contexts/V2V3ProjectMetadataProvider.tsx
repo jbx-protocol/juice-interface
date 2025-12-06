@@ -30,6 +30,8 @@ export default function V2V3ProjectMetadataProvider({
       projectMetadata?.archived) ??
     false
 
+  const isLoading = !projectMetadata
+
   return (
     <ProjectMetadataContext.Provider
       value={{
@@ -37,6 +39,7 @@ export default function V2V3ProjectMetadataProvider({
         isArchived,
         projectId,
         pv: PV_V2,
+        isLoading,
         refetchProjectMetadata: refetchValue,
       }}
     >

@@ -1,5 +1,7 @@
 import { Footer } from 'components/Footer/Footer'
+import Loading from 'components/Loading'
 import { CoverPhoto } from 'components/Project/ProjectHeader/CoverPhoto'
+import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { SuccessPayView } from 'packages/v4v5/components/ProjectDashboard/components/SuccessPayView/SuccessPayView'
 import { useProjectDispatch } from 'packages/v4v5/components/ProjectDashboard/redux/hooks'
 import { payRedeemActions } from 'packages/v4v5/components/ProjectDashboard/redux/payRedeemSlice'
@@ -14,11 +16,20 @@ import { ProjectActivityList } from './components/ProjectActivityList'
 
 export default function V4V5ProjectDashboard() {
   const { projectPayReceipt } = useProjectPageQueries()
+  const { isLoading } = useProjectMetadataContext()
 
   if (projectPayReceipt !== undefined) {
     return (
       <div className="flex w-full flex-col items-center pb-48">
         <SuccessPayView />
+      </div>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Loading />
       </div>
     )
   }

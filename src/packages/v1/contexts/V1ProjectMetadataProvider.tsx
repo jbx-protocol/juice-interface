@@ -21,6 +21,8 @@ export function V1ProjectMetadataProvider({
       metadata?.archived) ??
     false
 
+  const isLoading = !metadata
+
   return (
     <ProjectMetadataContext.Provider
       value={{
@@ -33,6 +35,7 @@ export function V1ProjectMetadataProvider({
         isArchived,
         projectId: projectId?.toNumber(),
         pv: PV_V1,
+        isLoading,
       }}
     >
       {children}

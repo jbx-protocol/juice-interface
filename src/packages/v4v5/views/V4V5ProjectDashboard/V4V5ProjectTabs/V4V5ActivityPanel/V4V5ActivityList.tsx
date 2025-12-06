@@ -11,6 +11,8 @@ import { Button } from 'antd'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
+import Link from 'next/link'
+import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { NETWORKS } from 'constants/networks'
 import { useActivityEventsQuery, useProjectQuery } from 'generated/v4v5/graphql'
@@ -85,9 +87,9 @@ export function V4V5ActivityList() {
       return activityEvents.activityEvents.items
         .map(transformEventData)
         .filter((event): event is AnyEvent => !!event)
-        .map(e => translateEventDataToPresenter(e, tokenSymbol))
+        .map(e => translateEventDataToPresenter(e, tokenSymbol, version))
     },
-    [activityEvents?.activityEvents.items, tokenSymbol],
+    [activityEvents?.activityEvents.items, tokenSymbol, version],
   )
 
   return (
@@ -161,7 +163,10 @@ function getCurrencySymbol(currency?: string | null): string {
 export function translateEventDataToPresenter(
   event: AnyEvent,
   tokenSymbol: string | undefined,
+  version?: 4 | 5,
 ) {
+  // Use passed version or fall back to event's projectVersion
+  const effectiveVersion = version ?? event.projectVersion
   // Use projectToken (the actual token address) for currency symbol lookup
   const currencySymbol = getCurrencySymbol(event.projectToken)
   // Use project decimals (e.g., 6 for USDC, 18 for ETH)
@@ -240,9 +245,22 @@ export function translateEventDataToPresenter(
           </span>
         ),
         extra: (
-          <RichNote
-            note={`Paid out: Ξ${formatActivityAmount(event.amountPaidOut.value)}, Fee: Ξ${formatActivityAmount(event.fee.value)}`}
-          />
+          <div className="mt-1">
+            <span className="break-words pr-2">
+              Paid out: Ξ{formatActivityAmount(event.amountPaidOut.value)},{' '}
+              {effectiveVersion ? (
+                <Link
+                  href={v4v5ProjectRoute({ chainId: event.chainId, projectId: 1, version: effectiveVersion })}
+                  className="text-bluebs-500 hover:underline"
+                >
+                  $NANA fee
+                </Link>
+              ) : (
+                '$NANA fee'
+              )}
+              : Ξ{formatActivityAmount(event.fee.value)}
+            </span>
+          </div>
         ),
       }
     case 'distributeReservedTokensEvent':

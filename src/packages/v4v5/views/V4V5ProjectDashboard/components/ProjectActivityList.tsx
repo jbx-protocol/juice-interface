@@ -53,8 +53,8 @@ export function ProjectActivityList() {
       activityEvents?.activityEvents.items
         .map(transformEventData)
         .filter((event): event is AnyEvent => !!event)
-        .map(e => translateEventDataToPresenter(e, undefined)) ?? [],
-    [activityEvents?.activityEvents.items],
+        .map(e => translateEventDataToPresenter(e, undefined, version)) ?? [],
+    [activityEvents?.activityEvents.items, version],
   )
 
   return (

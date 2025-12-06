@@ -4,9 +4,9 @@ import { NftReward, NftRewardSkeleton } from './NftReward/NftReward'
 
 import { Button } from 'antd'
 import { EmptyScreen } from 'components/Project/ProjectTabs/EmptyScreen'
-import { useWallet } from 'hooks/Wallet/useWallet'
-import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
-import { useV4V5ProjectHeader } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useV4V5ProjectHeader'
+import { useWallet } from 'hooks/Wallet'
+import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { useSettingsPagePath } from 'packages/v4v5/views/V4V5ProjectSettings/hooks/useSettingsPagePath'
 import { useRouter } from 'next/router'
 import { RedeemNftsSection } from './RedeemNftsSection/RedeemNftsSection'
@@ -22,16 +22,9 @@ export const V4V5NftRewardsPanel = forwardRef<HTMLDivElement>((props, ref) => {
 
   const router = useRouter()
   const { userAddress } = useWallet()
-  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
-  const { isRevnet, operatorAddress } = useV4V5ProjectHeader()
   const nftSettingsPath = useSettingsPagePath('nfts')
-
-  // Check if user can add NFTs (project owner or revnet operator)
-  const canAddNfts =
-    userAddress &&
-    (userAddress.toLowerCase() === projectOwnerAddress?.toLowerCase() ||
-      (isRevnet &&
-        userAddress.toLowerCase() === operatorAddress?.toLowerCase()))
+  const hasPermission = useV4V5WalletHasPermission(V4V5OperatorPermission.ADJUST_721_TIERS)
+  const canAddNfts = !!userAddress && hasPermission
 
   return (
     <div ref={ref} className="flex w-full flex-col gap-5">

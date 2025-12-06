@@ -57,10 +57,5 @@ export function useV4V5WalletHasPermission(
   // - wallet is direct owner
   // - wallet has explicit operator permission
   // - wallet is a signer on the Safe that owns the project (covers multisig ownership case)
-  // - in development environment
-  return (
-    isOwner ||
-    hasOperatorPermission.data ||
-    process.env.NODE_ENV === 'development'
-  )
+  return isOwner || !!hasOperatorPermission.data
 }

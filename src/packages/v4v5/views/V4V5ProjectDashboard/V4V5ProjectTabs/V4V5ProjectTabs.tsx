@@ -4,7 +4,10 @@ import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
+import { useWallet } from 'hooks/Wallet'
 import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
+import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4V5AboutPanel from './V4V5AboutPanel'
@@ -22,6 +25,7 @@ type ProjectTabConfig = {
 
 export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
+  const { userAddress } = useWallet()
   const {
       nftRewards: { rewardTiers },
     } = useV4V5NftRewards()
@@ -32,8 +36,10 @@ export const V4V5ProjectTabs = ({ className }: { className?: string }) => {
       },
       [rewardTiers],
     )
+  const hasPermission = useV4V5WalletHasPermission(V4V5OperatorPermission.ADJUST_721_TIERS)
+  const canAddNfts = !!userAddress && hasPermission
 
-  const showNftRewards = hasNftRewards
+  const showNftRewards = hasNftRewards || canAddNfts
 
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)

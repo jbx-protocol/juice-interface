@@ -1,13 +1,12 @@
 import { Button } from 'antd'
 import Loading from 'components/Loading'
 import { useActivityEventsQuery } from 'generated/v4v5/graphql'
-import { testnetBendystrawClient, mainnetBendystrawClient } from 'lib/apollo/bendystrawClient'
+import { mainnetBendystrawClient } from 'lib/apollo/bendystrawClient'
 import {
   AnyEvent,
   transformEventData,
 } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/utils/transformEventsData'
 import React, { useState } from 'react'
-import { twMerge } from 'tailwind-merge'
 import Link from 'next/link'
 import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { ProtocolActivityElement } from './ProtocolActivityElement'
@@ -16,26 +15,12 @@ import { translateEventDataToProtocolPresenter } from './utils/translateEventDat
 const PAGE_SIZE = 20
 const POLL_INTERVAL = 30000 // 30 seconds
 
-type NetworkType = 'testnet' | 'mainnet'
-
-// Always default to mainnet first
-const defaultNetwork: NetworkType = 'mainnet'
-
 export function ProtocolActivityList() {
-  const [network, setNetwork] = useState<NetworkType>(defaultNetwork)
   const [endCursor, setEndCursor] = useState<string | null>(null)
-
-  // Select client based on network toggle
-  const client = network === 'testnet' ? testnetBendystrawClient : mainnetBendystrawClient
-
-  // Reset cursor when network changes
-  React.useEffect(() => {
-    setEndCursor(null)
-  }, [network])
 
   // Query protocol activity (no chain filter)
   const { data: activityEvents, loading, error } = useActivityEventsQuery({
-    client,
+    client: mainnetBendystrawClient,
     pollInterval: POLL_INTERVAL, // Poll every 30 seconds
     variables: {
       where: {},
@@ -65,31 +50,6 @@ export function ProtocolActivityList() {
         <h2 className="mb-4 font-heading text-2xl font-medium">
           Protocol Activity
         </h2>
-        {/* Network Toggle */}
-        <div className="mb-4 flex gap-2">
-          <button
-            onClick={() => setNetwork('mainnet')}
-            className={twMerge(
-              'rounded-md px-4 py-2 text-sm font-medium transition-colors',
-              network === 'mainnet'
-                ? 'bg-bluebs-500 text-white'
-                : 'bg-smoke-100 text-grey-600 hover:bg-smoke-200 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600',
-            )}
-          >
-            Mainnet
-          </button>
-          <button
-            onClick={() => setNetwork('testnet')}
-            className={twMerge(
-              'rounded-md px-4 py-2 text-sm font-medium transition-colors',
-              network === 'testnet'
-                ? 'bg-bluebs-500 text-white'
-                : 'bg-smoke-100 text-grey-600 hover:bg-smoke-200 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600',
-            )}
-          >
-            Testnet
-          </button>
-        </div>
       </div>
       <div className="flex-1 overflow-y-auto px-6">
         <div className="flex flex-col gap-3">

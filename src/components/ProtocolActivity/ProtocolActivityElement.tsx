@@ -62,17 +62,17 @@ export function ProtocolActivityElement({
           />
         </div>
 
-        {/* Row 2: Action Label + Amount */}
-        <div className="flex items-baseline gap-2 mb-1">
-          <span className="text-sm text-grey-600 dark:text-grey-400 capitalize">
-            {header}
-          </span>
-          <div className="font-heading text-lg whitespace-nowrap">
-            {subject}
-          </div>
+        {/* Row 2: Action Label */}
+        <div className="text-sm text-grey-600 dark:text-grey-400 capitalize mb-1">
+          {header}
         </div>
 
-        {/* Row 3: Timestamp + From Address */}
+        {/* Row 3: Amount */}
+        <div className="font-heading text-lg whitespace-nowrap mb-1">
+          {subject}
+        </div>
+
+        {/* Row 4: Timestamp + From Address */}
         <div className="flex items-center gap-2 text-xs text-grey-500 dark:text-grey-500">
           <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
           <span>·</span>

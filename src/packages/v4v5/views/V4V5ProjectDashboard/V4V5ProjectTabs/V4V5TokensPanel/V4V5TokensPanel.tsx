@@ -29,7 +29,7 @@ import { V4V5ReservedTokensSubPanel } from './V4V5ReservedTokensSubPanel'
 import { V4V5TokenRedemptionCallout } from './V4V5TokenRedemptionCallout'
 
 export const V4V5TokensPanel = forwardRef<HTMLDivElement>((props, ref) => {
-  const { userTokenBalanceLoading, projectToken, totalTokenSupplyElement } =
+  const { userTokenBalanceLoading, projectToken, totalTokenSupplyElement, hasNoTokens } =
     useV4V5TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
   const { data: suckersBalance } = useSuckersUserTokenBalance()
@@ -94,6 +94,17 @@ export const V4V5TokensPanel = forwardRef<HTMLDivElement>((props, ref) => {
       </Tooltip>
     )
   }, [totalBalance, suckersBalance, projectToken])
+
+  if (hasNoTokens) {
+    return (
+      <div ref={ref} className="flex w-full flex-col items-stretch gap-5">
+        <div className="flex w-full flex-1 items-center justify-between">
+          <h2 className="font-heading text-2xl font-medium">Tokens</h2>
+        </div>
+        <span className="text-grey-500 dark:text-slate-200">None</span>
+      </div>
+    )
+  }
 
   return (
     <>

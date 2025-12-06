@@ -25,7 +25,7 @@ import { ActivityEvent } from './activityEventElems/ActivityElement'
 
 const PAGE_SIZE = 10
 
-const IGNORED_EVENTS = ['mintNftEvent']
+const IGNORED_EVENTS = ['mintNftEvent', 'burnEvent']
 
 const baseEventFilter = IGNORED_EVENTS.reduce(
   (acc, curr) => ({

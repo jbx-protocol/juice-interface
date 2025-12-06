@@ -14,6 +14,14 @@ import { translateEventDataToProtocolPresenter } from './utils/translateEventDat
 
 const PAGE_SIZE = 20
 const POLL_INTERVAL = 30000 // 30 seconds
+const IGNORED_EVENTS = ['mintNftEvent', 'burnEvent']
+const baseEventFilter = IGNORED_EVENTS.reduce(
+  (acc, curr) => ({
+    ...acc,
+    [curr]: null,
+  }),
+  {},
+)
 
 export function ProtocolActivityList() {
   const [endCursor, setEndCursor] = useState<string | null>(null)
@@ -23,7 +31,7 @@ export function ProtocolActivityList() {
     client: mainnetBendystrawClient,
     pollInterval: POLL_INTERVAL, // Poll every 30 seconds
     variables: {
-      where: {},
+      where: baseEventFilter,
       orderBy: 'timestamp',
       orderDirection: 'desc',
       after: endCursor,

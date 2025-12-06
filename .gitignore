@@ -44,3 +44,5 @@ src/generated
 
 .vercel
 .env*.local
+
+CLAUDE.md

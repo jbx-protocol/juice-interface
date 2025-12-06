@@ -22,6 +22,9 @@ import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20T
 import { useV4V5IssueErc20TokenTx } from 'packages/v4v5/hooks/useV4V5IssueErc20TokenTx'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
+import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
+import QueueSafeDeployErc20TxsModal from './components/QueueSafeDeployErc20TxsModal'
 
 export function CreateErc20TokenSettingsPage() {
   const [form] = Form.useForm<IssueErc20TokenTxArgs>()
@@ -29,6 +32,7 @@ export function CreateErc20TokenSettingsPage() {
   const [transactionModalOpen, setTransactionModalOpen] =
     useState<boolean>(false)
   const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
+  const [safeModalOpen, setSafeModalOpen] = useState<boolean>(false)
 
   const router = useRouter()
   const chainId = useJBChainId()
@@ -51,6 +55,11 @@ export function CreateErc20TokenSettingsPage() {
   const { sendRelayrTx } = useSendRelayrTx()
   const { projectId: _singleChainProjectId } = useJBContractContext() // still used for single-chain flow
   const { data: suckers } = useSuckers()
+
+  // Safe detection
+  const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
+  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress, Number(chainId))
+  const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
 
   const chainIds = useMemo(
     () => suckers?.map(s => s.peerChainId) ?? [],
@@ -108,6 +117,19 @@ export function CreateErc20TokenSettingsPage() {
   }
 
   async function onLaunchMulti() {
+    // Validate form first
+    try {
+      await form.validateFields()
+    } catch {
+      return
+    }
+
+    // Check if project owner is Safe - route to Safe modal
+    if (isProjectOwnerGnosisSafe) {
+      setSafeModalOpen(true)
+      return
+    }
+
     if (!txQuoteResponse) {
       // get quote first
       await getMultiChainQuote()
@@ -266,7 +288,7 @@ export function CreateErc20TokenSettingsPage() {
             </div>
           ): null}
           <Button type="primary" onClick={onLaunchMulti} loading={confirmLoading || txSigning || txQuoteLoading}>
-            {txQuote ? <>{<Trans>Launch ERC-20</Trans>}</> : <Trans>Get quote</Trans>}
+            {isProjectOwnerGnosisSafe ? <Trans>Launch ERC-20</Trans> : txQuote ? <Trans>Launch ERC-20</Trans> : <Trans>Get quote</Trans>}
           </Button>
         </div>
       </div>
@@ -321,6 +343,16 @@ export function CreateErc20TokenSettingsPage() {
           </Button>
         </div>
       </Modal>
+
+      <QueueSafeDeployErc20TxsModal
+        open={safeModalOpen}
+        onCancel={() => setSafeModalOpen(false)}
+        onSuccess={() => {
+          setSafeModalOpen(false)
+          setSuccessModalOpen(true)
+        }}
+        form={form}
+      />
     </>
   )
 }

@@ -1226,6 +1226,9 @@ msgstr ""
 msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension."
 msgstr ""
 
+msgid "Queue Safe ERC-20 Deploy Transactions"
+msgstr ""
+
 msgid "Total:"
 msgstr ""
 
@@ -1682,6 +1685,9 @@ msgstr ""
 msgid "Reserved recipients:"
 msgstr ""
 
+msgid "Beginner Friendly"
+msgstr ""
+
 msgid "Transfer ownership"
 msgstr ""
 
@@ -1746,6 +1752,9 @@ msgid "Version of the terminal contract used by this project."
 msgstr ""
 
 msgid "This cycle's payouts"
+msgstr ""
+
+msgid "Since your project owner is a Gnosis Safe and this is an omnichain project, you need to queue separate ERC-20 deploy transactions on each chain."
 msgstr ""
 
 msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
@@ -2090,6 +2099,9 @@ msgstr ""
 msgid "allocation"
 msgstr ""
 
+msgid "Token credits"
+msgstr ""
+
 msgid "This project's rules may pose risks for contributors:"
 msgstr ""
 
@@ -2121,6 +2133,9 @@ msgid "You can safely close this modal."
 msgstr ""
 
 msgid "Edit NFTs"
+msgstr ""
+
+msgid "Confirm archive"
 msgstr ""
 
 msgid "{tokenSymbol} ERC-20 address"
@@ -2610,6 +2625,9 @@ msgid "Send {tokenTextPlural}"
 msgstr ""
 
 msgid "reserved token recipient"
+msgstr ""
+
+msgid "Cashing out tokens"
 msgstr ""
 
 msgid "Controller configuration"
@@ -4443,6 +4461,9 @@ msgid "Locked cycles"
 msgstr ""
 
 msgid "Simple token rules that will work for most projects. You can edit these rules in future cycles."
+msgstr ""
+
+msgid "Confirm unarchive"
 msgstr ""
 
 msgid "Start"

@@ -58,7 +58,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       ? `${currentTotalIssuanceRateFormatted} ${tokenSymbol}/${currencySymbol}`
       : undefined
 
-    if (upcomingRuleset === null || upcomingRulesetLoading) {
+    if (upcomingRuleset == null || upcomingRulesetLoading) {
       return pairToDatum(t`Total issuance rate`, current, null)
     }
 
@@ -95,8 +95,8 @@ export const useV4V5FormatConfigurationTokenSection = ({
       : undefined
 
     if (
-      upcomingRuleset === null ||
-      upcomingRulesetMetadata === null ||
+      upcomingRuleset == null ||
+      upcomingRulesetMetadata == null ||
       upcomingRulesetLoading
     ) {
       return pairToDatum(t`Payer issuance rate`, current, null)
@@ -129,7 +129,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
     const current = rulesetMetadata?.reservedPercent
       ? `${rulesetMetadata.reservedPercent.formatPercentage()}%`
       : undefined
-    if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
+    if (upcomingRulesetMetadata == null || upcomingRulesetLoading) {
       return pairToDatum(t`Reserved rate`, current, null)
     }
 
@@ -146,7 +146,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       ? `${ruleset.weightCutPercent.formatPercentage()}%`
       : undefined
 
-    if (upcomingRuleset === null || upcomingRulesetLoading) {
+    if (upcomingRuleset == null || upcomingRulesetLoading) {
       return pairToDatum(t`Issuance cut percent`, current, null)
     }
     const queued = upcomingRuleset
@@ -165,7 +165,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       ? `${currentRedemptionRate}%`
       : undefined
 
-    if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
+    if (upcomingRulesetMetadata == null || upcomingRulesetLoading) {
       return pairToDatum(t`Cash out tax rate`, current, null)
     }
 
@@ -182,7 +182,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       rulesetMetadata?.allowOwnerMinting !== undefined
         ? rulesetMetadata?.allowOwnerMinting
         : undefined
-    if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
+    if (upcomingRulesetMetadata == null || upcomingRulesetLoading) {
       return flagPairToDatum(
         t`Owner token minting`,
         currentOwnerTokenMinting,
@@ -213,7 +213,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       rulesetMetadata?.pauseCreditTransfers !== undefined
         ? !rulesetMetadata?.pauseCreditTransfers
         : undefined
-    if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
+    if (upcomingRulesetMetadata == null || upcomingRulesetLoading) {
       return flagPairToDatum(
         t`Token transfers`,
         !!currentTokenTransfersDatum,

@@ -5,6 +5,7 @@ import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import { useWallet } from 'hooks/Wallet'
 import { Address } from 'viem'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
+import { estimateContractGasWithFallback, OMNICHAIN_GAS_FALLBACKS } from '../utils/estimateOmnichainGas'
 
 export function useDeployOmnichainErc20() {
   const { userAddress } = useWallet()
@@ -23,41 +24,46 @@ export function useDeployOmnichainErc20() {
     },
     chainIds: JBChainId[],
   ) {
-    if (!userAddress) return
+    if (!userAddress || !projectControllerAddress) return
 
-    const relayrTransactions = chainIds.map(chainId => {
-      const args = deployData[chainId]
-      let encoded
-      if (!args) throw new Error('No deploy data for chain ' + chainId)
-      
-        if (version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]) {
-        // Use v4.1 controller ABI
-        encoded = encodeFunctionData({
-          abi: jbController4_1Abi,
+    const relayrTransactions = await Promise.all(
+      chainIds.map(async chainId => {
+        const args = deployData[chainId]
+        if (!args) throw new Error('No deploy data for chain ' + chainId)
+
+        const useV41Abi = version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
+        const abi = useV41Abi ? jbController4_1Abi : jbControllerAbi
+
+        const to = projectControllerAddress as Address
+
+        const gas = await estimateContractGasWithFallback({
+          chainId,
+          contractAddress: to,
+          abi,
+          functionName: 'deployERC20For',
+          args,
+          userAddress,
+          fallbackGas: OMNICHAIN_GAS_FALLBACKS.DEPLOY_ERC20,
+        })
+
+        const encoded = encodeFunctionData({
+          abi,
           functionName: 'deployERC20For',
           args,
         })
-      } else {
-        // Use v4 controller ABI
-        encoded = encodeFunctionData({
-          abi: jbControllerAbi,
-          functionName: 'deployERC20For',
-          args,
-        })
-      }
 
-      const to = projectControllerAddress as Address
-      return {
-        data: {
-          from: userAddress,
-          to,
-          value: 0n,
-          gas: 300_000n * BigInt(chainIds.length),
-          data: encoded,
-        },
-        chainId,
-      }
-    })
+        return {
+          data: {
+            from: userAddress,
+            to,
+            value: 0n,
+            gas,
+            data: encoded,
+          },
+          chainId,
+        }
+      })
+    )
 
     return getRelayrTxQuote(relayrTransactions)
   }

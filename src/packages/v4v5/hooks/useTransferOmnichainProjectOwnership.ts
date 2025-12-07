@@ -4,6 +4,7 @@ import { Address, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
+import { estimateContractGasWithFallback, OMNICHAIN_GAS_FALLBACKS } from '../utils/estimateOmnichainGas'
 
 export function useTransferOmnichainProjectOwnership() {
   const { userAddress } = useWallet()
@@ -23,33 +24,47 @@ export function useTransferOmnichainProjectOwnership() {
       }
     },
     chainIds: JBChainId[],
-  ) {    
+  ) {
     if (!userAddress) {
       return
     }
 
-    const relayrTransactions = chainIds.map(chainId => {
-      const args = transferData[chainId]
-      if (!args) throw new Error('No transfer data for chain ' + chainId)
-      
-      const encoded = encodeFunctionData({
-        abi: jbProjectsAbi,
-        functionName: 'safeTransferFrom',
-        args: [args.from, args.to, args.tokenId],
+    const relayrTransactions = await Promise.all(
+      chainIds.map(async chainId => {
+        const transferArgs = transferData[chainId]
+        if (!transferArgs) throw new Error('No transfer data for chain ' + chainId)
+
+        const args = [transferArgs.from, transferArgs.to, transferArgs.tokenId] as const
+        const to = jbContractAddress[versionString][JBCoreContracts.JBProjects][chainId] as Address
+
+        const gas = await estimateContractGasWithFallback({
+          chainId,
+          contractAddress: to,
+          abi: jbProjectsAbi,
+          functionName: 'safeTransferFrom',
+          args,
+          userAddress,
+          fallbackGas: OMNICHAIN_GAS_FALLBACKS.TRANSFER_OWNERSHIP,
+        })
+
+        const encoded = encodeFunctionData({
+          abi: jbProjectsAbi,
+          functionName: 'safeTransferFrom',
+          args,
+        })
+
+        return {
+          data: {
+            from: userAddress,
+            to,
+            value: 0n,
+            gas,
+            data: encoded,
+          },
+          chainId,
+        }
       })
-      
-      const to = jbContractAddress[versionString][JBCoreContracts.JBProjects][chainId] as Address
-      return {
-        data: {
-          from: userAddress,
-          to,
-          value: 0n,
-          gas: 300_000n * BigInt(chainIds.length),
-          data: encoded,
-        },
-        chainId,
-      }
-    })
+    )
 
     const result = await getRelayrTxQuote(relayrTransactions)
     return result

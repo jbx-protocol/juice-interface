@@ -1,6 +1,5 @@
 import {
   createSalt,
-  JB721HookContracts,
   jb721TiersHookProjectDeployerAbi,
   JBChainId,
   jbContractAddress,
@@ -18,6 +17,7 @@ import {
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
+import { estimateContractGasWithFallback, OMNICHAIN_GAS_FALLBACKS } from 'packages/v4v5/utils/estimateOmnichainGas'
 
 export function useDeployOmnichainProject() {
   const { userAddress } = useWallet()
@@ -40,54 +40,68 @@ export function useDeployOmnichainProject() {
     }
     const salt = createSalt()
 
-    const relayrTransactions = chainIds.map(chainId => {
-      const suckerDeploymentConfiguration = parseSuckerDeployerConfig(
-        chainId,
-        chainIds,
-      )
+    const relayrTransactions = await Promise.all(
+      chainIds.map(async chainId => {
+        const suckerDeploymentConfiguration = parseSuckerDeployerConfig(
+          chainId,
+          chainIds,
+        )
 
-      const chainDeployData = deployData[chainId]
-      if (!chainDeployData) {
-        throw new Error('No deploy data for chain: ' + chainId)
-      }
+        const chainDeployData = deployData[chainId]
+        if (!chainDeployData) {
+          throw new Error('No deploy data for chain: ' + chainId)
+        }
 
-      const args = [
-        chainDeployData[0],
-        chainDeployData[1],
-        chainDeployData[2],
-        chainDeployData[3],
-        chainDeployData[4],
-        {
-          deployerConfigurations:
-            suckerDeploymentConfiguration.deployerConfigurations,
-          salt,
-        },
-      ] as const
+        const baseArgs = [
+          chainDeployData[0],
+          chainDeployData[1],
+          chainDeployData[2],
+          chainDeployData[3],
+          chainDeployData[4],
+          {
+            deployerConfigurations:
+              suckerDeploymentConfiguration.deployerConfigurations,
+            salt,
+          },
+        ] as const
 
-      // Always use v5 JBController
-      const controllerAddress = jbContractAddress['5'][JBCoreContracts.JBController][chainId]
-      const encodedData = encodeFunctionData({
-        abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
-        functionName: 'launchProjectFor',
-        args: [...args, controllerAddress as `0x${string}`],
+        // Always use v5 JBController
+        const controllerAddress = jbContractAddress['5'][JBCoreContracts.JBController][chainId]
+        const args = [...baseArgs, controllerAddress as `0x${string}`] as const
+
+        // Always use v5 JBOmnichainDeployer
+        const omnichainDeployerAddress = jbContractAddress['5'][
+          JBOmnichainDeployerContracts.JBOmnichainDeployer
+        ][chainId] as `0x${string}`
+
+        const gas = await estimateContractGasWithFallback({
+          chainId,
+          contractAddress: omnichainDeployerAddress,
+          abi: jbOmnichainDeployer4_1Abi,
+          functionName: 'launchProjectFor',
+          args,
+          userAddress,
+          fallbackGas: OMNICHAIN_GAS_FALLBACKS.LAUNCH_PROJECT,
+        })
+
+        const encodedData = encodeFunctionData({
+          abi: jbOmnichainDeployer4_1Abi,
+          functionName: 'launchProjectFor',
+          args,
+        })
+
+        return {
+          data: {
+            from: userAddress,
+            to: omnichainDeployerAddress,
+            value: 0n,
+            gas,
+            data: encodedData,
+          },
+          chainId,
+        }
       })
-
-
-      // Always use v5 JBOmnichainDeployer
-      const omnichainDeployerAddress = jbContractAddress['5'][
-        JBOmnichainDeployerContracts.JBOmnichainDeployer
-      ][chainId]
-      return {
-        data: {
-          from: userAddress,
-          to: omnichainDeployerAddress as `0x${string}`,
-          value: 0n,
-          gas: 1_000_000n * BigInt(chainIds.length),
-          data: encodedData,
-        },
-        chainId,
-      }
-    })
+    )
 
     return await getRelayrTxQuote(relayrTransactions)
   }
@@ -108,52 +122,64 @@ export function useDeployOmnichainProject() {
 
     const salt = createSalt()
 
-    const relayrTransactions = chainIds.map(chainId => {
-      const suckerDeploymentConfiguration = parseSuckerDeployerConfig(
-        chainId,
-        chainIds,
-      )
+    const relayrTransactions = await Promise.all(
+      chainIds.map(async chainId => {
+        const suckerDeploymentConfiguration = parseSuckerDeployerConfig(
+          chainId,
+          chainIds,
+        )
 
-      const chainDeployData = deployData[chainId]
-      if (!chainDeployData) {
-        throw new Error('No deploy data for chain: ' + chainId)
-      }
+        const chainDeployData = deployData[chainId]
+        if (!chainDeployData) {
+          throw new Error('No deploy data for chain: ' + chainId)
+        }
 
-      const args = [
-        chainDeployData[0],
-        chainDeployData[1],
-        chainDeployData[2],
-        salt,
-        {
-          deployerConfigurations:
-            suckerDeploymentConfiguration.deployerConfigurations,
+        const args = [
+          chainDeployData[0],
+          chainDeployData[1],
+          chainDeployData[2],
           salt,
-        },
-        jbContractAddress['5'][JBCoreContracts.JBController][chainId] as `0x${string}`, // all chains use the same controller
-      ] as const
+          {
+            deployerConfigurations:
+              suckerDeploymentConfiguration.deployerConfigurations,
+            salt,
+          },
+          jbContractAddress['5'][JBCoreContracts.JBController][chainId] as `0x${string}`,
+        ] as const
 
-      const encodedData = encodeFunctionData({
-        abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
-        functionName: 'launch721ProjectFor',
-        args,
+        // Always use v5 JBOmnichainDeployer
+        const omnichainDeployerAddress = jbContractAddress['5'][
+          JBOmnichainDeployerContracts.JBOmnichainDeployer
+        ][chainId] as `0x${string}`
+
+        const gas = await estimateContractGasWithFallback({
+          chainId,
+          contractAddress: omnichainDeployerAddress,
+          abi: jbOmnichainDeployer4_1Abi,
+          functionName: 'launch721ProjectFor',
+          args,
+          userAddress,
+          fallbackGas: OMNICHAIN_GAS_FALLBACKS.LAUNCH_NFT_PROJECT,
+        })
+
+        const encodedData = encodeFunctionData({
+          abi: jbOmnichainDeployer4_1Abi,
+          functionName: 'launch721ProjectFor',
+          args,
+        })
+
+        return {
+          data: {
+            from: userAddress,
+            to: omnichainDeployerAddress,
+            value: 0n,
+            gas,
+            data: encodedData,
+          },
+          chainId,
+        }
       })
-
-
-      // Always use v5 JBOmnichainDeployer
-      const omnichainDeployerAddress = jbContractAddress['5'][
-        JBOmnichainDeployerContracts.JBOmnichainDeployer
-      ][chainId]
-      return {
-        data: {
-          from: userAddress,
-          to: omnichainDeployerAddress as `0x${string}`,
-          value: 0n,
-          gas: 3_000_000n * BigInt(chainIds.length), // Bigger mutliple for NFTS. TODO ba5sed might have a better suggestion here.
-          data: encodedData,
-        },
-        chainId,
-      }
-    })
+    )
 
     return await getRelayrTxQuote(relayrTransactions)
   }

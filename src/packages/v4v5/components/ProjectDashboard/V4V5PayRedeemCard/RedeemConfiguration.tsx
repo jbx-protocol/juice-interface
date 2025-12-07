@@ -14,7 +14,7 @@ import { useWriteContract } from 'wagmi'
 
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { EthereumLogo } from './EthereumLogo'
-import Loading from 'components/Loading'
+import Image from 'next/legacy/image'
 import { PayRedeemInput } from './PayRedeemInput'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
@@ -232,9 +232,18 @@ const RedeemModal: React.FC<JuiceModalProps & { redeeming: boolean }> = ({
       <div className="mx-auto flex flex-col items-center justify-center">
         {redeeming ? (
           <>
-            <Loading />
-            <h2 className="mt-8">
-              <Trans>Redeeming tokens</Trans>
+            <Image
+              src="/assets/images/orange-loading.webp"
+              alt={t`Juicebox loading animation`}
+              width={260}
+              height={260}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
+            <h2 className="mt-4 font-heading text-2xl font-medium text-black dark:text-slate-100">
+              <Trans>Cashing out tokens</Trans>
             </h2>
             <div>
               <Trans>Your transaction is processing.</Trans>

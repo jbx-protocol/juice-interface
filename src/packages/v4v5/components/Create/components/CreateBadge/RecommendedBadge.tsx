@@ -7,7 +7,7 @@ export const RecommendedBadge = ({ tooltip }: { tooltip?: ReactNode }) => {
   return (
     <Tooltip title={tooltip}>
       <Badge variant="info" upperCase className="text-xs">
-        <Trans>Recommended</Trans>
+        <Trans>Beginner Friendly</Trans>
       </Badge>
     </Tooltip>
   )

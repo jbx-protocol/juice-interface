@@ -1,4 +1,4 @@
-import { NATIVE_TOKEN_DECIMALS, getTokenAToBQuote } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, NATIVE_TOKEN_DECIMALS, getTokenAToBQuote } from 'juice-sdk-core'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import {
   useJBRulesetContext,
@@ -7,7 +7,6 @@ import {
 } from 'juice-sdk-react'
 
 import { FixedInt } from 'fpnum'
-import { V4V5_CURRENCY_USD } from 'packages/v4v5/utils/currency'
 import { formatUnits } from 'viem'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
@@ -25,13 +24,16 @@ export const useProjectPaymentTokens = (): {
   const { token } = useJBTokenContext()
   const { data: nftCreditsData } = useV4V5UserNftCredits()
   const converter = useCurrencyConverter()
-  
+
+  const baseCurrency = rulesetMetadata.data?.baseCurrency
+  const isUsdBasedProject = baseCurrency !== undefined && baseCurrency !== ETH_CURRENCY_ID
+
   // Calculate effective payment amount after NFT credits (same logic as usePayAmounts)
-  const effectivePayAmountWei: number = (() => {
+  const effectivePayAmountEth: number = (() => {
     if (!payAmount) return 0
 
     const payAmountWei = parseWad(payAmount.amount)
-    
+
     if (!nftCreditsData || !chosenNftRewards.length) {
       return parseFloat(fromWad(payAmountWei))
     }
@@ -49,8 +51,8 @@ export const useProjectPaymentTokens = (): {
     if (cartNftValueWei.eq(0)) return parseFloat(fromWad(payAmountWei))
 
     // Credits can only be applied up to the value of NFTs in cart
-    const maxApplicableCredits = cartNftValueWei.lt(nftCreditsData) 
-      ? cartNftValueWei 
+    const maxApplicableCredits = cartNftValueWei.lt(nftCreditsData)
+      ? cartNftValueWei
       : nftCreditsData
 
     // And only up to the total pay amount
@@ -62,14 +64,19 @@ export const useProjectPaymentTokens = (): {
     return parseFloat(fromWad(totalAfterCredits))
   })()
 
-  if (payAmount?.currency === V4V5_CURRENCY_USD) {
-    // convert to wei first
-    // TODO support usd payments
-  }
+  // For USD-based projects, convert ETH payment to USD value for token calculation
+  // The project's weight is denominated in the base currency (USD), so we need
+  // to express the payment in that currency to calculate correct token issuance
+  const effectivePayAmountInBaseCurrency: number = (() => {
+    if (!isUsdBasedProject || !converter.usdPerEth) {
+      return effectivePayAmountEth
+    }
+    return effectivePayAmountEth * converter.usdPerEth
+  })()
 
-  const amountBQuote = ruleset.data && rulesetMetadata.data && effectivePayAmountWei > 0
+  const amountBQuote = ruleset.data && rulesetMetadata.data && effectivePayAmountInBaseCurrency > 0
     ? getTokenAToBQuote(
-        FixedInt.parse(effectivePayAmountWei.toString(), tokenA.decimals),
+        FixedInt.parse(effectivePayAmountInBaseCurrency.toString(), tokenA.decimals),
         {
           weight: ruleset.data.weight,
           reservedPercent: rulesetMetadata.data.reservedPercent,

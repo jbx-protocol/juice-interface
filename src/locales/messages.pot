@@ -167,6 +167,9 @@ msgstr ""
 msgid "An address"
 msgstr ""
 
+msgid "change"
+msgstr ""
+
 msgid "Activating this option enables running the user's wallet address against OFAC’s Specially Designated Nationals (SDN) list"
 msgstr ""
 
@@ -1091,6 +1094,9 @@ msgstr ""
 msgid "Edit project and cycle rules"
 msgstr ""
 
+msgid "Next cycle"
+msgstr ""
+
 msgid "Your project was successfully created!"
 msgstr ""
 
@@ -1226,6 +1232,9 @@ msgstr ""
 msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension."
 msgstr ""
 
+msgid "Queue Safe ERC-20 Deploy Transactions"
+msgstr ""
+
 msgid "Total:"
 msgstr ""
 
@@ -1263,6 +1272,9 @@ msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
 
 msgid "Project tokens will be minted to the address that made the payment."
+msgstr ""
+
+msgid "You are viewing a past ruleset. This cycle has ended."
 msgstr ""
 
 msgid "Migrate legacy tokens"
@@ -1331,6 +1343,9 @@ msgstr ""
 msgid "Cash outs are disabled when all of the project's ETH is being used for payouts (when payouts are unlimited)."
 msgstr ""
 
+msgid "Started {0}"
+msgstr ""
+
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
@@ -1365,6 +1380,9 @@ msgid "This project has paused payments this cycle."
 msgstr ""
 
 msgid "A fixed amount of ETH can be paid out from your project each ruleset. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token cash outs or use in future rulesets."
+msgstr ""
+
+msgid "Past"
 msgstr ""
 
 msgid "Not able to process fees"
@@ -1682,6 +1700,9 @@ msgstr ""
 msgid "Reserved recipients:"
 msgstr ""
 
+msgid "Beginner Friendly"
+msgstr ""
+
 msgid "Transfer ownership"
 msgstr ""
 
@@ -1746,6 +1767,9 @@ msgid "Version of the terminal contract used by this project."
 msgstr ""
 
 msgid "This cycle's payouts"
+msgstr ""
+
+msgid "Since your project owner is a Gnosis Safe and this is an omnichain project, you need to queue separate ERC-20 deploy transactions on each chain."
 msgstr ""
 
 msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
@@ -2090,6 +2114,9 @@ msgstr ""
 msgid "allocation"
 msgstr ""
 
+msgid "Token credits"
+msgstr ""
+
 msgid "This project's rules may pose risks for contributors:"
 msgstr ""
 
@@ -2121,6 +2148,9 @@ msgid "You can safely close this modal."
 msgstr ""
 
 msgid "Edit NFTs"
+msgstr ""
+
+msgid "Confirm archive"
 msgstr ""
 
 msgid "{tokenSymbol} ERC-20 address"
@@ -2232,6 +2262,9 @@ msgid "{0} days"
 msgstr ""
 
 msgid "Enable reserved tokens"
+msgstr ""
+
+msgid "This project's rules will be locked in place for {rulesetLength}."
 msgstr ""
 
 msgid "Case study"
@@ -2516,6 +2549,9 @@ msgstr ""
 msgid "Not a valid ETH address"
 msgstr ""
 
+msgid "Previous cycle"
+msgstr ""
+
 msgid "{0} after JBX fee"
 msgstr ""
 
@@ -2610,6 +2646,9 @@ msgid "Send {tokenTextPlural}"
 msgstr ""
 
 msgid "reserved token recipient"
+msgstr ""
+
+msgid "Cashing out tokens"
 msgstr ""
 
 msgid "Controller configuration"
@@ -2870,7 +2909,13 @@ msgstr ""
 msgid "Redeem tokens"
 msgstr ""
 
+msgid "Load more cycles..."
+msgstr ""
+
 msgid "Add an on-chain note about this cycle."
+msgstr ""
+
+msgid "Changes from Cycle #{previousCycleNumber}"
 msgstr ""
 
 msgid "Archive project"
@@ -2889,6 +2934,9 @@ msgid "Leave this blank to start your first ruleset immediately after you finish
 msgstr ""
 
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
+msgstr ""
+
+msgid "Loading..."
 msgstr ""
 
 msgid "Approve"
@@ -3575,6 +3623,9 @@ msgstr ""
 msgid "Previous value"
 msgstr ""
 
+msgid "changes"
+msgstr ""
+
 msgid "No chains available for multi-chain deployment"
 msgstr ""
 
@@ -3693,6 +3744,9 @@ msgid "The project's owner can edit the project's rules and start new cycles at 
 msgstr ""
 
 msgid "Reserve 1 NFT of every"
+msgstr ""
+
+msgid "Select cycle"
 msgstr ""
 
 msgid "NFT Projects"
@@ -3975,6 +4029,9 @@ msgid "Cycles & Payouts"
 msgstr ""
 
 msgid "Redeem {tokensLabel} for ETH"
+msgstr ""
+
+msgid "Past ruleset cycle"
 msgstr ""
 
 msgid "Made a mistake?"
@@ -4445,6 +4502,9 @@ msgstr ""
 msgid "Simple token rules that will work for most projects. You can edit these rules in future cycles."
 msgstr ""
 
+msgid "Confirm unarchive"
+msgstr ""
+
 msgid "Start"
 msgstr ""
 
@@ -4554,6 +4614,9 @@ msgid "Manage your project's state and ownership"
 msgstr ""
 
 msgid "ETH"
+msgstr ""
+
+msgid "Ruleset cycle"
 msgstr ""
 
 msgid "The amount of reserved tokens currently available to be distributed to the recipients below."

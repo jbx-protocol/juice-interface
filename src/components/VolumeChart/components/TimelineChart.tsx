@@ -256,7 +256,7 @@ export default function TimelineChart({
             type="monotone"
             dataKey={view}
             activeDot={{ r: 6, fill: colors.juice[400], stroke: undefined }}
-            animationDuration={750}
+            isAnimationActive={false}
           />
         )}
         <Tooltip

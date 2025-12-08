@@ -81,9 +81,9 @@ export const getStaticProps: GetStaticProps<
       props.props.seoProps = {
         title: metadata?.name,
         url: `${SiteBaseUrl}v5/${urn}`,
-        description,
-        image: projectImage,
         twitterCard: 'summary_large_image' as const,
+        ...(description && { description }),
+        ...(projectImage && { image: projectImage }),
         ...(metadata?.twitter && { twitterCreator: metadata.twitter }),
       }
     }

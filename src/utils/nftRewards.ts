@@ -380,7 +380,10 @@ export function buildJB721TierParams({
         if (version === JB721DelegateVersion.JB721DELEGATE_V3_1) {
           return nftRewardTierToJB721TierParamsV3_1(rewardTier, cid)
         }
-        if (version === JB721DelegateVersion.JB721DELEGATE_V4) {
+        if (
+          version === JB721DelegateVersion.JB721DELEGATE_V4 ||
+          version === JB721DelegateVersion.JB721DELEGATE_V5
+        ) {
           return nftRewardTierToJB721TierParamsV4(rewardTier, cid)
         }
 
@@ -391,49 +394,24 @@ export function buildJB721TierParams({
     .slice() // clone object
     .sort((a, b) => {
       // Tiers MUST BE in ascending order when sent to contract.
+      // Determine price property: V3.2+ uses 'price', V3.1 uses 'contributionFloor'
+      const priceA =
+        'price' in a ? a.price : (a as JB_721_TIER_PARAMS_V3_1).contributionFloor
+      const priceB =
+        'price' in b ? b.price : (b as JB_721_TIER_PARAMS_V3_1).contributionFloor
 
-      // bit bongy, sorry!
-      if (
-        version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-        version === JB721DelegateVersion.JB721DELEGATE_V3_3 ||
-        version === JB721DelegateVersion.JB721DELEGATE_V3_4 ||
-        version === JB721DelegateVersion.JB721DELEGATE_V4
-      ) {
-        if (
-          (a as JB_721_TIER_PARAMS_V3_2).price.gt(
-            (b as JB_721_TIER_PARAMS_V3_2).price,
-          )
-        ) {
-          return 1
-        }
-
-        if (
-          (a as JB_721_TIER_PARAMS_V3_2).price.lt(
-            (b as JB_721_TIER_PARAMS_V3_2).price,
-          )
-        ) {
-          return -1
-        }
-
+      // Runtime type check: bigint (V4/V5) vs BigNumber (V3.x)
+      if (typeof priceA === 'bigint' && typeof priceB === 'bigint') {
+        if (priceA > priceB) return 1
+        if (priceA < priceB) return -1
         return 0
       }
 
-      if (
-        (a as JB_721_TIER_PARAMS_V3_1).contributionFloor.gt(
-          (b as JB_721_TIER_PARAMS_V3_1).contributionFloor,
-        )
-      ) {
-        return 1
-      }
-
-      if (
-        (a as JB_721_TIER_PARAMS_V3_1).contributionFloor.lt(
-          (b as JB_721_TIER_PARAMS_V3_1).contributionFloor,
-        )
-      ) {
-        return -1
-      }
-
+      // BigNumber comparison (V3.x)
+      const bnPriceA = priceA as BigNumber
+      const bnPriceB = priceB as BigNumber
+      if (bnPriceA.gt(bnPriceB)) return 1
+      if (bnPriceA.lt(bnPriceB)) return -1
       return 0
     })
 }

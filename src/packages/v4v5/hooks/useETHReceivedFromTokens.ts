@@ -16,11 +16,12 @@ export function useETHReceivedFromTokens(
   const { projectId, contracts, contractAddress } = useJBContractContext()
   const { data: totalSupply } = useReadContract({
     abi: jbTokensAbi,
-    address: contractAddress(JBCoreContracts.JBTokens),
+    address: contractAddress(JBCoreContracts.JBTokens, chainId),
     functionName: 'totalSupplyOf',
     args: [projectId],
+    chainId,
   })
-  const { data: nativeTokenSurplus } = useNativeTokenSurplus()
+  const { data: nativeTokenSurplus } = useNativeTokenSurplus({ chainId })
   const { rulesetMetadata } = useJBRulesetByChain(chainId)
   const { data: tokensReserved } = useReadContract({
     abi: jbControllerAbi,

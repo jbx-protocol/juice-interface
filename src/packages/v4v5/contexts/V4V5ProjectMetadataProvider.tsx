@@ -15,6 +15,7 @@ export default function V4V5ProjectMetadataProvider({
   const { metadata } = useJBProjectMetadataContext()
 
   const projectMetadata = metadata?.data ?? undefined
+  const isLoading = metadata?.isLoading ?? true
 
   const isArchived = false
 
@@ -25,6 +26,7 @@ export default function V4V5ProjectMetadataProvider({
         isArchived,
         projectId: _projectId,
         pv: PV_V4,
+        isLoading,
         refetchProjectMetadata: () => null, // TODO
       }}
     >

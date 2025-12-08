@@ -1,52 +1,81 @@
-import { Tab } from '@headlessui/react'
-import { t } from '@lingui/macro'
-import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
-import { forwardRef, useMemo } from 'react'
-import { useV4V5CurrentUpcomingSubPanel } from '../../hooks/useV4V5CurrentUpcomingSubPanel'
-import { V4V5CurrentUpcomingSubPanel } from './V4V5CurrentUpcomingSubPanel'
+import { Trans } from '@lingui/macro'
+import { useSuckers } from 'juice-sdk-react'
+import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
+import { forwardRef } from 'react'
+import { CycleNavigator } from './components/CycleNavigator'
+import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
+import { CyclesPanelSelectedCycleProvider, useCyclesPanelSelectedCycle } from './contexts/CyclesPanelSelectedCycleContext'
+import { V4V5CycleSubPanel } from './V4V5CycleSubPanel'
 
-type V4V5CyclesSubPanel = {
-  id: 'current' | 'upcoming' | 'history'
-  name: string
-}
+const V4V5CyclesPayoutsPanelContent = forwardRef<HTMLDivElement>((props, ref) => {
+  const {
+    cycleOptions,
+    selectedCycleNumber,
+    selectedCycleStatus,
+    canGoNext,
+    canGoPrevious,
+    totalCycles,
+    hasMoreRulesets,
+    isLoadingMore,
+    goToNextCycle,
+    goToPreviousCycle,
+    jumpToCycle,
+    loadMoreRulesets,
+    isLoading,
+  } = useCyclesPanelSelectedCycle()
 
-export const V4V5CyclesPayoutsPanel = forwardRef<HTMLDivElement>((props, ref) => {
-  const upcomingInfo = useV4V5CurrentUpcomingSubPanel('upcoming')
-  const tabs: V4V5CyclesSubPanel[] = useMemo(() => {
-    // If upcoming ruleset is cycle #1 (scheduled launch), hide "Current"
-    if (!upcomingInfo.loading && upcomingInfo.rulesetNumber === 1) {
-      return [{ id: 'upcoming', name: t`Upcoming` }]
-    }
-    return [
-      { id: 'current', name: t`Current` },
-      { id: 'upcoming', name: t`Upcoming` },
-      // { id: 'history', name: t`History` },
-    ]
-  }, [upcomingInfo.loading, upcomingInfo.rulesetNumber])
+  const { selectedChainId, setSelectedChainId } = useCyclesPanelSelectedChain()
+  const { data: suckers } = useSuckers()
 
   return (
-    <Tab.Group as="div" ref={ref} className="relative flex w-full flex-col gap-5">
-      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-        <h2 className="mb-0 font-heading text-2xl font-medium">Rulesets</h2>
-        {/* ProjectChainSelect is in V4CurrentUpcomingSubPanel */}
-        <Tab.List className="flex gap-2">
-          {tabs.map(tab => (
-            <CyclesTab key={tab.id} name={tab.name} />
-          ))}
-        </Tab.List>
+    <div ref={ref} className="relative flex w-full flex-col gap-5">
+      {/* Row 1: Title + Chain selector */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <h2 className="mb-0 font-heading text-2xl font-medium">
+            <Trans>Rulesets</Trans>
+          </h2>
+          {selectedChainId && suckers && suckers.length > 1 && (
+            <ChainSelect
+              value={selectedChainId}
+              onChange={chainId => setSelectedChainId(chainId)}
+              chainIds={suckers.map(s => s.peerChainId)}
+            />
+          )}
+        </div>
       </div>
-      <Tab.Panels>
-        {tabs.map(tab => (
-          <Tab.Panel key={tab.id} className="outline-none">
-            {tab.id === 'history' ? (
-              <></> //<HistorySubPanel />
-            ) : (
-              <V4V5CurrentUpcomingSubPanel id={tab.id} />
-            )}
-          </Tab.Panel>
-        ))}
-      </Tab.Panels>
-    </Tab.Group>
+
+      {/* Row 2: Cycle Navigator */}
+      {!isLoading && cycleOptions.length > 0 && (
+        <CycleNavigator
+          cycleOptions={cycleOptions}
+          selectedCycleNumber={selectedCycleNumber}
+          selectedCycleStatus={selectedCycleStatus}
+          canGoNext={canGoNext}
+          canGoPrevious={canGoPrevious}
+          totalCycles={totalCycles}
+          hasMoreRulesets={hasMoreRulesets}
+          isLoadingMore={isLoadingMore}
+          onGoNext={goToNextCycle}
+          onGoPrevious={goToPreviousCycle}
+          onJumpToCycle={jumpToCycle}
+          onLoadMore={loadMoreRulesets}
+        />
+      )}
+
+      {/* Cycle content */}
+      <V4V5CycleSubPanel />
+    </div>
+  )
+})
+
+V4V5CyclesPayoutsPanelContent.displayName = 'V4V5CyclesPayoutsPanelContent'
+
+export const V4V5CyclesPayoutsPanel = forwardRef<HTMLDivElement>((props, ref) => {
+  return (
+    <CyclesPanelSelectedCycleProvider>
+      <V4V5CyclesPayoutsPanelContent ref={ref} {...props} />
+    </CyclesPanelSelectedCycleProvider>
   )
 })
 

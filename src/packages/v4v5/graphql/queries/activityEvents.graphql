@@ -27,6 +27,7 @@ query ActivityEvents(
         token
         currency
         decimals
+        version
       }
       payEvent {
         id

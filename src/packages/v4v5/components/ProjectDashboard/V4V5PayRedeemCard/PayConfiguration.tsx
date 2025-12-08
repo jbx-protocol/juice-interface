@@ -128,7 +128,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
               <PayRedeemInput
                 label={t`You pay`}
                 token={{
-                  balance: wallet.balance,
+                  balance: selectedChainBalance?.formatted,
                   image: <EthereumLogo />,
                   ticker: 'ETH',
                   type: 'eth',

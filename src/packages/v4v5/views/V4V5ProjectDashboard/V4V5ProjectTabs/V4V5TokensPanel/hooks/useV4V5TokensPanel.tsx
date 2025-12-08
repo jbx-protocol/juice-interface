@@ -2,7 +2,7 @@ import { JBChainId, JBProjectToken } from 'juice-sdk-core'
 
 import { Tooltip } from 'antd'
 import { NETWORKS } from 'constants/networks'
-import { useJBTokenContext } from 'juice-sdk-react'
+import { useJBRulesetContext, useJBTokenContext } from 'juice-sdk-react'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { useV4V5UserTotalTokensBalance } from 'packages/v4v5/contexts/V4V5UserTotalTokensBalanceProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'
@@ -15,6 +15,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 export const useV4V5TokensPanel = () => {
   const { token } = useJBTokenContext()
   const tokenAddress = token?.data?.address
+  const { ruleset } = useJBRulesetContext()
 
   const { data: _totalTokenSupply } = useV4V5TotalTokenSupply()
 
@@ -87,6 +88,10 @@ export const useV4V5TokensPanel = () => {
 
   const canCreateErc20Token = !projectHasErc20Token && hasDeployErc20Permission
 
+  // Check if project has no tokens: total supply is 0 AND ruleset weight is 0
+  const rulesetWeight = ruleset.data?.weight?.value ?? 0n
+  const hasNoTokens = aggregatedTotalSupply === 0n && rulesetWeight === 0n
+
   return {
     userTokenBalance,
     userTokenBalanceLoading,
@@ -99,5 +104,6 @@ export const useV4V5TokensPanel = () => {
     totalTokenSupplyElement,
     projectHasErc20Token,
     canCreateErc20Token,
+    hasNoTokens,
   }
 }

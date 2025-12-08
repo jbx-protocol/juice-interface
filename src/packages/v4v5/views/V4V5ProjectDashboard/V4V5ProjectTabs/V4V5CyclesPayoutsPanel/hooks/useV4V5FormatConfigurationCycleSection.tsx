@@ -45,7 +45,7 @@ export const useV4V5FormatConfigurationCycleSection = ({
 
   const durationDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentDuration = formatDuration(ruleset?.duration)
-    if (upcomingRuleset === null || upcomingRulesetLoading) {
+    if (upcomingRuleset == null || upcomingRulesetLoading) {
       return pairToDatum(t`Duration`, currentDuration, null)
     }
     const upcomingDuration = formatDuration(
@@ -61,17 +61,15 @@ export const useV4V5FormatConfigurationCycleSection = ({
   const upcomingRulesetStart =
     upcomingRuleset?.start ?? derivedUpcomingRulesetStart
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
-    const formattedTime = Boolean(upcomingRuleset)
-      ? formatTime(upcomingRulesetStart)
-      : formatTime(ruleset?.start)
+    const current = formatTime(ruleset?.start)
 
-    const formatTimeDatum: ConfigurationPanelDatum = {
-      name: t`Start time`,
-      new: formattedTime,
-      easyCopy: true,
+    if (upcomingRuleset == null || upcomingRulesetLoading) {
+      return pairToDatum(t`Start time`, current, null, undefined, true)
     }
-    return formatTimeDatum
-  }, [ruleset?.start, upcomingRuleset, upcomingRulesetStart])
+
+    const upcoming = formatTime(upcomingRulesetStart)
+    return pairToDatum(t`Start time`, current, upcoming, undefined, true)
+  }, [ruleset?.start, upcomingRuleset, upcomingRulesetStart, upcomingRulesetLoading])
 
   const formatPayoutAmount = (
     amount: bigint | undefined,
@@ -92,7 +90,7 @@ export const useV4V5FormatConfigurationCycleSection = ({
     const currentPayout = formatPayoutAmount(amount, currency)
 
     if (
-      upcomingPayoutLimitAmountCurrency === null ||
+      upcomingPayoutLimitAmountCurrency == null ||
       upcomingPayoutLimitLoading
     ) {
       return pairToDatum(t`Payouts`, currentPayout, null)
@@ -121,7 +119,7 @@ export const useV4V5FormatConfigurationCycleSection = ({
         ? getApprovalStrategyByAddress(ruleset.approvalHook, version, chainId)
         : undefined
     const current = currentApprovalStrategy?.name
-    if (upcomingRuleset === null || upcomingPayoutLimitLoading) {
+    if (upcomingRuleset == null || upcomingPayoutLimitLoading) {
       return pairToDatum(t`Rule change deadline`, current, null)
     }
 

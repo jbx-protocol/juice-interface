@@ -27,6 +27,7 @@ export interface Event {
   projectToken?: string | null
   projectCurrency?: string | null
   projectDecimals?: number | null
+  projectVersion?: 4 | 5 | null
   timestamp: number
   txHash: string
   from: string
@@ -168,6 +169,7 @@ function extractBaseEventData(
   projectToken?: string | null,
   projectCurrency?: string | null,
   projectDecimals?: number | null,
+  projectVersion?: 4 | 5 | null,
 ): AnyEvent {
   return {
     // Make type null and set it later
@@ -181,6 +183,7 @@ function extractBaseEventData(
     projectToken,
     projectCurrency,
     projectDecimals,
+    projectVersion,
     timestamp: event.timestamp,
     txHash: event.txHash,
     from: event.from,
@@ -200,6 +203,7 @@ export function transformEventData(
   // Currency appears to be an ID/enum, not the token address
   const projectCurrency = data.project?.currency ? String(data.project.currency) : null
   const projectDecimals = data.project?.decimals ? Number(data.project.decimals) : null
+  const projectVersion = data.project?.version === 4 || data.project?.version === 5 ? data.project.version : null
 
   // Check for aggregated events first
   // TODO: Aggregated event handling - temporarily disabled
@@ -212,7 +216,7 @@ export function transformEventData(
   // Handle individual events
   if (data.payEvent) {
     return {
-      ...extractBaseEventData(data.payEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.payEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'payEvent',
       amount: new Ether(BigInt(data.payEvent.amount)),
@@ -227,7 +231,7 @@ export function transformEventData(
   }
   if (data.addToBalanceEvent) {
     return {
-      ...extractBaseEventData(data.addToBalanceEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.addToBalanceEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'addToBalanceEvent',
       amount: new Ether(BigInt(data.addToBalanceEvent.amount)),
@@ -236,7 +240,7 @@ export function transformEventData(
   }
   if (data.manualMintTokensEvent) {
     return {
-      ...extractBaseEventData(data.manualMintTokensEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.manualMintTokensEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'manualMintTokensEvent',
       amount: new Ether(BigInt(data.manualMintTokensEvent.tokenCount)),
@@ -246,7 +250,7 @@ export function transformEventData(
   }
   if (data.cashOutTokensEvent) {
     return {
-      ...extractBaseEventData(data.cashOutTokensEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.cashOutTokensEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'cashOutEvent',
       metadata: data.cashOutTokensEvent.metadata,
@@ -258,7 +262,7 @@ export function transformEventData(
   }
   if (data.deployErc20Event) {
     return {
-      ...extractBaseEventData(data.deployErc20Event, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.deployErc20Event, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'deployedERC20Event',
       symbol: data.deployErc20Event.symbol,
@@ -267,14 +271,14 @@ export function transformEventData(
   }
   if (data.projectCreateEvent) {
     return {
-      ...extractBaseEventData(data.projectCreateEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.projectCreateEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'projectCreateEvent',
     }
   }
   if (data.sendPayoutsEvent) {
     return {
-      ...extractBaseEventData(data.sendPayoutsEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.sendPayoutsEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'distributePayoutsEvent',
       amount: new Ether(BigInt(data.sendPayoutsEvent.amount)),
@@ -286,7 +290,7 @@ export function transformEventData(
   }
   if (data.sendReservedTokensToSplitsEvent) {
     return {
-      ...extractBaseEventData(data.sendReservedTokensToSplitsEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.sendReservedTokensToSplitsEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'distributeReservedTokensEvent',
       rulesetCycleNumber:
@@ -296,7 +300,7 @@ export function transformEventData(
   }
   if (data.sendReservedTokensToSplitEvent) {
     return {
-      ...extractBaseEventData(data.sendReservedTokensToSplitEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.sendReservedTokensToSplitEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'distributeToReservedTokenSplitEvent',
       tokenCount: data.sendReservedTokensToSplitEvent.tokenCount,
@@ -310,7 +314,7 @@ export function transformEventData(
   }
   if (data.sendPayoutToSplitEvent) {
     return {
-      ...extractBaseEventData(data.sendPayoutToSplitEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.sendPayoutToSplitEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'distributeToPayoutSplitEvent',
       amount: new Ether(BigInt(data.sendPayoutToSplitEvent.amount)),
@@ -323,7 +327,7 @@ export function transformEventData(
   }
   if (data.useAllowanceEvent) {
     return {
-      ...extractBaseEventData(data.useAllowanceEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.useAllowanceEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'useAllowanceEvent',
       rulesetId: BigInt(data.useAllowanceEvent.rulesetId),
@@ -341,7 +345,7 @@ export function transformEventData(
   }
   if (data.manualBurnEvent) {
     return {
-      ...extractBaseEventData(data.manualBurnEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals),
+      ...extractBaseEventData(data.manualBurnEvent, projectName, projectHandle, projectLogoUri, projectToken, projectCurrency, projectDecimals, projectVersion),
       chainId: data.chainId,
       type: 'manualBurnEvent',
       holder: data.manualBurnEvent.from,

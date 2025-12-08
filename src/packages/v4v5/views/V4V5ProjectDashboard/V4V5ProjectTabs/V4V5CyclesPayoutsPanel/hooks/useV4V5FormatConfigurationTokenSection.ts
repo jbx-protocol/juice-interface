@@ -2,7 +2,7 @@ import {
   ConfigurationPanelDatum,
   ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
 
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { formattedNum } from 'utils/format/formatNumber'
@@ -10,6 +10,13 @@ import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { t } from '@lingui/macro'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useMemo } from 'react'
+
+const getCurrencySymbol = (baseCurrency: number | undefined): string => {
+  if (baseCurrency === undefined || baseCurrency === ETH_CURRENCY_ID) {
+    return 'ETH'
+  }
+  return 'USD'
+}
 
 export const useV4V5FormatConfigurationTokenSection = ({
   ruleset,
@@ -32,6 +39,8 @@ export const useV4V5FormatConfigurationTokenSection = ({
     plural: true,
   })
 
+  const currencySymbol = getCurrencySymbol(rulesetMetadata?.baseCurrency)
+
   const weightCutPercentFloat = ruleset?.weightCutPercent.toFloat()
   const currentTotalIssuanceRate = ruleset?.weight.toFloat()
   const currentTotalIssuanceRateFormatted = formattedNum(currentTotalIssuanceRate)
@@ -46,21 +55,22 @@ export const useV4V5FormatConfigurationTokenSection = ({
 
   const totalIssuanceRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const current = currentTotalIssuanceRateFormatted !== undefined
-      ? `${currentTotalIssuanceRateFormatted} ${tokenSymbol}/ETH`
+      ? `${currentTotalIssuanceRateFormatted} ${tokenSymbol}/${currencySymbol}`
       : undefined
 
-    if (upcomingRuleset === null || upcomingRulesetLoading) {
+    if (upcomingRuleset == null || upcomingRulesetLoading) {
       return pairToDatum(t`Total issuance rate`, current, null)
     }
 
     const queued = queuedTotalIssuanceRate !== undefined
-      ? `${queuedTotalIssuanceRateFormatted} ${tokenSymbol}/ETH`
+      ? `${queuedTotalIssuanceRateFormatted} ${tokenSymbol}/${currencySymbol}`
       : undefined
 
     return pairToDatum(t`Total issuance rate`, current, queued)
   }, [
     upcomingRuleset,
     tokenSymbol,
+    currencySymbol,
     queuedTotalIssuanceRate,
     upcomingRulesetLoading,
     currentTotalIssuanceRateFormatted,
@@ -81,12 +91,12 @@ export const useV4V5FormatConfigurationTokenSection = ({
     const currentPayerIssuanceRateFormatted = formattedNum(currentPayerIssuanceRate)
 
     const current = currentPayerIssuanceRate !== undefined
-      ? `${currentPayerIssuanceRateFormatted} ${tokenSymbol}/ETH`
+      ? `${currentPayerIssuanceRateFormatted} ${tokenSymbol}/${currencySymbol}`
       : undefined
 
     if (
-      upcomingRuleset === null ||
-      upcomingRulesetMetadata === null ||
+      upcomingRuleset == null ||
+      upcomingRulesetMetadata == null ||
       upcomingRulesetLoading
     ) {
       return pairToDatum(t`Payer issuance rate`, current, null)
@@ -99,12 +109,13 @@ export const useV4V5FormatConfigurationTokenSection = ({
         : undefined
     const queuedPayerIssuanceRateFormatted = formattedNum(queuedPayerIssuanceRate)
     const queued = queuedPayerIssuanceRate !== undefined
-      ? `${queuedPayerIssuanceRateFormatted} ${tokenSymbol}/ETH`
+      ? `${queuedPayerIssuanceRateFormatted} ${tokenSymbol}/${currencySymbol}`
       : undefined
 
     return pairToDatum(t`Payer issuance rate`, current, queued)
   }, [
     tokenSymbol,
+    currencySymbol,
     upcomingRuleset,
     queuedReservedPercentFloat,
     upcomingRulesetMetadata,
@@ -118,7 +129,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
     const current = rulesetMetadata?.reservedPercent
       ? `${rulesetMetadata.reservedPercent.formatPercentage()}%`
       : undefined
-    if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
+    if (upcomingRulesetMetadata == null || upcomingRulesetLoading) {
       return pairToDatum(t`Reserved rate`, current, null)
     }
 
@@ -135,7 +146,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       ? `${ruleset.weightCutPercent.formatPercentage()}%`
       : undefined
 
-    if (upcomingRuleset === null || upcomingRulesetLoading) {
+    if (upcomingRuleset == null || upcomingRulesetLoading) {
       return pairToDatum(t`Issuance cut percent`, current, null)
     }
     const queued = upcomingRuleset
@@ -154,7 +165,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       ? `${currentRedemptionRate}%`
       : undefined
 
-    if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
+    if (upcomingRulesetMetadata == null || upcomingRulesetLoading) {
       return pairToDatum(t`Cash out tax rate`, current, null)
     }
 
@@ -171,7 +182,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       rulesetMetadata?.allowOwnerMinting !== undefined
         ? rulesetMetadata?.allowOwnerMinting
         : undefined
-    if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
+    if (upcomingRulesetMetadata == null || upcomingRulesetLoading) {
       return flagPairToDatum(
         t`Owner token minting`,
         currentOwnerTokenMinting,
@@ -202,7 +213,7 @@ export const useV4V5FormatConfigurationTokenSection = ({
       rulesetMetadata?.pauseCreditTransfers !== undefined
         ? !rulesetMetadata?.pauseCreditTransfers
         : undefined
-    if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
+    if (upcomingRulesetMetadata == null || upcomingRulesetLoading) {
       return flagPairToDatum(
         t`Token transfers`,
         !!currentTokenTransfersDatum,

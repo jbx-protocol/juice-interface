@@ -1,9 +1,10 @@
-import { JBChainId, createSalt, jbControllerAbi } from 'juice-sdk-core'
+import { JBChainId, jbControllerAbi } from 'juice-sdk-core'
 import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
 
 import { useWallet } from 'hooks/Wallet'
 import { useSuckers } from 'juice-sdk-react'
 import { encodeFunctionData } from 'viem'
+import { estimateContractGasWithFallback, OMNICHAIN_GAS_FALLBACKS } from '../utils/estimateOmnichainGas'
 
 export function useOmnichainEditProjectDetailsTx() {
   const { userAddress } = useWallet()
@@ -18,21 +19,35 @@ export function useOmnichainEditProjectDetailsTx() {
   ) {
     if (!userAddress || !controllerAddress) return
     if (!suckers || suckers.length === 0) throw new Error('No project chains available')
-    const salt = createSalt()
-    const txs = suckers.map(sucker => {
-      const chainId = sucker.peerChainId as JBChainId
-      const projectId = BigInt(sucker.projectId)
-      const encoded = encodeFunctionData({
-        abi: jbControllerAbi,
-        functionName: 'setUriOf',
-        args: [projectId, cid],
+
+    const txs = await Promise.all(
+      suckers.map(async sucker => {
+        const chainId = sucker.peerChainId as JBChainId
+        const projectId = BigInt(sucker.projectId)
+        const args = [projectId, cid] as const
+
+        const gas = await estimateContractGasWithFallback({
+          chainId,
+          contractAddress: controllerAddress as `0x${string}`,
+          abi: jbControllerAbi,
+          functionName: 'setUriOf',
+          args,
+          userAddress,
+          fallbackGas: OMNICHAIN_GAS_FALLBACKS.SET_URI,
+        })
+
+        const encoded = encodeFunctionData({
+          abi: jbControllerAbi,
+          functionName: 'setUriOf',
+          args,
+        })
+        const to = controllerAddress as `0x${string}`
+        return {
+          data: { from: userAddress, to, value: 0n, gas, data: encoded },
+          chainId,
+        }
       })
-      const to = controllerAddress as `0x${string}`
-      return {
-        data: { from: userAddress, to, value: 0n, gas: 200_000n * BigInt(suckers.length), data: encoded },
-        chainId,
-      }
-    })
+    )
     return getRelayrTxQuote(txs)
   }
 

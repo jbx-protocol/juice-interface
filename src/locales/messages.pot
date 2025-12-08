@@ -167,6 +167,9 @@ msgstr ""
 msgid "An address"
 msgstr ""
 
+msgid "change"
+msgstr ""
+
 msgid "Activating this option enables running the user's wallet address against OFAC’s Specially Designated Nationals (SDN) list"
 msgstr ""
 
@@ -1091,6 +1094,9 @@ msgstr ""
 msgid "Edit project and cycle rules"
 msgstr ""
 
+msgid "Next cycle"
+msgstr ""
+
 msgid "Your project was successfully created!"
 msgstr ""
 
@@ -1268,6 +1274,9 @@ msgstr ""
 msgid "Project tokens will be minted to the address that made the payment."
 msgstr ""
 
+msgid "You are viewing a past ruleset. This cycle has ended."
+msgstr ""
+
 msgid "Migrate legacy tokens"
 msgstr ""
 
@@ -1334,6 +1343,9 @@ msgstr ""
 msgid "Cash outs are disabled when all of the project's ETH is being used for payouts (when payouts are unlimited)."
 msgstr ""
 
+msgid "Started {0}"
+msgstr ""
+
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
@@ -1368,6 +1380,9 @@ msgid "This project has paused payments this cycle."
 msgstr ""
 
 msgid "A fixed amount of ETH can be paid out from your project each ruleset. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token cash outs or use in future rulesets."
+msgstr ""
+
+msgid "Past"
 msgstr ""
 
 msgid "Not able to process fees"
@@ -2249,6 +2264,9 @@ msgstr ""
 msgid "Enable reserved tokens"
 msgstr ""
 
+msgid "This project's rules will be locked in place for {rulesetLength}."
+msgstr ""
+
 msgid "Case study"
 msgstr ""
 
@@ -2529,6 +2547,9 @@ msgid "Project cover photo"
 msgstr ""
 
 msgid "Not a valid ETH address"
+msgstr ""
+
+msgid "Previous cycle"
 msgstr ""
 
 msgid "{0} after JBX fee"
@@ -2888,7 +2909,13 @@ msgstr ""
 msgid "Redeem tokens"
 msgstr ""
 
+msgid "Load more cycles..."
+msgstr ""
+
 msgid "Add an on-chain note about this cycle."
+msgstr ""
+
+msgid "Changes from Cycle #{previousCycleNumber}"
 msgstr ""
 
 msgid "Archive project"
@@ -2907,6 +2934,9 @@ msgid "Leave this blank to start your first ruleset immediately after you finish
 msgstr ""
 
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
+msgstr ""
+
+msgid "Loading..."
 msgstr ""
 
 msgid "Approve"
@@ -3593,6 +3623,9 @@ msgstr ""
 msgid "Previous value"
 msgstr ""
 
+msgid "changes"
+msgstr ""
+
 msgid "No chains available for multi-chain deployment"
 msgstr ""
 
@@ -3711,6 +3744,9 @@ msgid "The project's owner can edit the project's rules and start new cycles at 
 msgstr ""
 
 msgid "Reserve 1 NFT of every"
+msgstr ""
+
+msgid "Select cycle"
 msgstr ""
 
 msgid "NFT Projects"
@@ -3993,6 +4029,9 @@ msgid "Cycles & Payouts"
 msgstr ""
 
 msgid "Redeem {tokensLabel} for ETH"
+msgstr ""
+
+msgid "Past ruleset cycle"
 msgstr ""
 
 msgid "Made a mistake?"
@@ -4575,6 +4614,9 @@ msgid "Manage your project's state and ownership"
 msgstr ""
 
 msgid "ETH"
+msgstr ""
+
+msgid "Ruleset cycle"
 msgstr ""
 
 msgid "The amount of reserved tokens currently available to be distributed to the recipients below."

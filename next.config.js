@@ -75,6 +75,8 @@ const IMG_SRC = [
 ]
 
 const CONNECT_SRC = [
+  'https://api.subgraph.migration.ormilabs.com',
+  'https://subgraph.satsuma-prod.com',
   'https://subgraph.satsuma-prod.com',
   'https://testnets.graph-eu.p2pify.com',
   'https://ethereum-mainnet.graph-eu.p2pify.com',

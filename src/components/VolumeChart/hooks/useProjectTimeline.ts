@@ -1,4 +1,4 @@
-import { PV_V2, PV_V4 } from 'constants/pv'
+import { PV_V2, PV_V4, PV_V5 } from 'constants/pv'
 import { useProjectTlQuery, useProjectsQuery } from 'generated/graphql'
 import { useProjectQuery, useSuckerGroupTlQuery } from 'generated/v4v5/graphql'
 import { daysToMS, minutesToMS } from 'utils/units'
@@ -109,14 +109,14 @@ export function useProjectTimeline({
     variables: {
       chainId: chainId || 0,
       projectId,
-      version: parseInt(pv)
+      version: parseInt(pv),
     },
-    skip: pv !== PV_V4 || !chainId || !projectId,
+    skip: (pv !== PV_V4 && pv !== PV_V5) || !chainId || !projectId,
   })
 
-  const { data: v4QueryResult } = useSuckerGroupTlQuery({
+  const { data: v4v5QueryResult } = useSuckerGroupTlQuery({
     client: bendystrawClient,
-    skip: pv !== PV_V4 || !project?.project?.suckerGroupId,
+    skip: (pv !== PV_V4 && pv !== PV_V5) || !project?.project?.suckerGroupId,
     variables: {
       suckerGroupId: project?.project?.suckerGroupId,
       startTimestamp: timestamps?.[0],
@@ -166,15 +166,15 @@ export function useProjectTimeline({
 
   // unlike v1v2v3 points where we always query an arbitrary number of points for a specified time window, we can trust that v4 points only exist where a change has occurred, leaving no need to "fill in the gaps".
   const v4Points: ProjectTimelinePoint[] | undefined = useMemo(() => {
-    if (!v4QueryResult || !timestamps || !project?.project) return
+    if (!v4v5QueryResult || !timestamps || !project?.project) return
 
     // first point before the current timestamp range. If undefined, assume project was created within timestamp range
-    const previous = v4QueryResult.previous.items.length
-      ? v4QueryResult.previous.items[0]
+    const previous = v4v5QueryResult.previous.items.length
+      ? v4v5QueryResult.previous.items[0]
       : undefined
     // last point within the timestamp range
-    const final = v4QueryResult.range.items.length
-      ? v4QueryResult.range.items[v4QueryResult.range.items.length - 1]
+    const final = v4v5QueryResult.range.items.length
+      ? v4v5QueryResult.range.items[v4v5QueryResult.range.items.length - 1]
       : undefined
 
     // extrapolate first point. If project was created before timestamp window, use previous point data. Otherwise use project.createdAt
@@ -205,7 +205,7 @@ export function useProjectTimeline({
 
     return [
       firstPoint,
-      ...v4QueryResult.range.items.map(
+      ...v4v5QueryResult.range.items.map(
         ({ volume, balance, trendingScore, timestamp }) => ({
           timestamp,
           volume: wadToFloat(volume),
@@ -215,7 +215,7 @@ export function useProjectTimeline({
       ),
       lastPoint,
     ]
-  }, [v4QueryResult, timestamps, project?.project])
+  }, [v4v5QueryResult, timestamps, project?.project])
 
   return {
     v1v2v3Points,

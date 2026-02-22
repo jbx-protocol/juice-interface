@@ -4,7 +4,7 @@ import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
-import { PV_V2, PV_V4 } from 'constants/pv'
+import { PV_V2, PV_V4, PV_V5 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { JBChainId } from 'juice-sdk-core'
@@ -65,7 +65,8 @@ export default function TrendingProjectCard({
       prefetch={false}
       key={project.handle}
       href={
-        project.pv === PV_V4 && project.chainIds?.length
+        (project.pv === PV_V4 || project.pv === PV_V5) &&
+        project.chainIds?.length
           ? v4ProjectRoute({
               projectId: project.projectId,
               chainId: project.chainIds[0],
@@ -100,7 +101,7 @@ export default function TrendingProjectCard({
             <Skeleton paragraph={false} title={{ width: 120 }} active />
           )}
 
-          <div className="flex w-full flex-wrap items-center text-black dark:text-slate-100 gap-1">
+          <div className="flex w-full flex-wrap items-center gap-1 text-black dark:text-slate-100">
             <span className="font-medium">
               <ETHAmount amount={project.trendingVolume} />
             </span>
@@ -120,7 +121,7 @@ export default function TrendingProjectCard({
             />
           </div>
 
-          <div className="flex gap-2 mt-2">
+          <div className="mt-2 flex gap-2">
             {project.chainIds ? (
               project.chainIds?.map(c => (
                 <ChainLogo key={c} chainId={c} width={18} height={18} />

@@ -12,7 +12,7 @@ import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
-import { v4ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
 export default function TrendingProjectCard({
@@ -67,9 +67,10 @@ export default function TrendingProjectCard({
       href={
         (project.pv === PV_V4 || project.pv === PV_V5) &&
         project.chainIds?.length
-          ? v4ProjectRoute({
+          ? v4v5ProjectRoute({
               projectId: project.projectId,
               chainId: project.chainIds[0],
+              version: parseInt(project.pv) as 4 | 5,
             })
           : project.pv === PV_V2
           ? v2v3ProjectRoute(project)

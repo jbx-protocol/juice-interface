@@ -29,6 +29,8 @@ export function useProjectTimeline({
 }) {
   const chainId = useJBChainId()
 
+  const isV4V5 = pv === PV_V4 || pv === PV_V5
+
   const exceptionTimestamp = useMemo(() => {
     return RomanStormVariables.PROJECT_ID === projectId
       ? RomanStormVariables.SNAPSHOT_TIMESTAMP
@@ -38,7 +40,7 @@ export function useProjectTimeline({
   const { data: romanStormData } = useProjectsQuery({
     client,
     fetchPolicy: 'no-cache',
-    skip: projectId !== RomanStormVariables.PROJECT_ID || pv === PV_V4,
+    skip: projectId !== RomanStormVariables.PROJECT_ID || isV4V5,
     variables: {
       where: {
         projectId,
@@ -101,7 +103,7 @@ export function useProjectTimeline({
         id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
         ...blocks,
       },
-      skip: pv === PV_V4,
+      skip: isV4V5,
     })
 
   const { data: project } = useProjectQuery({
@@ -111,12 +113,12 @@ export function useProjectTimeline({
       projectId,
       version: parseInt(pv),
     },
-    skip: (pv !== PV_V4 && pv !== PV_V5) || !chainId || !projectId,
+    skip: !isV4V5 || !chainId || !projectId,
   })
 
   const { data: v4v5QueryResult } = useSuckerGroupTlQuery({
     client: bendystrawClient,
-    skip: (pv !== PV_V4 && pv !== PV_V5) || !project?.project?.suckerGroupId,
+    skip: !isV4V5 || !project?.project?.suckerGroupId,
     variables: {
       suckerGroupId: project?.project?.suckerGroupId,
       startTimestamp: timestamps?.[0],
@@ -165,7 +167,7 @@ export function useProjectTimeline({
   ])
 
   // unlike v1v2v3 points where we always query an arbitrary number of points for a specified time window, we can trust that v4 points only exist where a change has occurred, leaving no need to "fill in the gaps".
-  const v4Points: ProjectTimelinePoint[] | undefined = useMemo(() => {
+  const v4v5Points: ProjectTimelinePoint[] | undefined = useMemo(() => {
     if (!v4v5QueryResult || !timestamps || !project?.project) return
 
     // first point before the current timestamp range. If undefined, assume project was created within timestamp range
@@ -219,7 +221,7 @@ export function useProjectTimeline({
 
   return {
     v1v2v3Points,
-    v4Points,
+    v4v5Points,
     loading: isLoadingBlockNumbers || isLoadingQuery,
   }
 }

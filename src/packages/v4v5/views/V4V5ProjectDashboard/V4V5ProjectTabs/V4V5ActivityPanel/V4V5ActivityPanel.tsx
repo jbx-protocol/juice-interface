@@ -2,10 +2,10 @@ import { Trans } from '@lingui/macro'
 import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import Loading from 'components/Loading'
 import VolumeChart from 'components/VolumeChart'
-import { PV_V4 } from 'constants/pv'
 import { useProjectQuery } from 'generated/v4v5/graphql'
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import { PV } from 'models/pv'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { Suspense } from 'react'
 import { V4V5ActivityList } from './V4V5ActivityList'
@@ -20,7 +20,7 @@ export function V4V5ActivityPanel() {
     variables: {
       projectId: Number(projectId),
       chainId: chainId || 0,
-      version: version
+      version: version,
     },
   })
 
@@ -38,7 +38,7 @@ export function V4V5ActivityPanel() {
                 height={240}
                 projectId={Number(projectId)}
                 createdAt={createdAt}
-                pv={PV_V4}
+                pv={version.toString() as PV}
               />
             </ErrorBoundaryCallout>
           </Suspense>

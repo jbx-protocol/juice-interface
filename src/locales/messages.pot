@@ -3770,6 +3770,9 @@ msgstr ""
 msgid "This project has no upcoming ruleset. Its rules can change at any time."
 msgstr ""
 
+msgid "V6"
+msgstr ""
+
 msgid "Select NFTs to redeem"
 msgstr ""
 

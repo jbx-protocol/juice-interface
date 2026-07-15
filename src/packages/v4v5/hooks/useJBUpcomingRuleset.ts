@@ -6,12 +6,12 @@ import {
   RulesetWeight,
   WeightCutPercent,
   jbControllerAbi,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import {
   JBChainId,
   useJBContractContext,
   useJBProjectId,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useReadContract } from 'wagmi'
 
 

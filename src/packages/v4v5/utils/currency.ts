@@ -11,7 +11,7 @@ import {
 } from '../models/v4CurrencyOption'
 
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { USD_CURRENCY_ID } from 'juice-sdk-core'
+import { USD_CURRENCY_ID } from '@bananapus/nana-sdk-core'
 
 export const V4V5_CURRENCY_ETH: V4V5CurrencyETH = 1
 
@@ -20,7 +20,7 @@ export const V4V5_CURRENCY_ETH: V4V5CurrencyETH = 1
  * V4: USD = 3 (due to botched price feed at index 2)
  * V5: USD = 2
  */
-export const getV4V5CurrencyUSD = (version: 4 | 5): V4V5CurrencyUSD => {
+export const getV4V5CurrencyUSD = (version: 4 | 5 | 6): V4V5CurrencyUSD => {
   return USD_CURRENCY_ID(version)
 }
 
@@ -52,7 +52,7 @@ export const V4V5CurrencyName = (
  */
 export const getV4V5CurrencyOption = (
   currencyName: CurrencyName,
-  version: 4 | 5,
+  version: 4 | 5 | 6,
 ): V4V5CurrencyOption =>
   currencyName === 'ETH' ? V4V5_CURRENCY_ETH : getV4V5CurrencyUSD(version)
 
@@ -67,7 +67,7 @@ export const convertV4V5CurrencyOptionToV2V3 = (v4CurrencyOption: V4V5CurrencyOp
 
 export const convertV2V3CurrencyOptionToV4V5 = (
   v2v3CurrencyOption: V2V3CurrencyOption,
-  version: 4 | 5,
+  version: 4 | 5 | 6,
 ): V4V5CurrencyOption => {
   if (v2v3CurrencyOption === V2V3_CURRENCY_ETH) {
     return V4V5_CURRENCY_ETH

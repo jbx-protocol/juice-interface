@@ -14,7 +14,7 @@ import {
   SerializedV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
 
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { CreatePage } from 'models/createPage'
 import { FundingTargetType } from 'models/fundingTargetType'
 import { NftPostPayModalConfig } from 'models/nftPostPayModal'

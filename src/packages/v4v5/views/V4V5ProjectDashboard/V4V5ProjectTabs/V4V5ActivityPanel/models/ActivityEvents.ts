@@ -1,4 +1,4 @@
-import { Ether, JBProjectToken } from 'juice-sdk-core'
+import { Ether, JBProjectToken } from '@bananapus/nana-sdk-core'
 import { Address } from 'viem'
 
 export type PayEvent = {

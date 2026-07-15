@@ -6,7 +6,7 @@ import { availableToPayOutTooltip } from 'components/Project/ProjectTabs/CyclesP
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { TruncatedText } from 'components/TruncatedText'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'

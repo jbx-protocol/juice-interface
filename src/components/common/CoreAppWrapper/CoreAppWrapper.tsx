@@ -87,8 +87,8 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   }, [])
 
   // Check if we're on a project page (v4/v5 projects render their own activity panel)
-  const isProjectPage = router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
-  const isProjectRoute = /^\/(v4|v5)\/[^\/]+/.test(router.asPath)
+  const isProjectPage = router.pathname.startsWith('/v6/') || router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
+  const isProjectRoute = /^\/(v4|v5|v6)\/[^\/]+/.test(router.asPath)
   const showProtocolActivity = !isMobile && !(isProjectPage && isProjectRoute)
 
   return (

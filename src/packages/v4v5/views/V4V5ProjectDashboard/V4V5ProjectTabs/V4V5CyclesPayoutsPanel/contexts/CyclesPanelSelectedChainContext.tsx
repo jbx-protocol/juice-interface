@@ -1,4 +1,4 @@
-import { JBChainId, useJBChainId } from 'juice-sdk-react'
+import { JBChainId, useJBChainId } from '@bananapus/nana-sdk-react'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 type CyclesPanelSelectedChainContextType = {

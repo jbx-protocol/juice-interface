@@ -1,8 +1,8 @@
 import { readContract, waitForTransactionReceipt } from '@wagmi/core'
-import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from 'juice-sdk-core'
+import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from '@bananapus/nana-sdk-core'
 import {
   useSuckers
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useWriteContract } from 'wagmi'
 import { useCallback } from 'react'
 import { Address } from 'viem'
@@ -13,7 +13,7 @@ export function useTransferOwnershipOnChain() {
   const { data: suckers } = useSuckers()
   const { writeContractAsync: safeTransferFromTx } = useWriteContract()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const transferOwnershipOnChain = useCallback(
     async (

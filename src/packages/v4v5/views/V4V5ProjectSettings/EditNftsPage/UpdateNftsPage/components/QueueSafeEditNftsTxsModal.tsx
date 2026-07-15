@@ -1,7 +1,7 @@
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from 'packages/v4v5/hooks/useProposeSafeTransaction'
 
 import { Trans } from '@lingui/macro'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { NftRewardTier } from 'models/nftRewards'
 import QueueSafeTxsModal from 'packages/v4v5/components/QueueSafeTxsModal'
 import { usePopulateNftUpdateTx } from 'packages/v4v5/hooks/usePopulateNftUpdateTx'

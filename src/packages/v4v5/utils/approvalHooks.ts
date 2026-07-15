@@ -5,7 +5,7 @@ import {
 } from 'constants/numbers'
 
 import { t } from '@lingui/macro'
-import { JBChainId, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { JBChainId, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { ApprovalHook } from 'models/approvalHooks'
 import { durationBallotStrategyDescription } from 'packages/v2v3/constants/ballotStrategies'
 import { isEqualAddress } from 'utils/address'
@@ -26,27 +26,29 @@ export const getDefaultCreateFlowChainId = (): JBChainId => {
  * This ensures we get the correct addresses per chain and is future-proof
  * against potential SDK changes where addresses might differ per chain.
  */
-const getApprovalHookAddresses = (version: 4 | 5, chainId: JBChainId) => {
+const getApprovalHookAddresses = (version: 4 | 5 | 6, chainId: JBChainId) => {
   const chainIdKey = String(
     chainId,
   ) as keyof (typeof jbContractAddress)['4'][JBCoreContracts.JBDeadline1Day]
 
   return {
     oneDay:
-      jbContractAddress[String(version) as '4' | '5'][
+      jbContractAddress[String(version) as '4' | '5' | '6'][
         JBCoreContracts.JBDeadline1Day
       ][chainIdKey],
     threeDay:
-      jbContractAddress[String(version) as '4' | '5'][
+      jbContractAddress[String(version) as '4' | '5' | '6'][
         JBCoreContracts.JBDeadline3Days
       ][chainIdKey],
     sevenDay:
-      jbContractAddress[String(version) as '4' | '5'][
+      jbContractAddress[String(version) as '4' | '5' | '6'][
         JBCoreContracts.JBDeadline7Days
       ][chainIdKey],
     threeHour:
-      version === 5
-        ? jbContractAddress['5'][JBCoreContracts.JBDeadline3Hours][chainIdKey]
+      version >= 5
+        ? jbContractAddress[String(version) as '5' | '6'][
+            JBCoreContracts.JBDeadline3Hours
+          ][chainIdKey]
         : undefined,
   }
 }
@@ -62,7 +64,7 @@ const getApprovalHookAddresses = (version: 4 | 5, chainId: JBChainId) => {
  * @param chainId - Optional chainId. If not provided, defaults to environment-based chainId for Create flow
  */
 export const getAvailableApprovalStrategies = (
-  version: 4 | 5,
+  version: 4 | 5 | 6,
   chainId?: JBChainId,
 ): ApprovalHook[] => {
   const resolvedChainId = chainId ?? getDefaultCreateFlowChainId()
@@ -142,7 +144,7 @@ export const createCustomApprovalStrategy = (
  */
 export const getApprovalStrategyByAddress = (
   address: string,
-  version: 4 | 5,
+  version: 4 | 5 | 6,
   chainId?: JBChainId,
 ): ApprovalHook => {
   const resolvedChainId = chainId ?? getDefaultCreateFlowChainId()

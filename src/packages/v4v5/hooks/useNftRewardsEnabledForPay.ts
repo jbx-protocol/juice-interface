@@ -1,4 +1,4 @@
-import { JBRulesetContext, useJBProjectId, useJBRulesetContext, useJBUpcomingRuleset } from 'juice-sdk-react'
+import { JBRulesetContext, useJBProjectId, useJBRulesetContext, useJBUpcomingRuleset } from '@bananapus/nana-sdk-react'
 
 import React from 'react'
 import { useV4V5NftRewards } from '../contexts/V4V5NftRewards/V4V5NftRewardsProvider'

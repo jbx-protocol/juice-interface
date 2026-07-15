@@ -1,5 +1,5 @@
 import { Button, Tooltip } from 'antd'
-import { JB_TOKEN_DECIMALS, NATIVE_TOKEN, jbMultiTerminalAbi } from 'juice-sdk-core'
+import { JB_TOKEN_DECIMALS, NATIVE_TOKEN, jbMultiTerminalAbi } from '@bananapus/nana-sdk-core'
 import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
 import { Trans, t } from '@lingui/macro'
 import { formatEther, parseUnits } from 'viem'
@@ -9,7 +9,7 @@ import {
   useJBContractContext,
   useJBProjectId,
   useJBTokenContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useWriteContract } from 'wagmi'
 
 import { CheckCircleIcon } from '@heroicons/react/24/outline'

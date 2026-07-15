@@ -2,7 +2,7 @@ import * as constants from '@ethersproject/constants'
 
 import { Trans, t } from '@lingui/macro'
 import { Col, Form, Row } from 'antd'
-import { JBChainId, JB_CHAINS } from 'juice-sdk-core'
+import { JBChainId, JB_CHAINS } from '@bananapus/nana-sdk-core'
 import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,

@@ -1,10 +1,10 @@
 import {
   JBChainId
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import {
   useJBProjectId,
   useJBRuleset
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 
 export function useJBRulesetByChain(chainId: JBChainId | undefined) {
   const { projectId } = useJBProjectId(chainId)

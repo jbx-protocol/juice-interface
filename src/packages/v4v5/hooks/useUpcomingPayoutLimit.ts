@@ -1,6 +1,6 @@
 import * as constants from '@ethersproject/constants';
-import { NATIVE_TOKEN, jbFundAccessLimitsAbi } from 'juice-sdk-core';
-import { useJBContractContext } from 'juice-sdk-react';
+import { NATIVE_TOKEN, jbFundAccessLimitsAbi } from '@bananapus/nana-sdk-core';
+import { useJBContractContext } from '@bananapus/nana-sdk-react';
 import { useReadContract } from 'wagmi';
 import { V4V5CurrencyOption } from '../models/v4CurrencyOption';
 import { useJBUpcomingRuleset } from './useJBUpcomingRuleset';

@@ -1,5 +1,5 @@
-import { JBChainId, NATIVE_TOKEN, jbMultiTerminalAbi } from 'juice-sdk-core'
-import { useJBChainId, useJBContractContext, useJBProjectId, useSuckers } from 'juice-sdk-react'
+import { JBChainId, NATIVE_TOKEN, jbMultiTerminalAbi } from '@bananapus/nana-sdk-core'
+import { useJBChainId, useJBContractContext, useJBProjectId, useSuckers } from '@bananapus/nana-sdk-react'
 import { useContext, useState } from 'react'
 import { useWriteContract } from 'wagmi'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'

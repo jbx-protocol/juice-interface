@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
 import { useModal } from 'hooks/useModal'
 
-import { SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { SplitPortion, SPLITS_TOTAL_PERCENT } from '@bananapus/nana-sdk-core'
 import round from 'lodash/round'
 import { amountFromPercent } from 'packages/v4v5/utils/distributions'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'

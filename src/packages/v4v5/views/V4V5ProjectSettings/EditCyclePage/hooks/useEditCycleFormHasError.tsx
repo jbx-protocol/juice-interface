@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
-import { SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { SPLITS_TOTAL_PERCENT } from '@bananapus/nana-sdk-core'
 import { totalSplitsPercent } from 'packages/v4v5/utils/v4Splits'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 

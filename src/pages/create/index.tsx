@@ -28,8 +28,8 @@ const V4V5VersionProvider = dynamic(
 )
 
 export default function CreatePage() {
-  const contentByVersion = featureFlagEnabled(FEATURE_FLAGS.V4) ? (
-    <V4V5VersionProvider defaultVersion={5}>
+  const contentByVersion = featureFlagEnabled(FEATURE_FLAGS.V6) ? (
+    <V4V5VersionProvider defaultVersion={6}>
       <V4V5Create />
     </V4V5VersionProvider>
   ) : (

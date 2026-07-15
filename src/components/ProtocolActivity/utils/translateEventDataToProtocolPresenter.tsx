@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
-import { USDC_ADDRESSES } from 'juice-sdk-core'
+import { USDC_ADDRESSES } from '@bananapus/nana-sdk-core'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { AnyEvent } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/utils/transformEventsData'
 import { formatActivityAmount } from 'utils/format/formatActivityAmount'

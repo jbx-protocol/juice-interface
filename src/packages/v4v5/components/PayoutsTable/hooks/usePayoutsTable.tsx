@@ -1,7 +1,7 @@
 import * as constants from '@ethersproject/constants'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ONE_BILLION, WAD_DECIMALS } from 'constants/numbers'
-import { SPLITS_TOTAL_PERCENT, JBSplit as Split, SplitPortion } from 'juice-sdk-core'
+import { SPLITS_TOTAL_PERCENT, JBSplit as Split, SplitPortion } from '@bananapus/nana-sdk-core'
 import isEqual from 'lodash/isEqual'
 import round from 'lodash/round'
 import { AddEditAllocationModalEntity } from 'packages/v4v5/components/Allocation/AddEditAllocationModal'

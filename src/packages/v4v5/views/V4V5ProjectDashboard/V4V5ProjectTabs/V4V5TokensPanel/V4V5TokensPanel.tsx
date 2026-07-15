@@ -1,11 +1,11 @@
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { JBChainId, JB_TOKEN_DECIMALS, formatUnits } from 'juice-sdk-core'
+import { JBChainId, JB_TOKEN_DECIMALS, formatUnits } from '@bananapus/nana-sdk-core'
 import {
   useJBChainId,
   useJBContractContext,
   useSuckersUserTokenBalance,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { forwardRef, useMemo } from 'react'
 
 import { SettingOutlined } from '@ant-design/icons'

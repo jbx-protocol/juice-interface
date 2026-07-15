@@ -1,4 +1,4 @@
-import { JBRulesetData, JBRulesetMetadata, jb721TiersHookStoreAbi } from 'juice-sdk-core'
+import { JBRulesetData, JBRulesetMetadata, jb721TiersHookStoreAbi } from '@bananapus/nana-sdk-core'
 import { JB721GovernanceType, NftCollectionMetadata, NftRewardTier } from 'models/nftRewards'
 import { Address, ContractFunctionReturnType } from 'viem'
 import { NftPricingContext } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'

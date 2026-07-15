@@ -6,7 +6,7 @@ import {
   TrendingProjectsDocument,
   TrendingProjectsQuery,
 } from 'generated/graphql'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { serverClient } from 'lib/apollo/serverClient'
 import { DBProjectsAggregateRow } from 'models/dbProject'

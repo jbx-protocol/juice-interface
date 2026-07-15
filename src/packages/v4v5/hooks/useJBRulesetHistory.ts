@@ -1,5 +1,5 @@
-import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
-import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+import { JBRulesetData, JBRulesetMetadata } from '@bananapus/nana-sdk-core'
+import { useJBProjectId, useJBRuleset } from '@bananapus/nana-sdk-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useJBAllRulesetsCrossChain, RulesetWithMetadata } from './useJBAllRulesetsCrossChain'
 import { useJBUpcomingRuleset } from './useJBUpcomingRuleset'

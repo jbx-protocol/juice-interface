@@ -1,6 +1,6 @@
 import { Button, Modal } from 'antd'
-import { useJBChainId, useJBProjectId } from 'juice-sdk-react'
-import { settingsPagePath, v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
+import { useJBChainId, useJBProjectId } from '@bananapus/nana-sdk-react'
+import { settingsPagePath, v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
@@ -47,10 +47,11 @@ export function TransactionSuccessModal({
               <Trans>Back to settings</Trans>
             </Button>
           </Link>
-          <Link href={version === 5
-            ? v5ProjectRoute({ projectId: Number(projectId), chainId })
-            : v4ProjectRoute({ projectId: Number(projectId), chainId })
-          }>
+          <Link href={v4v5ProjectRoute({
+            projectId: Number(projectId),
+            chainId,
+            version,
+          })}>
             <Button type="primary" className={buttonClasses}>
               <Trans>Go to project</Trans>
             </Button>

@@ -1,4 +1,4 @@
-import { useJBRulesetContext } from "juice-sdk-react"
+import { useJBRulesetContext } from "@bananapus/nana-sdk-react"
 import { zeroAddress } from "viem"
 
 export function useHasNftRewards() {

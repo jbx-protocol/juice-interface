@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
-import { useJBChainId } from 'juice-sdk-react'
+import { useJBChainId } from '@bananapus/nana-sdk-react'
 import { useIssueErc20TokenTx } from 'hooks/useIssueErc20TokenTx'
 import { IssueErc20TokenTxArgs } from '../buttons/IssueErc20TokenButton'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'

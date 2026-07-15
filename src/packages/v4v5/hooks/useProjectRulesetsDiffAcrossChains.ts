@@ -1,5 +1,5 @@
-import { JBChainId, JBRulesetData, JBRulesetMetadata } from "juice-sdk-core";
-import { useJBContractContext, useSuckers } from "juice-sdk-react";
+import { JBChainId, JBRulesetData, JBRulesetMetadata } from "@bananapus/nana-sdk-core";
+import { useJBContractContext, useSuckers } from "@bananapus/nana-sdk-react";
 
 
 export function useProjectRulesetsDiffAcrossChains(type: 'upcoming' | 'current') {

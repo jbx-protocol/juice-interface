@@ -4,7 +4,7 @@ import { Address, parseEther, zeroAddress } from 'viem'
 
 import { ONE_BILLION } from 'constants/numbers'
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { useLaunchProjectWithNftsTx } from 'packages/v4v5/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
 import { LaunchTxOpts } from 'packages/v4v5/hooks/useLaunchProjectTx'
 import { useCallback } from 'react'

@@ -3,7 +3,7 @@ import { ReactNode, createContext } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useWallet } from 'hooks/Wallet'
-import { useJBProjectMetadataContext } from 'juice-sdk-react'
+import { useJBProjectMetadataContext } from '@bananapus/nana-sdk-react'
 
 interface ProjectOFACContextType {
   isLoading?: boolean

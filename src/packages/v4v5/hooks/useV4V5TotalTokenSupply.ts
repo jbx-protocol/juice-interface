@@ -1,5 +1,5 @@
-import { useJBContractContext } from 'juice-sdk-react';
-import { jbControllerAbi } from 'juice-sdk-core';
+import { useJBContractContext } from '@bananapus/nana-sdk-react';
+import { jbControllerAbi } from '@bananapus/nana-sdk-core';
 import { useReadContract } from 'wagmi';
 
 export const useV4V5TotalTokenSupply = () => {

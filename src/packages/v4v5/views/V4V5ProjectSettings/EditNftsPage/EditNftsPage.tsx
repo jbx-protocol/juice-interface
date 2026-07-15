@@ -1,5 +1,5 @@
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useJBRulesetContext } from 'juice-sdk-react'
+import { useJBRulesetContext } from '@bananapus/nana-sdk-react'
 import { useNftDeployerCanReconfigure } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftDeployerCanReconfigure'
 import { useHasNftRewards } from 'packages/v4v5/hooks/useHasNftRewards'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'

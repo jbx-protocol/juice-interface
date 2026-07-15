@@ -1,5 +1,5 @@
 import { DEFAULT_PROJECT_CHAIN_ID, NETWORKS } from 'constants/networks'
-import { JBChainId, useSuckers } from 'juice-sdk-react'
+import { JBChainId, useSuckers } from '@bananapus/nana-sdk-react'
 
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 

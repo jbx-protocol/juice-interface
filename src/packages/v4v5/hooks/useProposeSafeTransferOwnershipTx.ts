@@ -1,7 +1,7 @@
-import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from 'juice-sdk-core'
+import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from '@bananapus/nana-sdk-core'
 import {
   useSuckers
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { Address, encodeFunctionData } from 'viem'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
@@ -12,7 +12,7 @@ export function useProposeSafeTransferOwnershipTx({ safeAddress }: { safeAddress
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress })
   const { data: suckers } = useSuckers()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const proposeTransferOwnershipTx = useCallback(
     async (

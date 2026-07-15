@@ -1,6 +1,6 @@
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { JBProjectToken } from 'juice-sdk-core'
-import { JBChainId } from 'juice-sdk-react'
+import { JBProjectToken } from '@bananapus/nana-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { usePayoutLimitOfChain } from 'packages/v4v5/hooks/usePayoutLimitOfChain'
 import { useUsedPayoutLimitOf } from 'packages/v4v5/hooks/useUsedPayoutLimitOf'
 import { useV4V5BalanceOfNativeTerminal } from 'packages/v4v5/hooks/useV4V5BalanceOfNativeTerminal'

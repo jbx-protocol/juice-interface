@@ -1,7 +1,7 @@
 import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
 import ProjectLogo from 'components/ProjectLogo'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 

@@ -2,8 +2,9 @@ import { CurrencyDollarIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { CurrencyName } from 'constants/currency'
-import { SPLITS_TOTAL_PERCENT, jbMultiTerminalAbi, JBCoreContracts } from 'juice-sdk-core'
-import { NativeTokenValue, useJBContractContext } from 'juice-sdk-react'
+import { SPLITS_TOTAL_PERCENT } from '@bananapus/nana-sdk-core'
+import { useTerminalFee } from 'packages/v4v5/hooks/useTerminalFee'
+import { NativeTokenValue, useJBContractContext } from '@bananapus/nana-sdk-react'
 import { useReadContract } from 'wagmi'
 import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import { V4V5CurrencyName } from 'packages/v4v5/utils/currency'
@@ -20,11 +21,7 @@ export function SplitAmountValue({
   hideTooltip?: boolean
 }) {
   const { contractAddress } = useJBContractContext()
-  const { data: primaryNativeTerminalFee } = useReadContract({
-    abi: jbMultiTerminalAbi,
-    address: contractAddress(JBCoreContracts.JBMultiTerminal),
-    functionName: 'FEE',
-  })
+  const primaryNativeTerminalFee = useTerminalFee()
 
   const splitValue = props.totalValue
     ? (props.totalValue * props.split.percent.value) /

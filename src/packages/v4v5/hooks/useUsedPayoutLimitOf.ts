@@ -1,9 +1,9 @@
-import { ETH_CURRENCY_ID, NATIVE_TOKEN, jbDirectoryAbi, jbTerminalStoreAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, NATIVE_TOKEN, jbDirectoryAbi, jbTerminalStoreAbi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import {
   JBChainId,
   useJBRulesetContext,
   useJBTerminalContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useReadContract } from 'wagmi'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
@@ -19,7 +19,7 @@ export const useUsedPayoutLimitOf = ({
   const { store } = useJBTerminalContext()
   const { ruleset } = useJBRulesetContext()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const directoryAddress = chainId ? jbContractAddress[versionString][JBCoreContracts.JBDirectory][chainId] : undefined
 

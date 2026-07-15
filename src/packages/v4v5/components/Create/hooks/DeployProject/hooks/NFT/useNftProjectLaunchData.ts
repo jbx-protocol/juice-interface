@@ -3,8 +3,8 @@ import {
   jbContractAddress,
   JBCoreContracts,
   NATIVE_TOKEN_DECIMALS,
-} from 'juice-sdk-core'
-import { JBChainId } from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
 import {
   JB721TierConfig,
@@ -24,6 +24,39 @@ import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { useStandardProjectLaunchData } from '../useStandardProjectLaunchData'
 import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
+
+// v6: JB721TierConfig drifted (encodedIpfsUri casing, nested flags tuple with cant*
+// naming, new splitPercent/splits fields) and JB721InitTiersConfig dropped `prices`.
+// We emit BOTH the v5 and v6 key spellings on the same object so it encodes correctly
+// under whichever ABI the caller picks by version (viem selects tuple fields by name).
+type JB721TierConfigDual = JB721TierConfig & {
+  encodedIpfsUri: `0x${string}`
+  splitPercent: number
+  splits: never[]
+  flags: {
+    allowOwnerMint: boolean
+    useReserveBeneficiaryAsDefault: boolean
+    transfersPausable: boolean
+    useVotingUnits: boolean
+    cantBeRemoved: boolean
+    cantIncreaseDiscountPercent: boolean
+    cantBuyWithCredits: boolean
+  }
+}
+
+type JB721TiersHookFlagsDual = JB721TiersHookFlags & {
+  issueTokensForSplits: boolean
+}
+
+type JBDeploy721TiersHookConfigDual = Omit<
+  JBDeploy721TiersHookConfig,
+  'tiersConfig' | 'flags'
+> & {
+  tiersConfig: Omit<JBDeploy721TiersHookConfig['tiersConfig'], 'tiers'> & {
+    tiers: JB721TierConfigDual[]
+  }
+  flags: JB721TiersHookFlagsDual
+}
 
 export function useNftProjectLaunchData() {
   const { version } = useV4V5Version()
@@ -58,7 +91,7 @@ export function useNftProjectLaunchData() {
     withStartBuffer?: boolean
   }) => {
     // Use version-specific JBController
-    const defaultJBController = jbContractAddress[version.toString() as '4' | '5'][
+    const defaultJBController = jbContractAddress[version.toString() as '4' | '5' | '6'][
       JBCoreContracts.JBController
     ][chainId as JBChainId] as Address
 
@@ -81,7 +114,7 @@ export function useNftProjectLaunchData() {
     })
     const flags = toV4Flags(nftFlags)
 
-    const deployTiered721HookData: JBDeploy721TiersHookConfig = {
+    const deployTiered721HookData: JBDeploy721TiersHookConfigDual = {
       name: collectionName,
       symbol: collectionSymbol,
       baseUri: ipfsUri(''),
@@ -90,11 +123,13 @@ export function useNftProjectLaunchData() {
       tiersConfig: {
         currency,
         decimals: NATIVE_TOKEN_DECIMALS,
-        prices: jbContractAddress[version.toString() as '4' | '5'][JBCoreContracts.JBPrices][
+        // v5 only: v6's JB721InitTiersConfig has no `prices` field (ignored by the v6 ABI).
+        prices: jbContractAddress[version.toString() as '4' | '5' | '6'][JBCoreContracts.JBPrices][
           chainId as JBChainId
         ] as Address,
         tiers,
       },
+      // v5 only: dropped from the v6 struct (ignored by the v6 ABI).
       reserveBeneficiary: zeroAddress,
       flags,
     }
@@ -130,7 +165,7 @@ function buildJB721TierParams({
 }: {
   cids: string[]
   rewardTiers: NftRewardTier[]
-}): JB721TierConfig[] {
+}): JB721TierConfigDual[] {
   const sortedRewardTiers = sortNftsByContributionFloor(rewardTiers)
 
   return cids.map((cid, index) => {
@@ -140,19 +175,21 @@ function buildJB721TierParams({
   })
 }
 
-function toV4Flags(v2v3Flags: JBTiered721Flags): JB721TiersHookFlags {
+function toV4Flags(v2v3Flags: JBTiered721Flags): JB721TiersHookFlagsDual {
   return {
     noNewTiersWithOwnerMinting: v2v3Flags.lockManualMintingChanges,
     noNewTiersWithReserves: v2v3Flags.lockReservedTokenChanges,
     noNewTiersWithVotes: v2v3Flags.lockVotingUnitChanges,
     preventOverspending: v2v3Flags.preventOverspending,
+    // v6 only: keep reserved-split minting off (matches v5 behavior).
+    issueTokensForSplits: false,
   }
 }
 
 function nftRewardTierToJB721TierConfig(
   rewardTier: NftRewardTier,
   cid: string,
-): JB721TierConfig {
+): JB721TierConfigDual {
   const price = parseEther(rewardTier.contributionFloor.toString())
   const initialSupply = rewardTier.maxSupply ?? DEFAULT_NFT_MAX_SUPPLY
   const encodedIPFSUri = encodeIpfsUri(cid) as `0x${string}`
@@ -171,13 +208,30 @@ function nftRewardTierToJB721TierConfig(
     votingUnits,
     reserveFrequency,
     reserveBeneficiary,
+    // v5 spelling.
     encodedIPFSUri,
+    // v6 spelling.
+    encodedIpfsUri: encodedIPFSUri,
+    // v5 flat flags.
     allowOwnerMint: false,
     useReserveBeneficiaryAsDefault: false,
     transfersPausable: false,
     useVotingUnits: true,
     cannotBeRemoved: false,
     cannotIncreaseDiscountPercent: false,
+    // v6 nested flags tuple.
+    flags: {
+      allowOwnerMint: false,
+      useReserveBeneficiaryAsDefault: false,
+      transfersPausable: false,
+      useVotingUnits: true,
+      cantBeRemoved: false,
+      cantIncreaseDiscountPercent: false,
+      cantBuyWithCredits: false,
+    },
+    // v6 only: no per-tier splits.
+    splitPercent: 0,
+    splits: [],
     discountPercent: 0,
     category: DEFAULT_JB_721_TIER_CATEGORY,
   }

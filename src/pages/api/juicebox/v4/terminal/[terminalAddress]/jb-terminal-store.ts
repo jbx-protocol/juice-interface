@@ -1,6 +1,6 @@
-import { jbMultiTerminalAbi } from 'juice-sdk-core'
+import { jbMultiTerminalAbi } from '@bananapus/nana-sdk-core'
 import { readContract } from 'wagmi/actions'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'

@@ -1,4 +1,4 @@
-import { useJBTokenContext } from 'juice-sdk-react'
+import { useJBTokenContext } from '@bananapus/nana-sdk-react'
 import { isZeroAddress } from 'utils/address'
 
 export const useProjectHasErc20Token = () => {

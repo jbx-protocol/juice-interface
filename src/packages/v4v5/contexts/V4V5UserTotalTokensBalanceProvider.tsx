@@ -1,6 +1,6 @@
 import { useWallet } from 'hooks/Wallet'
-import { useJBContractContext } from 'juice-sdk-react'
-import { jbTokensAbi, JBCoreContracts } from 'juice-sdk-core'
+import { useJBContractContext } from '@bananapus/nana-sdk-react'
+import { jbTokensAbi, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 import React, { PropsWithChildren } from 'react'
 

@@ -3,4 +3,5 @@ export type PV1 = '1'
 export type PV2 = '2'
 export type PV4 = '4'
 export type PV5 = '5'
-export type PV = PV1 | PV2 | PV4 | PV5
+export type PV6 = '6'
+export type PV = PV1 | PV2 | PV4 | PV5 | PV6

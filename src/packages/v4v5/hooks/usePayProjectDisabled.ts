@@ -1,4 +1,4 @@
-import { useJBChainId, useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+import { useJBChainId, useJBProjectId, useJBRuleset } from '@bananapus/nana-sdk-react'
 
 import { t } from '@lingui/macro'
 import { useProjectIsOFACListed } from 'hooks/useProjectIsOFACListed'

@@ -4,7 +4,7 @@ import {
   ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
-import { JBRulesetMetadata } from 'juice-sdk-core'
+import { JBRulesetMetadata } from '@bananapus/nana-sdk-core'
 import { useMemo } from 'react'
 
 export const useV4V5FormatConfigurationOtherRulesSection = ({

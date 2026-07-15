@@ -1,4 +1,4 @@
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { enableCors } from 'lib/api/nextjs'
 import { queryDBProjectsAggregates } from 'lib/api/supabase/projects'
 import { DBProjectQueryOpts } from 'models/dbProject'

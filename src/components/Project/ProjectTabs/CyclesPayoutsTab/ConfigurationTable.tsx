@@ -1,6 +1,6 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
 import { ReactNode, useMemo } from 'react'
-import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from '@bananapus/nana-sdk-react'
 
 import { ConfigurationPanelTableData } from './ConfigurationPanel'
 import CopyTextButton from 'components/buttons/CopyTextButton'

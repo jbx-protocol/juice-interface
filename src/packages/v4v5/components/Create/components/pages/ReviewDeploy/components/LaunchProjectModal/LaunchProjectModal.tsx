@@ -10,12 +10,12 @@ import { Trans, t } from '@lingui/macro'
 import {
   jb721TiersHookProjectDeployerAbi,
   jbControllerAbi,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import {
   RelayrPostBundleResponse,
   useGetRelayrTxBundle,
   useSendRelayrTx,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ContractFunctionArgs, hexToBigInt } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
@@ -27,7 +27,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { useRouter } from 'next/router'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
@@ -139,7 +139,7 @@ export const LaunchProjectModal: React.FC<{
             acc: {
               [k in JBChainId]?: ContractFunctionArgs<
                 typeof jb721TiersHookProjectDeployerAbi,
-                'nonpayable',
+                'payable',
                 'launchProjectFor'
               >
             },
@@ -167,7 +167,7 @@ export const LaunchProjectModal: React.FC<{
             acc: {
               [k in JBChainId]?: ContractFunctionArgs<
                 typeof jbControllerAbi,
-                'nonpayable',
+                'payable',
                 'launchProjectFor'
               >
             },

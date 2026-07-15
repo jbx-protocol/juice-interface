@@ -1,7 +1,7 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from '@bananapus/nana-sdk-react'
 import { twMerge } from 'tailwind-merge'
 import { useV4V5CurrentUpcomingPayoutSplits } from './hooks/useV4V5CurrentUpcomingPayoutSplits'
 import { useV4V5ExportSplitsToCsv } from './hooks/useV4V5ExportSplitsToCsv'

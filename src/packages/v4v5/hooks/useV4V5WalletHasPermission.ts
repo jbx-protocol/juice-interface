@@ -1,8 +1,8 @@
 import {
   useJBChainId,
   useJBContractContext,
-} from 'juice-sdk-react'
-import { jbPermissionsAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jbPermissionsAbi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
@@ -29,7 +29,7 @@ export function useV4V5WalletHasPermission(
 
   const _operator = userAddress ?? zeroAddress
   const _account = projectOwnerAddress ?? zeroAddress
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
   const permissionsAddress = chainId ? jbContractAddress[versionString][JBCoreContracts.JBPermissions][chainId as unknown as keyof typeof jbContractAddress[typeof versionString][JBCoreContracts.JBPermissions]] : undefined
 
   const hasOperatorPermission = useReadContract({

@@ -14,7 +14,7 @@ import { Trans } from '@lingui/macro'
 import { helpPagePath } from 'utils/helpPagePath'
 import { settingsPagePath } from 'packages/v4v5/utils/routes'
 import { useEditCycleFormContext } from './EditCycleFormContext'
-import { useJBChainId } from 'juice-sdk-react'
+import { useJBChainId } from '@bananapus/nana-sdk-react'
 import { useRouter } from 'next/router'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 

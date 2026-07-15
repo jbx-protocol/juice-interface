@@ -2,7 +2,7 @@ import { SafeLaunchProjectData, useProposeSafeLaunchProjectTx } from 'packages/v
 import { useCallback, useMemo } from 'react'
 
 import { Trans } from '@lingui/macro'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { SafeProposeTransactionResponse } from 'packages/v4v5/hooks/useProposeSafeTransaction'
 import QueueSafeTxsModal from './QueueSafeTxsModal'
 

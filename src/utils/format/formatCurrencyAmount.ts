@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
-import { USDC_ADDRESSES } from 'juice-sdk-core'
+import { USDC_ADDRESSES } from '@bananapus/nana-sdk-core'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 
 // Build currency mapping from SDK constants

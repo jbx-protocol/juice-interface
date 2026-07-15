@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Callout } from 'components/Callout/Callout'
-import { JBSplit as Split } from 'juice-sdk-core'
+import { JBSplit as Split } from '@bananapus/nana-sdk-core'
 import { useCallback } from 'react'
 import { allocationToSplit, splitToAllocation } from '../utils/splitToAllocation'
 import { AllocationSplit } from './Allocation/Allocation'

@@ -1,6 +1,7 @@
-import { JBSplit, SPLITS_TOTAL_PERCENT, jbMultiTerminalAbi, JBCoreContracts } from 'juice-sdk-core'
+import { JBSplit, SPLITS_TOTAL_PERCENT, JBCoreContracts } from '@bananapus/nana-sdk-core'
+import { useTerminalFee } from 'packages/v4v5/hooks/useTerminalFee'
 import { useCallback, useMemo } from 'react'
-import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext } from '@bananapus/nana-sdk-react'
 import { useReadContract } from 'wagmi'
 
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
@@ -40,11 +41,7 @@ export const useV4V5PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { contractAddress } = useJBContractContext()
   const terminalAddress = contractAddress(JBCoreContracts.JBMultiTerminal)
 
-  const { data: primaryNativeTerminalFee } = useReadContract({
-    abi: jbMultiTerminalAbi,
-    address: terminalAddress,
-    functionName: 'FEE',
-  })
+  const primaryNativeTerminalFee = useTerminalFee()
 
   const { projectId } = useJBContractContext()  
   const chainId = useJBChainId()

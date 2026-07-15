@@ -1,5 +1,5 @@
 import { NETWORKS, readNetwork } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { NetworkName } from 'models/networkName'
 
 export const etherscanLink = (

@@ -5,8 +5,8 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
-import { JBCoreContracts, jbMultiTerminalAbi } from 'juice-sdk-core'
-import { useJBContractContext } from 'juice-sdk-react'
+import { useTerminalFee } from 'packages/v4v5/hooks/useTerminalFee'
+import { useJBContractContext } from '@bananapus/nana-sdk-react'
 import moment, * as Moment from 'moment'
 import { isInfinitePayoutLimit } from 'packages/v4v5/utils/fundingCycle'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -76,11 +76,7 @@ export const AddEditAllocationModal = ({
   hideFee?: boolean
 }) => {
   const { contractAddress } = useJBContractContext()
-  const { data: primaryNativeTerminalFee } = useReadContract({
-    abi: jbMultiTerminalAbi,
-    address: contractAddress(JBCoreContracts.JBMultiTerminal),
-    functionName: 'FEE',
-  })
+  const primaryNativeTerminalFee = useTerminalFee()
 
   const { totalAllocationAmount, allocations, allocationCurrency } =
     Allocation.useAllocationInstance()

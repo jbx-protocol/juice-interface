@@ -4,7 +4,7 @@ import {
   formatPaused,
 } from 'utils/format/formatBoolean'
 
-import { useJBChainId } from 'juice-sdk-react'
+import { useJBChainId } from '@bananapus/nana-sdk-react'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { getAvailableApprovalStrategies } from 'packages/v4v5/utils/approvalHooks'
 import { useMemo } from 'react'

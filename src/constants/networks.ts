@@ -1,4 +1,4 @@
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { NetworkName } from 'models/networkName'
 import { isBrowser } from 'utils/isBrowser'
 

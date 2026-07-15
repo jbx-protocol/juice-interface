@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V4 } from 'constants/pv'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'

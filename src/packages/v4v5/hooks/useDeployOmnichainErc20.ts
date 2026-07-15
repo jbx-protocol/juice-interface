@@ -1,5 +1,5 @@
-import { JBChainId, jbController4_1Abi, jbControllerAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
-import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, jbController4_1Abi, jbControllerAbi, jbControllerV5Abi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from '@bananapus/nana-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
@@ -31,8 +31,10 @@ export function useDeployOmnichainErc20() {
         const args = deployData[chainId]
         if (!args) throw new Error('No deploy data for chain ' + chainId)
 
+        // deployERC20For is signature-identical across v4/v5/v6; pick the
+        // version-matched ABI anyway to keep the calldata provably correct.
         const useV41Abi = version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]
-        const abi = useV41Abi ? jbController4_1Abi : jbControllerAbi
+        const abi = version === 6 ? jbControllerAbi : useV41Abi ? jbController4_1Abi : jbControllerV5Abi
 
         const to = projectControllerAddress as Address
 

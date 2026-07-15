@@ -1,5 +1,5 @@
-import { resolveSuckers } from 'juice-sdk-core'
-import { JBChainId } from 'juice-sdk-react'
+import { JBVersion, resolveSuckers } from '@bananapus/nana-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -26,11 +26,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .status(400)
         .json({ error: 'projectId and chainId is required' })
     }
+
+    // Defaults to 4 for backwards compatibility with older clients.
+    const version = req.query.version ? Number(req.query.version as string) : 4
+    if (version !== 4 && version !== 5 && version !== 6) {
+      return res.status(400).json({ error: 'version must be 4, 5 or 6' })
+    }
+
     const suckers = await resolveSuckers({
       config: wagmiConfig,
       chainId,
       projectId: BigInt(projectId as string),
-      version: 4,
+      version: version as JBVersion,
     })
 
     // cache for 1 week

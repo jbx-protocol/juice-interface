@@ -382,8 +382,10 @@ export function buildJB721TierParams({
         }
         if (
           version === JB721DelegateVersion.JB721DELEGATE_V4 ||
-          version === JB721DelegateVersion.JB721DELEGATE_V5
+          version === JB721DelegateVersion.JB721DELEGATE_V5 ||
+          version === JB721DelegateVersion.JB721DELEGATE_V6
         ) {
+          // V6 callers convert the result to the v6 tuple shape via jb721TierConfigToV6.
           return nftRewardTierToJB721TierParamsV4(rewardTier, cid)
         }
 

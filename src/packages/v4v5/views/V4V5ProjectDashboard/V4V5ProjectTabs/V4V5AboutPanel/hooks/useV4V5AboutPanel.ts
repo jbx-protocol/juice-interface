@@ -1,4 +1,4 @@
-import { useJBProjectMetadataContext } from 'juice-sdk-react'
+import { useJBProjectMetadataContext } from '@bananapus/nana-sdk-react'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'

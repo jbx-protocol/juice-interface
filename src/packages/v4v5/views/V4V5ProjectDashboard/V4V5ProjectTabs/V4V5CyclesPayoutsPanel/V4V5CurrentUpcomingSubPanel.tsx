@@ -5,7 +5,7 @@ import { CountdownCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTa
 import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { useSuckers } from 'juice-sdk-react'
+import { useSuckers } from '@bananapus/nana-sdk-react'
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { RulesetCountdownProvider } from 'packages/v4v5/contexts/RulesetCountdownProvider'
 import { useState } from 'react'

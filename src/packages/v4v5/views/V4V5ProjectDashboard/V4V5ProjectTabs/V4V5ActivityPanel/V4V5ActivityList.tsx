@@ -1,5 +1,5 @@
-import { SplitPortion, USDC_ADDRESSES } from 'juice-sdk-core'
-import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { SplitPortion, USDC_ADDRESSES } from '@bananapus/nana-sdk-core'
+import { useJBChainId, useJBContractContext, useSuckers } from '@bananapus/nana-sdk-react'
 import {
   AnyEvent,
   EventType,
@@ -163,7 +163,7 @@ function getCurrencySymbol(currency?: string | null): string {
 export function translateEventDataToPresenter(
   event: AnyEvent,
   tokenSymbol: string | undefined,
-  version?: 4 | 5,
+  version?: 4 | 5 | 6,
 ) {
   // Use passed version or fall back to event's projectVersion
   const effectiveVersion = version ?? event.projectVersion

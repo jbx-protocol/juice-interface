@@ -9,7 +9,7 @@ import {
 } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/utils/transformEventsData'
 import React, { useState } from 'react'
 import { ActivityEvent } from 'packages/v4v5/views/V4V5ProjectDashboard/V4V5ProjectTabs/V4V5ActivityPanel/activityEventElems/ActivityElement'
-import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext } from '@bananapus/nana-sdk-react'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 const PAGE_SIZE = 20

@@ -5,7 +5,7 @@ import {
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
-import { JBRulesetMetadata } from 'juice-sdk-core'
+import { JBRulesetMetadata } from '@bananapus/nana-sdk-core'
 import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { etherscanLink } from 'utils/etherscan'

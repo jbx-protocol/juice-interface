@@ -1,4 +1,4 @@
-import { JBSplit, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { JBSplit, SPLITS_TOTAL_PERCENT } from '@bananapus/nana-sdk-core'
 
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'

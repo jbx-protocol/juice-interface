@@ -1,6 +1,6 @@
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'

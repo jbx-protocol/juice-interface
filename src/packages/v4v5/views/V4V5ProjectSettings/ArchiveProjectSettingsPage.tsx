@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Statistic } from 'antd'
 import { Callout } from 'components/Callout/Callout'
-import { RelayrPostBundleResponse, useJBProjectMetadataContext, useSuckers } from 'juice-sdk-react'
+import { RelayrPostBundleResponse, useJBProjectMetadataContext, useSuckers } from '@bananapus/nana-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { useEditProjectDetailsTx } from 'packages/v4v5/hooks/useEditProjectDetailsTx'
 import { useOmnichainEditProjectDetailsTx } from 'packages/v4v5/hooks/useOmnichainEditProjectDetailsTx'
@@ -10,7 +10,7 @@ import { emitErrorNotification, emitInfoNotification } from 'utils/notifications
 import { BigNumber } from '@ethersproject/bignumber'
 import ETHAmount from 'components/currency/ETHAmount'
 import TransactionModal from 'components/modals/TransactionModal'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 
 export function ArchiveProjectSettingsPage() {

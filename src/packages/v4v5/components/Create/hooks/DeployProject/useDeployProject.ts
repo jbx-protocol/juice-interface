@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { LaunchTxOpts } from 'packages/v4v5/hooks/useLaunchProjectTx'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'

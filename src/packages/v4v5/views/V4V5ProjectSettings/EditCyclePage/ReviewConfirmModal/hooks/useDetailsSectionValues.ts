@@ -1,6 +1,6 @@
 import { getApprovalStrategyByAddress } from 'packages/v4v5/utils/approvalHooks'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
-import { useJBChainId } from 'juice-sdk-react'
+import { useJBChainId } from '@bananapus/nana-sdk-react'
 import { otherUnitToSeconds } from 'utils/format/formatTime'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 

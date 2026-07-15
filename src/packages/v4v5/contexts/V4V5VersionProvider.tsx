@@ -9,7 +9,7 @@ import React, {
 } from 'react'
 
 interface V4V5VersionContextType {
-  version: 4 | 5
+  version: 4 | 5 | 6
   loading: boolean
 }
 
@@ -28,7 +28,7 @@ export const useV4V5Version = () => {
 interface V4V5VersionProviderProps extends PropsWithChildren {
   chainId?: number
   projectId?: number
-  defaultVersion?: 4 | 5
+  defaultVersion?: 4 | 5 | 6
 }
 
 export const V4V5VersionProvider: React.FC<V4V5VersionProviderProps> = ({
@@ -40,10 +40,11 @@ export const V4V5VersionProvider: React.FC<V4V5VersionProviderProps> = ({
   const router = useRouter()
 
   // Auto-detect version from route if defaultVersion not provided
-  const detectedVersion = useMemo((): 4 | 5 => {
+  const detectedVersion = useMemo((): 4 | 5 | 6 => {
     if (defaultVersion) return defaultVersion
 
     // Detect from pathname
+    if (router.pathname.startsWith('/v6')) return 6
     if (router.pathname.startsWith('/v5')) return 5
     if (router.pathname.startsWith('/v4')) return 4
 
@@ -65,7 +66,7 @@ export const V4V5VersionProvider: React.FC<V4V5VersionProviderProps> = ({
   const version = useMemo(() => {
     // Use the version from bendystraw if available, otherwise use detected version
     if (data?.project?.version) {
-      return data.project.version as 4 | 5
+      return data.project.version as 4 | 5 | 6
     }
     return detectedVersion
   }, [data?.project?.version, detectedVersion])

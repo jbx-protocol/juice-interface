@@ -4,7 +4,7 @@ import {
   JBSplit as Split,
   SplitPortion,
   SPLITS_TOTAL_PERCENT,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import round from 'lodash/round'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { isInfinitePayoutLimit } from './fundingCycle'

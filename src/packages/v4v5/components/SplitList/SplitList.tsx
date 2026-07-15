@@ -1,4 +1,4 @@
-import { JBSplit } from 'juice-sdk-core'
+import { JBSplit } from '@bananapus/nana-sdk-core'
 import {
   sortSplits,
   v4GetProjectOwnerRemainderSplit,

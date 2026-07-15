@@ -4,9 +4,9 @@ import {
   JBChainId,
   useJBContractContext,
   useJBRuleset,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 
-import { NATIVE_TOKEN, jbDirectoryAbi, jbFundAccessLimitsAbi, JBCoreContracts } from 'juice-sdk-core'
+import { NATIVE_TOKEN, jbDirectoryAbi, jbFundAccessLimitsAbi, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 import { V4V5CurrencyOption } from '../models/v4CurrencyOption'
 import { V4V5_CURRENCY_ETH } from '../utils/currency'

@@ -2,7 +2,7 @@ import {
   ConfigurationPanelDatum,
   ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { ETH_CURRENCY_ID, JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, JBRulesetData, JBRulesetMetadata } from '@bananapus/nana-sdk-core'
 
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { formattedNum } from 'utils/format/formatNumber'

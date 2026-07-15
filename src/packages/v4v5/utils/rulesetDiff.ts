@@ -1,4 +1,4 @@
-import { JBChainId, JBRulesetData, JBRulesetMetadata } from "juice-sdk-core";
+import { JBChainId, JBRulesetData, JBRulesetMetadata } from "@bananapus/nana-sdk-core";
 
 export function getDiffedAttrBetweenRulesets(rulesetsByChain: Record<JBChainId, {
   ruleset: JBRulesetData,

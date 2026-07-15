@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import Image from 'next/image'
 import {
   arbitrum,

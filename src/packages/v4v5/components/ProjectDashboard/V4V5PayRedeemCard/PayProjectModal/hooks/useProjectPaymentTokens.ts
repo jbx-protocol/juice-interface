@@ -1,10 +1,10 @@
-import { ETH_CURRENCY_ID, NATIVE_TOKEN_DECIMALS, getTokenAToBQuote } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, NATIVE_TOKEN_DECIMALS, getTokenAToBQuote } from '@bananapus/nana-sdk-core'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import {
   useJBRulesetContext,
   useJBTokenContext,
   useNativeTokenSymbol,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 
 import { FixedInt } from 'fpnum'
 import { formatUnits } from 'viem'

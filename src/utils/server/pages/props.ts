@@ -1,5 +1,5 @@
 import { PV_V2 } from 'constants/pv'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { PV } from 'models/pv'
 import { GetStaticPropsResult } from 'next'

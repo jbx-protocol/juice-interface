@@ -2,7 +2,7 @@ import { Trans, t } from '@lingui/macro'
 
 import { Tooltip } from 'antd'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 

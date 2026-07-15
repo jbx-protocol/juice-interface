@@ -8,7 +8,7 @@ import { V4V5ProjectAllocationRow } from '../V4V5CyclesPayoutsPanel/V4V5ProjectA
 import { V4V5SendReservedTokensButton } from './V4V5SendReservedTokensButton'
 import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
 import { twMerge } from 'tailwind-merge'
-import { useSuckers } from 'juice-sdk-react'
+import { useSuckers } from '@bananapus/nana-sdk-react'
 import { useV4V5ReservedTokensSubPanel } from './hooks/useV4V5ReservedTokensSubPanel'
 
 export const V4V5ReservedTokensSubPanel = ({

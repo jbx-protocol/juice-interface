@@ -1,9 +1,9 @@
-import { JBChainId, NATIVE_TOKEN, jbContractAddress, JBCoreContracts, jbController4_1Abi, jbControllerAbi } from 'juice-sdk-core'
+import { JBChainId, NATIVE_TOKEN, jbContractAddress, JBCoreContracts, jbController4_1Abi, jbControllerAbi, jbControllerV5Abi } from '@bananapus/nana-sdk-core'
 import {
   JBRulesetContext,
   useJBContractContext,
   useSuckers
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from './useProposeSafeTransaction'
 import { useCallback, useContext } from 'react'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
@@ -60,7 +60,14 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
       const projectControllerAddress = contracts.controller.data
       let data: `0x${string}`
 
-      if (version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]) {
+      if (version === 6) {
+        // Use v6 controller ABI (reads the scopeCashOutsToLocalBalances metadata flag)
+        data = encodeFunctionData({
+          abi: jbControllerAbi,
+          functionName: 'queueRulesetsOf',
+          args,
+        })
+      } else if (version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]) {
         // Use v4.1 controller ABI
         data = encodeFunctionData({
           abi: jbController4_1Abi,
@@ -68,9 +75,9 @@ export function useProposeSafeEditRulesetTx({ safeAddress }: { safeAddress: stri
           args,
         })
       } else {
-        // Use v4 controller ABI
+        // Use v4/v5 controller ABI (reads the useTotalSurplusForCashOuts metadata flag)
         data = encodeFunctionData({
-          abi: jbControllerAbi,
+          abi: jbControllerV5Abi,
           functionName: 'queueRulesetsOf',
           args,
         })

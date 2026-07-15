@@ -1,6 +1,6 @@
 import * as constants from '@ethersproject/constants'
 
-import { JBSplit, SPLITS_TOTAL_PERCENT, SplitPortion } from 'juice-sdk-core'
+import { JBSplit, SPLITS_TOTAL_PERCENT, SplitPortion } from '@bananapus/nana-sdk-core'
 
 import { Hash } from 'viem'
 import { formatWad } from 'utils/format/formatNumber'

@@ -1,12 +1,19 @@
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { JBChainId } from 'juice-sdk-react'
-import { jb721TiersHookProjectDeployerAbi, JB721HookContracts, jbContractAddress } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-react'
+import {
+  jb721TiersHookProjectDeployerAbi,
+  jb721TiersHookProjectDeployerV5Abi,
+  JB721HookContracts,
+  jbContractAddress,
+  JBCoreContracts,
+  jbProjectsAbi,
+} from '@bananapus/nana-sdk-core'
 import { useWriteContract } from 'wagmi'
 import { useNftProjectLaunchData } from 'packages/v4v5/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { useContext } from 'react'
-import { WaitForTransactionReceiptReturnType } from 'viem'
+import { ContractFunctionArgs, WaitForTransactionReceiptReturnType } from 'viem'
 import { LaunchTxOpts } from '../../useLaunchProjectTx'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
@@ -29,7 +36,7 @@ export function useLaunchProjectWithNftsTx() {
   const { writeContractAsync: writeLaunchProject } = useWriteContract()
   const getLaunchData = useNftProjectLaunchData()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   return async (
     chainId: JBChainId,
@@ -64,13 +71,41 @@ export function useLaunchProjectWithNftsTx() {
       // })
 
       const deployerAddress = jbContractAddress[versionString][JB721HookContracts.JB721TiersHookProjectDeployer][chainId]
-      const hash = await writeLaunchProject({
-        address: deployerAddress,
-        abi: jb721TiersHookProjectDeployerAbi,
-        functionName: 'launchProjectFor',
-        args,
-        chainId: chainId as JBChainId,
-      })
+
+      let hash: `0x${string}`
+      if (version === 6) {
+        // v6: launches are payable and revert unless
+        // msg.value == JBProjects.creationFee() exactly.
+        const creationFee = await readContract(wagmiConfig, {
+          address: jbContractAddress['6'][JBCoreContracts.JBProjects][chainId],
+          abi: jbProjectsAbi,
+          functionName: 'creationFee',
+          chainId,
+        })
+
+        hash = await writeLaunchProject({
+          address: deployerAddress,
+          abi: jb721TiersHookProjectDeployerAbi,
+          functionName: 'launchProjectFor',
+          args,
+          chainId: chainId as JBChainId,
+          value: creationFee,
+        })
+      } else {
+        // v4/v5: nonpayable, and the 721 config structs differ from v6. The launch data
+        // carries both key spellings, so it encodes correctly under the v5 ABI too.
+        hash = await writeLaunchProject({
+          address: deployerAddress,
+          abi: jb721TiersHookProjectDeployerV5Abi,
+          functionName: 'launchProjectFor',
+          args: args as unknown as ContractFunctionArgs<
+            typeof jb721TiersHookProjectDeployerV5Abi,
+            'nonpayable',
+            'launchProjectFor'
+          >,
+          chainId: chainId as JBChainId,
+        })
+      }
 
       onTransactionPendingCallback(hash)
       addTransaction?.('Launch Project', { hash, chainId })

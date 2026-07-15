@@ -1,6 +1,6 @@
 import { DurationOption } from 'components/inputs/DurationInput'
 import { CurrencyName } from 'constants/currency'
-import { JBSplit } from 'juice-sdk-core'
+import { JBSplit } from '@bananapus/nana-sdk-core'
 
 type DetailsSectionFields = {
   duration: number

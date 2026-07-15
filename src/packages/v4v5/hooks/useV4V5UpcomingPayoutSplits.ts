@@ -1,8 +1,8 @@
-import { JBSplit, NATIVE_TOKEN, SplitPortion, jbSplitsAbi, jbTokensAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { JBSplit, NATIVE_TOKEN, SplitPortion, jbSplitsAbi, jbTokensAbi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import {
   JBChainId,
   useJBProjectId,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useReadContract } from 'wagmi'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
@@ -11,7 +11,7 @@ import { useJBUpcomingRuleset } from './useJBUpcomingRuleset'
 export const useV4V5UpcomingPayoutSplits = (chainId?: JBChainId) => {
   const { projectId } = useJBProjectId(chainId)
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } =
     useJBUpcomingRuleset(chainId)

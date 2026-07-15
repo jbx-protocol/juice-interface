@@ -3,9 +3,9 @@ import {
   jbTokensAbi,
   jbContractAddress,
   JBCoreContracts
-} from "juice-sdk-core";
+} from "@bananapus/nana-sdk-core";
 import { readContract } from "wagmi/actions";
-import { useJBContractContext, useSuckers } from "juice-sdk-react";
+import { useJBContractContext, useSuckers } from "@bananapus/nana-sdk-react";
 
 import { useWallet } from "hooks/Wallet";
 import { zeroAddress } from "viem";
@@ -18,7 +18,7 @@ export function useSuckersUnclaimedBalance() {
   const { userAddress } = useWallet();
   const { projectId: mainProjectId } = useJBContractContext();
   const { version } = useV4V5Version();
-  const versionString = version.toString() as '4' | '5';
+  const versionString = version.toString() as '4' | '5' | '6';
 
   const suckersQuery = useSuckers();
   const pairs: SuckerPair[] = suckersQuery.data ?? [];

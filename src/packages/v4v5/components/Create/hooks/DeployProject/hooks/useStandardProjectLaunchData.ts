@@ -4,7 +4,7 @@ import {
   jbContractAddress,
   JBCoreContracts,
   NATIVE_TOKEN,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
@@ -51,8 +51,10 @@ export function useStandardProjectLaunchData() {
     chainId: JBChainId
     withStartBuffer?: boolean
   }) => {
+    const versionKey = String(version) as '4' | '5' | '6'
+
     const terminalAddress = chainId
-      ? (jbContractAddress['5'][JBCoreContracts.JBMultiTerminal][
+      ? (jbContractAddress[versionKey][JBCoreContracts.JBMultiTerminal][
           chainId as JBChainId
         ] as Address)
       : undefined
@@ -62,7 +64,7 @@ export function useStandardProjectLaunchData() {
     }
 
     const controllerAddress = chainId
-      ? (jbContractAddress['5'][JBCoreContracts.JBController][
+      ? (jbContractAddress[versionKey][JBCoreContracts.JBController][
           chainId as JBChainId
         ] as Address)
       : undefined

@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import EthereumAddress from 'components/EthereumAddress'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import tailwind from 'lib/tailwind'
 import { ParticipantsQuery } from 'packages/v4v5/graphql/client/graphql'
 import { useContext, useEffect, useMemo, useState } from 'react'

@@ -3,7 +3,7 @@ import { Button, Layout } from 'antd'
 
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
-import { useJBRulesetContext } from 'juice-sdk-react'
+import { useJBRulesetContext } from '@bananapus/nana-sdk-react'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'

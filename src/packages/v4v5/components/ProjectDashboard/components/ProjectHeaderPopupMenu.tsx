@@ -7,7 +7,7 @@ import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkBut
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
 import { PopupMenu } from 'components/ui/PopupMenu'
 import useMobile from 'hooks/useMobile'
-import { useJBChainId } from 'juice-sdk-react'
+import { useJBChainId } from '@bananapus/nana-sdk-react'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
 import { settingsPagePath } from 'packages/v4v5/utils/routes'

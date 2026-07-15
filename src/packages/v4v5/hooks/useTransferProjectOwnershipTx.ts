@@ -1,5 +1,5 @@
-import { useJBContractContext, useJBProjectMetadataContext, JBChainId } from 'juice-sdk-react'
-import { jbProjectsAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useJBContractContext, useJBProjectMetadataContext, JBChainId } from '@bananapus/nana-sdk-react'
+import { jbProjectsAbi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useWriteContract, useChainId } from 'wagmi'
 import { useCallback, useContext } from 'react'
 
@@ -16,7 +16,7 @@ export function useTransferProjectOwnershipTx() {
   const { projectId } = useJBContractContext()
   const { data: projectOwnerAddress } = useV4V5ProjectOwnerOf()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
   
   // Get project title inline
   const { projectMetadata } = useContext(ProjectMetadataContext)

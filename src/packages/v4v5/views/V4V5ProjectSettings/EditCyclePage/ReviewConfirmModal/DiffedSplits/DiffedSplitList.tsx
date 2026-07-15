@@ -1,7 +1,7 @@
 import { processUniqueSplits, v4GetProjectOwnerRemainderSplit } from 'packages/v4v5/utils/v4Splits'
 
 import { DiffedSplitItem } from './DiffedSplitItem'
-import { JBSplit as Split } from 'juice-sdk-core'
+import { JBSplit as Split } from '@bananapus/nana-sdk-core'
 import { SplitProps } from 'packages/v4v5/components/SplitList/SplitItem'
 import round from 'lodash/round'
 import { useMemo } from 'react'

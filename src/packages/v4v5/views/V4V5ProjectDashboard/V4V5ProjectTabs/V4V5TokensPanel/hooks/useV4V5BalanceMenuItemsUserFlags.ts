@@ -1,6 +1,6 @@
 import { useWallet } from 'hooks/Wallet'
-import { useJBContractContext, useJBRulesetMetadata, useNativeTokenSurplus } from 'juice-sdk-react'
-import { jbTokensAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useJBContractContext, useJBRulesetMetadata, useNativeTokenSurplus } from '@bananapus/nana-sdk-react'
+import { jbTokensAbi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract, useChainId } from 'wagmi'
 import { useV4V5WalletHasPermission } from 'packages/v4v5/hooks/useV4V5WalletHasPermission'
 import { V4V5OperatorPermission } from 'packages/v4v5/models/v4Permissions'
@@ -13,7 +13,7 @@ export const useV4V5BalanceMenuItemsUserFlags = () => {
   const { data: rulesetMetadata } = useJBRulesetMetadata()
   const chainId = useChainId()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
   const tokensAddress = jbContractAddress[versionString][JBCoreContracts.JBTokens][chainId as unknown as keyof typeof jbContractAddress[typeof versionString][JBCoreContracts.JBTokens]]
 
   const { projectId } = useJBContractContext()

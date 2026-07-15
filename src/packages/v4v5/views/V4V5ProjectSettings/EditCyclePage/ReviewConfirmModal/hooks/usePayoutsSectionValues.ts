@@ -1,5 +1,5 @@
 import { CurrencyName } from 'constants/currency'
-import { JBSplit } from 'juice-sdk-core'
+import { JBSplit } from '@bananapus/nana-sdk-core'
 import { distributionLimitsEqual } from 'packages/v4v5/utils/distributions'
 import { isInfinitePayoutLimit } from 'packages/v4v5/utils/fundingCycle'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'

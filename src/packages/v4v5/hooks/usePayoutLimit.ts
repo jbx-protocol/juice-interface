@@ -5,11 +5,11 @@ import {
   useJBContractContext,
   useJBProjectId,
   useJBRuleset,
-} from 'juice-sdk-react'
-import { jbFundAccessLimitsAbi } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jbFundAccessLimitsAbi } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 
-import { NATIVE_TOKEN } from 'juice-sdk-core'
+import { NATIVE_TOKEN } from '@bananapus/nana-sdk-core'
 import { V4V5CurrencyOption } from '../models/v4CurrencyOption'
 import { V4V5_CURRENCY_ETH } from '../utils/currency'
 

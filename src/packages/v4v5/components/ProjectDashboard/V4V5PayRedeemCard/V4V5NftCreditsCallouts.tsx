@@ -1,7 +1,7 @@
 import { CubeIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { formatEther } from 'juice-sdk-core'
+import { formatEther } from '@bananapus/nana-sdk-core'
 import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { useProjectPageQueries } from 'packages/v4v5/views/V4V5ProjectDashboard/hooks/useProjectPageQueries'
 

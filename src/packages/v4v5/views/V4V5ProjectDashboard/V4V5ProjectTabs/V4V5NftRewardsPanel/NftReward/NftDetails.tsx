@@ -1,7 +1,7 @@
 import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import { TruncatedText } from 'components/TruncatedText'
-import { useJBChainId } from 'juice-sdk-react'
+import { useJBChainId } from '@bananapus/nana-sdk-react'
 import { NftRewardTier } from 'models/nftRewards'
 import { twMerge } from 'tailwind-merge'
 import { parseWad } from 'utils/format/formatNumber'

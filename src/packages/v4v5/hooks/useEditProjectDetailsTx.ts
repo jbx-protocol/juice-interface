@@ -1,5 +1,5 @@
-import { useJBChainId, useJBContractContext, useJBProjectId } from 'juice-sdk-react'
-import { jbControllerAbi } from 'juice-sdk-core'
+import { useJBChainId, useJBContractContext, useJBProjectId } from '@bananapus/nana-sdk-react'
+import { jbControllerAbi } from '@bananapus/nana-sdk-core'
 import { useWriteContract } from 'wagmi'
 import { useCallback, useContext } from 'react'
 

@@ -4,7 +4,7 @@ import { useJBChainId, useJBContractContext } from '@bananapus/nana-sdk-react'
 import { Trans } from '@lingui/macro'
 import { JB_CHAINS } from '@bananapus/nana-sdk-core'
 import Link from 'next/link'
-import { v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v4v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
 export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
@@ -28,10 +28,11 @@ export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
           </h1>
           {chainId ? (
             <Link
-              href={version === 5
-                ? v5ProjectRoute({ projectId: Number(projectId), chainId })
-                : v4ProjectRoute({ projectId: Number(projectId), chainId })
-              }
+              href={v4v5ProjectRoute({
+                projectId: Number(projectId),
+                chainId,
+                version,
+              })}
               className="text-secondary"
             >
               <XMarkIcon className="h-6 w-6" />

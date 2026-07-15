@@ -1,4 +1,4 @@
-import { JBSplit, MAX_PAYOUT_LIMIT } from 'juice-sdk-core'
+import { JBSplit, MAX_PAYOUT_LIMIT } from '@bananapus/nana-sdk-core'
 
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'

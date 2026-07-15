@@ -1,7 +1,7 @@
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
-import { JBSplit as Split } from 'juice-sdk-core'
+import { JBSplit as Split } from '@bananapus/nana-sdk-core'
 import round from 'lodash/round'
 import { useState } from 'react'
 import { AddEditAllocationModal, AddEditAllocationModalEntity } from '../Allocation/AddEditAllocationModal'

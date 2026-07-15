@@ -7,11 +7,11 @@ import {
   jbControllerAbi,
   jbContractAddress,
   JBCoreContracts,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import {
   useJBProjectId,
   useJBUpcomingRuleset,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useReadContract } from 'wagmi'
 
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
@@ -30,7 +30,7 @@ export const useV4V5ReservedTokensSubPanel = () => {
   const { selectedChainId, setSelectedChainId } =
     useReservedTokensSelectedChain()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const { projectId } = useJBProjectId(selectedChainId)
 

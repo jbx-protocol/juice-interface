@@ -6,16 +6,16 @@ import {
   jbDirectoryAbi,
   jbContractAddress,
   JBCoreContracts,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import { readContract } from 'wagmi/actions'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { PublicClient } from 'viem'
 
 export const getV4V5ProjectMetadata = async (
   projectId: string | number,
   chainId?: JBChainId | undefined,
-  version: '4' | '5' = '4',
+  version: '4' | '5' | '6' = '4',
 ) => {
   if (typeof projectId === 'string') {
     projectId = Number(projectId)
@@ -30,7 +30,7 @@ export const getV4V5ProjectMetadata = async (
 const V4V5GetMetadataCidFromContract = async (
   projectId: number,
   chainId: JBChainId,
-  version: '4' | '5' = '4',
+  version: '4' | '5' | '6' = '4',
 ) => {
   if (!chainId) throw new Error('Chain id not found for chain')
   const directoryAddress = jbContractAddress[version][JBCoreContracts.JBDirectory][chainId]

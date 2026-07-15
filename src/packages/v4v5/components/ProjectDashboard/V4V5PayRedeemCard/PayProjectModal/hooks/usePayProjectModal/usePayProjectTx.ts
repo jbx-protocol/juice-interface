@@ -5,14 +5,14 @@ import {
   jbMultiTerminalAbi,
   jbContractAddress,
   JBCoreContracts,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import {
   JBChainId,
   useJBProjectId,
   useJBRulesetContext,
   usePreparePayMetadata,
   useSuckers,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useCallback, useContext, useMemo } from 'react'
 import { Address, Hash, parseEther, zeroAddress } from 'viem'
 import { useWriteContract } from 'wagmi'
@@ -65,7 +65,7 @@ export const usePayProjectTx = ({
   const { data: suckers } = useSuckers()
   const { projectId } = useJBProjectId()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const { receivedTickets } = useProjectPaymentTokens()
   // TODO: is this needed for preferClaimedTokens?

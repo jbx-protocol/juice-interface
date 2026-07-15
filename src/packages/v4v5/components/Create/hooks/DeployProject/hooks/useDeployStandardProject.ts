@@ -1,4 +1,4 @@
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import {
   LaunchTxOpts,
   useLaunchProjectTx,

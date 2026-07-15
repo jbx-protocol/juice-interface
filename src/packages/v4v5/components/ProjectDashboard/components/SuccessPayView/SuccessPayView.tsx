@@ -1,7 +1,7 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { useJBChainId } from 'juice-sdk-react'
+import { useJBChainId } from '@bananapus/nana-sdk-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'

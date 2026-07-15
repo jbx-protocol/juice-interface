@@ -1,4 +1,4 @@
-import { JBSplit } from "juice-sdk-core"
+import { JBSplit } from "@bananapus/nana-sdk-core"
 
 export interface GroupedSplits<G> {
   groupId: G

@@ -76,7 +76,7 @@ export function ProtocolActivityList() {
                   ? v4v5ProjectRoute({
                       projectId: event.event.projectId,
                       chainId: event.event.chainId,
-                      version: 5, // Default to v5 for all bendystraw projects
+                      version: event.event.projectVersion ?? 5, // Link by the project's own version, defaulting to v5
                     })
                   : null
 

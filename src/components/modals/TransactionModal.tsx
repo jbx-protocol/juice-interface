@@ -1,6 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
-import { JBChainId, RelayrGetBundleResponse } from 'juice-sdk-react'
+import { JBChainId, RelayrGetBundleResponse } from '@bananapus/nana-sdk-react'
 import { PropsWithChildren, useContext, useMemo } from 'react'
 
 import { readNetwork } from 'constants/networks'

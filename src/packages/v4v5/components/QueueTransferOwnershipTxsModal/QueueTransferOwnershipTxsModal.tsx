@@ -1,5 +1,5 @@
 import { Button, Modal, Spin, Tooltip } from 'antd'
-import { JBChainId, useSuckers } from 'juice-sdk-react'
+import { JBChainId, useSuckers } from '@bananapus/nana-sdk-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 

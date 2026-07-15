@@ -1,4 +1,4 @@
-import { useJBChainId } from 'juice-sdk-react'
+import { useJBChainId } from '@bananapus/nana-sdk-react'
 import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
 import { useProjectQuery, useSuckerGroupTlQuery } from 'generated/v4v5/graphql'
 import { useMemo } from 'react'

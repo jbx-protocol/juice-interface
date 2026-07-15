@@ -1,5 +1,5 @@
-import { jbControllerAbi } from 'juice-sdk-core'
-import { useJBContractContext } from 'juice-sdk-react'
+import { jbControllerAbi } from '@bananapus/nana-sdk-core'
+import { useJBContractContext } from '@bananapus/nana-sdk-react'
 import { useCallback } from 'react'
 import { encodeFunctionData } from 'viem'
 

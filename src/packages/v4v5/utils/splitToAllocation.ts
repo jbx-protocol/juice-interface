@@ -1,4 +1,4 @@
-import { JBSplit, SplitPortion } from 'juice-sdk-core'
+import { JBSplit, SplitPortion } from '@bananapus/nana-sdk-core'
 
 import { zeroAddress } from 'viem'
 import { AllocationSplit } from '../components/Allocation/Allocation'

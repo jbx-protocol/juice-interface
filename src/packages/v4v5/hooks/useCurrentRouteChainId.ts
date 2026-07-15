@@ -1,4 +1,4 @@
-import { JB_CHAIN_SLUGS, JBChainId } from 'juice-sdk-core'
+import { JB_CHAIN_SLUGS, JBChainId } from '@bananapus/nana-sdk-core'
 import { useRouter } from 'next/router'
 
 export function useCurrentRouteChainId() {

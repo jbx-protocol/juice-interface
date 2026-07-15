@@ -5,8 +5,8 @@ import {
   useJBProjectId,
   useJBContractContext,
   useSuckers,
-} from 'juice-sdk-react'
-import { jbDirectoryAbi, jbTokensAbi, jbControllerAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jbDirectoryAbi, jbTokensAbi, jbControllerAbi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract, useWriteContract } from 'wagmi'
 import { useContext, useState } from 'react'
 
@@ -47,7 +47,7 @@ export function V4V5MintModal({
   const { writeContractAsync: writeMintTokens } = useWriteContract()
   const [form] = useForm<MintForm>()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()

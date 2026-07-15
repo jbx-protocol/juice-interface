@@ -1,11 +1,11 @@
 import { Trans, t } from '@lingui/macro'
-import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
+import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from '@bananapus/nana-sdk-core'
 import {
   JBChainId,
   useJBProjectId,
   useSuckers,
-} from 'juice-sdk-react'
-import { jbDirectoryAbi, jbMultiTerminalAbi, JBCoreContracts, jbContractAddress } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jbDirectoryAbi, jbMultiTerminalAbi, JBCoreContracts, jbContractAddress } from '@bananapus/nana-sdk-core'
 import { useReadContract, useWriteContract } from 'wagmi'
 import { useContext, useState } from 'react'
 
@@ -44,7 +44,7 @@ export default function V4V5DistributePayoutsModal({
   const { addTransaction } = useContext(TxHistoryContext)
   const { selectedChainId: defaultChainId } = useCyclesPanelSelectedChain()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(
     defaultChainId,

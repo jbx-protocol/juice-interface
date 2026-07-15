@@ -1,8 +1,8 @@
 import {
   useJBChainId,
   useJBRulesetContext,
-} from 'juice-sdk-react'
-import { jb721TiersHookAbi } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jb721TiersHookAbi, jb721TiersHookV5Abi } from '@bananapus/nana-sdk-core'
 import { useWriteContract } from 'wagmi'
 import { JB_721_TIER_PARAMS_V4, NftRewardTier } from 'models/nftRewards'
 import { useCallback, useContext, useState } from 'react'
@@ -12,7 +12,7 @@ import { t } from '@lingui/macro'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { JB721DelegateVersion } from 'models/JB721Delegate'
+import { JB721DelegateVersion, jb721TierConfigToV6 } from 'models/JB721Delegate'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { emitErrorNotification } from 'utils/notifications'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
@@ -55,7 +55,12 @@ export function useUpdateCurrentCollection({
     const tiersToAdd = buildJB721TierParams({
       cids: rewardTiersCIDs,
       rewardTiers: newRewardTiers,
-      version: version === 5 ? JB721DelegateVersion.JB721DELEGATE_V5 : JB721DelegateVersion.JB721DELEGATE_V4,
+      version:
+        version === 6
+          ? JB721DelegateVersion.JB721DELEGATE_V6
+          : version === 5
+          ? JB721DelegateVersion.JB721DELEGATE_V5
+          : JB721DelegateVersion.JB721DELEGATE_V4,
     }) as JB_721_TIER_PARAMS_V4[]
 
     if (!newRewardTiers) {
@@ -65,13 +70,26 @@ export function useUpdateCurrentCollection({
       return
     }
     try {
-      const hash = await writeAdjustTiers({
-        abi: jb721TiersHookAbi,
-        functionName: 'adjustTiers',
-        chainId,
-        args: [tiersToAdd, editedRewardTierIds.map(id => BigInt(id))],
-        address: rulesetMetadata.dataHook,
-      })
+      const tierIdsToRemove = editedRewardTierIds.map(id => BigInt(id))
+
+      // The v6 hook's adjustTiers takes a different tier config shape
+      // (nested flags tuple + splitPercent/splits) than v4/v5.
+      const hash =
+        version === 6
+          ? await writeAdjustTiers({
+              abi: jb721TiersHookAbi,
+              functionName: 'adjustTiers',
+              chainId,
+              args: [tiersToAdd.map(jb721TierConfigToV6), tierIdsToRemove],
+              address: rulesetMetadata.dataHook,
+            })
+          : await writeAdjustTiers({
+              abi: jb721TiersHookV5Abi,
+              functionName: 'adjustTiers',
+              chainId,
+              args: [tiersToAdd, tierIdsToRemove],
+              address: rulesetMetadata.dataHook,
+            })
 
       addTransaction?.('Update NFT rewards', { hash, chainId })
       await waitForTransactionReceipt(wagmiConfig, {

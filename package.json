@@ -112,8 +112,6 @@
     "graphql": "^16.8.1",
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
-    "juice-sdk-core": "2.1.1",
-    "juice-sdk-react": "5.0.2",
     "juicebox-metadata-helper": "0.1.7",
     "less": "4.1.2",
     "lodash": "^4.17.21",
@@ -149,7 +147,9 @@
     "viem": "^2.31.6",
     "wagmi": "^2.15.6",
     "yarn": "^1.22.22",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "@bananapus/nana-sdk-core": "1.0.0",
+    "@bananapus/nana-sdk-react": "1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",

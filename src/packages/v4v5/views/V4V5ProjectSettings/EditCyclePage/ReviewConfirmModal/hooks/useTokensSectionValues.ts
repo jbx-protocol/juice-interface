@@ -2,7 +2,7 @@ import {
   useJBProjectId,
   useJBRuleset,
   useJBTokenContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 
 import { EditCycleFormFields } from '../../EditCycleFormFields'
 import round from 'lodash/round'

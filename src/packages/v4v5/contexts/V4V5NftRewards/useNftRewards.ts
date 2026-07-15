@@ -1,5 +1,5 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
-import { formatEther, jb721TiersHookStoreAbi } from 'juice-sdk-core'
+import { JBVersion, formatEther, jb721TiersHookStoreAbi, jb721TiersHookStoreV5Abi } from '@bananapus/nana-sdk-core'
 import { readContract } from 'wagmi/actions'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
 import {
@@ -12,7 +12,7 @@ import {
 } from 'utils/ipfs'
 
 import axios from 'axios'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { withHttps } from 'utils/externalLink'
 import { zeroAddress } from 'viem'
 import { useConfig } from 'wagmi'
@@ -158,6 +158,7 @@ export const useNftRewards = (
   chainId: JBChainId | undefined,
   dataSourceAddress: string | undefined,
   dataHookAddress: `0x${string}` | undefined,
+  version: JBVersion,
 ): UseQueryResult<NftRewardTier[]> => {
   const config = useConfig()
   const enabled = Boolean(tiers?.length && dataSourceAddress)
@@ -174,19 +175,35 @@ export const useNftRewards = (
       const allChainTiersData = await Promise.all(
         projectChains.map(async currentChainId => {
           try {
-            const chainTiers = await readContract(config, {
-              abi: jb721TiersHookStoreAbi,
-              address: dataSourceAddress as `0x${string}`,
-              functionName: 'tiersOf',
-              args: [
-                dataHookAddress ?? zeroAddress as `0x${string}`,
-                [], // _categories
-                false, // _includeResolvedUri
-                0n, // _startingId
-                NFT_PAGE_SIZE, // limit
-              ],
-              chainId: currentChainId
-            })
+            // The v6 store returns a different tier tuple shape, so the
+            // versioned ABI is required to decode. Only id/remainingSupply
+            // are read below, which both shapes expose.
+            const tiersOfArgs = [
+              dataHookAddress ?? (zeroAddress as `0x${string}`),
+              [], // _categories
+              false, // _includeResolvedUri
+              0n, // _startingId
+              NFT_PAGE_SIZE, // limit
+            ] as const
+            const chainTiers: readonly {
+              id: number
+              remainingSupply: number
+            }[] =
+              version === 6
+                ? await readContract(config, {
+                    abi: jb721TiersHookStoreAbi,
+                    address: dataSourceAddress as `0x${string}`,
+                    functionName: 'tiersOf',
+                    args: tiersOfArgs,
+                    chainId: currentChainId,
+                  })
+                : await readContract(config, {
+                    abi: jb721TiersHookStoreV5Abi,
+                    address: dataSourceAddress as `0x${string}`,
+                    functionName: 'tiersOf',
+                    args: tiersOfArgs,
+                    chainId: currentChainId,
+                  })
 
             return {
               chainId: currentChainId,
@@ -209,7 +226,7 @@ export const useNftRewards = (
             chainData.chainId === currentChainId
           )?.tiers
 
-          const matchingTier = chainTiersData?.find((chainTier: JB721TierV4) =>
+          const matchingTier = chainTiersData?.find(chainTier =>
             chainTier.id === tier.id
           )
 

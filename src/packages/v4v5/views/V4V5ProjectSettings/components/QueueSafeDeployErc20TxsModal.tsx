@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import { FormInstance } from 'antd'
-import { JBChainId, createSalt, jbControllerAbi } from 'juice-sdk-core'
-import { useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { JBChainId, createSalt, jbControllerAbi } from '@bananapus/nana-sdk-core'
+import { useJBContractContext, useSuckers } from '@bananapus/nana-sdk-react'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from 'packages/v4v5/hooks/useProposeSafeTransaction'
 
 import { IssueErc20TokenTxArgs } from 'components/buttons/IssueErc20TokenButton'

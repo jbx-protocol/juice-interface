@@ -1,5 +1,5 @@
 import { Project } from 'generated/graphql'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { ipfsGatewayFetch } from 'lib/api/ipfs'
 import {
   DBProject,

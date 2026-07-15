@@ -1,5 +1,5 @@
 import { Button, Divider } from 'antd'
-import { JBChainId, useJBChainId, useSuckers } from 'juice-sdk-react'
+import { JBChainId, useJBChainId, useSuckers } from '@bananapus/nana-sdk-react'
 import {
   settingsPagePath,
   v4v5ProjectRoute,
@@ -15,7 +15,7 @@ import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeade
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
 import { TruncatedText } from 'components/TruncatedText'
 import useMobile from 'hooks/useMobile'
-import { SuckerPair } from 'juice-sdk-core'
+import { SuckerPair } from '@bananapus/nana-sdk-core'
 import Link from 'next/link'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { ProjectHeaderPopupMenu } from 'packages/v4v5/components/ProjectDashboard/components/ProjectHeaderPopupMenu'

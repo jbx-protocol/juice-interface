@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext } from 'react'
 
 import { CurrencyName } from 'constants/currency'
-import { JBSplit as Split } from 'juice-sdk-core'
+import { JBSplit as Split } from '@bananapus/nana-sdk-core'
 import { TreasurySelection } from 'models/treasurySelection'
 
 export interface PayoutsTableContextProps {

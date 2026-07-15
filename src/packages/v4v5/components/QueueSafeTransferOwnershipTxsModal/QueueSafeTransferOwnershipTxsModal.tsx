@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { useCallback } from 'react'
 import { Address } from 'viem'
 import { SafeProposeTransactionResponse } from '../../hooks/useProposeSafeTransaction'

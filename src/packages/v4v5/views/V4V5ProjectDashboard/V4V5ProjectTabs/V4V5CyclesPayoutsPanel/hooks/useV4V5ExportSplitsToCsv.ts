@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
-import { JBSplit } from 'juice-sdk-core'
-import { useJBContractContext } from 'juice-sdk-react'
+import { JBSplit } from '@bananapus/nana-sdk-core'
+import { useJBContractContext } from '@bananapus/nana-sdk-react'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4v5/utils/v4Splits'
 import { useState } from 'react'

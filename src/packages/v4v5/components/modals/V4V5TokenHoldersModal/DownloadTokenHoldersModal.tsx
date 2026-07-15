@@ -9,7 +9,7 @@ import {
   useProjectQuery,
 } from 'generated/v4v5/graphql'
 
-import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext } from '@bananapus/nana-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { bendystrawUri } from 'lib/apollo/bendystrawUri'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'

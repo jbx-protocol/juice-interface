@@ -1,4 +1,4 @@
-import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
+import { JBChainId, JBProjectProvider } from '@bananapus/nana-sdk-react'
 import React, { PropsWithChildren } from 'react'
 
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'

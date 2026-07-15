@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { useSuckers } from 'juice-sdk-react'
+import { useSuckers } from '@bananapus/nana-sdk-react'
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
 import { forwardRef } from 'react'
 import { CycleNavigator } from './components/CycleNavigator'

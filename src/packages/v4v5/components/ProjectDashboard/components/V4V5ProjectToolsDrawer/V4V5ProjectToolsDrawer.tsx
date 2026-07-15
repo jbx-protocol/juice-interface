@@ -2,7 +2,7 @@ import { Divider, Drawer } from 'antd'
 
 import { Trans } from '@lingui/macro'
 import useMobile from 'hooks/useMobile'
-import { useJBProjectMetadataContext } from 'juice-sdk-react'
+import { useJBProjectMetadataContext } from '@bananapus/nana-sdk-react'
 import { AddToProjectBalanceForm } from './AddToProjectBalanceForm'
 
 export function V4V5ProjectToolsDrawer({

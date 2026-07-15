@@ -1,5 +1,5 @@
 import { Button, Modal } from 'antd'
-import { useJBChainId, useJBProjectId } from 'juice-sdk-react'
+import { useJBChainId, useJBProjectId } from '@bananapus/nana-sdk-react'
 import { settingsPagePath, v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 

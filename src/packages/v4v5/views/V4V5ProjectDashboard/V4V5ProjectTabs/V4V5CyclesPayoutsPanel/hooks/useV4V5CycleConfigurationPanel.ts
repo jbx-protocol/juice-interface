@@ -1,4 +1,4 @@
-import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { JBRulesetData, JBRulesetMetadata } from '@bananapus/nana-sdk-core'
 import { useV4V5FormatCycleSection } from './useV4V5FormatCycleSection'
 import { useV4V5FormatTokenSection } from './useV4V5FormatTokenSection'
 import { useV4V5FormatOtherRulesSection } from './useV4V5FormatOtherRulesSection'

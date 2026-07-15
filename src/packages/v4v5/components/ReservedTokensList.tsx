@@ -3,7 +3,7 @@ import { t } from '@lingui/macro'
 import { Button } from 'antd'
 import { FormItemInput } from 'models/formItemInput'
 
-import { SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { SPLITS_TOTAL_PERCENT } from '@bananapus/nana-sdk-core'
 import { useMemo } from 'react'
 import { totalSplitsPercent } from '../utils/v4Splits'
 import { Allocation, AllocationSplit } from './Allocation/Allocation'

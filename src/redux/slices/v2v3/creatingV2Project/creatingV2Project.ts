@@ -15,7 +15,7 @@ import {
 } from '../shared/v2ProjectDefaultState'
 import { NftRewardsData, ReduxState } from '../shared/v2ProjectTypes'
 
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { CreatePage } from 'models/createPage'
 import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import { PayoutsSelection } from 'models/payoutsSelection'

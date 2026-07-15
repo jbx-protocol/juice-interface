@@ -1,7 +1,7 @@
 import { Button, Tooltip } from 'antd'
 import { Trans, t } from '@lingui/macro'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useJBChainId, useJBProjectId, useJBRuleset, useJBTokenContext } from 'juice-sdk-react'
+import { useJBChainId, useJBProjectId, useJBRuleset, useJBTokenContext } from '@bananapus/nana-sdk-react'
 import { useProjectDispatch, useProjectSelector, useProjectStore } from '../redux/hooks'
 
 import { EthereumLogo } from './EthereumLogo'

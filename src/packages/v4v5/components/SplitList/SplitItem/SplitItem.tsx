@@ -1,4 +1,4 @@
-import { JBSplit } from 'juice-sdk-core'
+import { JBSplit } from '@bananapus/nana-sdk-core'
 import { isJuiceboxProjectSplit } from 'packages/v4v5/utils/v4Splits'
 import { ETHAddressBeneficiary } from './EthAddressBeneficiary'
 import { JuiceboxProjectBeneficiary } from './JuiceboxProjectBeneficiary'

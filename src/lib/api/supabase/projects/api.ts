@@ -16,7 +16,7 @@ import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient } from 'lib/apollo/serverClient'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
-import { PV4, PV5 } from 'models/pv'
+import { PV4, PV5, PV6 } from 'models/pv'
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
   Dbv4V5ProjectsDocument,
@@ -70,7 +70,7 @@ export async function queryAllSGProjectsForServer() {
 
   const v4v5Parsed = v4v5.map(p => {
     // p.version is non-null, but treat as optional to support bendystraw pre-v5 integration
-    const pv = (p.version?.toString() as PV4 | PV5) ?? PV_V4
+    const pv = (p.version?.toString() as PV4 | PV5 | PV6) ?? PV_V4
 
     return {
       ...p,

@@ -2,7 +2,7 @@ import { Button, Tooltip } from 'antd'
 import { useCallback, useState } from 'react'
 
 import { ArrowUpCircleIcon } from '@heroicons/react/24/outline'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { Trans } from '@lingui/macro'
 import V4V5DistributeReservedTokensModal from './V4V5DistributeReservedTokensModal'
 import { reloadWindow } from 'utils/windowUtils'

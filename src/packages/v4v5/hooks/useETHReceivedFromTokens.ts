@@ -2,11 +2,11 @@ import {
   JBChainId,
   useJBContractContext,
   useNativeTokenSurplus,
-} from 'juice-sdk-react'
-import { jbControllerAbi, jbTokensAbi, JBCoreContracts } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jbControllerAbi, jbTokensAbi, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 
-import { getTokenCashOutQuoteEth } from 'juice-sdk-core'
+import { getTokenCashOutQuoteEth } from '@bananapus/nana-sdk-core'
 import { useJBRulesetByChain } from './useJBRulesetByChain'
 
 export function useETHReceivedFromTokens(

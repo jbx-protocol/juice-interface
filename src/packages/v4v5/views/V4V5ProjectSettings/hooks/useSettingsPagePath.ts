@@ -1,4 +1,4 @@
-import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext } from '@bananapus/nana-sdk-react'
 
 import { SettingsPageKey } from '../ProjectSettingsDashboard'
 import { settingsPagePath } from 'packages/v4v5/utils/routes'

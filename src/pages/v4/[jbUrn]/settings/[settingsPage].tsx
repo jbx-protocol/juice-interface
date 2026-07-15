@@ -1,4 +1,4 @@
-import { jbUrn } from 'juice-sdk-core'
+import { jbUrn } from '@bananapus/nana-sdk-core'
 import { useRouter } from 'next/router'
 import { V4V5SettingsProvider } from 'packages/v4v5/contexts/V4V5SettingsProvider'
 import { V4V5VersionProvider } from 'packages/v4v5/contexts/V4V5VersionProvider'

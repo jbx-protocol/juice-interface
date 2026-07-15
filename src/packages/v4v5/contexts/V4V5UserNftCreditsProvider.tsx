@@ -1,6 +1,6 @@
 import { useWallet } from 'hooks/Wallet'
-import { useJBRulesetContext } from 'juice-sdk-react'
-import { jb721TiersHookAbi } from 'juice-sdk-core'
+import { useJBRulesetContext } from '@bananapus/nana-sdk-react'
+import { jb721TiersHookAbi } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 import React, { PropsWithChildren } from 'react'
 

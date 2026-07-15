@@ -1,6 +1,6 @@
 import EthereumAddress from 'components/EthereumAddress'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { ReviewDescription } from '../ReviewDescription'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { t } from '@lingui/macro'

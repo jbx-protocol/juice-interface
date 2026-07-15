@@ -3,7 +3,7 @@ import {
   useJBChainId,
   useJBContractContext,
   useJBProjectMetadataContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { useProjectQuery, useSuckerGroupQuery } from 'generated/v4v5/graphql'
@@ -13,7 +13,7 @@ import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
 import { GnosisSafe } from 'models/safe'
 import useV4V5ProjectOwnerOf from 'packages/v4v5/hooks/useV4V5ProjectOwnerOf'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
-import { getJBContractAddress } from 'juice-sdk-core'
+import { getJBContractAddress } from '@bananapus/nana-sdk-core'
 
 export interface ProjectHeaderData {
   title: string | undefined

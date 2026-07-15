@@ -1,5 +1,5 @@
-import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from 'juice-sdk-core'
-import { useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, jbContractAddress, JBCoreContracts, jbProjectsAbi } from '@bananapus/nana-sdk-core'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from '@bananapus/nana-sdk-react'
 import { Address, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
@@ -12,7 +12,7 @@ export function useTransferOmnichainProjectOwnership() {
   const { sendRelayrTx } = useSendRelayrTx()
   const relayrBundle = useGetRelayrTxBundle()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   
   async function transferOmnichainProjectOwnership(

@@ -12,7 +12,7 @@ import {
 import { t } from '@lingui/macro'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import React from 'react'
 import { ChainLogo } from './ChainLogo'
 

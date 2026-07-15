@@ -1,6 +1,6 @@
 import { Abi, Address, Client, encodeFunctionData, PublicClient, Transport } from 'viem'
 import { estimateGas } from 'viem/actions'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { Chain } from 'viem/chains'
 

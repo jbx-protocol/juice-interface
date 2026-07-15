@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PV_V1, PV_V2, PV_V4, PV_V5 } from 'constants/pv'
-import { JBChainId } from 'juice-sdk-core'
+import { PV_V1, PV_V2, PV_V4, PV_V5, PV_V6 } from 'constants/pv'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { PV } from 'models/pv'
 import { findProjectMetadata } from './ipfs'
 
@@ -34,5 +34,10 @@ export const getProjectMetadata = async (
         './v4v5Metadata'
       )
       return getV5ProjectMetadata(projectId, chainId, '5')
+    case PV_V6:
+      const { getV4V5ProjectMetadata: getV6ProjectMetadata } = await import(
+        './v4v5Metadata'
+      )
+      return getV6ProjectMetadata(projectId, chainId, '6')
   }
 }

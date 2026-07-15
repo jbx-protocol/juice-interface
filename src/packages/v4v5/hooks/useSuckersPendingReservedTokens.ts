@@ -4,9 +4,9 @@ import {
   jbControllerAbi,
   jbContractAddress,
   JBCoreContracts
-} from "juice-sdk-core";
+} from "@bananapus/nana-sdk-core";
 import { readContract } from "wagmi/actions";
-import { useJBChainId, useJBContractContext, useSuckers } from "juice-sdk-react";
+import { useJBChainId, useJBContractContext, useSuckers } from "@bananapus/nana-sdk-react";
 import { useConfig } from "wagmi";
 import { useQuery } from "wagmi/query";
 import { useV4V5Version } from '../contexts/V4V5VersionProvider';
@@ -14,7 +14,7 @@ import { useV4V5Version } from '../contexts/V4V5VersionProvider';
 export function useSuckersPendingReservedTokens() {
   const config = useConfig();
   const { version } = useV4V5Version();
-  const versionString = version.toString() as '4' | '5';
+  const versionString = version.toString() as '4' | '5' | '6';
 
   const chainId = useJBChainId();
 

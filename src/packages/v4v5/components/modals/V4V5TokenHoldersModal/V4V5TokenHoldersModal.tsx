@@ -6,7 +6,7 @@ import {
   useJBChainId,
   useJBContractContext,
   useJBTokenContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'

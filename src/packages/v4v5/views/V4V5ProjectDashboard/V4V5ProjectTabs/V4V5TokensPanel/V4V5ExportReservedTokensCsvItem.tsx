@@ -1,6 +1,6 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from '@bananapus/nana-sdk-react'
 import { useV4V5ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'
 import { useV4V5ExportSplitsToCsv } from '../V4V5CyclesPayoutsPanel/hooks/useV4V5ExportSplitsToCsv'
 

@@ -1,10 +1,10 @@
 import { Address, encodeFunctionData } from 'viem'
-import { JBChainId, createSalt, jb721TiersHookAbi } from 'juice-sdk-core'
+import { JBChainId, createSalt, jb721TiersHookAbi, jb721TiersHookV5Abi } from '@bananapus/nana-sdk-core'
 import { JB_721_TIER_PARAMS_V4, NftRewardTier } from 'models/nftRewards'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
-import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBRulesetContext, useSendRelayrTx } from 'juice-sdk-react'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBRulesetContext, useSendRelayrTx } from '@bananapus/nana-sdk-react'
 
-import { JB721DelegateVersion } from 'models/JB721Delegate'
+import { JB721DelegateVersion, jb721TierConfigToV6 } from 'models/JB721Delegate'
 import { useWallet } from 'hooks/Wallet'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 
@@ -39,19 +39,37 @@ export function useOmnichainUpdateCurrentCollection() {
     const tierParams = buildJB721TierParams({
       cids: tierCids,
       rewardTiers: newTiers,
-      version: version === 5 ? JB721DelegateVersion.JB721DELEGATE_V5 : JB721DelegateVersion.JB721DELEGATE_V4,
+      version:
+        version === 6
+          ? JB721DelegateVersion.JB721DELEGATE_V6
+          : version === 5
+          ? JB721DelegateVersion.JB721DELEGATE_V5
+          : JB721DelegateVersion.JB721DELEGATE_V4,
     })
 
     // Common salt
     const salt = createSalt()
 
+    const tierIdsToRemove = editedRewardTierIds.map(i => BigInt(i))
+
     const txs = chainIds.map(chainId => {
-      // Use the correct abi and function name
-      const encoded = encodeFunctionData({
-        abi: jb721TiersHookAbi,
-        functionName: 'adjustTiers',
-        args: [tierParams as JB_721_TIER_PARAMS_V4[], editedRewardTierIds.map(i => BigInt(i))]
-      })
+      // The v6 hook's adjustTiers takes a different tier config shape
+      // (nested flags tuple + splitPercent/splits) than v4/v5.
+      const encoded =
+        version === 6
+          ? encodeFunctionData({
+              abi: jb721TiersHookAbi,
+              functionName: 'adjustTiers',
+              args: [
+                (tierParams as JB_721_TIER_PARAMS_V4[]).map(jb721TierConfigToV6),
+                tierIdsToRemove,
+              ],
+            })
+          : encodeFunctionData({
+              abi: jb721TiersHookV5Abi,
+              functionName: 'adjustTiers',
+              args: [tierParams as JB_721_TIER_PARAMS_V4[], tierIdsToRemove],
+            })
       
       // Use the NFT hook address from the ruleset context
       // Note: This assumes the same hook address is used across all chains

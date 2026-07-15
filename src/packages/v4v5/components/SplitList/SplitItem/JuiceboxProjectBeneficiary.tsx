@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AllocatorBadge } from 'components/AllocatorBadge'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
-import { JBSplit } from 'juice-sdk-core'
+import { JBSplit } from '@bananapus/nana-sdk-core'
 import { useChainId } from 'wagmi'
 import V4V5ProjectHandleLink from '../../V4V5ProjectHandleLink'
 export function JuiceboxProjectBeneficiary({

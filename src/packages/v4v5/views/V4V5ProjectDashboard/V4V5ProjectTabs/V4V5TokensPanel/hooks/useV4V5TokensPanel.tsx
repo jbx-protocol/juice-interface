@@ -1,8 +1,8 @@
-import { JBChainId, JBProjectToken } from 'juice-sdk-core'
+import { JBChainId, JBProjectToken } from '@bananapus/nana-sdk-core'
 
 import { Tooltip } from 'antd'
 import { NETWORKS } from 'constants/networks'
-import { useJBRulesetContext, useJBTokenContext } from 'juice-sdk-react'
+import { useJBRulesetContext, useJBTokenContext } from '@bananapus/nana-sdk-react'
 import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import { useV4V5UserTotalTokensBalance } from 'packages/v4v5/contexts/V4V5UserTotalTokensBalanceProvider'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'

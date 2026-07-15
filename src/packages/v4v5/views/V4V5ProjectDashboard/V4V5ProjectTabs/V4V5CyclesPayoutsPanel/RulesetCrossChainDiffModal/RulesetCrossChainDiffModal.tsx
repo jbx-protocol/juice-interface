@@ -1,4 +1,4 @@
-import { JBRulesetData, JBRulesetMetadata } from "juice-sdk-core"
+import { JBRulesetData, JBRulesetMetadata } from "@bananapus/nana-sdk-core"
 
 import { t } from "@lingui/macro"
 import { JuiceModal } from "components/modals/JuiceModal"

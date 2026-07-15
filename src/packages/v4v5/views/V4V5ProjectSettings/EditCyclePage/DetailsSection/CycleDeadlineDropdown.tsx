@@ -5,7 +5,7 @@ import {
   useJBChainId,
   useJBContractContext,
   useJBRuleset,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { BallotStrategy } from 'models/ballot'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'
 import { getAvailableApprovalStrategies } from 'packages/v4v5/utils/approvalHooks'

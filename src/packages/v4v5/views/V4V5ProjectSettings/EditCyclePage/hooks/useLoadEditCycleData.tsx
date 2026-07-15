@@ -1,4 +1,4 @@
-import { useJBChainId, useJBProjectId, useJBRuleset, useJBUpcomingRuleset } from 'juice-sdk-react'
+import { useJBChainId, useJBProjectId, useJBRuleset, useJBUpcomingRuleset } from '@bananapus/nana-sdk-react'
 import { useEffect, useMemo, useState } from 'react'
 import {
   deriveDurationOption,
@@ -7,7 +7,7 @@ import {
 } from 'utils/format/formatTime'
 
 import { Form } from 'antd'
-import { Ether } from 'juice-sdk-core'
+import { Ether } from '@bananapus/nana-sdk-core'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
 import { useV4V5CurrentPayoutSplits } from 'packages/v4v5/hooks/useV4V5CurrentPayoutSplits'
 import { useV4V5ReservedSplits } from 'packages/v4v5/hooks/useV4V5ReservedSplits'

@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Database } from 'types/database.types'
 
 import { Project } from 'generated/graphql'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { ProjectTagName } from './project-tags'
 import { PV } from './pv'
 type P = Project & { chainId: number; suckerGroupId: string }

@@ -1,4 +1,4 @@
-import { JBSplit as Split } from 'juice-sdk-core'
+import { JBSplit as Split } from '@bananapus/nana-sdk-core'
 import { FormItemInput } from 'models/formItemInput'
 import { V4V5CurrencyOption } from 'packages/v4v5/models/v4CurrencyOption'
 import { createContext, useContext } from 'react'

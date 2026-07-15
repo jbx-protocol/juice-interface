@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
-import { SplitPortion } from 'juice-sdk-core'
+import { SplitPortion } from '@bananapus/nana-sdk-core'
 
 export function ReservedTokensValue({
   splitPercent,

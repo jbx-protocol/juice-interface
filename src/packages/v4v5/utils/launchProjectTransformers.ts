@@ -2,12 +2,13 @@ import {
   ETH_CURRENCY_ID,
   jbContractAddress,
   JBCoreContracts,
+  JBRouterTerminalContracts,
   JBSplit,
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
   SplitGroup,
   SplitPortion,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 
 import {
   V2V3FundAccessConstraint,
@@ -52,7 +53,7 @@ export function transformV2V3CreateArgsToV4({
   v2v3Args: LaunchV2V3ProjectArgs
   primaryNativeTerminal: Address
   currencyTokenAddress: Address
-  version: 4 | 5
+  version: 4 | 5 | 6
   chainId: number
 }) {
   const [
@@ -77,26 +78,33 @@ export function transformV2V3CreateArgsToV4({
 
   const now = round(new Date().getTime() / 1000)
 
-  // Map v4 approval hooks to their v5 equivalents when version is 5
+  // Map approval hooks from other versions to the target version's equivalents
   const ballotAddress = _fundingCycleData.ballot?.toLowerCase()
   let approvalHook = _fundingCycleData.ballot as Address
 
-  if (version === 5 && ballotAddress) {
+  if (version >= 5 && ballotAddress) {
     const chainIdKey = String(
       chainId,
     ) as keyof (typeof jbContractAddress)['4'][JBCoreContracts.JBDeadline1Day]
+    const versionKey = String(version) as '5' | '6'
 
-    // Check if ballot is a v4 approval hook and map to v5
-    const v4Hooks: Record<string, Address> = {
-      [jbContractAddress['4'][JBCoreContracts.JBDeadline1Day][chainIdKey]]:
-        jbContractAddress['5'][JBCoreContracts.JBDeadline1Day][chainIdKey],
-      [jbContractAddress['4'][JBCoreContracts.JBDeadline3Days][chainIdKey]]:
-        jbContractAddress['5'][JBCoreContracts.JBDeadline3Days][chainIdKey],
-      [jbContractAddress['4'][JBCoreContracts.JBDeadline7Days][chainIdKey]]:
-        jbContractAddress['5'][JBCoreContracts.JBDeadline7Days][chainIdKey],
+    // Check if ballot is another version's approval hook and map to this version's
+    const hookMap: Record<string, Address> = {}
+    for (const deadline of [
+      JBCoreContracts.JBDeadline1Day,
+      JBCoreContracts.JBDeadline3Days,
+      JBCoreContracts.JBDeadline7Days,
+    ] as const) {
+      const target = jbContractAddress[versionKey][deadline][chainIdKey]
+      for (const sourceVersion of ['4', '5'] as const) {
+        if (sourceVersion === versionKey) continue
+        hookMap[
+          jbContractAddress[sourceVersion][deadline][chainIdKey].toLowerCase()
+        ] = target
+      }
     }
 
-    approvalHook = (v4Hooks[ballotAddress] as Address) ?? approvalHook
+    approvalHook = (hookMap[ballotAddress] as Address) ?? approvalHook
   }
 
   const ruleset = {
@@ -130,6 +138,21 @@ export function transformV2V3CreateArgsToV4({
     terminals: _terminals,
     currencyTokenAddress,
   })
+
+  // v6 replaces the swap terminal with the router terminal registry: register it with empty
+  // accounting contexts so the project can accept any token (it swaps into the accounting token).
+  if (version === 6) {
+    const chainIdKey = String(
+      chainId,
+    ) as keyof (typeof jbContractAddress)['6'][JBRouterTerminalContracts.JBRouterTerminalRegistry]
+    terminalConfigurations.push({
+      terminal:
+        jbContractAddress['6'][
+          JBRouterTerminalContracts.JBRouterTerminalRegistry
+        ][chainIdKey],
+      accountingContextsToAccept: [],
+    })
+  }
 
   const result = [
     _owner as Address,
@@ -165,6 +188,10 @@ export function transformFCMetadataToRulesetMetadata({
     holdFees: fundingCycleMetadata.holdFees,
     useTotalSurplusForCashOuts:
       fundingCycleMetadata.useTotalOverflowForRedemptions,
+    // v6 renamed the flag above with INVERTED semantics. Both keys are set so the same
+    // object encodes correctly under the v4/v5 and v6 ABIs (viem picks fields by name).
+    scopeCashOutsToLocalBalances:
+      !fundingCycleMetadata.useTotalOverflowForRedemptions,
     useDataHookForPay: fundingCycleMetadata.useDataSourceForPay,
     useDataHookForCashOut: fundingCycleMetadata.useDataSourceForRedeem,
     dataHook: fundingCycleMetadata.dataSource as Address,
@@ -209,7 +236,7 @@ export function transformV2V3FundAccessConstraintsToV4({
   v2V3FundAccessConstraints: V2V3FundAccessConstraint[]
   primaryNativeTerminal: Address
   currencyTokenAddress: Address
-  version: 4 | 5
+  version: 4 | 5 | 6
 }): FundAccessLimitGroup[] {
   return v2V3FundAccessConstraints.map(constraint => ({
     terminal: primaryNativeTerminal as `0x${string}`,

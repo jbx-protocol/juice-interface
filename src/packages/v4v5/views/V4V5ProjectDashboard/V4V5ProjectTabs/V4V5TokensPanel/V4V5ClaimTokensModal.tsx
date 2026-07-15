@@ -1,13 +1,13 @@
 import { Trans, t } from '@lingui/macro'
 import { Descriptions, Form } from 'antd'
-import { Ether, JBChainId } from 'juice-sdk-core'
+import { Ether, JBChainId } from '@bananapus/nana-sdk-core'
 import {
   useJBChainId,
   useJBProjectId,
   useJBTokenContext,
   useSuckers,
-} from 'juice-sdk-react'
-import { jbDirectoryAbi, jbTokensAbi, jbControllerAbi, JBCoreContracts, jbContractAddress } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jbDirectoryAbi, jbTokensAbi, jbControllerAbi, JBCoreContracts, jbContractAddress } from '@bananapus/nana-sdk-core'
 import { useReadContract, useWriteContract } from 'wagmi'
 import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -41,7 +41,7 @@ export function V4V5ClaimTokensModal({
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const { token } = useJBTokenContext()
   const { userAddress, changeNetworks } = useWallet()

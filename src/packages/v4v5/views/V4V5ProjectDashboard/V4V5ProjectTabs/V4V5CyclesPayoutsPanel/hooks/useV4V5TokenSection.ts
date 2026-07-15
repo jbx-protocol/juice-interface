@@ -1,4 +1,4 @@
-import { useJBTokenContext } from 'juice-sdk-react'
+import { useJBTokenContext } from '@bananapus/nana-sdk-react'
 
 import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { useJBRulesetByChain } from 'packages/v4v5/hooks/useJBRulesetByChain'

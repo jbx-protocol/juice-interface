@@ -5,7 +5,7 @@ import {
   useJBRulesetMetadata,
   useSuckersNativeTokenBalance,
   useSuckersNativeTokenSurplus
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'

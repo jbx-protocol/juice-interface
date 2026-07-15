@@ -1,4 +1,4 @@
-import { useJBProjectId, useJBUpcomingRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBUpcomingRuleset } from '@bananapus/nana-sdk-react'
 
 import { ClockIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'

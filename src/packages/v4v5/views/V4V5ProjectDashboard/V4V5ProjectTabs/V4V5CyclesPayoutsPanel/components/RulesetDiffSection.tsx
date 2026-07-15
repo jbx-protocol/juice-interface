@@ -1,7 +1,7 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
-import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { JBRulesetData, JBRulesetMetadata } from '@bananapus/nana-sdk-core'
 import { Fragment, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formattedNum } from 'utils/format/formatNumber'

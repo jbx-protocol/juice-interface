@@ -1,7 +1,7 @@
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V4 } from 'constants/pv'
 import { SiteBaseUrl } from 'constants/url'
-import { jbUrn, toJbUrn } from 'juice-sdk-core'
+import { jbUrn, toJbUrn } from '@bananapus/nana-sdk-core'
 import { loadCatalog } from 'locales/utils'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'

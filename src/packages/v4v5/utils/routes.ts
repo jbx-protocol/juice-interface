@@ -23,6 +23,17 @@ export const v5ProjectRoute = ({
   return `/v5/${chainSlug}:${projectId?.toString()}`
 }
 
+export const v6ProjectRoute = ({
+  chainId,
+  projectId,
+}: {
+  chainId: number
+  projectId?: number
+}) => {
+  const chainSlug = getChainSlug(chainId)
+  return `/v6/${chainSlug}:${projectId?.toString()}`
+}
+
 export const v4v5ProjectRoute = ({
   chainId,
   projectId,
@@ -30,7 +41,7 @@ export const v4v5ProjectRoute = ({
 }: {
   chainId: number
   projectId?: number
-  version: 4 | 5
+  version: 4 | 5 | 6
 }) => {
   const chainSlug = getChainSlug(chainId)
   return `/v${version}/${chainSlug}:${projectId?.toString()}`
@@ -44,7 +55,7 @@ export const settingsPagePath = (
   }: {
     projectId: number
     chainId: number
-    version?: 4 | 5
+    version?: 4 | 5 | 6
   },
   settingsPage?: SettingsPageKey,
 ) => {

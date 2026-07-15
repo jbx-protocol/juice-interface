@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import { FormInstance, useWatch } from 'antd/lib/form/Form'
-import { JBChainId, JBProjectMetadata, jbControllerAbi } from 'juice-sdk-core'
-import { useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { JBChainId, JBProjectMetadata, jbControllerAbi } from '@bananapus/nana-sdk-core'
+import { useJBContractContext, useSuckers } from '@bananapus/nana-sdk-react'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from 'packages/v4v5/hooks/useProposeSafeTransaction'
 
 import { ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'

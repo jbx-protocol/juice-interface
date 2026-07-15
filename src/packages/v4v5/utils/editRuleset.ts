@@ -1,4 +1,4 @@
-import { ETH_CURRENCY_ID, JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, JBChainId, NATIVE_TOKEN } from '@bananapus/nana-sdk-core'
 
 import round from 'lodash/round'
 import { issuanceRateFrom } from 'packages/v2v3/utils/math'
@@ -34,6 +34,7 @@ export type EditCycleTxArgs = readonly [
       ownerMustSendPayouts: boolean
       holdFees: boolean
       useTotalSurplusForCashOuts: boolean
+      scopeCashOutsToLocalBalances: boolean
       useDataHookForPay: boolean
       useDataHookForCashOut: boolean
       dataHook: `0x${string}`
@@ -82,7 +83,7 @@ export function transformEditCycleFormFieldsToTxArgs({
   dataHook: `0x${string}`
   projectId: bigint
   chainId: JBChainId
-  version: 4 | 5
+  version: 4 | 5 | 6
 }): EditCycleTxArgs {
   const now = round(new Date().getTime() / 1000)
 
@@ -132,7 +133,8 @@ export function transformEditCycleFormFieldsToTxArgs({
         allowAddPriceFeed: false, // Defaulting to false as it's not in formValues
         ownerMustSendPayouts: false, // Defaulting to false as it's not in formValues
         holdFees: formValues.holdFees,
-        useTotalSurplusForCashOuts: false, // Defaulting to false as it's not in formValues
+        useTotalSurplusForCashOuts: false, // Defaulting to false as it's not in formValues. Read by v4/v5 ABIs.
+        scopeCashOutsToLocalBalances: true, // v6 renamed the flag with inverted meaning; must stay the negation of useTotalSurplusForCashOuts. Read by the v6 ABI.
         useDataHookForPay: useDataHookForPayValue,
         useDataHookForCashOut: false, // Defaulting to false as it's not in formValues
         dataHook, // doesn't change in edit ruleset

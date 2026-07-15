@@ -2,8 +2,8 @@ import {
   useJBProjectId,
   useJBRuleset,
   useJBContractContext,
-} from 'juice-sdk-react'
-import { jbRulesetsAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jbRulesetsAbi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 
 import { V4ApprovalStatus } from 'models/approvalHooks'

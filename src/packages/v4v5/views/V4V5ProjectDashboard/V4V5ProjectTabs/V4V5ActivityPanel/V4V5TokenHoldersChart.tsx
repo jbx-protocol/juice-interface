@@ -4,7 +4,7 @@ import {
   useJBChainId,
   useJBContractContext,
   useJBTokenContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { getBendystrawClient } from 'lib/apollo/bendystrawClient'
 import TokenDistributionChart from 'packages/v4v5/components/modals/V4V5TokenHoldersModal/TokenDistributionChart'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'

@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { useV4V5ProjectHeader } from './hooks/useV4V5ProjectHeader'
-import { USDC_ADDRESSES } from 'juice-sdk-core'
+import { USDC_ADDRESSES } from '@bananapus/nana-sdk-core'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 
 // Build currency mapping from SDK constants

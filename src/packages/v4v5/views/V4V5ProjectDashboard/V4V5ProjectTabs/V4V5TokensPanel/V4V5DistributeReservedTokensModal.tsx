@@ -1,8 +1,8 @@
-import { JBChainId, formatEther } from 'juice-sdk-core'
+import { JBChainId, formatEther } from '@bananapus/nana-sdk-core'
 import { Trans, t } from '@lingui/macro'
 import { useContext, useEffect, useState } from 'react'
-import { useJBProjectId, useJBTokenContext, useSuckers } from 'juice-sdk-react'
-import { jbControllerAbi, jbDirectoryAbi, JBCoreContracts, jbContractAddress } from 'juice-sdk-core'
+import { useJBProjectId, useJBTokenContext, useSuckers } from '@bananapus/nana-sdk-react'
+import { jbControllerAbi, jbDirectoryAbi, JBCoreContracts, jbContractAddress } from '@bananapus/nana-sdk-core'
 import { useReadContract, useWriteContract } from 'wagmi'
 
 import { ChainSelect } from 'packages/v4v5/components/ChainSelect'
@@ -32,7 +32,7 @@ export default function V4V5DistributeReservedTokensModal({
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   // Chain selection state - separate from the hook's chain
   const [selectedChainId, setSelectedChainId] = useState<JBChainId>(defaultChainId)

@@ -1,5 +1,5 @@
 import { ConfigurationPanel } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { JBRulesetData, JBRulesetMetadata } from '@bananapus/nana-sdk-core'
 import { useV4V5CycleConfigurationPanel } from './hooks/useV4V5CycleConfigurationPanel'
 
 type V4V5CycleConfigurationPanelProps = {

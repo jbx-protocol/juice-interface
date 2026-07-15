@@ -1,5 +1,5 @@
 import { TESTNET_IDS } from 'constants/networks'
-import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
+import { JB_CHAINS, JBChainId } from '@bananapus/nana-sdk-core'
 
 export function getChainName(chainId: number) {
   return JB_CHAINS[chainId as JBChainId].name

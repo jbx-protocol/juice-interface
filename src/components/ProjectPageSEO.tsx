@@ -1,5 +1,5 @@
 import { SiteBaseUrl } from 'constants/url'
-import { JBChainId, toJbUrn } from 'juice-sdk-core'
+import { JBChainId, toJbUrn } from '@bananapus/nana-sdk-core'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import { stripHtmlTags } from 'utils/string'

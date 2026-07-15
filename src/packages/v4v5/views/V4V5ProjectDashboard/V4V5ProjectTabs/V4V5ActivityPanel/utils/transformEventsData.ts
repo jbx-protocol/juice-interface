@@ -1,4 +1,4 @@
-import { Ether, JBProjectToken } from 'juice-sdk-core'
+import { Ether, JBProjectToken } from '@bananapus/nana-sdk-core'
 
 import { ActivityEventsQuery } from 'packages/v4v5/graphql/client/graphql'
 
@@ -27,7 +27,7 @@ export interface Event {
   projectToken?: string | null
   projectCurrency?: string | null
   projectDecimals?: number | null
-  projectVersion?: 4 | 5 | null
+  projectVersion?: 4 | 5 | 6 | null
   timestamp: number
   txHash: string
   from: string
@@ -169,7 +169,7 @@ function extractBaseEventData(
   projectToken?: string | null,
   projectCurrency?: string | null,
   projectDecimals?: number | null,
-  projectVersion?: 4 | 5 | null,
+  projectVersion?: 4 | 5 | 6 | null,
 ): AnyEvent {
   return {
     // Make type null and set it later
@@ -203,7 +203,7 @@ export function transformEventData(
   // Currency appears to be an ID/enum, not the token address
   const projectCurrency = data.project?.currency ? String(data.project.currency) : null
   const projectDecimals = data.project?.decimals ? Number(data.project.decimals) : null
-  const projectVersion = data.project?.version === 4 || data.project?.version === 5 ? data.project.version : null
+  const projectVersion = data.project?.version === 4 || data.project?.version === 5 || data.project?.version === 6 ? data.project.version : null
 
   // Check for aggregated events first
   // TODO: Aggregated event handling - temporarily disabled

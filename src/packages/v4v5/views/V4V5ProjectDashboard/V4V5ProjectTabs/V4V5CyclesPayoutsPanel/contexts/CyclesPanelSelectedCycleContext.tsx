@@ -1,4 +1,4 @@
-import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { JBRulesetData, JBRulesetMetadata } from '@bananapus/nana-sdk-core'
 import { createContext, useContext } from 'react'
 import {
   CycleOption,

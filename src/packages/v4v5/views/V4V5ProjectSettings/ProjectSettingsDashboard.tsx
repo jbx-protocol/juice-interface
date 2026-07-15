@@ -3,7 +3,7 @@ import {
   useJBChainId,
   useJBContractContext,
   useJBProjectMetadataContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'

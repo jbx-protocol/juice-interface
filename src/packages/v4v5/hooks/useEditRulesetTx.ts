@@ -4,12 +4,13 @@ import {
   jbContractAddress,
   jbController4_1Abi,
   jbControllerAbi,
-} from 'juice-sdk-core'
+  jbControllerV5Abi,
+} from '@bananapus/nana-sdk-core'
 import {
   JBRulesetContext,
   useJBChainId,
   useJBContractContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useCallback, useContext } from 'react'
 import { useWriteContract } from 'wagmi'
 
@@ -92,9 +93,19 @@ export function useEditRulesetTx() {
         // console.log('contracts address: ', contracts.controller.data)
         // console.log('encodedData: ', encodedData)
 
+        // v6 uses the canonical (v6) controller ABI. v4.1 has its own ABI.
+        // v4 (non-4.1) and v5 share the v5 controller ABI, which reads the
+        // useTotalSurplusForCashOuts metadata flag (renamed in v6).
+        const abi =
+          version === 6
+            ? jbControllerAbi
+            : isV4_1
+            ? jbController4_1Abi
+            : jbControllerV5Abi
+
         const hash = await writeEditRuleset({
           address: contracts.controller.data,
-          abi: isV4_1 ? jbController4_1Abi : jbControllerAbi,
+          abi,
           functionName: 'queueRulesetsOf',
           args,
         })

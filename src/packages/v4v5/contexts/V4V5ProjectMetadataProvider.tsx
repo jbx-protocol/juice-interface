@@ -1,4 +1,4 @@
-import { useJBProjectMetadataContext } from 'juice-sdk-react'
+import { useJBProjectMetadataContext } from '@bananapus/nana-sdk-react'
 
 import { PV_V4 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'

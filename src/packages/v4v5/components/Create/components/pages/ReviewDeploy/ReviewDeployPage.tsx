@@ -2,7 +2,7 @@ import { Checkbox, Form } from 'antd'
 import {
   jb721TiersHookProjectDeployerAbi,
   jbControllerAbi,
-} from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-core'
 import React, {
   useCallback,
   useContext,
@@ -32,7 +32,7 @@ import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
 import { useWallet } from 'hooks/Wallet'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { useRouter } from 'next/router'
 import QueueSafeLaunchProjectTxsModal from 'packages/v4v5/components/QueueSafeTxsModal/QueueSafeLaunchProjectTxsModal'
@@ -138,14 +138,14 @@ export const ReviewDeployPage = () => {
   const [standardProjectLaunchData, setStandardProjectLaunchData] = useState<{
     [k in JBChainId]?: ContractFunctionArgs<
       typeof jbControllerAbi,
-      'nonpayable',
+      'payable',
       'launchProjectFor'
     >
   }>()
   const [nftProjectLaunchData, setNftProjectLaunchData] = useState<{
     [k in JBChainId]?: ContractFunctionArgs<
       typeof jb721TiersHookProjectDeployerAbi,
-      'nonpayable',
+      'payable',
       'launchProjectFor'
     >
   }>()
@@ -208,7 +208,7 @@ export const ReviewDeployPage = () => {
           {} as {
             [k in JBChainId]?: ContractFunctionArgs<
               typeof jb721TiersHookProjectDeployerAbi,
-              'nonpayable',
+              'payable',
               'launchProjectFor'
             >
           },
@@ -229,7 +229,7 @@ export const ReviewDeployPage = () => {
           {} as {
             [k in JBChainId]?: ContractFunctionArgs<
               typeof jbControllerAbi,
-              'nonpayable',
+              'payable',
               'launchProjectFor'
             >
           },

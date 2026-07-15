@@ -1,5 +1,5 @@
 import { useCountdownClock } from 'components/Project/hooks/useCountdownClock'
-import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from '@bananapus/nana-sdk-react'
 import { createContext } from 'react'
 
 type RulesetCountdownContextType = {

@@ -2,12 +2,12 @@ import { ShareAltOutlined, TwitterOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { JB_CHAINS } from 'juice-sdk-core'
-import { JBChainId } from 'juice-sdk-react'
+import { JB_CHAINS } from '@bananapus/nana-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import Image from 'next/legacy/image'
 import { useRouter } from 'next/router'
 import V4V5ProjectHandleLink from 'packages/v4v5/components/V4V5ProjectHandleLink'
-import { v5ProjectRoute } from 'packages/v4v5/utils/routes'
+import { v6ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useMemo } from 'react'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
 
@@ -28,7 +28,7 @@ export const DeploySuccess = ({
     if (!projectIds || projectIds.length === 0) {
       return ''
     }
-    const juiceboxUrl = v5ProjectRoute(projectIds[0])
+    const juiceboxUrl = v6ProjectRoute(projectIds[0])
     const chain = JB_CHAINS[projectIds[0].chainId]
 
     const message = `Check out my project on ${

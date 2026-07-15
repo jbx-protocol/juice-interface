@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import Image from 'next/legacy/image'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
 

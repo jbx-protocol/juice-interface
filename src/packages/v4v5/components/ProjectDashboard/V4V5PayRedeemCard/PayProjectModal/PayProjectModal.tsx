@@ -1,4 +1,4 @@
-import { JBChainId, useJBChainId } from 'juice-sdk-react'
+import { JBChainId, useJBChainId } from '@bananapus/nana-sdk-react'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
@@ -21,7 +21,7 @@ import { payRedeemActions } from '../../redux/payRedeemSlice'
 import { twMerge } from 'tailwind-merge'
 import { usePayAmounts } from './hooks/usePayAmounts'
 import { useProjectIsOFACListed } from 'hooks/useProjectIsOFACListed'
-import { useSuckers } from 'juice-sdk-react'
+import { useSuckers } from '@bananapus/nana-sdk-react'
 import { useV4V5UserNftCredits } from 'packages/v4v5/contexts/V4V5UserNftCreditsProvider'
 import { useWallet } from 'hooks/Wallet'
 

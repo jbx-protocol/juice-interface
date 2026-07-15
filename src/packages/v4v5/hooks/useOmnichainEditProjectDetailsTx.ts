@@ -1,8 +1,8 @@
-import { JBChainId, jbControllerAbi } from 'juice-sdk-core'
-import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, jbControllerAbi } from '@bananapus/nana-sdk-core'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from '@bananapus/nana-sdk-react'
 
 import { useWallet } from 'hooks/Wallet'
-import { useSuckers } from 'juice-sdk-react'
+import { useSuckers } from '@bananapus/nana-sdk-react'
 import { encodeFunctionData } from 'viem'
 import { estimateContractGasWithFallback, OMNICHAIN_GAS_FALLBACKS } from '../utils/estimateOmnichainGas'
 

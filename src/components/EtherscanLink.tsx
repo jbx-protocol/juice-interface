@@ -1,5 +1,5 @@
 import { LinkIcon } from '@heroicons/react/24/outline'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { MouseEventHandler } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { etherscanLink } from 'utils/etherscan'

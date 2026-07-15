@@ -21,6 +21,10 @@ const FEATURE_FLAG_DEFAULTS: {
     mainnet: true,
     sepolia: true,
   },
+  [FEATURE_FLAGS.V6]: {
+    mainnet: true,
+    sepolia: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

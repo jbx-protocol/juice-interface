@@ -2,7 +2,7 @@ import { Trans, t } from '@lingui/macro'
 import { DEADLINE_EXPLANATION, RULESET_EXPLANATION } from 'components/strings'
 
 import Loading from 'components/Loading'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-react'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { CreateBadge } from './components/CreateBadge'

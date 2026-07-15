@@ -2,8 +2,8 @@ import {
   PlusCircleIcon,
   ReceiptRefundIcon
 } from '@heroicons/react/24/outline'
-import { useJBProjectId } from 'juice-sdk-react'
-import { jbTokensAbi, jbContractAddress, JBCoreContracts } from 'juice-sdk-core'
+import { useJBProjectId } from '@bananapus/nana-sdk-react'
+import { jbTokensAbi, jbContractAddress, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 import { ReactNode, useMemo, useState } from 'react'
 
@@ -29,7 +29,7 @@ export const useV4V5YourBalanceMenuItems = () => {
 
   const { userAddress } = useWallet()
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const { projectId, chainId } = useJBProjectId()
 

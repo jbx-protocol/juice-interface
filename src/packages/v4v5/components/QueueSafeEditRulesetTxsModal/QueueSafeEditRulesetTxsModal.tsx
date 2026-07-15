@@ -1,14 +1,14 @@
 import { Trans } from '@lingui/macro'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 import { useCallback } from 'react'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from '../../hooks/useProposeSafeTransaction'
 import { EditCycleFormFields } from '../../views/V4V5ProjectSettings/EditCyclePage/EditCycleFormFields'
 import QueueSafeTxsModal from '../QueueSafeTxsModal'
-import { useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { useJBContractContext, useSuckers } from '@bananapus/nana-sdk-react'
 import { useContext } from 'react'
-import { JBRulesetContext } from 'juice-sdk-react'
+import { JBRulesetContext } from '@bananapus/nana-sdk-react'
 import { useV4V5Version } from '../../contexts/V4V5VersionProvider'
-import { NATIVE_TOKEN, jbContractAddress, JBCoreContracts, jbController4_1Abi, jbControllerAbi } from 'juice-sdk-core'
+import { NATIVE_TOKEN, jbContractAddress, JBCoreContracts, jbController4_1Abi, jbControllerAbi, jbControllerV5Abi } from '@bananapus/nana-sdk-core'
 import { transformEditCycleFormFieldsToTxArgs } from '../../utils/editRuleset'
 import { encodeFunctionData } from 'viem'
 
@@ -65,7 +65,14 @@ export default function QueueSafeEditRulesetTxsModal({
       const projectControllerAddress = contracts.controller.data
       let data: `0x${string}`
 
-      if (version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]) {
+      if (version === 6) {
+        // Use v6 controller ABI (reads the scopeCashOutsToLocalBalances metadata flag)
+        data = encodeFunctionData({
+          abi: jbControllerAbi,
+          functionName: 'queueRulesetsOf',
+          args,
+        })
+      } else if (version === 4 && projectControllerAddress === jbContractAddress['4'][JBCoreContracts.JBController4_1][chainId]) {
         // Use v4.1 controller ABI
         data = encodeFunctionData({
           abi: jbController4_1Abi,
@@ -73,9 +80,9 @@ export default function QueueSafeEditRulesetTxsModal({
           args,
         })
       } else {
-        // Use v4 controller ABI
+        // Use v4/v5 controller ABI (reads the useTotalSurplusForCashOuts metadata flag)
         data = encodeFunctionData({
-          abi: jbControllerAbi,
+          abi: jbControllerV5Abi,
           functionName: 'queueRulesetsOf',
           args,
         })

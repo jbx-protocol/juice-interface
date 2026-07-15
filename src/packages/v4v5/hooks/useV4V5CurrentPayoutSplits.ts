@@ -1,17 +1,17 @@
-import { JBSplit, NATIVE_TOKEN, SplitPortion, jbSplitsAbi, jbTokensAbi, JBCoreContracts, jbContractAddress } from 'juice-sdk-core'
+import { JBSplit, NATIVE_TOKEN, SplitPortion, jbSplitsAbi, jbTokensAbi, JBCoreContracts, jbContractAddress } from '@bananapus/nana-sdk-core'
 import {
   JBChainId,
   useJBProjectId,
   useJBRuleset,
   useJBContractContext,
-} from 'juice-sdk-react'
+} from '@bananapus/nana-sdk-react'
 import { useReadContract } from 'wagmi'
 import { useV4V5Version } from '../contexts/V4V5VersionProvider'
 
 export const useV4V5CurrentPayoutSplits = (chainId?: JBChainId) => {
   const { projectId } = useJBProjectId(chainId)
   const { version } = useV4V5Version()
-  const versionString = version.toString() as '4' | '5'
+  const versionString = version.toString() as '4' | '5' | '6'
 
   const { contractAddress } = useJBContractContext()
   const { data: tokenAddress } = useReadContract({

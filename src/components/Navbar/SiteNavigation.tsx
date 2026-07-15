@@ -37,8 +37,8 @@ const DesktopSiteNavigation = () => {
   const router = useRouter()
 
   // Hide protocol activity toggle on project pages
-  const isProjectPage = router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
-  const isProjectRoute = /^\/(v4|v5)\/[^\/]+/.test(router.asPath)
+  const isProjectPage = router.pathname.startsWith('/v6/') || router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
+  const isProjectRoute = /^\/(v4|v5|v6)\/[^\/]+/.test(router.asPath)
   const showProtocolActivityToggle = !(isProjectPage && isProjectRoute)
 
   return (
@@ -103,8 +103,8 @@ const MobileSiteNavigation = () => {
   const router = useRouter()
 
   // Hide protocol activity toggle on project pages
-  const isProjectPage = router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
-  const isProjectRoute = /^\/(v4|v5)\/[^\/]+/.test(router.asPath)
+  const isProjectPage = router.pathname.startsWith('/v6/') || router.pathname.startsWith('/v5/') || router.pathname.startsWith('/v4/')
+  const isProjectRoute = /^\/(v4|v5|v6)\/[^\/]+/.test(router.asPath)
   const showProtocolActivityToggle = !(isProjectPage && isProjectRoute)
 
   return (

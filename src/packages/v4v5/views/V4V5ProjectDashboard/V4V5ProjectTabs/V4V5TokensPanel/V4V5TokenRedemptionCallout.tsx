@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { useJBProjectId, useJBRulesetContext, useJBUpcomingRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBRulesetContext, useJBUpcomingRuleset } from '@bananapus/nana-sdk-react'
 
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4v5/utils/math'

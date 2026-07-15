@@ -5,8 +5,8 @@ import { ChainLogo } from 'packages/v4v5/components/ChainLogo'
 import EtherscanLink from 'components/EtherscanLink'
 import { Hash } from 'viem'
 import Image from 'next/image'
-import { JBChainId } from 'juice-sdk-core'
-import { RelayrGetBundleResponse } from 'juice-sdk-react'
+import { JBChainId } from '@bananapus/nana-sdk-core'
+import { RelayrGetBundleResponse } from '@bananapus/nana-sdk-react'
 import { Skeleton } from 'antd'
 
 interface ChainTxLinkProps {

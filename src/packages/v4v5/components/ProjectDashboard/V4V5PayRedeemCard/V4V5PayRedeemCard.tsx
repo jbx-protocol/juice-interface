@@ -5,8 +5,8 @@ import {
   useJBRulesetContext,
   useJBContractContext,
   useSuckers,
-} from 'juice-sdk-react'
-import { jbTokensAbi, JBCoreContracts } from 'juice-sdk-core'
+} from '@bananapus/nana-sdk-react'
+import { jbTokensAbi, JBCoreContracts } from '@bananapus/nana-sdk-core'
 import { useReadContract } from 'wagmi'
 import React, { ReactNode } from 'react'
 import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
@@ -15,7 +15,7 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Tooltip } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import { useWallet } from 'hooks/Wallet'
-import { JB_TOKEN_DECIMALS } from 'juice-sdk-core'
+import { JB_TOKEN_DECIMALS } from '@bananapus/nana-sdk-core'
 import { useV4V5NftRewards } from 'packages/v4v5/contexts/V4V5NftRewards/V4V5NftRewardsProvider'
 import { usePayoutLimit } from 'packages/v4v5/hooks/usePayoutLimit'
 import { useProjectHasErc20Token } from 'packages/v4v5/hooks/useProjectHasErc20Token'

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 
 export type PayRedeemState = {
   cardState: 'pay' | 'redeem'

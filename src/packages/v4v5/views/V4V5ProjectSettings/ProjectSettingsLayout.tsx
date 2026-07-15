@@ -1,8 +1,8 @@
 import { Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/solid'
-import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext } from '@bananapus/nana-sdk-react'
 
 import { Trans } from '@lingui/macro'
-import { JB_CHAINS } from 'juice-sdk-core'
+import { JB_CHAINS } from '@bananapus/nana-sdk-core'
 import Link from 'next/link'
 import { v4ProjectRoute, v5ProjectRoute } from 'packages/v4v5/utils/routes'
 import { useV4V5Version } from 'packages/v4v5/contexts/V4V5VersionProvider'

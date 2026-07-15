@@ -3,7 +3,7 @@ import { Trans, t } from '@lingui/macro'
 import EtherscanLink from 'components/EtherscanLink'
 import { Hash } from 'viem'
 import Image from 'next/image'
-import { JBChainId } from 'juice-sdk-core'
+import { JBChainId } from '@bananapus/nana-sdk-core'
 
 export function TxLoadingContent({
   txHash,

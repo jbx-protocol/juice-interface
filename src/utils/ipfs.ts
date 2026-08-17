@@ -7,11 +7,14 @@ import { UploadProgressEvent } from 'rc-upload/lib/interface'
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
 
 /**
- * Return a URL to eth.sucks gateway for the given cid (primary gateway).
- * Uses CIDv1 conversion for better caching.
+ * Return a URL to the configured read gateway for the given cid, or to a
+ * specific `hostname` when a caller is walking the fallback list.
  */
-export const ipfsGatewayUrl = (cid: string | undefined): string => {
-  return `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`
+export const ipfsGatewayUrl = (
+  cid: string | undefined,
+  hostname: string = OPEN_IPFS_GATEWAY_HOSTNAME,
+): string => {
+  return `https://${hostname}/ipfs/${cid}`
 }
 
 /**
@@ -83,20 +86,19 @@ export const cidFromIpfsUri = (ipfsUri: string) =>
   ipfsUri.match(IPFS_URL_REGEX)?.[1]
 
 /**
- * Returns a native IPFS link (`ipfs://`) as a https link using eth.sucks gateway.
+ * Returns a native IPFS link (`ipfs://`) as an https link on the read gateway.
  */
 export function ipfsUriToGatewayUrl(ipfsUri: string): string {
   if (!isIpfsUri(ipfsUri)) return ipfsUri
 
-  const suffix = cidFromIpfsUri(ipfsUri)
-  return ethSucksGatewayUrl(suffix)
+  // Not eth.sucks: that gateway answers 410 Gone, so every image routed through
+  // it renders broken.
+  return ipfsGatewayUrl(cidFromIpfsUri(ipfsUri))
 }
 
 /**
- * Convert `ipfs://` urls or urls using old gateway to eth.sucks gateway with CIDv1.
- * Falls back to Infura gateway if eth.sucks fails.
- * e.g.- ipfs://123 -> https://123v1.eth.sucks/
- *     - https://old-gateway.io/ipfs/123 -> https://123v1.eth.sucks/
+ * Convert an `ipfs://` url, or one pointing at the retired dedicated gateway, to
+ * the current read gateway.
  */
 export function pinataToGatewayUrl(url: string) {
   let cid: string | undefined
@@ -109,12 +111,10 @@ export function pinataToGatewayUrl(url: string) {
     return url
   }
 
-  // Try eth.sucks first with CIDv1 if we have a valid CID
   if (cid && isIpfsCID(cid)) {
-    return ethSucksGatewayUrl(cid)
+    return ipfsGatewayUrl(cid)
   }
 
-  // Fallback to original Infura gateway logic
   if (url.startsWith('https://jbx.mypinata.cloud')) {
     return ipfsGatewayUrl(cidFromUrl(url))
   } else if (url.startsWith('ipfs://')) {

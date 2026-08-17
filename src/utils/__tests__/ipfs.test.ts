@@ -1,4 +1,36 @@
-import { decodeEncodedIpfsUri, encodeIpfsUri } from '../ipfs'
+import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+
+import {
+  decodeEncodedIpfsUri,
+  encodeIpfsUri,
+  ipfsUriToGatewayUrl,
+  pinataToGatewayUrl,
+} from '../ipfs'
+
+const CID = 'QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51'
+
+describe('ipfs gateway urls', () => {
+  // Both of these used to resolve to gateways that stopped serving: the
+  // dedicated Pinata one is NXDOMAIN and eth.sucks answers 410, so every image
+  // routed through them rendered broken.
+  it('routes ipfs:// uris at the read gateway', () => {
+    expect(ipfsUriToGatewayUrl(`ipfs://${CID}`)).toBe(
+      `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${CID}`,
+    )
+  })
+
+  it('rewrites urls on the retired dedicated gateway', () => {
+    expect(pinataToGatewayUrl(`https://jbx.mypinata.cloud/ipfs/${CID}`)).toBe(
+      `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${CID}`,
+    )
+  })
+
+  it('leaves other urls alone', () => {
+    expect(pinataToGatewayUrl('https://example.com/logo.png')).toBe(
+      'https://example.com/logo.png',
+    )
+  })
+})
 
 describe('ipfs utilities', () => {
   describe('decodeEncodedIpfsUri', () => {

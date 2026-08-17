@@ -34,6 +34,14 @@ const V2EX_URLS = [
   'https://cid.v2ex.pro/*',
 ]
 
+// The gateways reads fall back to (see IPFS_GATEWAY_HOSTNAMES). They belong in
+// every fetch directive that can carry IPFS content, media included — a gateway
+// the app now reads from but CSP does not list is a blocked request.
+const IPFS_GATEWAY_URLS = [
+  'https://gateway.pinata.cloud',
+  'https://ipfs.io',
+]
+
 const SCRIPT_SRC = [
   'https://juicebox.money', // Trusted host
   'https://*.juicebox.money', // Trusted subdomains
@@ -153,7 +161,7 @@ const ContentSecurityPolicy = `
   connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';
   frame-src ${FRAME_SRC.join(' ')};
-  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')} ${ETH_SUCKS_URLS.join(' ')} ${V2EX_URLS.join(' ')};
+  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')} ${ETH_SUCKS_URLS.join(' ')} ${V2EX_URLS.join(' ')} ${IPFS_GATEWAY_URLS.join(' ')};
   frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
   worker-src 'self' ${WORKER_SRC.join(' ')};

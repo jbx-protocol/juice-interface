@@ -1,4 +1,4 @@
-import { cidFromUrl, ethSucksGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 import { readNetwork } from 'constants/networks'
 import { PV_V2 } from 'constants/pv'
@@ -60,13 +60,12 @@ export const useProjectLogoSrc = ({
       return undefined
     }
 
-    // Some older JB projects have a logo URI hardcoded to use Pinata.
-    // JBM no longer uses Pinata.
-    // This rewrites those URLs to use the eth.sucks gateway.
+    // Some older JB projects have a logo URI hardcoded to the dedicated Pinata
+    // gateway, which no longer resolves. Rewrite those onto the read gateway.
     if (uri.startsWith('https://jbx.mypinata.cloud')) {
       const cid = cidFromUrl(uri)
       // Use `/api/image/[url].ts` to validate filetype.
-      return `/api/image/${encodeURIComponent(ethSucksGatewayUrl(cid))}`
+      return `/api/image/${encodeURIComponent(ipfsGatewayUrl(cid))}`
     }
 
     return `/api/image/${encodeURIComponent(ipfsUriToGatewayUrl(uri))}`

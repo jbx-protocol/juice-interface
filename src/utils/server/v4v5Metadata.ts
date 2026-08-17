@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPublicClient } from '@wagmi/core'
-import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+import { IPFS_GATEWAY_HOSTNAMES } from 'constants/ipfs'
 import {
   getProjectMetadata as sdkGetProjectMetadata,
   jbDirectoryAbi,
@@ -44,16 +44,32 @@ const V4V5GetMetadataCidFromContract = async (
   const client = getPublicClient(wagmiConfig, {
     chainId,
   }) as PublicClient
-  const metadata = await sdkGetProjectMetadata(
-    client,
-    {
-      jbControllerAddress,
-      projectId: BigInt(projectId),
-    },
-    {
-      ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME,
-    },
-  )
 
-  return metadata
+  // Try each read gateway. This runs during project page generation, so a single
+  // gateway that stops resolving must not become a 500 for every project.
+  let lastError: unknown
+  for (const ipfsGatewayHostname of IPFS_GATEWAY_HOSTNAMES) {
+    try {
+      return await sdkGetProjectMetadata(
+        client,
+        {
+          jbControllerAddress,
+          projectId: BigInt(projectId),
+        },
+        { ipfsGatewayHostname },
+      )
+    } catch (e: any) {
+      lastError = e
+      console.error('IPFS request failed', {
+        projectId,
+        chainId,
+        hostname: ipfsGatewayHostname,
+        status: e?.response?.status,
+        code: e?.code,
+        error: e?.message,
+      })
+    }
+  }
+
+  throw lastError
 }

@@ -1,4 +1,5 @@
 import Bottleneck from 'bottleneck'
+import { IPFS_GATEWAY_HOSTNAMES } from 'constants/ipfs'
 import { ipfsGatewayFetch } from 'lib/api/ipfs'
 import {
   AnyProjectMetadata,
@@ -8,6 +9,11 @@ import {
 
 import { GlobalInfuraScheduler } from './infuraScheduler'
 
+/** A gateway that has not answered by now is one to walk past, not to wait on. */
+const GATEWAY_TIMEOUT_MS = 10_000
+/** Attempts per gateway before moving to the next one. */
+const ATTEMPTS_PER_GATEWAY = 2
+
 export const findProjectMetadata = async ({
   metadataCid, // ipfs hash
   limiter,
@@ -16,46 +22,54 @@ export const findProjectMetadata = async ({
   limiter?: Bottleneck
 }): Promise<ProjectMetadata> => {
   limiter = limiter ?? GlobalInfuraScheduler
-  /*
-   * Safe to do so, as the static timeout will catch this and retry later.
-   */
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    try {
-      const response = await limiter.schedule(
-        async () => await ipfsGatewayFetch<AnyProjectMetadata>(metadataCid),
-      )
-      const metadata = consolidateMetadata(response.data)
-      Object.keys(metadata).forEach(key =>
+  let lastError: unknown
+
+  // Walk the gateways rather than retrying one forever. A gateway that stops
+  // resolving used to hang or throw here, and this call sits inside project page
+  // generation — so the whole page 500'd on one vendor's DNS record.
+  for (const hostname of IPFS_GATEWAY_HOSTNAMES) {
+    for (let attempt = 0; attempt < ATTEMPTS_PER_GATEWAY; attempt++) {
+      try {
+        const response = await limiter.schedule(
+          async () =>
+            await ipfsGatewayFetch<AnyProjectMetadata>(
+              metadataCid,
+              { timeout: GATEWAY_TIMEOUT_MS },
+              hostname,
+            ),
+        )
+        const metadata = consolidateMetadata(response.data)
+        Object.keys(metadata).forEach(key =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (metadata as any)[key] === undefined
+            ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              delete (metadata as any)[key]
+            : {},
+        )
+        return metadata
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (metadata as any)[key] === undefined
-          ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            delete (metadata as any)[key]
-          : {},
-      )
-      return metadata
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      if (
-        isTemporaryServiceError({ status: e?.response?.status, code: e?.code })
-      ) {
-        console.error('IPFS request temporarily unavailable, retry shortly', {
+      } catch (e: any) {
+        lastError = e
+        console.error('IPFS request failed', {
           metadataCid,
+          hostname,
           status: e?.response?.status,
           code: e?.code,
           error: e?.message,
         })
-        continue
+        if (
+          !isTemporaryServiceError({
+            status: e?.response?.status,
+            code: e?.code,
+          })
+        ) {
+          break
+        }
       }
-      console.error('IPFS request responded with error', {
-        metadataCid,
-        status: e?.response?.status,
-        code: e?.code,
-        error: e?.message,
-      })
-      throw e
     }
   }
+
+  throw lastError
 }
 
 /**

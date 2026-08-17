@@ -37,9 +37,11 @@ export const ipfsFetch = async <T>(hash: string) => {
 export const ipfsGatewayFetch = async <T>(
   hash: string,
   opts?: AxiosRequestConfig<T>,
+  /** Which gateway to read from. Defaults to the configured one. */
+  hostname?: string,
 ) => {
   // Build config for axios get request
-  const response = await axios.get<T>(ipfsGatewayUrl(hash), {
+  const response = await axios.get<T>(ipfsGatewayUrl(hash, hostname), {
     ...opts,
     responseType: 'json',
     headers: {

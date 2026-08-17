@@ -39,6 +39,21 @@ export async function getProjectStaticProps(
       return { notFound: true }
     }
 
-    throw e
+    // The dashboard loads its own data in the browser; this metadata only fills
+    // in the SEO tags. Throwing here turns an IPFS hiccup into a 500 for a
+    // project that exists, so serve the page and let the tags degrade. The
+    // caller's short `revalidate` picks the metadata back up on its own.
+    console.error('Project metadata unavailable, rendering without it', {
+      projectId,
+      pv,
+      chainId,
+      error: e?.message,
+    })
+    return {
+      props: {
+        projectId,
+        chainId: chainId ?? null,
+      },
+    }
   }
 }

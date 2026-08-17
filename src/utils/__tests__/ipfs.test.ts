@@ -1,8 +1,8 @@
-import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
-
 import {
+  convertToV1CID,
   decodeEncodedIpfsUri,
   encodeIpfsUri,
+  ethSucksGatewayUrl,
   ipfsUriToGatewayUrl,
   pinataToGatewayUrl,
 } from '../ipfs'
@@ -10,18 +10,21 @@ import {
 const CID = 'QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51'
 
 describe('ipfs gateway urls', () => {
-  // Both of these used to resolve to gateways that stopped serving: the
-  // dedicated Pinata one is NXDOMAIN and eth.sucks answers 410, so every image
-  // routed through them rendered broken.
-  it('routes ipfs:// uris at the read gateway', () => {
-    expect(ipfsUriToGatewayUrl(`ipfs://${CID}`)).toBe(
-      `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${CID}`,
-    )
+  // The gateway serves the subdomain form. Its path form
+  // (`ipfs.banny.eth.sucks/ipfs/<cid>`) answers 410 Gone, which is what left
+  // every project logo and NFT tier image broken.
+  it('addresses eth.sucks by subdomain with a v1 CID', () => {
+    expect(ethSucksGatewayUrl(CID)).toBe(`https://${convertToV1CID(CID)}.eth.sucks/`)
+    expect(ethSucksGatewayUrl(CID)).not.toContain('/ipfs/')
+  })
+
+  it('routes ipfs:// uris there', () => {
+    expect(ipfsUriToGatewayUrl(`ipfs://${CID}`)).toBe(ethSucksGatewayUrl(CID))
   })
 
   it('rewrites urls on the retired dedicated gateway', () => {
     expect(pinataToGatewayUrl(`https://jbx.mypinata.cloud/ipfs/${CID}`)).toBe(
-      `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${CID}`,
+      ethSucksGatewayUrl(CID),
     )
   })
 

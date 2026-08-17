@@ -27,6 +27,9 @@ const INFURA_IPFS_URLS = [
 const ETH_SUCKS_URLS = [
   'https://ipfs.banny.eth.sucks',
   'https://ipfs.banny.eth.sucks/*',
+  // The gateway serves the subdomain form (`<cidv1>.eth.sucks`), so the wildcard
+  // is what actually covers reads; the path form above is kept for old links.
+  'https://*.eth.sucks',
 ]
 
 const V2EX_URLS = [
@@ -380,6 +383,13 @@ const nextConfig = removeImports({
         hostname: 'ipfs.banny.eth.sucks',
         port: '',
         pathname: '/ipfs/**',
+      },
+      {
+        // The subdomain form the gateway actually serves: `<cidv1>.eth.sucks/`.
+        protocol: 'https',
+        hostname: '*.eth.sucks',
+        port: '',
+        pathname: '/**',
       },
       {
         protocol: 'https',

@@ -18,13 +18,15 @@ export const ipfsGatewayUrl = (
 }
 
 /**
- * Return a URL to ETH Sucks gateway for the given CID.
- * Uses the new ipfs.banny.eth.sucks format.
+ * Return a URL to the eth.sucks gateway for the given CID.
+ *
+ * Subdomain form with a v1 CID, which is what that gateway serves — the path form
+ * (`ipfs.banny.eth.sucks/ipfs/<cid>`) answers 410 Gone, so everything routed
+ * through it rendered broken.
  */
 export const ethSucksGatewayUrl = (cid: string | undefined): string => {
   if (!cid) return ''
-  // this can use either v0 or v1 CID according to Livid
-  return `https://ipfs.banny.eth.sucks/ipfs/${cid}`
+  return `https://${convertToV1CID(cid)}.eth.sucks/`
 }
 
 /**
@@ -86,14 +88,13 @@ export const cidFromIpfsUri = (ipfsUri: string) =>
   ipfsUri.match(IPFS_URL_REGEX)?.[1]
 
 /**
- * Returns a native IPFS link (`ipfs://`) as an https link on the read gateway.
+ * Returns a native IPFS link (`ipfs://`) as an https link on a read gateway.
  */
 export function ipfsUriToGatewayUrl(ipfsUri: string): string {
   if (!isIpfsUri(ipfsUri)) return ipfsUri
 
-  // Not eth.sucks: that gateway answers 410 Gone, so every image routed through
-  // it renders broken.
-  return ipfsGatewayUrl(cidFromIpfsUri(ipfsUri))
+  const cid = cidFromIpfsUri(ipfsUri)
+  return cid && isIpfsCID(cid) ? ethSucksGatewayUrl(cid) : ipfsGatewayUrl(cid)
 }
 
 /**
@@ -112,7 +113,7 @@ export function pinataToGatewayUrl(url: string) {
   }
 
   if (cid && isIpfsCID(cid)) {
-    return ipfsGatewayUrl(cid)
+    return ethSucksGatewayUrl(cid)
   }
 
   if (url.startsWith('https://jbx.mypinata.cloud')) {

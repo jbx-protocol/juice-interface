@@ -16,44 +16,20 @@ export async function getProjectStaticProps(
   pv: PV = PV_V2,
   chainId?: JBChainId | undefined,
 ): Promise<GetStaticPropsResult<ProjectPageProps>> {
-  try {
-    const metadata = await getProjectMetadata(projectId, pv, chainId)
-    if (!metadata) {
-      return { notFound: true }
-    }
+  const metadata = await getProjectMetadata(projectId, pv, chainId)
+  // `undefined` is a project that doesn't exist. `null` is one whose metadata
+  // can't be served right now: the dashboard reads its own data in the browser
+  // and this only fills the SEO tags, so serve the page and let them degrade.
+  // The caller's short `revalidate` picks the metadata back up on its own.
+  if (metadata === undefined) {
+    return { notFound: true }
+  }
 
-    return {
-      props: {
-        metadata,
-        projectId,
-        chainId: chainId ?? null,
-      },
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    if (
-      e?.response?.status === 404 ||
-      e?.response?.status === 400 ||
-      e?.response?.status === 403
-    ) {
-      return { notFound: true }
-    }
-
-    // The dashboard loads its own data in the browser; this metadata only fills
-    // in the SEO tags. Throwing here turns an IPFS hiccup into a 500 for a
-    // project that exists, so serve the page and let the tags degrade. The
-    // caller's short `revalidate` picks the metadata back up on its own.
-    console.error('Project metadata unavailable, rendering without it', {
+  return {
+    props: {
+      ...(metadata ? { metadata } : {}),
       projectId,
-      pv,
-      chainId,
-      error: e?.message,
-    })
-    return {
-      props: {
-        projectId,
-        chainId: chainId ?? null,
-      },
-    }
+      chainId: chainId ?? null,
+    },
   }
 }

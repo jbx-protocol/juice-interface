@@ -2,7 +2,7 @@
 import { PV_V1, PV_V2, PV_V4, PV_V5 } from 'constants/pv'
 import { JBChainId } from 'juice-sdk-core'
 import { PV } from 'models/pv'
-import { findProjectMetadata } from './ipfs'
+import { findProjectMetadata, recoverProjectMetadata } from './ipfs'
 
 /**
  * Server-side function. Returns the metadata for a v2v3, v4, or v5 project.
@@ -23,7 +23,19 @@ export const getProjectMetadata = async (
     case PV_V2:
       const { V2V3GetMetadataCidFromContract } = await import('./v2v3Metadata')
       const metadataCid = await V2V3GetMetadataCidFromContract(projectId)
-      return findProjectMetadata({ metadataCid })
+      // No CID on-chain means the project doesn't exist. Anything after this
+      // point is a project that does, whatever IPFS says about its metadata.
+      if (!metadataCid) return undefined
+      try {
+        return await findProjectMetadata({ metadataCid })
+      } catch (e: any) {
+        console.error('Project metadata unresolvable, recovering', {
+          projectId,
+          metadataCid,
+          error: e?.message,
+        })
+        return (await recoverProjectMetadata(projectId)) ?? null
+      }
     case PV_V4:
       const { getV4V5ProjectMetadata: getV4ProjectMetadata } = await import(
         './v4v5Metadata'

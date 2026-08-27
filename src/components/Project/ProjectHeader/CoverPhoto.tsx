@@ -1,13 +1,16 @@
 // import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import Image from "next/image"
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useCoverPhoto } from './hooks/useCoverPhoto'
 
 export const CoverPhoto = () => {
   const { coverImageUrl, coverImageAltText } = useCoverPhoto()
   // const { projectId } = useProjectMetadataContext()
-  const hasCoverImage = !!coverImageUrl
+  // A cover whose IPFS content no longer resolves renders as a broken image
+  // in a tall empty band; treat it as no cover once it fails to load.
+  const [failedUrl, setFailedUrl] = useState<string>()
+  const hasCoverImage = !!coverImageUrl && coverImageUrl !== failedUrl
 
   const applyDarkerCoverPhoto = useMemo(() => {
     // This is used for countdown projects only; Since it is disabled, we don't need to apply darker cover photo for now
@@ -22,7 +25,7 @@ export const CoverPhoto = () => {
         hasCoverImage ? 'h-70 bg-split-200 dark:bg-slate-600' : 'h-[168px]',
       )}
     >
-      {coverImageUrl && (
+      {hasCoverImage && (
         <>
           <Image
             fill
@@ -33,6 +36,7 @@ export const CoverPhoto = () => {
             )}
             crossOrigin="anonymous"
             alt={coverImageAltText}
+            onError={() => setFailedUrl(coverImageUrl)}
           />
           {applyDarkerCoverPhoto && (
             <div className="absolute h-70 w-full bg-black opacity-30 drop-shadow" />
